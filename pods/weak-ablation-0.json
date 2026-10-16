@@ -1,0 +1,27 @@
+{
+ "id": "tw74iahtis47uv",
+ "name": "weak-ablation-0",
+ "status": "RUNNING",
+ "actions": [
+  "stop",
+  "restart",
+  "terminate"
+ ],
+ "ssh": {
+  "direct": null,
+  "proxy": {
+   "command": "ssh tw74iahtis47uv-64411f37@ssh.runpod.io",
+   "host": "ssh.runpod.io",
+   "port": 22,
+   "username": "tw74iahtis47uv-64411f37"
+  }
+ },
+ "gpu": {
+  "count": 1,
+  "id": "NVIDIA B200",
+  "memory": 283,
+  "vcpuCount": 28
+ },
+ "cost": 7.99,
+ "lastStatusChange": null
+}
