@@ -65,6 +65,7 @@ class Intervention:
         self.neuron_mask = torch.ones(L, N, dtype=torch.bool, device=device)
         self.random_event_frac = None  # if set: replace this fraction of events uniformly at random (control)
         self.skip_first_token = True
+        self.first_pos = None         # [B] index of first real token under left padding (set by eval code)
         self.stats = None             # set to a StatsCollector in stats mode
         self.n_replaced = 0
         self.n_events = 0
@@ -101,8 +102,12 @@ class Intervention:
             # control: ignore weakness, replace a uniformly random fraction of events in the quadrant set
             r = torch.rand(a.shape, device=a.device, generator=self.gen)
             sel = (r < self.random_event_frac) & self.quad_mask[quad] & self.neuron_mask[l][None, None, :]
-        if self.skip_first_token:
-            sel[:, 0, :] = False
+        if self.skip_first_token and T > 1:
+            fp = self.first_pos
+            if fp is not None and fp.shape[0] == B:
+                sel[torch.arange(B, device=a.device), fp, :] = False
+            else:
+                sel[:, 0, :] = False
         if self.mode == 'zero':
             rep = torch.zeros_like(a32)
         else:

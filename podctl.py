@@ -29,7 +29,9 @@ def sshcmd(i):
     p=status(i); u=p['ssh']['proxy']['username']
     return ['ssh','-o','ConnectTimeout=20','-o','StrictHostKeyChecking=accept-new','-o','ServerAliveInterval=30','-i','/workspace/keys/id_ed25519',u+'@ssh.runpod.io']
 def run(i,cmd,timeout=600):
-    r=subprocess.run(sshcmd(i)+[cmd],capture_output=True,text=True,timeout=timeout); return r.returncode,r.stdout,r.stderr
+    # RunPod's proxy requires a PTY; send the command on stdin and exit.
+    r=subprocess.run(sshcmd(i)+['-tt'],input=cmd+'\nexit\n',capture_output=True,text=True,timeout=timeout)
+    return r.returncode,r.stdout,r.stderr
 if __name__=='__main__':
     c=sys.argv[1]
     if c=='create': print(json.dumps(create(int(sys.argv[2]), *(sys.argv[3:4] or [])),indent=1))

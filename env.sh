@@ -1,0 +1,5 @@
+export HF_HOME=/workspace/.cache/huggingface
+export HF_TOKEN=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
+export HF_HUB_ENABLE_HF_TRANSFER=1
+export PYTHONUNBUFFERED=1
+export TOKENIZERS_PARALLELISM=false
