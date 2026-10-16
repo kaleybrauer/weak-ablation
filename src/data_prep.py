@@ -101,6 +101,19 @@ def build_verbatim_windows(tok, cache_dir, window=64, per_source=700, seed=0):
     return items
 
 
+def build_verbatim_extra(tok, cache_dir, existing, window=64, seed=1, plan=(('kjv_bible', 4000), ('apache2', 100), ('constitution', 400), ('shakespeare', 1500))):
+    """Supplementary windows from the most-memorized sources, disjoint from existing starts."""
+    used = {(w['source'], w['start']) for w in existing}
+    rng = random.Random(seed); items = []
+    for name, k in plan:
+        p = os.path.join(cache_dir, name + '.txt')
+        if not os.path.exists(p): continue
+        ids = tok(open(p, encoding='utf-8', errors='ignore').read(), add_special_tokens=False)['input_ids']
+        starts = [s for s in range(0, len(ids) - window, window // 2) if (name, s) not in used]; rng.shuffle(starts)
+        for s in starts[:k]: items.append(dict(source=name, start=s, ids=ids[s:s + window]))
+    return items
+
+
 def build_induction(tok, n=200, half=256, seed=0):
     g = torch.Generator().manual_seed(seed)
     vocab = min(tok.vocab_size, 100_000)
@@ -158,6 +171,8 @@ def build_all(tok, tag, root):
     if not os.path.exists(os.path.join(d, 'popqa.json')): save('popqa.json', build_popqa())
     if not os.path.exists(os.path.join(d, 'triviaqa.json')): save('triviaqa.json', build_triviaqa())
     if not os.path.exists(os.path.join(d, 'verbatim_windows.json')): save('verbatim_windows.json', build_verbatim_windows(tok, os.path.join(root, 'data', 'texts')))
+    if not os.path.exists(os.path.join(d, 'verbatim_windows_extra.json')):
+        save('verbatim_windows_extra.json', build_verbatim_extra(tok, os.path.join(root, 'data', 'texts'), json.load(open(os.path.join(d, 'verbatim_windows.json')))))
     if not os.path.exists(os.path.join(d, 'induction.pt')): save('induction.pt', build_induction(tok))
     if not os.path.exists(os.path.join(d, 'sst2.json')): save('sst2.json', build_sst2())
     if not os.path.exists(os.path.join(d, 'mmlu.json')): save('mmlu.json', build_mmlu())

@@ -112,9 +112,15 @@ def main():
         res['time']['total'] = time.time() - t0
         json.dump(res, open(bpath, 'w'), indent=1); print('baseline', json.dumps(res['metrics']), flush=True)
     base = json.load(open(bpath))
+    xpath = os.path.join(rd, 'baseline_verbatim_recs_extra.json'); xw = os.path.join(dd, 'verbatim_windows_extra.json')
+    if os.path.exists(xw) and not os.path.exists(xpath):
+        interv.active = False; recs = E.eval_verbatim(model, tok, json.load(open(xw)), interv); json.dump(recs, open(xpath, 'w'))
+        print('verbatim extra: memorized', sum(r['exact'] for r in recs), 'of', len(recs), flush=True)
+    if os.path.exists(xpath):
+        data['verbatim'] = data['verbatim'] + json.load(open(xw))
     pop_ok = {r['id'] for r in json.load(open(os.path.join(rd, 'baseline_popqa_recs.json'))) if r['correct']}
     tq_ok = {r['id'] for r in json.load(open(os.path.join(rd, 'baseline_triviaqa_recs.json'))) if r['correct']}
-    vrecs = json.load(open(os.path.join(rd, 'baseline_verbatim_recs.json')))
+    vrecs = json.load(open(os.path.join(rd, 'baseline_verbatim_recs.json'))) + (json.load(open(xpath)) if os.path.exists(xpath) else [])
     mem_keys = {(r['source'], r['start']) for r in vrecs if r['exact']}
     nonmem_keys = {(r['source'], r['start']) for r in vrecs if r['tokmatch'] < 0.25}
     popqa_sub = [it for it in data['popqa'] if it['id'] in pop_ok]
