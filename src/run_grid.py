@@ -10,7 +10,7 @@ from data_prep import build_all
 import evals as E
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-Q_LIST = [50, 80, 90, 95, 99, 99.9]
+Q_LIST = [50, 75, 80, 90, 95, 99, 99.9]
 QUADSETS = {'pp': ['pp'], 'pn': ['pn'], 'np': ['np'], 'nn': ['nn'], 'neg': ['np', 'nn'], 'all': QUAD_CODES}
 
 

@@ -1,0 +1,8 @@
+results/
+data/
+logs/
+pods/
+__pycache__/
+*.pyc
+*.pt
+.venv/
