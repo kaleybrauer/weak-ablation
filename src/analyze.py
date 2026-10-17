@@ -20,6 +20,20 @@ def load(tag):
     ok_ids = [r['id'] for r in brecs if r['correct']]
     spop = np.array([popqa[i]['s_pop'] for i in ok_ids]); lg = np.log10(spop + 1)
     edges = np.quantile(lg, np.linspace(0, 1, 11)); dec = {i: int(min(9, np.searchsorted(edges, l, side='right') - 1)) for i, l in zip(ok_ids, lg)}
+    # baseline NLL on exactly the memorized / non-memorized subsets the grid uses
+    import random
+    vw = json.load(open(os.path.join(ROOT, 'data', tag, 'verbatim_windows.json')))
+    xw = os.path.join(ROOT, 'data', tag, 'verbatim_windows_extra.json')
+    if os.path.exists(xw): vw = vw + json.load(open(xw))
+    vrecs = json.load(open(os.path.join(rd, 'baseline_verbatim_recs.json')))
+    xr = os.path.join(rd, 'baseline_verbatim_recs_extra.json')
+    if os.path.exists(xr): vrecs = vrecs + json.load(open(xr))
+    byk = {(r['source'], r['start']): r for r in vrecs}
+    mem = [w for w in vw if byk[(w['source'], w['start'])]['exact']]
+    non = [w for w in vw if byk[(w['source'], w['start'])]['tokmatch'] < 0.25]
+    random.Random(0).shuffle(non); non = non[:max(200, len(mem))]
+    base['metrics']['verbatim_mem_nll'] = float(np.mean([byk[(w['source'], w['start'])]['nll'] for w in mem]))
+    base['metrics']['verbatim_nonmem_nll'] = float(np.mean([byk[(w['source'], w['start'])]['nll'] for w in non]))
     runs = {}
     for p in glob.glob(os.path.join(rd, 'grid', '*.json')):
         r = json.load(open(p))
@@ -53,7 +67,7 @@ def summarize(tag):
         if 'popqa' in m:
             acc, n = popqa_by_decile(r, dec); row['popqa'] = m['popqa']['acc']; row['popqa_low3'] = float((acc[:3] * n[:3]).sum() / max(1, n[:3].sum())); row['popqa_high3'] = float((acc[7:] * n[7:]).sum() / max(1, n[7:].sum())); row['popqa_dec'] = acc.round(3).tolist()
         if 'triviaqa' in m: row['triviaqa'] = m['triviaqa']['acc']
-        if 'verbatim' in m: row.update(mem_exact=m['verbatim']['mem_exact'], mem_tokmatch=m['verbatim']['mem_tokmatch'], mem_dnll=m['verbatim']['mem_nll'] - b.get('verbatim_mem_nll', m['verbatim']['mem_nll']), nonmem_nll=m['verbatim']['nonmem_nll'], mem_nll=m['verbatim']['mem_nll'])
+        if 'verbatim' in m: row.update(mem_exact=m['verbatim']['mem_exact'], mem_tokmatch=m['verbatim']['mem_tokmatch'], d_mem_nll=m['verbatim']['mem_nll'] - b['verbatim_mem_nll'], d_nonmem_nll=m['verbatim']['nonmem_nll'] - b['verbatim_nonmem_nll'], nonmem_nll=m['verbatim']['nonmem_nll'], mem_nll=m['verbatim']['mem_nll'])
         if 'induction' in m: row['induction'] = m['induction']['nll_second_half']; row['d_induction'] = m['induction']['nll_second_half'] - b['induction']['nll_second_half']
         if 'sst2' in m: row['sst2'] = m['sst2']['acc']; row['d_sst2'] = m['sst2']['acc'] - b['sst2']['acc']
         if 'mmlu' in m: row['mmlu'] = m['mmlu']['acc']; row['d_mmlu'] = m['mmlu']['acc'] - b['mmlu']['acc']
@@ -81,7 +95,7 @@ if __name__ == '__main__':
     s1 = [r for r in rows if r['name'].startswith('s1_')]
     s1.sort(key=lambda r: (r['quadset'], r['q']))
     print('\n## Stage 1: all layers, mean replacement, all neurons\n')
-    print(fmt_table(s1, ['quadset', 'q', 'replaced', 'dloss_pct', 'popqa', 'popqa_low3', 'popqa_high3', 'triviaqa', 'mem_exact', 'mem_tokmatch', 'd_induction', 'd_sst2', 'd_mmlu']))
+    print(fmt_table(s1, ['quadset', 'q', 'replaced', 'dloss_pct', 'popqa', 'popqa_low3', 'popqa_high3', 'triviaqa', 'mem_exact', 'mem_tokmatch', 'd_mem_nll', 'd_nonmem_nll', 'd_induction', 'd_sst2', 'd_mmlu']))
     s2 = [r for r in rows if r['name'].startswith('s2_')]
     if s2:
         print('\n## Stage 2\n')
