@@ -90,7 +90,7 @@ def fmt_table(rows, cols):
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(); ap.add_argument('--tag', required=True); a = ap.parse_args()
     base, rows, edges = summarize(a.tag)
-    print('baseline:', json.dumps({k: (v.get('nll') if 'nll' in v else v.get('acc', v)) for k, v in base['metrics'].items()}))
+    print('baseline:', json.dumps({k: ((v.get('nll') if 'nll' in v else v.get('acc', v)) if isinstance(v, dict) else v) for k, v in base['metrics'].items()}))
     print('PopQA log10(s_pop) decile edges:', np.round(edges, 2).tolist())
     s1 = [r for r in rows if r['name'].startswith('s1_')]
     s1.sort(key=lambda r: (r['quadset'], r['q']))
