@@ -72,6 +72,8 @@ def main():
     ap.add_argument('--stage', default='stage1'); ap.add_argument('--cells', default='')  # e.g. "75:pp,99:nn,95:neg"
     ap.add_argument('--evals', default='loss,popqa,triviaqa,verbatim,induction,sst2,mmlu')
     ap.add_argument('--only', default='')  # comma list of config names to run
+    ap.add_argument('--filter', default='')  # substring a config name must contain
+    ap.add_argument('--exclude', default='')  # substring a config name must not contain
     ap.add_argument('--shard', default='0/1')
     a = ap.parse_args()
     rd = os.path.join(ROOT, 'results', a.tag); gd = os.path.join(rd, 'grid'); os.makedirs(gd, exist_ok=True)
@@ -140,6 +142,8 @@ def main():
     else: raise ValueError(a.stage)
     cfgs = [c for c in cfgs if not c.get('none')]
     if a.only: cfgs = [c for c in cfgs if c['name'] in a.only.split(',')]
+    if a.filter: cfgs = [c for c in cfgs if a.filter in c['name']]
+    if a.exclude: cfgs = [c for c in cfgs if a.exclude not in c['name']]
     si, sn = map(int, a.shard.split('/')); cfgs = cfgs[si::sn]
     for c in cfgs:
         out = os.path.join(gd, c['name'] + '.json')
