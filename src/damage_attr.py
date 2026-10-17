@@ -23,7 +23,7 @@ def categorize(tok, tid, prev_text, freq_rank):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--model', required=True); ap.add_argument('--tag', required=True); ap.add_argument('--cells', required=True)
-    ap.add_argument('--n_seq', type=int, default=400); a = ap.parse_args()
+    ap.add_argument('--n_seq', type=int, default=400); ap.add_argument('--mode', default='mean'); a = ap.parse_args()
     rd = os.path.join(ROOT, 'results', a.tag)
     model, tok = load_model(a.model); layers = get_layers(model); L = len(layers); N = layers[0].mlp.gate_proj.out_features
     interv = Intervention(L, N, 'cuda'); patch_mlps(model, interv)
@@ -43,7 +43,7 @@ def main():
     for cell in a.cells.split(','):
         q, qs = cell.split(':'); q = float(q) if '.' in q else int(q)
         thr, rb, ra = thresholds_from_stats(os.path.join(rd, 'stats.pt'), [q])[0][q]
-        interv.configure(thr, rb, ra, QUADSETS[qs], list(range(L)), mode='mean')
+        interv.configure(thr, rb, ra, QUADSETS[qs], list(range(L)), mode=a.mode)
         nll = per_token_nll(); d = (nll - base)
         flat = d.flatten(); k = max(1, int(0.01 * flat.numel())); top = flat.topk(k).indices
         cat_counts = {c: 0 for c in CATS}; cat_mass = {c: 0.0 for c in CATS}; all_counts = {c: 0 for c in CATS}
@@ -57,7 +57,7 @@ def main():
             all_counts[categorize(tok, tid, prev, int(rank[tid]))] += 1
         res[cell] = dict(top1pct_counts=cat_counts, top1pct_mass=cat_mass, background_counts=all_counts, mean_dnll=float(d.mean()), top1pct_share_of_total=float(flat.topk(k).values.sum() / flat.clamp_min(0).sum()))
         print(cell, json.dumps(res[cell]), flush=True)
-    json.dump(res, open(os.path.join(rd, 'damage_attribution.json'), 'w'), indent=1)
+    json.dump(res, open(os.path.join(rd, 'damage_attribution.json' if a.mode == 'mean' else f'damage_attribution_{a.mode}.json'), 'w'), indent=1)
 
 
 if __name__ == '__main__':
