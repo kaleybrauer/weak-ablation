@@ -101,4 +101,17 @@ if __name__ == '__main__':
         print('\n## Stage 2\n')
         s2.sort(key=lambda r: r['name'])
         print(fmt_table(s2, ['name', 'replaced', 'dloss_pct', 'popqa', 'popqa_low3', 'popqa_high3', 'triviaqa', 'mem_exact', 'd_induction', 'd_sst2', 'd_mmlu']))
+    # Protocol gap: (rare-fact drop at q) / (rare-fact drop at full-quadrant removal) - (loss rise at q) / (loss rise at full removal)
+    byname = {r['name']: r for r in rows}
+    full = {'pp': byname.get('s1_q99.9_pp'), 'pn': byname.get('s1_q99.9_pn'), 'nn': byname.get('s2_remove_all_nn') or byname.get('s1_q99.9_nn'),
+            'np': byname.get('s1_q99.9_np'), 'neg': byname.get('s2_remove_all_neg') or byname.get('s1_q99.9_neg'), 'all': byname.get('s1_q99.9_all')}
+    print('\n## Fact-versus-general gap (protocol measurement 2), Stage 1 cells\n')
+    gap_rows = []
+    for r in s1:
+        f = full.get(r['quadset'])
+        if not f or 'popqa_low3' not in r: continue
+        rare = (1 - r['popqa_low3']) / max(1e-9, 1 - f['popqa_low3']); gen = r['dloss_pct'] / max(1e-9, f['dloss_pct'])
+        mem = (1 - r['mem_tokmatch']) / max(1e-9, 1 - f['mem_tokmatch'])
+        gap_rows.append(dict(quadset=r['quadset'], q=r['q'], rare_frac=rare, mem_frac=mem, loss_frac=gen, gap_rare=rare - gen, gap_mem=mem - gen))
+    print(fmt_table(gap_rows, ['quadset', 'q', 'loss_frac', 'rare_frac', 'mem_frac', 'gap_rare', 'gap_mem']))
     json.dump(rows, open(os.path.join(ROOT, 'results', a.tag, 'summary_rows.json'), 'w'), indent=1)

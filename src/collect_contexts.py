@@ -28,7 +28,7 @@ def main():
     d, _ = thresholds_from_stats(os.path.join(rd, 'stats.pt'), qs)
     for q in qs: thr[q] = d[q][0][sel_l, sel_n, 0].cpu()  # Q1 thresholds for selected neurons  [S]
     S = len(sel)
-    store = {i: {'bands': [[] for _ in BANDS], 'nn': [], 'top': []} for i in range(S)}
+    store = {i: {'bands': [[] for _ in BANDS], 'nn': [], 'top': [], 'top_neg': []} for i in range(S)}
     seen = {i: {'bands': [0] * len(BANDS), 'nn': 0} for i in range(S)}
     random_ctx = []
     interv = Intervention(L, N, 'cuda'); patch_mlps(model, interv)
@@ -73,6 +73,14 @@ def main():
                         if t == 0 or not q1[b, t]: continue
                         store[si]['top'].append(dict(l=l, act=v, ids=batch[b, max(0, t - PRE):t + 1 + POST].tolist(), tpos=t - max(0, t - PRE)))
                     store[si]['top'] = sorted(store[si]['top'], key=lambda x: -x['act'])[:TOPK]
+                    # negative pole (Q2: gate>0, up<0): most negative outputs
+                    q2 = (gg > 0) & (uu < 0)
+                    vals, flat = (-aa).flatten().topk(min(4, aa.numel()))
+                    for v, f in zip(vals.tolist(), flat.tolist()):
+                        b, t = divmod(f, T)
+                        if t == 0 or not q2[b, t]: continue
+                        store[si]['top_neg'].append(dict(l=l, act=-v, ids=batch[b, max(0, t - PRE):t + 1 + POST].tolist(), tpos=t - max(0, t - PRE)))
+                    store[si]['top_neg'] = sorted(store[si]['top_neg'], key=lambda x: x['act'])[:TOPK]
             if len(random_ctx) < N_RANDOM * 4:
                 b = rng.randrange(B); t = rng.randrange(PRE + 1, T - POST)
                 random_ctx.append(dict(ids=batch[b, t - PRE:t + 1 + POST].tolist(), tpos=PRE))
@@ -82,7 +90,7 @@ def main():
         return dict(before=tok.decode(ids[:tp]), token=tok.decode(ids[tp:tp + 1]), after=tok.decode(ids[tp + 1:]), act=item.get('act'))
     out = dict(bands=[list(b) for b in BANDS], neurons=[])
     for i, (l, n) in enumerate(sel):
-        out['neurons'].append(dict(layer=int(l), neuron=int(n), wasserstein=bool(wmask[l, n]), top=[txt(x) for x in store[i]['top']],
+        out['neurons'].append(dict(layer=int(l), neuron=int(n), wasserstein=bool(wmask[l, n]), top=[txt(x) for x in store[i]['top']], top_neg=[txt(x) for x in store[i]['top_neg']],
                                    bands=[[txt(x) for x in lst] for lst in store[i]['bands']], nn=[txt(x) for x in store[i]['nn']],
                                    seen=seen[i]))
     out['random'] = [txt(x) for x in random_ctx]
