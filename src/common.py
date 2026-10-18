@@ -60,6 +60,7 @@ class Intervention:
         self.thr = None
         self.rep_below = None
         self.rep_above = None
+        self.offset = None          # [L,N,4] E[a*S] per neuron/quadrant for 'zero_offset' mode
         self.quad_mask = torch.zeros(4, dtype=torch.bool, device=device)
         self.layer_mask = torch.zeros(L, dtype=torch.bool, device=device)
         self.neuron_mask = torch.ones(L, N, dtype=torch.bool, device=device)
@@ -110,6 +111,12 @@ class Intervention:
                 sel[:, 0, :] = False
         if self.mode == 'zero':
             rep = torch.zeros_like(a32)
+        elif self.mode == 'zero_offset':
+            # zero the selected events, then add the constant E[a*S] to every event of the quadrant (mean preserved on the reference distribution)
+            off = self.offset[l][ar[None, None, :], quad]
+            out = torch.where(sel, torch.zeros_like(a32), a32) + off * self.quad_mask[quad] * self.neuron_mask[l][None, None, :]
+            self.n_replaced += int(sel.sum()); self.n_events += sel.numel()
+            return out.to(a.dtype)
         else:
             src = self.rep_above if self.invert else self.rep_below
             rep = src[l][ar[None, None, :], quad]
@@ -208,7 +215,8 @@ def thresholds_from_stats(stats_path, q_list, device='cuda'):
         mean_below = torch.where(n_below > 0, s_below / n_below.clamp_min(1), torch.zeros_like(s_below)) * sign
         mean_above = torch.where(n_above > 0, s_above / n_above.clamp_min(1), torch.zeros_like(s_above)) * sign
         thr = torch.where(total > 0, thr, torch.zeros_like(thr))
-        out[q] = (thr.float().to(device), mean_below.float().to(device), mean_above.float().to(device))
+        p_sel = torch.where(total > 0, n_below / total.clamp_min(1), torch.zeros_like(n_below))
+        out[q] = (thr.float().to(device), mean_below.float().to(device), mean_above.float().to(device), (p_sel * mean_below).float().to(device))
     return out, st
 
 

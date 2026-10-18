@@ -25,7 +25,7 @@ def main():
     interv = Intervention(L, N, 'cuda'); patch_mlps(model, interv)
     toks = torch.load(os.path.join(ROOT, 'data', a.tag, 'eval_tokens.pt'))[: a.n_seq]
     q, qs = a.cell.split(':'); q = float(q) if '.' in q else int(q)
-    thr, rb, ra = thresholds_from_stats(os.path.join(rd, 'stats.pt'), [q])[0][q]
+    thr, rb, ra, *_ = thresholds_from_stats(os.path.join(rd, 'stats.pt'), [q])[0][q]
     interv.active = False; base = E.eval_loss(model, toks)['nll']
     out = dict(cell=a.cell, base=base, per_layer={}, per_chunk={})
     t0 = time.time()

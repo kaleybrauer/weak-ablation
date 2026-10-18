@@ -18,7 +18,7 @@ for name in ['baseline'] + a.configs.split(','):
     if name == 'baseline': interv.active = False
     else:
         c = json.load(open(os.path.join(rd, 'grid', name + '.json')))['config']
-        thr, rb, ra = thresholds_from_stats(os.path.join(rd, 'stats.pt'), [c['q']])[0][c['q']]
+        thr, rb, ra, *_ = thresholds_from_stats(os.path.join(rd, 'stats.pt'), [c['q']])[0][c['q']]
         nm = neuron_set_mask(c['neuron_set'], a.tag, L, N, stats) if c.get('neuron_set') else None
         interv.configure(thr, rb, ra, c['quads'], c['layers'], mode=c['mode'], invert=c.get('invert', False), neuron_mask=nm, random_event_frac=(c['q'] / 100.0 if c.get('random_event') else None))
     t0 = time.time(); m, recs = E.eval_gsm8k(model, tok, items, interv); out[name] = m

@@ -18,11 +18,11 @@ os.makedirs('/workspace/weak-ablation/results/smoke', exist_ok=True)
 stats.save('/workspace/weak-ablation/results/smoke/stats.pt'); interv.stats = None
 c = census('/workspace/weak-ablation/results/smoke/stats.pt'); print('census L0', json.dumps(c['per_layer'][0])); print('census L16', json.dumps(c['per_layer'][16]))
 d, st = thresholds_from_stats('/workspace/weak-ablation/results/smoke/stats.pt', [50, 95])
-thr, rb, ra = d[95]; print('thr95 pp L16 median', float(thr[16, :, 0].median()), 'nn', float(thr[16, :, 3].median()), 'rep_below pp', float(rb[16, :, 0].mean()), 'nn', float(rb[16, :, 3].mean()))
+thr, rb, ra, *_ = d[95]; print('thr95 pp L16 median', float(thr[16, :, 0].median()), 'nn', float(thr[16, :, 3].median()), 'rep_below pp', float(rb[16, :, 0].mean()), 'nn', float(rb[16, :, 3].mean()))
 ev = next(iter(fineweb_token_stream(tok, 2048, 8, 16384 * 4, split='eval')))
 interv.active = False; t0 = time.time(); base = E.eval_loss(model, ev); print('base loss', base, f'{time.time()-t0:.1f}s', flush=True)
 for quads, q in [(['pp'], 50), (['pp'], 95), (['nn'], 95), (['np', 'nn'], 99.9), (QUAD_CODES, 50)]:
-    thr, rb, ra = d[q] if q in d else thresholds_from_stats('/workspace/weak-ablation/results/smoke/stats.pt', [q])[0][q]
+    thr, rb, ra, *_ = d[q] if q in d else thresholds_from_stats('/workspace/weak-ablation/results/smoke/stats.pt', [q])[0][q]
     interv.configure(thr, rb, ra, quads, list(range(L)), mode='mean'); t0 = time.time()
     r = E.eval_loss(model, ev); print(quads, q, 'loss', r['nll'], 'replaced', interv.n_replaced / interv.n_events, f'{time.time()-t0:.1f}s', flush=True)
 interv.configure(*d[50], ['pp'], list(range(L)), mode='mean')

@@ -136,6 +136,12 @@ def main():
 
     # ---- configs
     if a.stage == 'stage1': cfgs = stage1_configs(L)
+    elif a.stage == 'audit':
+        cfgs = []
+        for q, qs in [(75, 'nn'), (75, 'pp'), (75, 'np'), (100, 'neg'), (100, 'nn')]:
+            for mode in ['mean', 'zero', 'zero_offset']:
+                for ns in [None, 'wasserstein']:
+                    cfgs.append(dict(name=f'audit_q{q}_{qs}_{mode}_' + (ns or 'all'), q=q, quads=QUADSETS[qs], layers=list(range(L)), mode=mode, **({'neuron_set': ns} if ns else {})))
     elif a.stage == 'stage2':
         cells = [(float(x.split(':')[0]) if '.' in x.split(':')[0] else int(x.split(':')[0]), x.split(':')[1]) for x in a.cells.split(',') if x]
         cfgs = stage2_configs(L, cells)
@@ -148,7 +154,7 @@ def main():
     for c in cfgs:
         out = os.path.join(gd, c['name'] + '.json')
         if os.path.exists(out): continue
-        thr, rb, ra = get_thr(c['q'])
+        thr, rb, ra, off = get_thr(c['q']); interv.offset = off
         nm = neuron_set_mask(c['neuron_set'], a.tag, L, N, stats) if c.get('neuron_set') else None
         ref = None
         if c.get('random_event'):

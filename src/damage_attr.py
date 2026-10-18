@@ -42,7 +42,7 @@ def main():
     res = {}
     for cell in a.cells.split(','):
         q, qs = cell.split(':'); q = float(q) if '.' in q else int(q)
-        thr, rb, ra = thresholds_from_stats(os.path.join(rd, 'stats.pt'), [q])[0][q]
+        thr, rb, ra, *_ = thresholds_from_stats(os.path.join(rd, 'stats.pt'), [q])[0][q]
         interv.configure(thr, rb, ra, QUADSETS[qs], list(range(L)), mode=a.mode)
         nll = per_token_nll(); d = (nll - base)
         flat = d.flatten(); k = max(1, int(0.01 * flat.numel())); top = flat.topk(k).indices

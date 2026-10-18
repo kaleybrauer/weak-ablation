@@ -17,7 +17,7 @@ popqa = {it['id']: it for it in json.load(open(os.path.join(ROOT, 'data', a.tag,
 ok = [r['id'] for r in json.load(open(os.path.join(rd, 'baseline_popqa_recs.json'))) if r['correct']]
 rng = random.Random(0); rng.shuffle(ok); items = [popqa[i] for i in ok[: a.n_items]]
 sp = subject_positions(tok, items); keep = [i for i, p in enumerate(sp) if p]; items = [items[i] for i in keep]; sp = [sp[i] for i in keep]
-thr, rb, ra = thresholds_from_stats(os.path.join(rd, 'stats.pt'), [100])[0][100]  # rb = full-quadrant means [L,N,4]
+thr, rb, ra, *_ = thresholds_from_stats(os.path.join(rd, 'stats.pt'), [100])[0][100]  # rb = full-quadrant means [L,N,4]
 cap = {}
 interv = Intervention(L, N, 'cuda'); patch_mlps(model, interv)
 class H:

@@ -84,7 +84,7 @@ def main():
     rd = os.path.join(ROOT, 'results', a.tag); outp = os.path.join(rd, 'sparse_facts.json')
     model, tok = load_model(a.model); layers = get_layers(model); L = len(layers); N = layers[0].mlp.gate_proj.out_features
     interv = TopK(L, N, 'cuda'); patch_mlps(model, interv)
-    thr, rb, ra = thresholds_from_stats(os.path.join(rd, 'stats.pt'), [100])[0][100]; interv.rep_full = rb  # full-quadrant means
+    thr, rb, ra, *_ = thresholds_from_stats(os.path.join(rd, 'stats.pt'), [100])[0][100]; interv.rep_full = rb  # full-quadrant means
     st = torch.load(os.path.join(rd, 'stats.pt')); cnt = st['count'].double(); interv.cum = (cnt.cumsum(-1) / cnt.sum(-1, keepdim=True).clamp_min(1)).half().cuda(); del st, cnt
     popqa = {it['id']: it for it in json.load(open(os.path.join(ROOT, 'data', a.tag, 'popqa.json')))}
     ok_ids = [r['id'] for r in json.load(open(os.path.join(rd, 'baseline_popqa_recs.json'))) if r['correct']]
