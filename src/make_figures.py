@@ -64,6 +64,6 @@ for ax, (tag, label) in zip(axes, TAGS):
     xr = [y[rare & mk].mean() * 100 for mk in masks]; xc = [y[common & mk].mean() * 100 for mk in masks]; x = np.arange(4)
     ax.plot(x - 0.15, xr, 'o', color=ACC, ms=9, label='rarest third of facts'); ax.plot(x + 0.15, xc, 'o', color=GREY, ms=9, label='commonest third of facts')
     for xi, (a, b) in enumerate(zip(xr, xc)): ax.text(xi - 0.15, a + 1.2, f'{a:.0f}', ha='center', fontsize=8.5, color='#555'); ax.text(xi + 0.15, b + 1.2, f'{b:.0f}', ha='center', fontsize=8.5, color='#555')
-    ax.set_xticks(x); ax.set_xticklabels(groups); ax.set_xlabel('baseline answer-margin tercile (weakest 75% of Q1 events removed)'); ax.set_ylim(80, 102); ax.grid(axis='y', color='#e6e6e6'); ax.set_title(label, loc='left', fontsize=10, color='#333')
-axes[0].set_ylabel('PopQA retention (%)'); axes[0].legend(frameon=False, fontsize=9, loc='lower right')
+    ax.set_xticks(x); ax.set_xticklabels(groups); ax.set_xlabel('baseline answer-margin tercile'); ax.set_ylim(80, 102); ax.grid(axis='y', color='#e6e6e6'); ax.set_title(label, loc='left', fontsize=10, color='#333')
+axes[0].set_ylabel('PopQA retention (%)\nafter removing the weakest 75% of Q1 events'); axes[0].legend(frameon=False, fontsize=9, loc='lower right')
 save(fig, 'rarity_vs_margin.png')
