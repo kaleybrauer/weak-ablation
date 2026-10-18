@@ -34,7 +34,8 @@ if __name__ == '__main__':
             down_desc[(l, n)] = describe(ctxs[f'{l}:{n}']['top'], 'positive')
     sample = [s for s in sample if (s['layer'], s['neuron']) in down_desc]
     # describe drivers (relevant pole = sign of the driver's activation at the event); cache
-    dpath = os.path.join(rd, 'driver_descriptions.json')  # shared cache across suffixes; ddesc = json.load(open(dpath)) if os.path.exists(dpath) else {}
+    dpath = os.path.join(rd, 'driver_descriptions.json')  # shared cache across suffixes
+    ddesc = json.load(open(dpath)) if os.path.exists(dpath) else {}; ddesc = json.load(open(dpath)) if os.path.exists(dpath) else {}
     need = sorted({(d['layer'], d['neuron'], 'pos' if d['a'] > 0 else 'neg') for s in sample for d in s['drivers']})
     todo = [x for x in need if f'{x[0]}:{x[1]}:{x[2]}' not in ddesc]
     print('drivers to describe', len(todo), flush=True)
