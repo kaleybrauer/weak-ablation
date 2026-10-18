@@ -10,23 +10,29 @@ from run_grid import ROOT
 PRE, POST, TOPK = 48, 4, 20
 
 ap = argparse.ArgumentParser(); ap.add_argument('--model', required=True); ap.add_argument('--tag', required=True)
-ap.add_argument('--n_down', type=int, default=30); ap.add_argument('--per_band', type=int, default=10); ap.add_argument('--tokens', type=int, default=4_000_000); a = ap.parse_args()
+ap.add_argument('--n_down', type=int, default=30); ap.add_argument('--per_band', type=int, default=10); ap.add_argument('--tokens', type=int, default=4_000_000)
+ap.add_argument('--suffix', default=''); a = ap.parse_args()
 rd = os.path.join(ROOT, 'results', a.tag)
-ev = json.load(open(os.path.join(rd, 'upstream_events_null.json')))
-rng = random.Random(0)
-downs = sorted({(r['layer'], r['neuron'], r['wasserstein']) for r in ev})
-rnd = [d for d in downs if not d[2]]; was = [d for d in downs if d[2]]; rng.shuffle(rnd); rng.shuffle(was)
-pick = rnd[: a.n_down // 2] + was[: a.n_down - a.n_down // 2]
-sample = []
-for (l, n, w) in pick:
-    for band in ['b50_80', 'b80_95', 'strong']:
-        rs = [r for r in ev if r['layer'] == l and r['neuron'] == n and r['band'] == band and r['g'] > 0 and len(r['top']) >= 3]
-        rng.shuffle(rs)
-        for r in rs[: a.per_band]:
-            sample.append(dict(layer=l, neuron=n, wasserstein=w, band=band, g=r['g'], text=r['text'], act=r['act'],
-                               drivers=[dict(layer=t['layer'], neuron=t['neuron'], a=t['a'], contrib=t['contrib'], own_pct=t['own_pct'], quad=t['quad']) for t in r['top'][:3]]))
-json.dump(sample, open(os.path.join(rd, 'driver_sample.json'), 'w'))
-drivers = sorted({(d['layer'], d['neuron']) for s in sample for d in s['drivers']} | {(l, n) for (l, n, w) in pick})  # drivers plus the downstream neurons themselves
+if a.suffix:
+    # sample already built by upstream_full.py; just collect contexts for its drivers and downstream neurons
+    sample = json.load(open(os.path.join(rd, f'driver_sample{a.suffix}.json')))
+    pick = sorted({(s['layer'], s['neuron'], s['wasserstein']) for s in sample})
+else:
+    ev = json.load(open(os.path.join(rd, 'upstream_events_null.json')))
+    rng = random.Random(0)
+    downs = sorted({(r['layer'], r['neuron'], r['wasserstein']) for r in ev})
+    rnd = [d for d in downs if not d[2]]; was = [d for d in downs if d[2]]; rng.shuffle(rnd); rng.shuffle(was)
+    pick = rnd[: a.n_down // 2] + was[: a.n_down - a.n_down // 2]
+    sample = []
+    for (l, n, w) in pick:
+        for band in ['b50_80', 'b80_95', 'strong']:
+            rs = [r for r in ev if r['layer'] == l and r['neuron'] == n and r['band'] == band and r['g'] > 0 and len(r['top']) >= 3]
+            rng.shuffle(rs)
+            for r in rs[: a.per_band]:
+                sample.append(dict(layer=l, neuron=n, wasserstein=w, band=band, g=r['g'], text=r['text'], act=r['act'],
+                                   drivers=[dict(layer=t['layer'], neuron=t['neuron'], a=t['a'], contrib=t['contrib'], own_pct=t['own_pct'], quad=t['quad']) for t in r['top'][:3]]))
+    json.dump(sample, open(os.path.join(rd, 'driver_sample.json'), 'w'))
+drivers = sorted({(d['layer'], d['neuron']) for s in sample for d in (s['drivers'] if 'drivers' in s else s['top'])} | {(l, n) for (l, n, w) in pick})  # drivers plus the downstream neurons themselves
 print('events', len(sample), 'unique drivers', len(drivers), flush=True)
 model, tok = load_model(a.model); layers = get_layers(model); L = len(layers); N = layers[0].mlp.gate_proj.out_features
 by_layer = {}
@@ -57,4 +63,4 @@ with torch.no_grad():
 def txt(x):
     ids, tp = x['ids'], x['tpos']; return dict(before=tok.decode(ids[:tp]), token=tok.decode(ids[tp:tp + 1]), after=tok.decode(ids[tp + 1:]), act=x['act'])
 out = {f'{l}:{n}': dict(layer=l, neuron=n, top=[txt(x) for x in store[i]['top']], top_neg=[txt(x) for x in store[i]['top_neg']]) for i, (l, n) in enumerate(drivers)}
-json.dump(out, open(os.path.join(rd, 'driver_contexts.json'), 'w')); print('saved', len(out), flush=True)
+json.dump(out, open(os.path.join(rd, f'driver_contexts{a.suffix}.json'), 'w')); print('saved', len(out), flush=True)
