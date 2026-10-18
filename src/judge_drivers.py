@@ -26,6 +26,11 @@ if __name__ == '__main__':
     rd = os.path.join(ROOT, 'results', a.tag)
     sample = json.load(open(os.path.join(rd, 'driver_sample.json'))); ctxs = json.load(open(os.path.join(rd, 'driver_contexts.json')))
     down_desc = {(r['layer'], r['neuron']): r['desc_pos'] for r in json.load(open(os.path.join(rd, 'semantic_judgments.json'))) if 'desc_pos' in r}
+    # downstream neurons without an existing description: describe their positive pole from the collected contexts
+    for (l, n) in {(s['layer'], s['neuron']) for s in sample}:
+        if (l, n) not in down_desc and f'{l}:{n}' in ctxs and len(ctxs[f'{l}:{n}']['top']) >= 5:
+            down_desc[(l, n)] = describe(ctxs[f'{l}:{n}']['top'], 'positive')
+    sample = [s for s in sample if (s['layer'], s['neuron']) in down_desc]
     # describe drivers (relevant pole = sign of the driver's activation at the event); cache
     dpath = os.path.join(rd, 'driver_descriptions.json'); ddesc = json.load(open(dpath)) if os.path.exists(dpath) else {}
     need = sorted({(d['layer'], d['neuron'], 'pos' if d['a'] > 0 else 'neg') for s in sample for d in s['drivers']})

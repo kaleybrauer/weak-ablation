@@ -12,6 +12,7 @@ ap.add_argument('--n_items', type=int, default=1500); ap.add_argument('--k', typ
 rd = os.path.join(ROOT, 'results', a.tag)
 model, tok = load_model(a.model); tok.padding_side = 'left'; layers = get_layers(model); L = len(layers); N = layers[0].mlp.gate_proj.out_features
 for p in model.parameters(): p.requires_grad_(False)
+model.model.embed_tokens.register_forward_hook(lambda mod, inp, out: out.requires_grad_(True))  # make activations differentiable
 popqa = {it['id']: it for it in json.load(open(os.path.join(ROOT, 'data', a.tag, 'popqa.json')))}
 ok = [r['id'] for r in json.load(open(os.path.join(rd, 'baseline_popqa_recs.json'))) if r['correct']]
 rng = random.Random(0); rng.shuffle(ok); items = [popqa[i] for i in ok[: a.n_items]]

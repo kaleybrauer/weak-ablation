@@ -13,9 +13,8 @@ ap = argparse.ArgumentParser(); ap.add_argument('--model', required=True); ap.ad
 ap.add_argument('--n_down', type=int, default=30); ap.add_argument('--per_band', type=int, default=10); ap.add_argument('--tokens', type=int, default=4_000_000); a = ap.parse_args()
 rd = os.path.join(ROOT, 'results', a.tag)
 ev = json.load(open(os.path.join(rd, 'upstream_events_null.json')))
-judged = {(r['layer'], r['neuron']): r for r in json.load(open(os.path.join(rd, 'semantic_judgments.json'))) if 'desc_pos' in r}
 rng = random.Random(0)
-downs = sorted({(r['layer'], r['neuron'], r['wasserstein']) for r in ev if (r['layer'], r['neuron']) in judged})
+downs = sorted({(r['layer'], r['neuron'], r['wasserstein']) for r in ev})
 rnd = [d for d in downs if not d[2]]; was = [d for d in downs if d[2]]; rng.shuffle(rnd); rng.shuffle(was)
 pick = rnd[: a.n_down // 2] + was[: a.n_down - a.n_down // 2]
 sample = []
@@ -27,7 +26,7 @@ for (l, n, w) in pick:
             sample.append(dict(layer=l, neuron=n, wasserstein=w, band=band, g=r['g'], text=r['text'], act=r['act'],
                                drivers=[dict(layer=t['layer'], neuron=t['neuron'], a=t['a'], contrib=t['contrib'], own_pct=t['own_pct'], quad=t['quad']) for t in r['top'][:3]]))
 json.dump(sample, open(os.path.join(rd, 'driver_sample.json'), 'w'))
-drivers = sorted({(d['layer'], d['neuron']) for s in sample for d in s['drivers']})
+drivers = sorted({(d['layer'], d['neuron']) for s in sample for d in s['drivers']} | {(l, n) for (l, n, w) in pick})  # drivers plus the downstream neurons themselves
 print('events', len(sample), 'unique drivers', len(drivers), flush=True)
 model, tok = load_model(a.model); layers = get_layers(model); L = len(layers); N = layers[0].mlp.gate_proj.out_features
 by_layer = {}
