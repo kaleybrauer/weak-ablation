@@ -36,12 +36,12 @@ for which in ['surface', 'traced']:
             surf = [s['band0']['related'], s['band1']['related'], s['band2']['related'], s['band3']['related'], s['top']['related']]
             ax.plot(range(5), surf, '-o', color=ACC, lw=2, ms=6, label="the firing's context, scored against the neuron's description")
             ax.axhline(s['random']['related'], ls=':', color=GREY, lw=1.5, label='floor: random text scored the same way')
-            ax.set_xticks(range(5)); ax.set_xticklabels(bands); ax.set_xlabel("percentile band of the neuron's positive-pole firings  (top 20 = the contexts the description was written from)")
+            ax.set_xticks(range(5)); ax.set_xticklabels(['50-80', '80-95', '95-99', '>99.9', 'top 20\n(source of the\ndescription)']); ax.set_xlabel("percentile band of the neuron's positive-pole firings")
         else:
             tx = [0, 1, 2]
             ax.plot(tx, [d['b50_80_real']['related'], d['b80_95_real']['related'], d['strong_real']['related']], '-o', color=ACC, lw=2, ms=6, label="top-3 upstream drivers' descriptions vs the neuron's description")
             ax.plot(tx, [d['b50_80_null']['related'], d['b80_95_null']['related'], d['strong_null']['related']], '--o', color=GREY, lw=1.5, ms=5, label="null: same drivers vs a random other neuron's description")
-            ax.set_xticks(tx); ax.set_xticklabels(['50-80', '80-95', '>99.9']); ax.set_xlabel("percentile band of the downstream neuron's positive-pole firing")
+            ax.set_xticks(tx); ax.set_xticklabels(['50-80', '80-95', '>99.9']); ax.set_xlabel("percentile band of the downstream firing")
         ax.set_ylim(0, 1); ax.set_yticks([0, .25, .5, .75, 1]); ax.set_yticklabels(['0', '25%', '50%', '75%', '100%']); ax.set_title(label, loc='left', fontsize=10, color='#333'); ax.grid(axis='y', color='#e6e6e6')
     axes[0].set_ylabel('fraction judged related'); axes[0].legend(frameon=False, fontsize=8.5, loc='upper left')
     save(fig, f'relatedness_{which}.png')
