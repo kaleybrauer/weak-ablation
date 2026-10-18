@@ -30,6 +30,7 @@ class TopK(Intervention):
             ar = torch.arange(N, device=a.device)
             pctv = self.cum[l][ar[None, None, :], quad, bi].float()   # own-percentile of each event within its quadrant
             idx = pctv.topk(self.k, dim=-1).indices
+            keep = torch.zeros(B, T, N, dtype=torch.bool, device=a.device).scatter_(-1, idx, True)
         else:
             idx = a32.abs().topk(self.k, dim=-1).indices
             keep = torch.zeros(B, T, N, dtype=torch.bool, device=a.device).scatter_(-1, idx, True)
