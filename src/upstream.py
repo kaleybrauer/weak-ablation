@@ -17,7 +17,7 @@ PER_BAND = 24; PER_BATCH_CAP = 2; PRE = 40; POST = 3
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--model', required=True); ap.add_argument('--tag', required=True)
     ap.add_argument('--n_neurons', type=int, default=120); ap.add_argument('--tokens', type=int, default=3_000_000)
-    ap.add_argument('--batch', type=int, default=4); a = ap.parse_args()
+    ap.add_argument('--batch', type=int, default=4); ap.add_argument('--suffix', default=''); a = ap.parse_args()
     rd = os.path.join(ROOT, 'results', a.tag)
     model, tok = load_model(a.model); layers = get_layers(model); L = len(layers); N = layers[0].mlp.gate_proj.out_features
     D = layers[0].mlp.gate_proj.in_features
@@ -83,10 +83,10 @@ def main():
             if nb % 50 == 0:
                 done = sum(min(PER_BAND, c) for v in counts.values() for c in v.values())
                 print(f'{ntok/1e6:.2f}M tokens, {len(records)} events ({done}/{len(sel)*len(BANDS)*PER_BAND}), {time.time()-t0:.0f}s', flush=True)
-                json.dump(records, open(os.path.join(rd, 'upstream_events.json'), 'w'))
+                json.dump(records, open(os.path.join(rd, f'upstream_events{a.suffix}.json'), 'w'))
             if all(counts[si][b] >= PER_BAND for si in counts for b in BANDS): break
-    json.dump(records, open(os.path.join(rd, 'upstream_events.json'), 'w'))
-    summ = summarize(records); json.dump(summ, open(os.path.join(rd, 'upstream_summary.json'), 'w'), indent=1)
+    json.dump(records, open(os.path.join(rd, f'upstream_events{a.suffix}.json'), 'w'))
+    summ = summarize(records); json.dump(summ, open(os.path.join(rd, f'upstream_summary{a.suffix}.json'), 'w'), indent=1)
     print(json.dumps(summ, indent=1), flush=True)
 
 
@@ -120,11 +120,20 @@ def decompose(l, n, b, t, cap, Wg, Wd, gam, eps, L, N, pct, batch, tok):
     for val, idx in zip(topvals[:10].tolist(), topidx[:10].tolist()):
         lp, m = divmod(idx, N); am = float(cap[('a', lp)][b, t, m]); quad = int(cap[('quad', lp)][b, t, m])
         top.append(dict(layer=lp, neuron=m, contrib=val, share=val / pos_total if pos_total > 0 else None, a=am, quad=quad, own_pct=pct(lp, m, quad, am)))
+    # null: the same decomposition for a random unit direction scaled like v (selection-by-magnitude baseline)
+    gen = torch.Generator(device=x.device); gen.manual_seed(int(l * 100003 + n * 7 + t))
+    vn = torch.randn(x.shape[0], device=x.device, generator=gen); vn = vn / vn.norm() * v.norm()
+    gn = float(vn @ x); nv = torch.cat([(vn @ Wd[lp].float()) * cap[('a', lp)][b, t].float() for lp in range(l)]) if l > 0 else torch.zeros(0, device=x.device)
+    ns = torch.sort(nv, descending=True); null_top = []
+    for val, idx in zip(ns.values[:3].tolist(), ns.indices[:3].tolist()):
+        lp, m = divmod(idx, N); am = float(cap[('a', lp)][b, t, m]); quad = int(cap[('quad', lp)][b, t, m])
+        null_top.append(dict(own_pct=pct(lp, m, quad, am), quad=quad, contrib=val))
+    null_pos = nv[nv > 0]; null_top5_share = float(ns.values[:5].clamp_min(0).sum() / null_pos.sum()) if null_pos.numel() else None
     ids = batch[b, max(0, t - PRE):t + 1 + POST].tolist(); tp = t - max(0, t - PRE)
     return dict(g=g, sum_check=total, rel_err=abs(total - g) / max(abs(g), 1e-6), emb=emb, attn_total=attn_tot,
                 neuron_pos_total=float(posn.sum()), pos_total=pos_total, top1=share(1), top5=share(5), top20=share(20), participation=pr,
                 n_pos_neurons=int((allc > 0).sum()), attn_share=pos_attn / pos_total if pos_total > 0 else None,
-                top=top, text=dict(before=tok.decode(ids[:tp]), token=tok.decode(ids[tp:tp + 1]), after=tok.decode(ids[tp + 1:])))
+                top=top, null_g=gn, null_top=null_top, null_top5_share=null_top5_share, text=dict(before=tok.decode(ids[:tp]), token=tok.decode(ids[tp:tp + 1]), after=tok.decode(ids[tp + 1:])))
 
 
 def summarize(records):
@@ -135,7 +144,8 @@ def summarize(records):
         if not rs: continue
         def med(key): return S.median([r[key] for r in rs if r[key] is not None])
         drv = [t for r in rs for t in r['top'][:3]]
-        out[band] = dict(n=len(rs), median_top1=med('top1'), median_top5=med('top5'), median_top20=med('top20'), median_participation=med('participation'),
+        nd = [t for r in rs for t in r.get('null_top', [])]
+        out[band] = dict(n=len(rs), null_top3_driver_median_own_pct=(S.median(t['own_pct'] for t in nd) if nd else None), null_top3_frac_above_99=(S.mean(t['own_pct'] >= 0.99 for t in nd) if nd else None), median_top1=med('top1'), median_top5=med('top5'), median_top20=med('top20'), median_participation=med('participation'),
                          median_attn_share=med('attn_share'), mean_rel_err=S.mean(r['rel_err'] for r in rs),
                          top3_driver_median_own_pct=S.median(t['own_pct'] for t in drv), top3_driver_frac_above_99=S.mean(t['own_pct'] >= 0.99 for t in drv),
                          top3_driver_frac_above_999=S.mean(t['own_pct'] >= 0.999 for t in drv), top3_driver_frac_below_95=S.mean(t['own_pct'] < 0.95 for t in drv),

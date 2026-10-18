@@ -15,6 +15,7 @@ KS = [4, 16, 64, 256, 1024, 4096]
 class TopK(Intervention):
     def __init__(self, L, N, device):
         super().__init__(L, N, device); self.k = None; self.pos_mask = None; self.rand_keep = None; self.rep_full = None; self.layers_on = torch.ones(L, dtype=torch.bool, device=device)
+        self.cum = None; self.by_pct = False  # cum: [L,N,4,B] cumulative fraction for own-percentile ranking
     def apply(self, l, g, u, a):
         if not self.active or self.pos_mask is None: return a
         B, T, N = a.shape
@@ -22,6 +23,13 @@ class TopK(Intervention):
         a32 = a.float(); quad = 2 * (g < 0).long() + (u < 0).long()
         if self.rand_keep is not None:
             keep = self.rand_keep[l][None, None, :].expand(B, T, N)
+        elif self.by_pct:
+            from common import HIST_LO, HIST_HI, HIST_BINS
+            w = (HIST_HI - HIST_LO) / HIST_BINS
+            bi = ((torch.log10(a32.abs().clamp_min(1e-30)) - HIST_LO) / w).floor().long().clamp_(0, HIST_BINS - 1)
+            ar = torch.arange(N, device=a.device)
+            pctv = self.cum[l][ar[None, None, :], quad, bi].float()   # own-percentile of each event within its quadrant
+            idx = pctv.topk(self.k, dim=-1).indices
         else:
             idx = a32.abs().topk(self.k, dim=-1).indices
             keep = torch.zeros(B, T, N, dtype=torch.bool, device=a.device).scatter_(-1, idx, True)
@@ -76,6 +84,7 @@ def main():
     model, tok = load_model(a.model); layers = get_layers(model); L = len(layers); N = layers[0].mlp.gate_proj.out_features
     interv = TopK(L, N, 'cuda'); patch_mlps(model, interv)
     thr, rb, ra = thresholds_from_stats(os.path.join(rd, 'stats.pt'), [100])[0][100]; interv.rep_full = rb  # full-quadrant means
+    st = torch.load(os.path.join(rd, 'stats.pt')); cnt = st['count'].double(); interv.cum = (cnt.cumsum(-1) / cnt.sum(-1, keepdim=True).clamp_min(1)).half().cuda(); del st, cnt
     popqa = {it['id']: it for it in json.load(open(os.path.join(ROOT, 'data', a.tag, 'popqa.json')))}
     ok_ids = [r['id'] for r in json.load(open(os.path.join(rd, 'baseline_popqa_recs.json'))) if r['correct']]
     items = [popqa[i] for i in ok_ids]
@@ -88,7 +97,7 @@ def main():
         for k in KS:
             name = f'{mode}_k{k}'
             if name in out: continue
-            interv.rand_keep = None
+            interv.rand_keep = None; interv.by_pct = (mode == 'topk_subject_pct')
             if mode == 'randk_subject':
                 g = torch.Generator().manual_seed(k); interv.rand_keep = torch.zeros(L, N, dtype=torch.bool, device='cuda')
                 for l in range(L): interv.rand_keep[l, torch.randperm(N, generator=g)[:k].cuda()] = True
