@@ -18,7 +18,7 @@ for ax, (tag, label) in zip(axes, TAGS):
     s = rd(tag, 'semantic_summary.json')['all']; d = rd(tag, 'driver_summary_full.json')
     surf = [s['band0']['related'], s['band1']['related'], s['band2']['related'], s['band3']['related'], s['top']['related']]
     ax.plot(range(5), surf, '-o', color=ACC, lw=2, ms=5, label='surface: context vs label')
-    tx = [0, 1, 3]; ax.plot(tx, [d['b50_80_real_weighted']['contrib_weighted_related'], d['b80_95_real_weighted']['contrib_weighted_related'], d['strong_real_weighted']['contrib_weighted_related']], '-o', color=GREY, lw=2.5, ms=5, label='traced: top-10 upstream drivers vs label, contribution-weighted')
+    tx = [0, 1, 3]; ax.plot(tx, [d['b50_80_real_weighted']['contrib_weighted_related'], d['b80_95_real_weighted']['contrib_weighted_related'], d['strong_real_weighted']['contrib_weighted_related']], '-o', color=GREY, lw=2.5, ms=5, label='traced: top-10 drivers vs label, weighted')
     ax.plot(tx, [d['b50_80_null_weighted']['contrib_weighted_related'], d['b80_95_null_weighted']['contrib_weighted_related'], d['strong_null_weighted']['contrib_weighted_related']], '--o', color=GREY, lw=1.5, ms=4, label='null: drivers vs shuffled label')
     ax.axhline(s['random']['related'], ls=':', color=GREY2, lw=1.5, label='floor: random text')
     ax.set_xticks(range(5)); ax.set_xticklabels(bands); ax.set_ylim(0, 1); ax.set_yticks([0, .25, .5, .75, 1]); ax.set_yticklabels(['0', '25%', '50%', '75%', '100%'])
@@ -39,9 +39,9 @@ for which in ['surface', 'traced']:
             ax.set_xticks(range(5)); ax.set_xticklabels(['50-80', '80-95', '95-99', '>99.9', 'top 20\n(source of the\ndescription)']); ax.set_xlabel("percentile band of the neuron's positive-pole firings")
         else:
             tx = [0, 1, 2]; B = ['b50_80', 'b80_95', 'strong']
-            ax.plot(tx, [d[f'{b}_real_weighted']['contrib_weighted_related'] for b in B], '-o', color=ACC, lw=2, ms=6, label="top-10 upstream drivers (direct + via attention), weighted by contribution")
-            ax.plot(tx, [d[f'{b}_real']['related'] for b in B], '-o', color=ACC, lw=1.2, ms=4, alpha=0.5, label='same, unweighted per-driver rate')
-            ax.plot(tx, [d[f'{b}_null_weighted']['contrib_weighted_related'] for b in B], '--o', color=GREY, lw=1.5, ms=5, label="null: same drivers vs a random other neuron's description")
+            ax.plot(tx, [d[f'{b}_real_weighted']['contrib_weighted_related'] for b in B], '-o', color=ACC, lw=2, ms=6, label='top-10 upstream drivers, contribution-weighted')
+            ax.plot(tx, [d[f'{b}_real']['related'] for b in B], '-o', color=ACC, lw=1.2, ms=4, alpha=0.5, label='same drivers, unweighted')
+            ax.plot(tx, [d[f'{b}_null_weighted']['contrib_weighted_related'] for b in B], '--o', color=GREY, lw=1.5, ms=5, label='null: drivers vs a random other neuron')
             ax.set_xticks(tx); ax.set_xticklabels(['50-80', '80-95', '>99.9']); ax.set_xlabel("percentile band of the downstream firing")
         ax.set_ylim(0, 1); ax.set_yticks([0, .25, .5, .75, 1]); ax.set_yticklabels(['0', '25%', '50%', '75%', '100%']); ax.set_title(label, loc='left', fontsize=10, color='#333'); ax.grid(axis='y', color='#e6e6e6')
     axes[0].set_ylabel('fraction judged related'); axes[0].legend(frameon=False, fontsize=8.5, loc='upper left')
