@@ -22,7 +22,7 @@ for ax, (tag, label) in zip(axes, TAGS):
     ax.plot(tx, [d['b50_80_null_weighted']['contrib_weighted_related'], d['b80_95_null_weighted']['contrib_weighted_related'], d['strong_null_weighted']['contrib_weighted_related']], '--o', color=GREY, lw=1.5, ms=4, label='null: drivers vs shuffled label')
     ax.axhline(s['random']['related'], ls=':', color=GREY2, lw=1.5, label='floor: random text')
     ax.set_xticks(range(5)); ax.set_xticklabels(bands); ax.set_ylim(0, 1); ax.set_yticks([0, .25, .5, .75, 1]); ax.set_yticklabels(['0', '25%', '50%', '75%', '100%'])
-    ax.set_xlabel("percentile band of the neuron's positive-pole firings"); ax.set_title(label, loc='left', fontsize=10, color='#333'); ax.grid(axis='y', color='#e6e6e6')
+    ax.set_xlabel("percentile band of the neuron's (gate +, in +) firings"); ax.set_title(label, loc='left', fontsize=10, color='#333'); ax.grid(axis='y', color='#e6e6e6')
 axes[0].set_ylabel('fraction judged related to the label'); axes[0].legend(frameon=False, fontsize=8.5, loc='upper left')
 save(fig, 'relatedness_by_band.png')
 
@@ -36,7 +36,7 @@ for which in ['surface', 'traced']:
             surf = [s['band0']['related'], s['band1']['related'], s['band2']['related'], s['band3']['related'], s['top']['related']]
             ax.plot(range(5), surf, '-o', color=ACC, lw=2, ms=6, label="the firing's context, scored against the neuron's description")
             ax.axhline(s['random']['related'], ls=':', color=GREY, lw=1.5, label='floor: random text scored the same way')
-            ax.set_xticks(range(5)); ax.set_xticklabels(['50-80', '80-95', '95-99', '>99.9', 'top 20\n(source of the\ndescription)']); ax.set_xlabel("percentile band of the neuron's positive-pole firings")
+            ax.set_xticks(range(5)); ax.set_xticklabels(['50-80', '80-95', '95-99', '>99.9', 'top 20\n(source of the\ndescription)']); ax.set_xlabel("percentile band of the neuron's (gate +, in +) firings")
         else:
             tx = [0, 1, 2]; B = ['b50_80', 'b80_95', 'strong']
             ax.plot(tx, [d[f'{b}_real_weighted']['contrib_weighted_related'] for b in B], '-o', color=ACC, lw=2, ms=6, label='top-10 upstream drivers, contribution-weighted')
@@ -51,27 +51,27 @@ for which in ['surface', 'traced']:
 fig, axes = plt.subplots(1, 2, figsize=(10, 3.8))
 rows = {r['name']: r for r in rd('llama31_8b', 'summary_rows.json')}
 qs = [50, 75, 80, 90, 95, 99]
-for q_, c, lab in [('pp', ACC, 'Q1 (gate+, up+)'), ('nn', GREY, 'Q3 (gate-, up-)'), ('np', GREY2, 'Q4 (gate-, up+)')]:
+for q_, c, lab in [('pp', ACC, 'gate +, in +'), ('nn', GREY, 'gate −, in −'), ('np', GREY2, 'gate −, in +')]:
     axes[0].plot(range(6), [rows[f's1_q{q}_{q_}']['dloss_pct'] for q in qs], '-o', color=c, lw=2, ms=5, label=lab)
-axes[0].set_xticks(range(6)); axes[0].set_xticklabels(qs); axes[0].set_xlabel("weakest q% of the quadrant's events removed (per neuron)"); axes[0].set_ylabel('held-out loss increase (%)'); axes[0].legend(frameon=False, fontsize=9); axes[0].grid(axis='y', color='#e6e6e6'); axes[0].set_title('Llama-3.1-8B, all layers, mean replacement', loc='left', fontsize=10, color='#333')
+axes[0].set_xticks(range(6)); axes[0].set_xticklabels(qs); axes[0].set_xlabel("weakest q% of the sign regime's events flattened to their mean (per neuron)"); axes[0].set_ylabel('held-out loss increase (%)'); axes[0].legend(frameon=False, fontsize=9); axes[0].grid(axis='y', color='#e6e6e6'); axes[0].set_title('Llama-3.1-8B, all layers, mean replacement', loc='left', fontsize=10, color='#333')
 base_mmlu = rd('llama31_8b', 'grid/baseline.json')['metrics']['mmlu']['acc']
 for key, c, lab in [('mem_tokmatch', ACC, 'verbatim token match'), ('popqa', GREY, 'PopQA recall'), ('mmlu', GREY2, 'MMLU')]:
     vals = [(rows[f's1_q{q}_pp'][key] / base_mmlu if key == 'mmlu' else rows[f's1_q{q}_pp'][key]) for q in qs]
     axes[1].plot(range(6), vals, '-o', color=c, lw=2, ms=5, label=lab)
 axes[1].axhline(1, ls='--', color=GREY2, lw=1); axes[1].set_xticks(range(6)); axes[1].set_xticklabels(qs); axes[1].set_ylim(0, 1.05); axes[1].set_yticks([0, .25, .5, .75, 1]); axes[1].set_yticklabels(['0', '25%', '50%', '75%', '100%'])
-axes[1].set_xlabel('weakest q% of Q1 events removed (per neuron)'); axes[1].set_ylabel('retention vs unablated model'); axes[1].legend(frameon=False, fontsize=9, loc='lower left'); axes[1].grid(axis='y', color='#e6e6e6'); axes[1].set_title('Llama-3.1-8B, Q1 only', loc='left', fontsize=10, color='#333')
+axes[1].set_xlabel('weakest q% of (gate +, in +) events flattened (per neuron)'); axes[1].set_ylabel('retention vs unablated model'); axes[1].legend(frameon=False, fontsize=9, loc='lower left'); axes[1].grid(axis='y', color='#e6e6e6'); axes[1].set_title('Llama-3.1-8B, gate +, in + only', loc='left', fontsize=10, color='#333')
 save(fig, 'cost_curves.png')
 
 # 3. zero vs mean
 fig, axes = plt.subplots(1, 2, figsize=(10, 3.8), sharey=True)
 for ax, (tag, label) in zip(axes, TAGS):
     rows = {r['name']: r for r in rd(tag, 'summary_rows.json')}
-    quads = [('pp', 'Q1\ngate+, up+'), ('nn', 'Q3\ngate-, up-'), ('np', 'Q4\ngate-, up+')]
+    quads = [('pp', 'gate +, in +'), ('nn', 'gate −, in −'), ('np', 'gate −, in +')]
     x = np.arange(3); m = [rows[f's1_q75_{q}']['dloss_pct'] for q, _ in quads]; z = [rows[f's2_q75_{q}_zero_all']['dloss_pct'] for q, _ in quads]
     ax.bar(x - 0.2, m, 0.38, color=ACC, label='replaced by the band mean'); ax.bar(x + 0.2, z, 0.38, color=GREY2, label='zeroed')
     for xi, (a, b) in enumerate(zip(m, z)):
         ax.text(xi - 0.2, a + 0.6, f'+{a:.2f}%', ha='center', fontsize=8.5, color='#333'); ax.text(xi + 0.2, b + 0.6, f'+{b:.1f}%', ha='center', fontsize=8.5, color='#333')
-    ax.set_xticks(x); ax.set_xticklabels([f'{q}\nzero / mean = {round(b / a)}x' for (_, q), a, b in zip(quads, m, z)]); ax.set_xlabel('quadrant (weakest 75% of its events removed, all layers)'); ax.set_title(label, loc='left', fontsize=10, color='#333'); ax.grid(axis='y', color='#e6e6e6'); ax.set_ylim(0, 38)
+    ax.set_xticks(x); ax.set_xticklabels([f'{q}\nzero / mean = {round(b / a)}x' for (_, q), a, b in zip(quads, m, z)]); ax.set_xlabel('sign regime (weakest 75% of its events replaced, all layers)'); ax.set_title(label, loc='left', fontsize=10, color='#333'); ax.grid(axis='y', color='#e6e6e6'); ax.set_ylim(0, 38)
 axes[0].set_ylabel('held-out loss increase (%)'); axes[0].legend(frameon=False, fontsize=9)
 save(fig, 'zero_vs_mean.png')
 
@@ -86,5 +86,5 @@ for ax, (tag, label) in zip(axes, TAGS):
     ax.plot(x - 0.15, xr, 'o', color=ACC, ms=9, label='rarest third of facts'); ax.plot(x + 0.15, xc, 'o', color=GREY, ms=9, label='commonest third of facts')
     for xi, (a, b) in enumerate(zip(xr, xc)): ax.text(xi - 0.15, a + 1.2, f'{a:.0f}', ha='center', fontsize=8.5, color='#555'); ax.text(xi + 0.15, b + 1.2, f'{b:.0f}', ha='center', fontsize=8.5, color='#555')
     ax.set_xticks(x); ax.set_xticklabels(groups); ax.set_xlabel('baseline answer-margin tercile'); ax.set_ylim(80, 102); ax.grid(axis='y', color='#e6e6e6'); ax.set_title(label, loc='left', fontsize=10, color='#333')
-axes[0].set_ylabel('PopQA retention (%)\nafter removing the weakest 75% of Q1 events'); axes[0].legend(frameon=False, fontsize=9, loc='lower right')
+axes[0].set_ylabel('PopQA retention (%)\nafter flattening the weakest 75% of (gate +, in +) events'); axes[0].legend(frameon=False, fontsize=9, loc='lower right')
 save(fig, 'rarity_vs_margin.png')
