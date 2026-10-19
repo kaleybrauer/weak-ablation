@@ -51,8 +51,8 @@ for which in ['surface', 'traced']:
 fig, axes = plt.subplots(1, 2, figsize=(10, 3.8))
 rows = {r['name']: r for r in rd('llama31_8b', 'summary_rows.json')}
 qs = [50, 75, 80, 90, 95, 99]
-for q_, c, lab in [('pp', ACC, 'gate +, in +'), ('nn', GREY, 'gate −, in −'), ('np', GREY2, 'gate −, in +')]:
-    axes[0].plot(range(6), [rows[f's1_q{q}_{q_}']['dloss_pct'] for q in qs], '-o', color=c, lw=2, ms=5, label=lab)
+for q_, c, lab, ls in [('pp', ACC, 'gate +, in +', '-'), ('pn', ACC, 'gate +, in −', '--'), ('nn', GREY, 'gate −, in −', '-'), ('np', GREY2, 'gate −, in +', '--')]:
+    axes[0].plot(range(6), [rows[f's1_q{q}_{q_}']['dloss_pct'] for q in qs], ls, marker='o', color=c, lw=2, ms=5, label=lab)
 axes[0].set_xticks(range(6)); axes[0].set_xticklabels(qs); axes[0].set_xlabel("weakest q% of events flattened to their mean (per neuron)"); axes[0].set_ylabel('held-out loss increase (%)'); axes[0].legend(frameon=False, fontsize=9); axes[0].grid(axis='y', color='#e6e6e6'); axes[0].set_title('Llama-3.1-8B, all layers, mean replacement', loc='left', fontsize=10, color='#333')
 base_mmlu = rd('llama31_8b', 'grid/baseline.json')['metrics']['mmlu']['acc']
 for key, c, lab in [('mem_tokmatch', ACC, 'verbatim token match'), ('popqa', GREY, 'PopQA recall'), ('mmlu', GREY2, 'MMLU')]:
