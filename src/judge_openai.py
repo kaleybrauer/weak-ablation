@@ -42,7 +42,11 @@ def judge_pairs(items):
               "Score how semantically related the two descriptions are, as patterns that could plausibly feed one another at that token: "
               "3 = clearly related (same topic, a sub-case, or an obvious precursor), 2 = plausibly related, 1 = cannot tell, 0 = unrelated.\n"
               f"Return only a JSON array of {len(items)} integers in order.\n\n" + lines)
-    txt = call(prompt, 400); m = re.search(r'\[[\d,\s]*\]', txt)
+    try:
+        txt = call(prompt, 400)
+    except Exception as e:
+        print('judge call failed:', repr(e)[:120], flush=True); return [None] * len(items)
+    m = re.search(r'\[[\d,\s]*\]', txt)
     try: arr = json.loads(m.group(0)) if m else []
     except Exception: arr = []
     return arr if len(arr) == len(items) else [None] * len(items)
