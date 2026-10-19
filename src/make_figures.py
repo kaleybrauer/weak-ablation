@@ -88,3 +88,32 @@ for ax, (tag, label) in zip(axes, TAGS):
     ax.set_xticks(x); ax.set_xticklabels(groups); ax.set_xlabel('baseline answer-margin tercile'); ax.set_ylim(80, 102); ax.grid(axis='y', color='#e6e6e6'); ax.set_title(label, loc='left', fontsize=10, color='#333')
 axes[0].set_ylabel('PopQA retention (%)\nafter flattening the weakest 75% of (gate > 0, up > 0) events'); axes[0].legend(frameon=False, fontsize=9, loc='lower right')
 save(fig, 'rarity_vs_margin.png')
+
+# 7. full-depth tracing (GPT-5.5 judge): one-hop vs full-depth top-10, real vs null; plus sources at other positions
+fig, axes = plt.subplots(1, 2, figsize=(10, 3.8), sharey=True)
+B = ['b50_80', 'b80_95', 'strong']; tx = [0, 1, 2]
+for ax, (tag, label) in zip(axes, TAGS):
+    g = rd(tag, 'driver_summary_grad_openai.json'); f = rd(tag, 'driver_summary_full_openai.json')
+    ax.plot(tx, [g[f'{b}_real']['related'] for b in B], '-o', color=ACC, lw=2.5, ms=6, label='full-depth tracing (all attention paths), top-10 drivers')
+    ax.plot(tx, [f[f'{b}_real']['related'] for b in B], '-o', color=ACC, lw=1.2, ms=4, alpha=0.5, label='one-hop tracing, top-10 drivers')
+    ax.plot(tx, [g[f'{b}_real']['related_drivers_from_other_positions'] for b in B], ':s', color=GREY, lw=1.5, ms=5, label='full-depth: drivers acting from other positions only')
+    ax.plot(tx, [g[f'{b}_null']['related'] for b in B], '--o', color=GREY, lw=1.5, ms=5, label="null: same drivers vs a random other neuron")
+    ax.set_xticks(tx); ax.set_xticklabels(['50-80', '80-95', '>99.9']); ax.set_xlabel("percentile band of the downstream firing")
+    ax.set_ylim(0, 1); ax.set_yticks([0, .25, .5, .75, 1]); ax.set_yticklabels(['0', '25%', '50%', '75%', '100%']); ax.set_title(label, loc='left', fontsize=10, color='#333'); ax.grid(axis='y', color='#e6e6e6')
+axes[0].set_ylabel('fraction of drivers judged related'); axes[0].legend(frameon=False, fontsize=8, loc='upper left')
+save(fig, 'relatedness_fulldepth.png')
+
+# 8. forced-choice identification without context (chance 25%)
+fig, axes = plt.subplots(1, 2, figsize=(10, 3.8), sharey=True)
+for ax, (tag, label) in zip(axes, TAGS):
+    g = rd(tag, 'identify_grad_openai_nocontext.json')['summary']; f = rd(tag, 'identify_full_openai_nocontext.json')['summary']
+    x = np.arange(3)
+    ax.bar(x - 0.2, [f[b]['accuracy'] for b in B], 0.38, color=ACC, alpha=0.55, label='one-hop tracing')
+    ax.bar(x + 0.2, [g[b]['accuracy'] for b in B], 0.38, color=ACC, label='full-depth tracing')
+    for xi, b in enumerate(B):
+        ax.text(xi - 0.2, f[b]['accuracy'] + 0.015, f"{f[b]['accuracy']*100:.0f}", ha='center', fontsize=8.5, color='#555'); ax.text(xi + 0.2, g[b]['accuracy'] + 0.015, f"{g[b]['accuracy']*100:.0f}", ha='center', fontsize=8.5, color='#555')
+    ax.axhline(0.25, ls='--', color=GREY, lw=1.2, label='chance (1 of 4)')
+    ax.set_xticks(x); ax.set_xticklabels(['50-80', '80-95', '>99.9']); ax.set_xlabel('percentile band of the downstream firing'); ax.set_ylim(0, 1); ax.set_yticks([0, .25, .5, .75, 1]); ax.set_yticklabels(['0', '25%', '50%', '75%', '100%'])
+    ax.set_title(label, loc='left', fontsize=10, color='#333'); ax.grid(axis='y', color='#e6e6e6')
+axes[0].set_ylabel('real driver picked from 4 candidates\n(descriptions only, no text)'); axes[0].legend(frameon=False, fontsize=9, loc='upper left')
+save(fig, 'identification.png')
