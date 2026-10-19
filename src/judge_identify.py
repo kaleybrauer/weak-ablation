@@ -12,9 +12,10 @@ def ask(items):
     lines = []
     for i, it in enumerate(items):
         opts = '\n'.join(f"   {'ABCD'[j]}. \"{o}\"" for j, o in enumerate(it['options']))
-        lines.append(f"{i+1}. DOWNSTREAM: \"{it['down']}\"\n   CONTEXT: {snippet(it['ctx'])}\n{opts}")
-    prompt = ("For each item, a DOWNSTREAM neuron in a language model fires at the marked token «» in CONTEXT. Exactly one of the four candidate "
-              "descriptions (A-D) is of the upstream neuron that contributed most to that firing; the other three are drivers of unrelated firings. "
+        lines.append(f"{i+1}. DOWNSTREAM: \"{it['down']}\"\n{opts}")
+    prompt = ("For each item, a DOWNSTREAM neuron in a language model fired. Exactly one of the four candidate descriptions (A-D) is of the "
+              "upstream neuron that contributed most to that firing; the other three are drivers of unrelated firings. You are given only the "
+              "descriptions, not the text, so judge which upstream pattern would plausibly feed the downstream pattern. "
               f"Pick the real one. Return only a JSON array of {len(items)} letters in order, e.g. [\"B\",\"A\",...].\n\n" + '\n\n'.join(lines))
     txt = call(prompt, 300); m = re.search(r'\[[^\]]*\]', txt)
     arr = re.findall(r'[ABCD]', m.group(0)) if m else re.findall(r'\b[ABCD]\b', txt)
@@ -46,4 +47,4 @@ if __name__ == '__main__':
         if q: summ[band] = dict(n=len(q), accuracy=sum(it['pick'] == it['answer'] for it in q) / len(q), chance=0.25,
                                 random_neurons=(lambda z: sum(it['pick'] == it['answer'] for it in z) / len(z) if z else None)([it for it in q if not it['wasserstein']]),
                                 wasserstein=(lambda z: sum(it['pick'] == it['answer'] for it in z) / len(z) if z else None)([it for it in q if it['wasserstein']]))
-    json.dump(dict(summary=summ, items=items), open(os.path.join(rd, f'identify{a.suffix}_openai.json'), 'w')); print(json.dumps(summ, indent=1))
+    json.dump(dict(summary=summ, items=items), open(os.path.join(rd, f'identify{a.suffix}_openai_nocontext.json'), 'w')); print(json.dumps(summ, indent=1))
