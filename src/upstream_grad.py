@@ -31,12 +31,14 @@ def main():
     def pct(l, m, quad, val):
         b = int(min(HIST_BINS - 1, max(0, math.floor((math.log10(max(abs(val), 1e-30)) - HIST_LO) / w_)))); return float(cum[l, m, quad, b])
     cap = {}
-    model.model.embed_tokens.register_forward_hook(lambda mod, inp, out: (out.requires_grad_(True), out.retain_grad(), cap.__setitem__('emb', out))[-1])
+    def emb_hook(mod, inp, out):
+        out = out.requires_grad_(True); cap['emb'] = out; return out
+    model.model.embed_tokens.register_forward_hook(emb_hook)
     interv = Intervention(L, N, 'cuda'); patch_mlps(model, interv)
     gate_cap = {}
     class Cap:
         def record(self, l, g, u, a):
-            a.retain_grad(); cap[('a', l)] = a; cap[('quad', l)] = (2 * (g < 0).to(torch.int8) + (u < 0).to(torch.int8)); gate_cap[l] = g
+            cap[('a', l)] = a; cap[('quad', l)] = (2 * (g < 0).to(torch.int8) + (u < 0).to(torch.int8)); gate_cap[l] = g
     interv.stats = Cap()
     counts = {i: {b: 0 for b in BANDS} for i in range(len(downs))}; records = []; t0 = time.time(); nt = 0; nb = 0; nval = 0; val = []
     for batch in fineweb_token_stream(tok, 1024, 1, a.tokens, split='stats2'):
@@ -59,17 +61,17 @@ def main():
         for k, (si, l, n, t, bname, act) in enumerate(events):
             if counts[si][bname] >= a.per_band: continue
             g = gate_cap[l][0, t, n]
-            for lp in range(L):
-                if cap[('a', lp)].grad is not None: cap[('a', lp)].grad = None
-            if cap['emb'].grad is not None: cap['emb'].grad = None
+            tensors = [cap['emb']] + [cap[('a', lp)] for lp in range(l)]
             with torch.enable_grad():
-                g.backward(retain_graph=True)
+                grads = torch.autograd.grad(g, tensors, retain_graph=True, allow_unused=True)
             tot = torch.zeros(l * N, device='cuda'); direct = torch.zeros(l * N, device='cuda'); top_pos = torch.zeros(l * N, dtype=torch.long, device='cuda')
             for lp in range(l):
-                c = (cap[('a', lp)].detach().float() * cap[('a', lp)].grad.float())[0, :t + 1]   # [t+1, N]
+                gr = grads[lp + 1]
+                if gr is None: continue
+                c = (cap[('a', lp)].detach().float() * gr.float())[0, :t + 1]   # [t+1, N]
                 tot[lp * N:(lp + 1) * N] = c.sum(0); direct[lp * N:(lp + 1) * N] = c[t]; top_pos[lp * N:(lp + 1) * N] = c.argmax(0)
-            emb_c = float((cap['emb'].detach().float() * cap['emb'].grad.float())[0, :t + 1].sum())
-            gv = float(g); srt = torch.sort(tot, descending=True); top = []
+            emb_c = float((cap['emb'].detach().float() * grads[0].float())[0, :t + 1].sum()) if grads[0] is not None else 0.0
+            gv = float(g.detach()); srt = torch.sort(tot, descending=True); top = []
             for v_, idx in zip(srt.values[:a.topk].tolist(), srt.indices[:a.topk].tolist()):
                 lpp, m = divmod(idx, N); s_ = int(top_pos[idx]); am = float(cap[('a', lpp)][0, s_, m]); quad = int(cap[('quad', lpp)][0, s_, m])
                 top.append(dict(layer=lpp, neuron=m, contrib=v_, direct=float(direct[idx]), via_other_positions=v_ - float(direct[idx]), top_position=s_, a=am, quad=quad, own_pct=pct(lpp, m, quad, am), dist=t - s_))
