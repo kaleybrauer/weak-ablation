@@ -17,8 +17,7 @@ def ask(items):
               "descriptions (A-D) is of the upstream neuron that contributed most to that firing; the other three are drivers of unrelated firings. "
               f"Pick the real one. Return only a JSON array of {len(items)} letters in order, e.g. [\"B\",\"A\",...].\n\n" + '\n\n'.join(lines))
     txt = call(prompt, 300); m = re.search(r'\[[^\]]*\]', txt)
-    try: arr = json.loads(m.group(0)) if m else []
-    except Exception: arr = []
+    arr = re.findall(r'[ABCD]', m.group(0)) if m else re.findall(r'\b[ABCD]\b', txt)
     return arr if len(arr) == len(items) else [None] * len(items)
 
 

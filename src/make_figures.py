@@ -63,15 +63,15 @@ axes[1].set_xlabel('weakest q% of (gate > 0, up > 0) events flattened (per neuro
 save(fig, 'cost_curves.png')
 
 # 3. zero vs mean
-fig, axes = plt.subplots(1, 2, figsize=(10, 3.8), sharey=True)
+fig, axes = plt.subplots(1, 2, figsize=(12, 4.2), sharey=True)
 for ax, (tag, label) in zip(axes, TAGS):
     rows = {r['name']: r for r in rd(tag, 'summary_rows.json')}
-    quads = [('pp', 'gate > 0, up > 0'), ('pn', 'gate > 0, up < 0'), ('nn', 'gate < 0, up < 0'), ('np', 'gate < 0, up > 0')]
+    quads = [('pp', 'gate > 0\nup > 0'), ('pn', 'gate > 0\nup < 0'), ('nn', 'gate < 0\nup < 0'), ('np', 'gate < 0\nup > 0')]
     x = np.arange(4); m = [rows[f's1_q75_{q}']['dloss_pct'] for q, _ in quads]; z = [rows[f's2_q75_{q}_zero_all']['dloss_pct'] for q, _ in quads]
     ax.bar(x - 0.2, m, 0.38, color=ACC, label='replaced by the band mean'); ax.bar(x + 0.2, z, 0.38, color=GREY2, label='zeroed')
     for xi, (a, b) in enumerate(zip(m, z)):
-        ax.text(xi - 0.2, a + 0.6, f'+{a:.2f}%', ha='center', fontsize=8.5, color='#333'); ax.text(xi + 0.2, b + 0.6, f'+{b:.1f}%', ha='center', fontsize=8.5, color='#333')
-    ax.set_xticks(x); ax.set_xticklabels([f'{q}\nzero / mean = {round(b / a)}x' for (_, q), a, b in zip(quads, m, z)]); ax.set_xlabel('sign regime (weakest 75% of its events replaced, all layers)'); ax.set_title(label, loc='left', fontsize=10, color='#333'); ax.grid(axis='y', color='#e6e6e6'); ax.set_ylim(0, 38)
+        ax.text(xi - 0.2, a + 0.6, f'+{a:.2f}%', ha='center', fontsize=8, color='#333'); ax.text(xi + 0.2, b + 0.6, f'+{b:.1f}%', ha='center', fontsize=8, color='#333')
+    ax.set_xticks(x); ax.set_xticklabels([f'{q}\nzero/mean {round(b / a)}x' for (_, q), a, b in zip(quads, m, z)], fontsize=9); ax.set_xlabel('sign regime (weakest 75% of its events replaced, all layers)'); ax.set_title(label, loc='left', fontsize=10, color='#333'); ax.grid(axis='y', color='#e6e6e6'); ax.set_ylim(0, 38)
 axes[0].set_ylabel('held-out loss increase (%)'); axes[0].legend(frameon=False, fontsize=9, handlelength=3.5)
 save(fig, 'zero_vs_mean.png')
 
