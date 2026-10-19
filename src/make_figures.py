@@ -66,8 +66,8 @@ save(fig, 'cost_curves.png')
 fig, axes = plt.subplots(1, 2, figsize=(10, 3.8), sharey=True)
 for ax, (tag, label) in zip(axes, TAGS):
     rows = {r['name']: r for r in rd(tag, 'summary_rows.json')}
-    quads = [('pp', 'gate > 0, up > 0'), ('nn', 'gate < 0, up < 0'), ('np', 'gate < 0, up > 0')]
-    x = np.arange(3); m = [rows[f's1_q75_{q}']['dloss_pct'] for q, _ in quads]; z = [rows[f's2_q75_{q}_zero_all']['dloss_pct'] for q, _ in quads]
+    quads = [('pp', 'gate > 0, up > 0'), ('pn', 'gate > 0, up < 0'), ('nn', 'gate < 0, up < 0'), ('np', 'gate < 0, up > 0')]
+    x = np.arange(4); m = [rows[f's1_q75_{q}']['dloss_pct'] for q, _ in quads]; z = [rows[f's2_q75_{q}_zero_all']['dloss_pct'] for q, _ in quads]
     ax.bar(x - 0.2, m, 0.38, color=ACC, label='replaced by the band mean'); ax.bar(x + 0.2, z, 0.38, color=GREY2, label='zeroed')
     for xi, (a, b) in enumerate(zip(m, z)):
         ax.text(xi - 0.2, a + 0.6, f'+{a:.2f}%', ha='center', fontsize=8.5, color='#333'); ax.text(xi + 0.2, b + 0.6, f'+{b:.1f}%', ha='center', fontsize=8.5, color='#333')
