@@ -10,7 +10,13 @@ client = OpenAI(api_key=open('/workspace/keys/openai_api_key').read().strip(), m
 
 
 def call(prompt, max_tokens=800):
-    r = client.chat.completions.create(model=MODEL, messages=[{'role': 'user', 'content': prompt}], max_completion_tokens=max_tokens)
+    # gpt-5.5 is a reasoning model: the completion budget must cover reasoning tokens, so give it room and keep reasoning short
+    kw = dict(model=MODEL, messages=[{'role': 'user', 'content': prompt}], max_completion_tokens=max(4000, max_tokens * 5))
+    try:
+        r = client.chat.completions.create(reasoning_effort='low', **kw)
+    except Exception as e:
+        if 'reasoning_effort' in str(e): r = client.chat.completions.create(**kw)
+        else: raise
     return r.choices[0].message.content or ''
 
 
