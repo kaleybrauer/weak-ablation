@@ -53,7 +53,7 @@ rows = {r['name']: r for r in rd('llama31_8b', 'summary_rows.json')}
 qs = [50, 75, 80, 90, 95, 99]
 for q_, c, lab, ls in [('pp', ACC, 'gate +, in +', '-'), ('pn', ACC, 'gate +, in −', '--'), ('nn', GREY, 'gate −, in −', '-'), ('np', GREY2, 'gate −, in +', '--')]:
     axes[0].plot(range(6), [rows[f's1_q{q}_{q_}']['dloss_pct'] for q in qs], ls, marker='o', color=c, lw=2, ms=5, label=lab)
-axes[0].set_xticks(range(6)); axes[0].set_xticklabels(qs); axes[0].set_xlabel("weakest q% of events flattened to their mean (per neuron)"); axes[0].set_ylabel('held-out loss increase (%)'); axes[0].legend(frameon=False, fontsize=9); axes[0].grid(axis='y', color='#e6e6e6'); axes[0].set_title('Llama-3.1-8B, all layers, mean replacement', loc='left', fontsize=10, color='#333')
+axes[0].set_xticks(range(6)); axes[0].set_xticklabels(qs); axes[0].set_xlabel("weakest q% of events flattened to their mean (per neuron)"); axes[0].set_ylabel('held-out loss increase (%)'); axes[0].legend(frameon=False, fontsize=9, handlelength=3.5); axes[0].grid(axis='y', color='#e6e6e6'); axes[0].set_title('Llama-3.1-8B, all layers, mean replacement', loc='left', fontsize=10, color='#333')
 base_mmlu = rd('llama31_8b', 'grid/baseline.json')['metrics']['mmlu']['acc']
 for key, c, lab in [('mem_tokmatch', ACC, 'verbatim token match'), ('popqa', GREY, 'PopQA recall'), ('mmlu', GREY2, 'MMLU')]:
     vals = [(rows[f's1_q{q}_pp'][key] / base_mmlu if key == 'mmlu' else rows[f's1_q{q}_pp'][key]) for q in qs]
@@ -72,7 +72,7 @@ for ax, (tag, label) in zip(axes, TAGS):
     for xi, (a, b) in enumerate(zip(m, z)):
         ax.text(xi - 0.2, a + 0.6, f'+{a:.2f}%', ha='center', fontsize=8.5, color='#333'); ax.text(xi + 0.2, b + 0.6, f'+{b:.1f}%', ha='center', fontsize=8.5, color='#333')
     ax.set_xticks(x); ax.set_xticklabels([f'{q}\nzero / mean = {round(b / a)}x' for (_, q), a, b in zip(quads, m, z)]); ax.set_xlabel('sign regime (weakest 75% of its events replaced, all layers)'); ax.set_title(label, loc='left', fontsize=10, color='#333'); ax.grid(axis='y', color='#e6e6e6'); ax.set_ylim(0, 38)
-axes[0].set_ylabel('held-out loss increase (%)'); axes[0].legend(frameon=False, fontsize=9)
+axes[0].set_ylabel('held-out loss increase (%)'); axes[0].legend(frameon=False, fontsize=9, handlelength=3.5)
 save(fig, 'zero_vs_mean.png')
 
 # 4. rarity vs margin (weak-band ablation s1_q75_pp)
