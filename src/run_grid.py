@@ -19,9 +19,9 @@ def cfg_id(c):
     return c['name']
 
 
-def stage1_configs(L):
+def stage1_configs(L, qs=None):
     cs = [dict(name='baseline', none=True)]
-    for q in Q_LIST:
+    for q in (qs or Q_LIST):
         for qs in QUADSETS:
             cs.append(dict(name=f's1_q{q}_{qs}', q=q, quads=QUADSETS[qs], layers=list(range(L)), mode='mean'))
     return cs
@@ -59,8 +59,8 @@ def neuron_set_mask(name, tag, L, N, stats):
     if name == 'wasserstein':
         return torch.load(os.path.join(rd, 'stats_wasserstein.pt'))['mask']
     if name == 'majority_nn':
-        tot = stats['count'].sum(-1)  # [L,N,4]
-        frac_nn = tot[:, :, 3] / tot.sum(-1).clamp_min(1)
+        tot = torch.stack([stats['count'][l].sum(-1) for l in range(L)])  # [L,N,4], layer by layer
+        frac_nn = tot[:, :, 3].double() / tot.sum(-1).double().clamp_min(1)
         k = max(1, int(0.04 * L * N)); thr = frac_nn.flatten().topk(k).values.min()
         return frac_nn >= thr
     raise ValueError(name)
@@ -74,7 +74,7 @@ def main():
     ap.add_argument('--only', default='')  # comma list of config names to run
     ap.add_argument('--filter', default='')  # substring a config name must contain
     ap.add_argument('--exclude', default='')  # substring a config name must not contain
-    ap.add_argument('--shard', default='0/1')
+    ap.add_argument('--shard', default='0/1'); ap.add_argument('--qs', default='')  # e.g. "50,75,90,95,99" to restrict Stage 1
     a = ap.parse_args()
     rd = os.path.join(ROOT, 'results', a.tag); gd = os.path.join(rd, 'grid'); os.makedirs(gd, exist_ok=True)
     model, tok = load_model(a.model)
@@ -89,7 +89,7 @@ def main():
     evs = a.evals.split(',')
     stats_path = os.path.join(rd, 'stats.pt')
     thr_cache = {}
-    stats = torch.load(stats_path) if os.path.exists(stats_path) else None
+    stats = torch.load(stats_path, mmap=True) if os.path.exists(stats_path) else None
 
     def get_thr(q):
         if q not in thr_cache:
@@ -135,7 +135,7 @@ def main():
         print('no stats.pt; baseline only'); return
 
     # ---- configs
-    if a.stage == 'stage1': cfgs = stage1_configs(L)
+    if a.stage == 'stage1': cfgs = stage1_configs(L, [float(x) if '.' in x else int(x) for x in a.qs.split(',')] if a.qs else None)
     elif a.stage == 'audit':
         cfgs = []
         for q, qs in [(75, 'nn'), (75, 'pp'), (75, 'np'), (100, 'neg'), (100, 'nn')]:

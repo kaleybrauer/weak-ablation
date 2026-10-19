@@ -96,7 +96,10 @@ def summarize(res, bands):
 
 
 if __name__ == '__main__':
-    ap = argparse.ArgumentParser(); ap.add_argument('--tag', required=True); ap.add_argument('--workers', type=int, default=6); a = ap.parse_args()
+    ap = argparse.ArgumentParser(); ap.add_argument('--tag', required=True); ap.add_argument('--workers', type=int, default=6); ap.add_argument('--provider', default='anthropic'); a = ap.parse_args()
+    if a.provider == 'openai':
+        from judge_openai import call as _ocall
+        globals()['call'] = _ocall   # describe() and judge() look up `call` at run time
     rd = os.path.join(ROOT, 'results', a.tag)
     data = json.load(open(os.path.join(rd, 'contexts.json')))
     rnd = data['random'][:16]

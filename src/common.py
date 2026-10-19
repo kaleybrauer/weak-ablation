@@ -192,57 +192,53 @@ def patch_mlps(model, interv: Intervention):
 
 
 def thresholds_from_stats(stats_path, q_list, device='cuda'):
-    """From saved histograms compute, per quadrant, the |a| percentile thresholds and band means.
-    Returns dict q -> (thr[L,N,4], rep_below[L,N,4], rep_above[L,N,4]) as float32 tensors on device, plus census."""
-    st = torch.load(stats_path)
-    count, sumabs = st['count'].double(), st['sumabs'].double()  # [L,N,4,B]
-    L, N = count.shape[:2]
-    centers = bin_centers()  # [B]
-    total = count.sum(-1)  # [L,N,4]
-    cum = count.cumsum(-1)  # [L,N,4,B]
-    sumabs_cum = sumabs.cumsum(-1)
-    sign = torch.tensor([1.0, -1.0, -1.0, 1.0]).view(1, 1, 4)  # pp:+, pn:-, np:-, nn:+
+    """From saved histograms compute, per quadrant, the |a| percentile thresholds and band means (layer by layer to bound memory).
+    Returns dict q -> (thr[L,N,4], rep_below[L,N,4], rep_above[L,N,4], E[a*S][L,N,4]) as float32 tensors on device, plus the raw stats."""
+    st = torch.load(stats_path, mmap=True)
+    count_all, sumabs_all = st['count'], st['sumabs']  # [L,N,4,B]
+    L, N = count_all.shape[:2]
+    sign = torch.tensor([1.0, -1.0, -1.0, 1.0]).view(1, 4)  # pp:+, pn:-, np:-, nn:+
     edges = 10 ** (HIST_LO + (HIST_HI - HIST_LO) / HIST_BINS * torch.arange(HIST_BINS + 1, dtype=torch.float64))
-    out = {}
-    for q in q_list:
-        target = total * (q / 100.0)
-        # first bin index where cum >= target  -> threshold = upper edge of that bin
-        idx = (cum < target.unsqueeze(-1)).sum(-1).clamp(max=HIST_BINS - 1)  # [L,N,4]
-        thr = edges[idx + 1]
-        n_below = cum.gather(-1, idx.unsqueeze(-1)).squeeze(-1)
-        s_below = sumabs_cum.gather(-1, idx.unsqueeze(-1)).squeeze(-1)
-        n_above = total - n_below; s_above = sumabs.sum(-1) - s_below
-        mean_below = torch.where(n_below > 0, s_below / n_below.clamp_min(1), torch.zeros_like(s_below)) * sign
-        mean_above = torch.where(n_above > 0, s_above / n_above.clamp_min(1), torch.zeros_like(s_above)) * sign
-        thr = torch.where(total > 0, thr, torch.zeros_like(thr))
-        p_sel = torch.where(total > 0, n_below / total.clamp_min(1), torch.zeros_like(n_below))
-        out[q] = (thr.float().to(device), mean_below.float().to(device), mean_above.float().to(device), (p_sel * mean_below).float().to(device))
+    acc = {q: [torch.zeros(L, N, 4) for _ in range(4)] for q in q_list}
+    for l in range(L):
+        count = count_all[l].double(); sumabs = sumabs_all[l].double()   # [N,4,B]
+        total = count.sum(-1); cum = count.cumsum(-1); sumabs_cum = sumabs.cumsum(-1); sum_all = sumabs.sum(-1)
+        for q in q_list:
+            target = total * (q / 100.0)
+            idx = (cum < target.unsqueeze(-1)).sum(-1).clamp(max=HIST_BINS - 1)  # [N,4]
+            thr = edges[idx + 1]
+            n_below = cum.gather(-1, idx.unsqueeze(-1)).squeeze(-1); s_below = sumabs_cum.gather(-1, idx.unsqueeze(-1)).squeeze(-1)
+            n_above = total - n_below; s_above = sum_all - s_below
+            mean_below = torch.where(n_below > 0, s_below / n_below.clamp_min(1), torch.zeros_like(s_below)) * sign
+            mean_above = torch.where(n_above > 0, s_above / n_above.clamp_min(1), torch.zeros_like(s_above)) * sign
+            thr = torch.where(total > 0, thr, torch.zeros_like(thr))
+            p_sel = torch.where(total > 0, n_below / total.clamp_min(1), torch.zeros_like(n_below))
+            acc[q][0][l] = thr.float(); acc[q][1][l] = mean_below.float(); acc[q][2][l] = mean_above.float(); acc[q][3][l] = (p_sel * mean_below).float()
+    out = {q: tuple(t.to(device) for t in acc[q]) for q in q_list}
     return out, st
 
 
 def census(stats_path):
-    st = torch.load(stats_path)
-    count, sumabs = st['count'].double(), st['sumabs'].double()
-    L, N = count.shape[:2]
-    tot_q = count.sum(-1)                       # [L,N,4] events per quadrant
-    mass_q = sumabs.sum(-1)                     # [L,N,4]
+    st = torch.load(stats_path, mmap=True)
+    count_all, sumabs_all = st['count'], st['sumabs']
+    L, N = count_all.shape[:2]
     per_layer = {}
     for l in range(L):
-        ev = tot_q[l].sum(0); ms = mass_q[l].sum(0)
-        maj = tot_q[l].argmax(-1)
+        tot_q = count_all[l].double().sum(-1); mass_q = sumabs_all[l].double().sum(-1)   # [N,4]
+        ev = tot_q.sum(0); ms = mass_q.sum(0); maj = tot_q.argmax(-1)
         per_layer[l] = dict(
             event_frac={c: float(ev[i] / ev.sum()) for i, c in enumerate(QUAD_CODES)},
             mass_frac={c: float(ms[i] / ms.sum()) for i, c in enumerate(QUAD_CODES)},
             neuron_majority_frac={c: float((maj == i).double().mean()) for i, c in enumerate(QUAD_CODES)},
-            frac_neurons_nn_over_25pct=float(((tot_q[l, :, 3] / tot_q[l].sum(-1).clamp_min(1)) > 0.25).double().mean()),
+            frac_neurons_nn_over_25pct=float(((tot_q[:, 3] / tot_q.sum(-1).clamp_min(1)) > 0.25).double().mean()),
         )
-    return dict(tokens=st['tokens'], per_layer=per_layer)
+    return dict(tokens=int(st['tokens']), per_layer=per_layer)
 
 
 def wasserstein_neurons(stats_path, frac=0.01):
     """Approximate Kong et al. 'Wasserstein neurons': rank by W1 distance between the gate pre-activation
     distribution and a Gaussian with the same mean/std, computed from the gate histogram."""
-    st = torch.load(stats_path)
+    st = torch.load(stats_path, mmap=True)
     h = st['gate_hist'].double(); L, N, B = h.shape
     n = h.sum(-1); mean = st['gate_sum'] / n; var = st['gate_sumsq'] / n - mean ** 2; std = var.clamp_min(1e-8).sqrt()
     w = (GATE_HI - GATE_LO) / B

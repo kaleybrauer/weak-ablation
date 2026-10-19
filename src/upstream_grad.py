@@ -21,7 +21,8 @@ def main():
     rd = os.path.join(ROOT, 'results', a.tag)
     model, tok = load_model(a.model); layers = get_layers(model); L = len(layers); N = layers[0].mlp.gate_proj.out_features
     for p in model.parameters(): p.requires_grad_(False)
-    prev = json.load(open(os.path.join(rd, 'driver_sample_full.json')))
+    sp_ = os.path.join(rd, 'driver_sample_full.json'); sp_ = sp_ if os.path.exists(sp_) else os.path.join(rd, 'driver_sample.json')
+    prev = json.load(open(sp_))
     downs = sorted({(s['layer'], s['neuron'], s['wasserstein']) for s in prev})
     sel_by_layer = {}
     for i, (l, n, w) in enumerate(downs): sel_by_layer.setdefault(l, []).append((i, n))
