@@ -20,9 +20,10 @@ COLOR = os.environ.get('PALETTE', '') == 'color'   # PALETTE=color: three full-s
 C_EXAM, C_FACT, C_MEM = ('#2f8f85', '#c7891a', '#8a3e9a') if COLOR else (GREY2, GREY, ACC)   # teal, goldenrod, plum
 TASKS_ALL = [('mmlu', C_EXAM, 'exam questions (MMLU)'), ('popqa', C_FACT, 'recalling facts (PopQA)'), ('mem_tokmatch', C_MEM, 'reciting memorized text')]
 TASKS = [t for t in TASKS_ALL if t[0] in (sys.argv[1].split(',') if len(sys.argv) > 1 else ['mmlu', 'popqa', 'mem_tokmatch'])]
-OUT = ('tweet_retention_all' if len(sys.argv) < 2 else 'tweet_retention_all_' + '_'.join(sys.argv[1].split(','))) + ('_color' if COLOR else '') + ('_loss' if os.environ.get('LOSS', '') == '1' else '') + ('_thr' if os.environ.get('THR', '') == '1' else '') + '.png'
+OUT = ('tweet_retention_all' if len(sys.argv) < 2 else 'tweet_retention_all_' + '_'.join(sys.argv[1].split(','))) + ('_color' if COLOR else '') + ('_loss' if os.environ.get('LOSS', '') == '1' else '') + ('_top' if os.environ.get('TOP', '') == '1' else '_thr' if os.environ.get('THR', '') == '1' else '') + '.png'
 qs = [50, 75, 90, 95, 99]; x = list(range(len(qs)))
-THR = os.environ.get('THR', '') == '1'   # THR=1: where the cutoff sits on each neuron's own scale (median over neurons and models of threshold / max |activation|)
+TOP = os.environ.get('TOP', '') == '1'   # TOP=1: cutoff as % of max on a top x-axis instead of a tick row
+THR = os.environ.get('THR', '') == '1' and not TOP   # THR=1: where the cutoff sits on each neuron's own scale (median over neurons and models of threshold / max |activation|)
 fig, ax = plt.subplots(figsize=(10.5, (7.7 if THR else 6.9) if os.environ.get('LOSS', '') == '1' else (6.9 if THR else 6.3)))
 for tag, mlabel, ls, lw in MODELS:
     rows = {r['name']: r for r in json.load(open(os.path.join(ROOT, 'results', tag, 'summary_rows.json')))}
@@ -38,13 +39,16 @@ if LOSS:
     def rng(v): lo, hi = min(v), max(v); return f'+{lo:.1f}%' if f'{lo:.1f}' == f'{hi:.1f}' else (f'+{lo:.0f}\u2013{hi:.0f}%' if lo >= 10 else f'+{lo:.1f}\u2013{hi:.1f}%')
     labels = [f'{q}%\n{rng(L[q])}' for q in qs]
 else: labels = [f'{q}%' for q in qs]
-if THR:
-    import statistics
-    T = json.load(open(os.path.join(ROOT, 'results', 'thr_vs_max.json')))
-    def thr_pct(q):
-        v = 100 * statistics.median(T[t]['pp'][str(q)]['r_max']['median'] for t, *_ in MODELS)
-        return f'{v:.1f}%' if v < 10 else f'{v:.0f}%'
-    labels = [l + '\n' + thr_pct(q) for l, q in zip(labels, qs)]
+import statistics
+T = json.load(open(os.path.join(ROOT, 'results', 'thr_vs_max.json')))
+def thr_pct(q):
+    v = 100 * statistics.median(T[t]['pp'][str(q)]['r_max']['median'] for t, *_ in MODELS)
+    return f'{v:.1f}%' if v < 10 else f'{v:.0f}%'
+if THR: labels = [l + '\n' + thr_pct(q) for l, q in zip(labels, qs)]
+if TOP:
+    top = ax.secondary_xaxis('top'); top.set_xticks(x); top.set_xticklabels([thr_pct(q) for q in qs], fontsize=14, color='#555')
+    top.spines['top'].set_color('#9a9a9a'); top.tick_params(colors='#555', length=4)
+    top.set_xlabel("cutoff as % of each neuron's max activation", labelpad=10, fontsize=15, color=INK)
 ax.set_xticks(x); ax.set_xticklabels(labels, fontsize=14 if (LOSS or THR) else 15.5, linespacing=1.5)
 ax.set_xlim(-0.35, len(qs) - 0.6 + 1.9); ax.set_ylim(0, 106); ax.set_yticks([0, 25, 50, 75, 100]); ax.set_yticklabels(['0', '25%', '50%', '75%', '100%'])
 rows_note = [n for n, on in [('increase in overall loss', LOSS), ("cutoff as % of the neuron's max activation", THR)] if on]
