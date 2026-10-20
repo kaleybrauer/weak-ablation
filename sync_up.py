@@ -7,5 +7,5 @@ root=os.path.dirname(os.path.abspath(__file__))
 for sub in [f'results/{T}', 'logs']:
     d=os.path.join(root,sub)
     if os.path.isdir(d):
-        api.upload_folder(folder_path=d, path_in_repo=sub, repo_id=REPO, repo_type='dataset', ignore_patterns=['*.pt','*.bin','*.npy','*.safetensors'], commit_message=f'sync {sub}')
+        api.upload_folder(folder_path=d, path_in_repo=sub, repo_id=REPO, repo_type='dataset', ignore_patterns=['*.pt','*.bin','*.npy','*.safetensors','.*','*.partial','*.incomplete'], commit_message=f'sync {sub}')
 print('synced', flush=True)
