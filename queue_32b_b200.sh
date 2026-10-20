@@ -22,7 +22,7 @@ python src/driver_contexts.py --model $M --tag $T > logs/q32b_drivers.log 2>&1; 
 python src/upstream_grad.py --model $M --tag $T --per_band 10 --tokens 3000000 --validate 60 > logs/q32b_upgrad.log 2>&1; mark UPGRAD
 python src/driver_contexts.py --model $M --tag $T --suffix _grad > logs/q32b_drivers_grad.log 2>&1; mark DRIVERS_GRAD
 python src/driver_profile.py --model $M --tag $T > logs/q32b_profile.log 2>&1; mark PROFILE
-until [ -f results/$T/baseline_popqa_recs.json ]; do sleep 60; done   # produced by chain A's stage1 baseline
+until [ -f results/$T/baseline_popqa_recs.json ]; do sleep 60; done; sleep 30   # produced by chain A's stage1 baseline
 python src/margins.py --model $M --tag $T > logs/q32b_margins.log 2>&1; mark MARGINS
 python src/sparse_facts.py --model $M --tag $T --modes topk_subject,randk_subject > logs/q32b_sparse.log 2>&1; mark SPARSE
 python src/fact_attr.py --model $M --tag $T --n_items 1000 > logs/q32b_factattr.log 2>&1; mark FACTATTR
