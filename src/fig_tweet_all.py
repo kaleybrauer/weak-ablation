@@ -20,9 +20,9 @@ COLOR = os.environ.get('PALETTE', '') == 'color'   # PALETTE=color: three full-s
 C_EXAM, C_FACT, C_MEM = ('#2f8f85', '#c7891a', '#8a3e9a') if COLOR else (GREY2, GREY, ACC)   # teal, goldenrod, plum
 TASKS_ALL = [('mmlu', C_EXAM, 'exam questions (MMLU)'), ('popqa', C_FACT, 'recalling facts (PopQA)'), ('mem_tokmatch', C_MEM, 'reciting memorized text')]
 TASKS = [t for t in TASKS_ALL if t[0] in (sys.argv[1].split(',') if len(sys.argv) > 1 else ['mmlu', 'popqa', 'mem_tokmatch'])]
-OUT = ('tweet_retention_all' if len(sys.argv) < 2 else 'tweet_retention_all_' + '_'.join(sys.argv[1].split(','))) + ('_color' if COLOR else '') + '.png'
+OUT = ('tweet_retention_all' if len(sys.argv) < 2 else 'tweet_retention_all_' + '_'.join(sys.argv[1].split(','))) + ('_color' if COLOR else '') + ('_loss' if os.environ.get('LOSS', '') == '1' else '') + '.png'
 qs = [50, 75, 90, 95, 99]; x = list(range(len(qs)))
-fig, ax = plt.subplots(figsize=(10.5, 6.3))
+fig, ax = plt.subplots(figsize=(10.5, 6.9 if os.environ.get('LOSS', '') == '1' else 6.3))
 for tag, mlabel, ls, lw in MODELS:
     rows = {r['name']: r for r in json.load(open(os.path.join(ROOT, 'results', tag, 'summary_rows.json')))}
     base_mmlu = json.load(open(os.path.join(ROOT, 'results', tag, 'grid/baseline.json')))['metrics']['mmlu']['acc']
@@ -31,9 +31,14 @@ for tag, mlabel, ls, lw in MODELS:
         ax.plot(x, vals, ls, color=c, lw=lw, marker='o' if ls == '-' else None, ms=7)
         if ls == '-': ax.annotate(lab, (x[-1], vals[-1]), xytext=(8, 0), textcoords='offset points', va='center', color=c, fontsize=17)
 ax.axhline(100, ls='-', color='#e6e6e3', lw=1, zorder=0)
-ax.set_xticks(x); ax.set_xticklabels([f'{q}%' for q in qs], fontsize=15.5)
+LOSS = os.environ.get('LOSS', '') == '1'   # LOSS=1: held-out loss increase under each tick, as the range across the three models
+if LOSS:
+    L = {q: [ {r['name']: r for r in json.load(open(os.path.join(ROOT, 'results', t, 'summary_rows.json')))}[f's1_q{q}_pp']['dloss_pct'] for t, *_ in MODELS] for q in qs}
+    def rng(v): lo, hi = min(v), max(v); return f'+{lo:.1f}%' if f'{lo:.1f}' == f'{hi:.1f}' else (f'+{lo:.0f}\u2013{hi:.0f}%' if lo >= 10 else f'+{lo:.1f}\u2013{hi:.1f}%')
+    ax.set_xticks(x); ax.set_xticklabels([f'{q}%\n{rng(L[q])}' for q in qs], fontsize=14, linespacing=1.5)
+else: ax.set_xticks(x); ax.set_xticklabels([f'{q}%' for q in qs], fontsize=15.5)
 ax.set_xlim(-0.35, len(qs) - 0.6 + 1.9); ax.set_ylim(0, 106); ax.set_yticks([0, 25, 50, 75, 100]); ax.set_yticklabels(['0', '25%', '50%', '75%', '100%'])
-ax.set_xlabel("% of each neuron's weakest activations ablated", labelpad=10); ax.set_ylabel('performance, % of the unablated model')
+ax.set_xlabel("% of each neuron's weakest activations ablated" + ("\n(second row: resulting increase in overall loss)" if LOSS else ''), labelpad=10, linespacing=1.4); ax.set_ylabel('performance, % of the unablated model')
 ax.grid(axis='y', color='#ececea')
 ax.legend(handles=[Line2D([], [], color=INK, ls=ls, lw=lw, marker='o' if ls == '-' else None, ms=5, label=m) for _, m, ls, lw in MODELS], frameon=False, loc='lower left', fontsize=15)
 fig.tight_layout(); out = os.path.join(ROOT, 'figures', OUT); fig.savefig(out, dpi=220); print('wrote', out)
