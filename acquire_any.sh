@@ -1,5 +1,5 @@
 #!/bin/bash
-# Poll for ANY usable GPU: big GPUs on the kaley-storage volume (US-CA-2) first, then RTX PRO 6000 (96GB) off-volume anywhere.
+# Poll for ANY usable GPU: big GPUs on the kaley-storage volume (US-CA-2) first, then big GPUs off-volume anywhere, then (unless BIG_ONLY=1) RTX PRO 6000 (96GB).
 # usage: bash acquire_any.sh <pod_number> <max_attempts>   (one attempt ~45 s). Prints "ACQUIRED pod N gpu G mode on|off" on success.
 cd /workspace/weak-ablation
 PY=/workspace/behavioral-readability-pilot/.venv/bin/python
@@ -13,17 +13,20 @@ try_create() {  # $1 gpu, $2 mode (on|off), $3 cloud
   return 1
 }
 check() { timeout 180 $PY podctl.py run $N 'python -c "import torch; x=torch.zeros(1).cuda(); print(\"CUDA_OK\")" 2>&1 | tail -1' 2>&1 | grep -c CUDA_OK; }
+wait_ready() {  # a fresh container can take minutes to boot after the API says RUNNING; never judge the GPU before the shell answers
+  for j in $(seq 1 30); do timeout 60 $PY podctl.py run $N 'echo READY_MARK' 2>/dev/null | grep -q READY_MARK && return 0; sleep 20; done; return 1; }
 for attempt in $(seq 1 $MAX); do
   got=""
   for g in "NVIDIA B200" "NVIDIA H200" "NVIDIA H200 NVL"; do try_create "$g" on SECURE && { got="$g"; mode=on; break; }; done
-  if [ -z "$got" ]; then for cloud in SECURE COMMUNITY; do for g in "NVIDIA RTX PRO 6000 Blackwell Server Edition" "NVIDIA RTX PRO 6000 Blackwell Workstation Edition" "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition"; do try_create "$g" off $cloud && { got="$g"; mode=off; break 2; }; done; done; fi
+  if [ -z "$got" ]; then for cloud in SECURE COMMUNITY; do for g in "NVIDIA B200" "NVIDIA H200" "NVIDIA H200 NVL"; do try_create "$g" off $cloud && { got="$g"; mode=off; break 2; }; done; done; fi
+  if [ -z "$got" ] && [ "${BIG_ONLY:-0}" != 1 ]; then for cloud in SECURE COMMUNITY; do for g in "NVIDIA RTX PRO 6000 Blackwell Server Edition" "NVIDIA RTX PRO 6000 Blackwell Workstation Edition" "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition"; do try_create "$g" off $cloud && { got="$g"; mode=off; break 2; }; done; done; fi
   if [ -n "$got" ]; then
     echo "pod $N created on $got mode=$mode after $attempt attempts $(date)"
     for i in $(seq 1 60); do
       s=$($PY podctl.py status $N | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['status'], bool(d.get('ssh') and d['ssh'].get('proxy')))" 2>/dev/null)
       [ "$s" = "RUNNING True" ] && break; sleep 10
     done
-    sleep 20
+    wait_ready || echo "pod $N shell not answering after 10 min $(date)"
     if [ "$(check)" = "1" ]; then echo "ACQUIRED pod $N gpu $got mode $mode $(date)"; echo "POD=$N MODE=$mode GPU=$got" > pods/current_pod.txt; exit 0; fi
     echo "pod $N CUDA broken $(date); restarting"; $PY podctl.py action $N restart >/dev/null 2>&1; sleep 90
     if [ "$(check)" = "1" ]; then echo "ACQUIRED pod $N gpu $got mode $mode $(date)"; echo "POD=$N MODE=$mode GPU=$got" > pods/current_pod.txt; exit 0; fi
