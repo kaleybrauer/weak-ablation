@@ -1,6 +1,6 @@
 # Weak-activation ablation
 
-Does the weak-activation regime of an LLM's gated-MLP neurons carry load-bearing information,
+Does the weak-activation regime of an LLM's gated-MLP neurons carry important information,
 and is that information related to the neuron's main pattern or unrelated to it?
 
 Protocol: https://claude.ai/code/artifact/fca7609d-3716-48c6-af80-7dcb671a5a3a
