@@ -16,9 +16,11 @@ def popqa_retention(tag, rows, q):
 plt.rcParams.update({'font.size': 17, 'axes.spines.top': False, 'axes.spines.right': False, 'axes.edgecolor': '#9a9a9a', 'axes.labelcolor': INK, 'xtick.color': '#555', 'ytick.color': '#555'})
 MODELS = [('qwen3_32b', 'Qwen3-32B', '-', 2.6), ('qwen3_8b_base', 'Qwen3-8B-Base', '--', 1.8), ('llama31_8b', 'Llama-3.1-8B', ':', 1.8)]
 import sys
-TASKS_ALL = [('mmlu', GREY2, 'exam questions (MMLU)'), ('popqa', GREY, 'recalling facts (PopQA)'), ('mem_tokmatch', ACC, 'reciting memorized text')]
+COLOR = os.environ.get('PALETTE', '') == 'color'   # PALETTE=color: three full-strength hues instead of blue + two greys
+C_EXAM, C_FACT, C_MEM = ('#1baf7a', '#eb6834', '#2a78d6') if COLOR else (GREY2, GREY, ACC)
+TASKS_ALL = [('mmlu', C_EXAM, 'exam questions (MMLU)'), ('popqa', C_FACT, 'recalling facts (PopQA)'), ('mem_tokmatch', C_MEM, 'reciting memorized text')]
 TASKS = [t for t in TASKS_ALL if t[0] in (sys.argv[1].split(',') if len(sys.argv) > 1 else ['mmlu', 'popqa', 'mem_tokmatch'])]
-OUT = 'tweet_retention_all.png' if len(sys.argv) < 2 else 'tweet_retention_all_' + '_'.join(sys.argv[1].split(',')) + '.png'
+OUT = ('tweet_retention_all' if len(sys.argv) < 2 else 'tweet_retention_all_' + '_'.join(sys.argv[1].split(','))) + ('_color' if COLOR else '') + '.png'
 qs = [50, 75, 90, 95, 99]; x = list(range(len(qs)))
 fig, ax = plt.subplots(figsize=(10.5, 6.3))
 for tag, mlabel, ls, lw in MODELS:
