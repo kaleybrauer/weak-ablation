@@ -1,4 +1,5 @@
 """Local side: pull results/<tag> and logs/q32b_* from the sync repo into this checkout (never deletes local files)."""
+import os; os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "0"   # local machine lacks hf_transfer; the env var leaks in from the shell profile
 import os, sys
 from huggingface_hub import snapshot_download
 REPO='kbrauer/weak-ablation-sync'; T=sys.argv[1] if len(sys.argv)>1 else 'qwen3_32b'
