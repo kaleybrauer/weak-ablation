@@ -40,12 +40,12 @@ def main():
                     print(f'{done/1e6:.1f}M tokens  {done/el/1e3:.1f}k tok/s  elapsed {el/60:.1f} min', flush=True)
                 if nb % 500 == 0:
                     stats.save(a.out + '.partial', big=False)
-        stats.save(a.out)
+        stats.save(a.out); n_tokens = stats.tokens
         interv.stats = None; del stats; torch.cuda.empty_cache()
     c = census(a.out); json.dump(c, open(a.out.replace('.pt', '_census.json'), 'w'), indent=1)
     mask, w1 = wasserstein_neurons(a.out)
     torch.save(dict(mask=mask, w1=w1), a.out.replace('.pt', '_wasserstein.pt'))
-    print('saved', a.out, 'tokens', stats.tokens, 'elapsed min', (time.time() - t0) / 60, flush=True)
+    print('saved', a.out, 'tokens', n_tokens, 'elapsed min', (time.time() - t0) / 60, flush=True)
 
 
 if __name__ == '__main__':
