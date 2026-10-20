@@ -41,23 +41,24 @@ for tag, label in TAGS:
 json.dump(out, open(os.path.join(ROOT, 'results', 'token_split.json'), 'w'), indent=1)
 
 # ---- figure: per model, loss increase per bin (relative to the config's overall loss increase) for the weak pp bands and the controls
-STYLE = [('s1_q75_pp', '#8a3e9a', '-', 'weakest 75% flattened (gate > 0, up > 0)'), ('s1_q95_pp', '#c99ad6', '-', 'weakest 95% flattened (gate > 0, up > 0)'),
-         ('s1_q75_nn', '#c7891a', '-', 'weakest 75% flattened (gate < 0, up < 0)'), ('s2_q75_pp_invert_all', '#2f8f85', '--', 'STRONGEST 25% flattened (gate > 0, up > 0)'),
-         ('s2_q75_nn_invert_all', '#1d5c55', '--', 'STRONGEST 25% flattened (gate < 0, up < 0)'), ('s2_q75_nn_randevent_all', '#c0392b', ':', 'random 75% of events replaced (gate < 0, up < 0)')]
+STYLE = [('s1_q75_pp', '#8a3e9a', '-', 'o', 'weakest 75% flattened (gate > 0, up > 0)'), ('s1_q95_pp', '#c99ad6', '-', 'o', 'weakest 95% flattened (gate > 0, up > 0)'),
+         ('s1_q75_nn', '#c7891a', '-', 'o', 'weakest 75% flattened (gate < 0, up < 0)'),
+         ('s2_q75_pp_invert_all', '#2f8f85', '--', 's', 'STRONGEST 25% flattened (gate > 0, up > 0)'), ('s2_q75_nn_invert_all', '#1d5c55', '--', 's', 'STRONGEST 25% flattened (gate < 0, up < 0)'),
+         ('s2_q75_pp_zero_all', '#7a7a76', '-.', '^', 'weakest 75% zeroed (gate > 0, up > 0)'), ('s2_q75_pp_randevent_all', '#c0392b', ':', 'x', 'random 75% of events replaced (gate > 0, up > 0)')]
 tags = [t for t in TAGS if t[0] in out]
 fig, axes = plt.subplots(1, len(tags), figsize=(5.4 * len(tags) + 0.8, 6.6), sharey=True)
 axes = np.atleast_1d(axes)
 for ax, (tag, label) in zip(axes, tags):
     r = out[tag]; xs = np.arange(6)
-    for name, c, ls, lab in STYLE:
+    for name, c, ls, mk, lab in STYLE:
         if name not in r['configs']: continue
         rel = np.array(r['configs'][name]['per_bin']) / r['configs'][name]['dloss']
-        ax.plot(xs, rel, color=c, ls=ls, lw=2.4, marker='o', ms=7, label=lab, zorder=3)
+        ax.plot(xs, rel, color=c, ls=ls, lw=2.2, marker=mk, ms=7 if mk != 'x' else 9, mew=2 if mk == 'x' else 1, label=lab, zorder=3)
     ax.axhline(1, color='#bbb', lw=1, ls='-', zorder=1)
     ax.set_xticks(xs); ax.set_xticklabels(BIN_LABELS, fontsize=12.5); ax.grid(color='#ececea', axis='y'); ax.set_axisbelow(True)
     ax.text(0.0, 1.02, label, transform=ax.transAxes, fontsize=13.5, color='#777')
     ax.set_xlabel('how much better the big model predicts the token\nthan a small one (nats)', labelpad=8, fontsize=13.5)
-axes[0].set_ylabel('loss increase on these tokens\n(relative to the config\'s overall increase)')
-h, l = axes[0].get_legend_handles_labels(); fig.legend(h, l, frameon=False, fontsize=12.5, loc='lower center', ncol=2, handletextpad=0.5, columnspacing=1.6, bbox_to_anchor=(0.5, 0.0))
-fig.subplots_adjust(left=0.07, right=0.99, top=0.93, bottom=0.34, wspace=0.08)
+axes[0].set_ylabel('loss increase on these tokens,\nrelative to the config\'s overall increase')
+h, l = axes[0].get_legend_handles_labels(); fig.legend(h, l, frameon=False, fontsize=12.5, loc='lower center', ncol=2 if len(tags) < 3 else 3, handletextpad=0.5, columnspacing=1.6, bbox_to_anchor=(0.5, 0.0))
+fig.subplots_adjust(left=0.1 if len(tags) < 3 else 0.075, right=0.99, top=0.93, bottom=0.36, wspace=0.08)
 p = os.path.join(ROOT, 'figures', 'token_split.png'); fig.savefig(p, dpi=200); print('wrote', p)

@@ -10,6 +10,7 @@ from run_grid import ROOT, stage1_configs, stage2_configs, neuron_set_mask
 
 DEFAULT = ([f's1_q{q}_{r}' for q in [50, 75, 90, 95, 99] for r in ['pp', 'pn', 'np', 'nn']]
            + [f's2_q75_{r}_{m}_all' for r in ['pp', 'nn', 'np'] for m in ['invert', 'zero', 'resample']] + ['s2_q75_pp_randevent_all', 's2_q75_nn_randevent_all'])
+EXTRA = [f's2_q{q}_{r}_invert_all' for q in [95, 99, 99.9] for r in ['pp', 'nn']]   # strongest 5% / 1% / 0.1% flattened: strong-band removals at loss costs comparable to the weak bands
 
 ap = argparse.ArgumentParser(); ap.add_argument('--model', required=True); ap.add_argument('--tag', required=True); ap.add_argument('--ref', required=True)
 ap.add_argument('--configs', default=','.join(DEFAULT)); ap.add_argument('--batch', type=int, default=8); ap.add_argument('--skip_ref', action='store_true'); ap.add_argument('--reverse', action='store_true')  # second worker converging from the end
@@ -46,7 +47,7 @@ interv = Intervention(L, N, 'cuda'); patch_mlps(model, interv)
 stats_path = os.path.join(rd, 'stats.pt'); stats = load_stats(stats_path)
 if not os.path.exists(os.path.join(od, 'base.npy')):
     interv.active = False; t0 = time.time(); save('base', per_token_nll(model, a.batch)); print(f'base {time.time()-t0:.0f}s', flush=True)
-cfgs = {c['name']: c for c in stage1_configs(L) + stage2_configs(L, [(75, 'pp'), (75, 'nn'), (75, 'np'), (75, 'pn')])}
+cfgs = {c['name']: c for c in stage1_configs(L) + stage2_configs(L, [(q, r) for q in [75, 95, 99, 99.9] for r in ['pp', 'nn', 'np', 'pn']])}
 thr_cache = {}
 for name in (a.configs.split(',')[::-1] if a.reverse else a.configs.split(',')):
     if os.path.exists(os.path.join(od, name + '.npy')): continue
