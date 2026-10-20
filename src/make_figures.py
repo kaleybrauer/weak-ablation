@@ -5,6 +5,10 @@ import matplotlib; matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TAGS = [('llama31_8b', 'Llama-3.1-8B'), ('qwen3_8b_base', 'Qwen3-8B-Base')]
+TAGS3 = TAGS + [('qwen3_32b', 'Qwen3-32B')]
+def have(*names): return [(t, l) for t, l in TAGS3 if all(os.path.exists(os.path.join(ROOT, 'results', t, n)) for n in names)]
+def panels(tags, w=5, h=3.8, **kw):
+    fig, axes = plt.subplots(1, len(tags), figsize=(w * len(tags), h), **kw); return fig, (list(axes) if len(tags) > 1 else [axes])
 ACC, GREY, GREY2 = '#2f6fdb', '#8a8a86', '#c4c2bb'
 plt.rcParams.update({'font.size': 10, 'axes.spines.top': False, 'axes.spines.right': False, 'axes.edgecolor': '#9a9a9a', 'axes.labelcolor': '#333', 'xtick.color': '#555', 'ytick.color': '#555'})
 os.makedirs(os.path.join(ROOT, 'figures'), exist_ok=True)
@@ -64,10 +68,12 @@ def cost_curves(tag, label, fname):
     save(fig, fname)
 cost_curves('llama31_8b', 'Llama-3.1-8B', 'cost_curves.png')
 cost_curves('qwen3_8b_base', 'Qwen3-8B-Base', 'cost_curves_qwen3_8b.png')
+if os.path.exists(os.path.join(ROOT, 'results', 'qwen3_32b', 'grid', 's1_q99_np.json')): cost_curves('qwen3_32b', 'Qwen3-32B', 'cost_curves_qwen3_32b.png')
 
 # 3. zero vs mean
-fig, axes = plt.subplots(1, 2, figsize=(12, 4.2), sharey=True)
-for ax, (tag, label) in zip(axes, TAGS):
+ZT = have('summary_rows.json', 'grid/s2_q75_pn_zero_all.json', 'grid/s2_q75_pp_zero_all.json', 'grid/s2_q75_nn_zero_all.json', 'grid/s2_q75_np_zero_all.json')
+fig, axes = panels(ZT, w=6, h=4.2, sharey=True)
+for ax, (tag, label) in zip(axes, ZT):
     rows = {r['name']: r for r in rd(tag, 'summary_rows.json')}
     quads = [('pp', 'gate > 0\nup > 0'), ('pn', 'gate > 0\nup < 0'), ('nn', 'gate < 0\nup < 0'), ('np', 'gate < 0\nup > 0')]
     x = np.arange(4); m = [rows[f's1_q75_{q}']['dloss_pct'] for q, _ in quads]; z = [rows[f's2_q75_{q}_zero_all']['dloss_pct'] for q, _ in quads]
@@ -79,8 +85,9 @@ axes[0].set_ylabel('held-out loss increase (%)'); axes[0].legend(frameon=False, 
 save(fig, 'zero_vs_mean.png')
 
 # 4. rarity vs margin (weak-band ablation s1_q75_pp)
-fig, axes = plt.subplots(1, 2, figsize=(10, 3.8), sharey=True)
-for ax, (tag, label) in zip(axes, TAGS):
+RT = TAGS   # the 32B's grid PopQA uses the plain prompt (thinking preamble), so its per-item retention is too noisy for the margin split
+fig, axes = panels(RT, sharey=True)
+for ax, (tag, label) in zip(axes, RT):
     M = rd(tag, 'popqa_margins.json'); rec = {r['id']: r['correct'] for r in rd(tag, 'grid/s1_q75_pp.json')['popqa_recs']}
     ids = [int(i) for i in M if int(i) in rec]; lg = np.array([math.log10(M[str(i)]['s_pop'] + 1) for i in ids]); mg = np.array([M[str(i)]['margin'] for i in ids]); y = np.array([rec[i] for i in ids], dtype=float)
     q = np.quantile(lg, [1 / 3, 2 / 3]); rare = lg < q[0]; common = lg >= q[1]; t = np.quantile(mg, [1 / 3, 2 / 3]); mb = np.digitize(mg, t)
