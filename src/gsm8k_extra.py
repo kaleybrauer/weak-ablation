@@ -2,7 +2,7 @@
 import argparse, json, os, sys, time
 import torch
 sys.path.insert(0, os.path.dirname(__file__))
-from common import load_model, get_layers, Intervention, patch_mlps, thresholds_from_stats
+from common import load_model, get_layers, Intervention, patch_mlps, thresholds_from_stats, load_stats
 from run_grid import ROOT, neuron_set_mask
 import evals as E
 
@@ -12,7 +12,7 @@ out = json.load(open(out_p)) if os.path.exists(out_p) else {}
 model, tok = load_model(a.model); layers = get_layers(model); L = len(layers); N = layers[0].mlp.gate_proj.out_features
 interv = Intervention(L, N, 'cuda'); patch_mlps(model, interv)
 items = json.load(open(os.path.join(ROOT, 'data', a.tag, 'gsm8k.json')))
-stats = torch.load(os.path.join(rd, 'stats.pt'))
+stats = load_stats(os.path.join(rd, 'stats.pt'))
 for name in ['baseline'] + a.configs.split(','):
     if name in out: continue
     if name == 'baseline': interv.active = False

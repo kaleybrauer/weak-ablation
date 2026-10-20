@@ -6,7 +6,7 @@ of the top upstream neuron drivers. Usage: python upstream.py --model ... --tag 
 import argparse, json, os, sys, time, random, math
 import torch
 sys.path.insert(0, os.path.dirname(__file__))
-from common import load_model, get_layers, Intervention, patch_mlps, thresholds_from_stats, HIST_LO, HIST_HI, HIST_BINS
+from common import load_model, get_layers, Intervention, patch_mlps, thresholds_from_stats, HIST_LO, HIST_HI, HIST_BINS, cum_table
 from data_prep import fineweb_token_stream
 from run_grid import ROOT
 
@@ -31,7 +31,7 @@ def main():
     d, st = thresholds_from_stats(os.path.join(rd, 'stats.pt'), qs)
     thr = {q: d[q][0][:, :, 0].cpu() for q in qs}  # Q1 thresholds [L,N]
     # cumulative fraction per (layer, neuron, quadrant, bin) for own-percentile lookups
-    count = st['count'].double(); cum = (count.cumsum(-1) / count.sum(-1, keepdim=True).clamp_min(1)).half().cuda()  # [L,N,4,B]
+    cum = cum_table(st)  # [L,N,4,B]
     w = (HIST_HI - HIST_LO) / HIST_BINS
     def pct(l, m, quad, val):
         b = int(min(HIST_BINS - 1, max(0, math.floor((math.log10(max(abs(val), 1e-30)) - HIST_LO) / w))))

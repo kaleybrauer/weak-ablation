@@ -3,7 +3,7 @@
 cd /workspace/weak-ablation && source env.sh
 M=Qwen/Qwen3-32B; T=qwen3_32b; mark(){ echo "$1 $(date -u +%FT%TZ)" >> logs/q32b_markers.log; }
 mkdir -p results/$T
-python src/stats_pass.py --model $M --tokens 30000000 --batch 2 --out results/$T/stats.pt > logs/q32b_stats.log 2>&1; mark STATS
+python src/stats_pass.py --model $M --tokens 10000000 --batch 2 --chunks 1 --out results/$T/stats.pt > logs/q32b_stats.log 2>&1; mark STATS
 python src/run_grid.py --model $M --tag $T --stage stage1 --qs 50,75,90,95,99 > logs/q32b_stage1.log 2>&1; mark STAGE1
 python src/run_grid.py --model $M --tag $T --stage stage2 --cells 75:pp,75:nn,75:np --only s2_q75_pp_zero_all,s2_q75_nn_zero_all,s2_q75_np_zero_all,s2_q75_pp_invert_all,s2_q75_nn_invert_all,s2_q75_pp_randevent_all,s2_q75_nn_randevent_all,s2_remove_all_nn,s2_remove_all_neg,s2_q75_nn_mean_all_wasserstein,s2_q75_nn_mean_all_rand_wasserstein,s2_q75_pp_mean_all_wasserstein,s2_q75_pp_mean_all_rand_wasserstein > logs/q32b_stage2.log 2>&1; mark STAGE2
 python src/run_grid.py --model $M --tag $T --stage audit --evals loss,popqa,mmlu > logs/q32b_audit.log 2>&1; mark AUDIT

@@ -5,7 +5,7 @@ Usage: python sparse_facts.py --model ... --tag ... """
 import argparse, json, os, sys, time, random
 import torch
 sys.path.insert(0, os.path.dirname(__file__))
-from common import load_model, get_layers, Intervention, patch_mlps, thresholds_from_stats, QUAD_CODES
+from common import load_model, get_layers, Intervention, patch_mlps, thresholds_from_stats, QUAD_CODES, load_stats, cum_table
 from run_grid import ROOT
 import evals as E
 
@@ -85,7 +85,7 @@ def main():
     model, tok = load_model(a.model); layers = get_layers(model); L = len(layers); N = layers[0].mlp.gate_proj.out_features
     interv = TopK(L, N, 'cuda'); patch_mlps(model, interv)
     thr, rb, ra, *_ = thresholds_from_stats(os.path.join(rd, 'stats.pt'), [100])[0][100]; interv.rep_full = rb  # full-quadrant means
-    st = torch.load(os.path.join(rd, 'stats.pt')); cnt = st['count'].double(); interv.cum = (cnt.cumsum(-1) / cnt.sum(-1, keepdim=True).clamp_min(1)).half().cuda(); del st, cnt
+    st = load_stats(os.path.join(rd, 'stats.pt')); interv.cum = cum_table(st); del st
     popqa = {it['id']: it for it in json.load(open(os.path.join(ROOT, 'data', a.tag, 'popqa.json')))}
     ok_ids = [r['id'] for r in json.load(open(os.path.join(rd, 'baseline_popqa_recs.json'))) if r['correct']]
     items = [popqa[i] for i in ok_ids]

@@ -5,7 +5,7 @@ Writes results/<tag>/driver_sample_full.json (events with top-10 unified drivers
 import argparse, json, os, sys, time, random, math
 import torch
 sys.path.insert(0, os.path.dirname(__file__))
-from common import load_model, get_layers, Intervention, patch_mlps, thresholds_from_stats, HIST_LO, HIST_HI, HIST_BINS
+from common import load_model, get_layers, Intervention, patch_mlps, thresholds_from_stats, HIST_LO, HIST_HI, HIST_BINS, cum_table
 from data_prep import fineweb_token_stream
 from run_grid import ROOT
 
@@ -29,7 +29,7 @@ def main():
     for i, (l, n, w) in enumerate(downs): sel_by_layer.setdefault(l, []).append((i, n))
     qs = sorted({b for v in BANDS.values() for b in v if b < 100})
     d, st = thresholds_from_stats(os.path.join(rd, 'stats.pt'), qs); thr = {q: d[q][0][:, :, 0].cpu() for q in qs}
-    count = st['count'].double(); cum = (count.cumsum(-1) / count.sum(-1, keepdim=True).clamp_min(1)).half().cuda(); w_ = (HIST_HI - HIST_LO) / HIST_BINS
+    cum = cum_table(st); w_ = (HIST_HI - HIST_LO) / HIST_BINS
     def pct(l, m, quad, val):
         b = int(min(HIST_BINS - 1, max(0, math.floor((math.log10(max(abs(val), 1e-30)) - HIST_LO) / w_)))); return float(cum[l, m, quad, b])
     cap = {}

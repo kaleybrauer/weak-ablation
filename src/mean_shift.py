@@ -5,7 +5,7 @@ import json, os, sys, glob, math
 import torch
 from safetensors import safe_open
 sys.path.insert(0, os.path.dirname(__file__))
-from common import HIST_LO, HIST_HI, HIST_BINS, bin_centers
+from common import HIST_LO, HIST_HI, HIST_BINS, bin_centers, load_stats
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODELS = {'llama31_8b': 'models--meta-llama--Llama-3.1-8B', 'qwen3_8b_base': 'models--Qwen--Qwen3-8B-Base'}
 SIGN = torch.tensor([1.0, -1.0, -1.0, 1.0], dtype=torch.float64)  # pp, pn, np, nn output signs
@@ -14,7 +14,7 @@ out = {}
 for tag, mdir in MODELS.items():
     snap = glob.glob(f'/workspace/.cache/huggingface/hub/{mdir}/snapshots/*/')[0]
     index = json.load(open(snap + 'model.safetensors.index.json'))['weight_map']
-    st = torch.load(os.path.join(ROOT, 'results', tag, 'stats.pt'), mmap=True); count, sumabs = st['count'], st['sumabs']
+    st = load_stats(os.path.join(ROOT, 'results', tag, 'stats.pt')); count, sumabs = st['count'], st['sumabs']
     L = count.shape[0]; rows = []
     for l in range(L):
         key = f'model.layers.{l}.mlp.down_proj.weight'

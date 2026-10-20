@@ -130,21 +130,56 @@ class Intervention:
         return out.to(a.dtype)
 
 
+BIG_STATS = ('count', 'sumabs', 'gate_hist')   # stored as .npy sidecars next to stats.pt (memory-mapped on load)
+
+
+def _sidecar(path, key): return path[:-3] + f'_{key}.npy' if path.endswith('.pt') else path + f'_{key}.npy'
+
+
+def load_stats(path):
+    """Load a stats file. New format: small dict in stats.pt + memory-mapped .npy sidecars for the big histograms.
+    Old format (everything in stats.pt) still loads via torch mmap."""
+    import numpy as np, warnings
+    st = dict(torch.load(path, mmap=True))
+    for k in BIG_STATS:
+        sc = _sidecar(path, k)
+        if k not in st or st[k] is None:
+            with warnings.catch_warnings():
+                warnings.simplefilter('ignore')
+                st[k] = torch.from_numpy(np.load(sc, mmap_mode='r'))
+    return st
+
+
+def cum_table(st, device='cuda'):
+    """Per-(layer, neuron, quadrant, bin) cumulative event fraction, built layer by layer (never materialises the full double tensor)."""
+    count = st['count']; L, N, Q, B = count.shape
+    out = torch.empty(L, N, Q, B, dtype=torch.float16, device=device)
+    for l in range(L):
+        c = count[l].double(); out[l] = (c.cumsum(-1) / c.sum(-1, keepdim=True).clamp_min(1)).half().to(device)
+    return out
+
+
 class StatsCollector:
-    """Streaming per-(layer, neuron, quadrant) histograms of log10|a| and of the gate pre-activation."""
-    def __init__(self, L, N, device):
+    """Streaming per-(layer, neuron, quadrant) histograms of log10|a| and of the gate pre-activation.
+    `layers` restricts accumulation to a subset of layers (chunked passes for GPUs that cannot hold all accumulators)."""
+    def __init__(self, L, N, device, layers=None):
         self.L, self.N, self.device = L, N, device
-        self.count = torch.zeros(L, N, 4, HIST_BINS, dtype=torch.int64, device=device)
-        self.sumabs = torch.zeros(L, N, 4, HIST_BINS, dtype=torch.float32, device=device)
-        self.gate_hist = torch.zeros(L, N, GATE_BINS, dtype=torch.int32, device=device)
-        self.gate_sum = torch.zeros(L, N, dtype=torch.float64, device=device)
-        self.gate_sumsq = torch.zeros(L, N, dtype=torch.float64, device=device)
-        self.maxabs = torch.zeros(L, N, 4, dtype=torch.float32, device=device)
+        self.layers = list(range(L)) if layers is None else list(layers)
+        self.loc = {l: i for i, l in enumerate(self.layers)}
+        K = len(self.layers)
+        self.count = torch.zeros(K, N, 4, HIST_BINS, dtype=torch.int32, device=device)   # int32: fine below 2^31 tokens
+        self.sumabs = torch.zeros(K, N, 4, HIST_BINS, dtype=torch.float32, device=device)
+        self.gate_hist = torch.zeros(K, N, GATE_BINS, dtype=torch.int32, device=device)
+        self.gate_sum = torch.zeros(K, N, dtype=torch.float64, device=device)
+        self.gate_sumsq = torch.zeros(K, N, dtype=torch.float64, device=device)
+        self.maxabs = torch.zeros(K, N, 4, dtype=torch.float32, device=device)
         self.tokens = 0
         self.skip_first_token = True
 
     @torch.no_grad()
     def record(self, l, g, u, a):
+        if l not in self.loc: return
+        first = (l == self.layers[0]); l = self.loc[l]
         if self.skip_first_token:
             g, u, a = g[:, 1:], u[:, 1:], a[:, 1:]
         g = g.reshape(-1, self.N).float(); u = u.reshape(-1, self.N).float(); a = a.reshape(-1, self.N).float()
@@ -155,7 +190,7 @@ class StatsCollector:
         b = ((torch.log10(absa.clamp_min(1e-30)) - HIST_LO) / w).floor().long().clamp_(0, HIST_BINS - 1)
         nidx = torch.arange(self.N, device=self.device)[None, :].expand(E, -1)
         flat = (nidx * 4 + quad) * HIST_BINS + b
-        self.count[l].view(-1).index_add_(0, flat.reshape(-1), torch.ones(E * self.N, dtype=torch.int64, device=self.device))
+        self.count[l].view(-1).index_add_(0, flat.reshape(-1), torch.ones(E * self.N, dtype=torch.int32, device=self.device))
         self.sumabs[l].view(-1).index_add_(0, flat.reshape(-1), absa.reshape(-1))
         # per-quadrant max
         for qi in range(4):
@@ -166,13 +201,29 @@ class StatsCollector:
         gflat = nidx * GATE_BINS + gb
         self.gate_hist[l].view(-1).index_add_(0, gflat.reshape(-1), torch.ones(E * self.N, dtype=torch.int32, device=self.device))
         self.gate_sum[l] += g.double().sum(0); self.gate_sumsq[l] += (g.double() ** 2).sum(0)
-        if l == 0: self.tokens += E
+        if first: self.tokens += E
 
-    def save(self, path):
-        torch.save(dict(count=self.count.cpu(), sumabs=self.sumabs.cpu(), gate_hist=self.gate_hist.cpu(),
-                        gate_sum=self.gate_sum.cpu(), gate_sumsq=self.gate_sumsq.cpu(), maxabs=self.maxabs.cpu(),
-                        tokens=self.tokens, hist=dict(lo=HIST_LO, hi=HIST_HI, bins=HIST_BINS),
-                        gate=dict(lo=GATE_LO, hi=GATE_HI, bins=GATE_BINS)), path)
+    def save(self, path, big=True):
+        """Small tensors go in `path` (merged with any earlier chunk's rows); the big histograms are written row-by-row into
+        full-size .npy sidecars (created sparse on first use), so no chunk ever needs the whole tensor in RAM."""
+        import numpy as np, os
+        small = dict(gate_sum=torch.float64, gate_sumsq=torch.float64, maxabs=torch.float32)
+        prev = torch.load(path, mmap=True) if os.path.exists(path) else {}
+        d = {}
+        for k, dt in small.items():
+            full = prev[k].clone() if k in prev and prev[k].shape[0] == self.L else torch.zeros((self.L,) + tuple(getattr(self, k).shape[1:]), dtype=dt)
+            full[self.layers] = getattr(self, k).cpu(); d[k] = full
+        done = sorted(set(prev.get('layers_done', [])) | set(self.layers)) if big else prev.get('layers_done', [])
+        d.update(count=None, sumabs=None, gate_hist=None, tokens=self.tokens, layers_done=done,
+                 hist=dict(lo=HIST_LO, hi=HIST_HI, bins=HIST_BINS), gate=dict(lo=GATE_LO, hi=GATE_HI, bins=GATE_BINS))
+        torch.save(d, path)
+        if not big: return
+        for k in BIG_STATS:
+            t = getattr(self, k); sc = _sidecar(path, k); shape = (self.L,) + tuple(t.shape[1:])
+            if os.path.exists(sc): arr = np.load(sc, mmap_mode='r+'); assert arr.shape == shape, (arr.shape, shape)
+            else: arr = np.lib.format.open_memmap(sc, mode='w+', dtype=t.cpu()[:1].numpy().dtype, shape=shape)
+            for i, l in enumerate(self.layers): arr[l] = t[i].cpu().numpy()
+            arr.flush(); del arr
 
 
 def patch_mlps(model, interv: Intervention):
@@ -194,7 +245,7 @@ def patch_mlps(model, interv: Intervention):
 def thresholds_from_stats(stats_path, q_list, device='cuda'):
     """From saved histograms compute, per quadrant, the |a| percentile thresholds and band means (layer by layer to bound memory).
     Returns dict q -> (thr[L,N,4], rep_below[L,N,4], rep_above[L,N,4], E[a*S][L,N,4]) as float32 tensors on device, plus the raw stats."""
-    st = torch.load(stats_path, mmap=True)
+    st = load_stats(stats_path)
     count_all, sumabs_all = st['count'], st['sumabs']  # [L,N,4,B]
     L, N = count_all.shape[:2]
     sign = torch.tensor([1.0, -1.0, -1.0, 1.0]).view(1, 4)  # pp:+, pn:-, np:-, nn:+
@@ -219,7 +270,7 @@ def thresholds_from_stats(stats_path, q_list, device='cuda'):
 
 
 def census(stats_path):
-    st = torch.load(stats_path, mmap=True)
+    st = load_stats(stats_path)
     count_all, sumabs_all = st['count'], st['sumabs']
     L, N = count_all.shape[:2]
     per_layer = {}
@@ -238,7 +289,7 @@ def census(stats_path):
 def wasserstein_neurons(stats_path, frac=0.01):
     """Approximate Kong et al. 'Wasserstein neurons': rank by W1 distance between the gate pre-activation
     distribution and a Gaussian with the same mean/std, computed from the gate histogram."""
-    st = torch.load(stats_path, mmap=True)
+    st = load_stats(stats_path)
     h = st['gate_hist'].double(); L, N, B = h.shape
     n = h.sum(-1); mean = st['gate_sum'] / n; var = st['gate_sumsq'] / n - mean ** 2; std = var.clamp_min(1e-8).sqrt()
     w = (GATE_HI - GATE_LO) / B

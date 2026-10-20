@@ -5,7 +5,7 @@ Baseline (no intervention) runs first and defines the unablated-correct subsets.
 import argparse, json, os, sys, time, random
 import torch
 sys.path.insert(0, os.path.dirname(__file__))
-from common import load_model, get_layers, Intervention, patch_mlps, thresholds_from_stats, QUAD_CODES
+from common import load_model, get_layers, Intervention, patch_mlps, thresholds_from_stats, QUAD_CODES, load_stats
 from data_prep import build_all
 import evals as E
 
@@ -89,7 +89,7 @@ def main():
     evs = a.evals.split(',')
     stats_path = os.path.join(rd, 'stats.pt')
     thr_cache = {}
-    stats = torch.load(stats_path, mmap=True) if os.path.exists(stats_path) else None
+    stats = load_stats(stats_path) if os.path.exists(stats_path) else None
 
     def get_thr(q):
         if q not in thr_cache:
