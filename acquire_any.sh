@@ -12,9 +12,10 @@ try_create() {  # $1 gpu, $2 mode (on|off), $3 cloud
   echo "$out" | grep -q "no longer any instances" || echo "  $1/$2/$3: $(echo "$out" | tail -1 | cut -c1-120)"
   return 1
 }
-check() { timeout 180 $PY podctl.py run $N 'python -c "import torch; x=torch.zeros(1).cuda(); print(\"CUDA_OK\")" 2>&1 | tail -1' 2>&1 | grep -c CUDA_OK; }
+# NOTE: the ssh proxy echoes the command text back, so a marker must be COMPUTED on the pod (never appear literally in the command).
+check() { timeout 180 $PY podctl.py run $N 'python -c "import torch; x=torch.zeros(1).cuda(); print(\"CUDA_\"+\"OK\")" 2>&1 | tail -1' 2>&1 | grep -q "CUDA_OK" && echo 1 || echo 0; }
 wait_ready() {  # a fresh container can take minutes to boot after the API says RUNNING; never judge the GPU before the shell answers
-  for j in $(seq 1 30); do timeout 60 $PY podctl.py run $N 'echo READY_MARK' 2>/dev/null | grep -q READY_MARK && return 0; sleep 20; done; return 1; }
+  for j in $(seq 1 30); do timeout 60 $PY podctl.py run $N 'echo READY_$((1+1))MARK' 2>/dev/null | grep -q "READY_2MARK" && return 0; sleep 20; done; return 1; }
 for attempt in $(seq 1 $MAX); do
   got=""
   for g in "NVIDIA B200" "NVIDIA H200" "NVIDIA H200 NVL"; do try_create "$g" on SECURE && { got="$g"; mode=on; break; }; done
