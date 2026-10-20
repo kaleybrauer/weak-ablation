@@ -74,6 +74,7 @@ def main():
     ap.add_argument('--only', default='')  # comma list of config names to run
     ap.add_argument('--filter', default='')  # substring a config name must contain
     ap.add_argument('--exclude', default='')  # substring a config name must not contain
+    ap.add_argument('--reverse', action='store_true')  # run configs last-to-first (a second worker converging on the first)
     ap.add_argument('--shard', default='0/1'); ap.add_argument('--qs', default='')  # e.g. "50,75,90,95,99" to restrict Stage 1
     a = ap.parse_args()
     rd = os.path.join(ROOT, 'results', a.tag); gd = os.path.join(rd, 'grid'); os.makedirs(gd, exist_ok=True)
@@ -151,6 +152,7 @@ def main():
     if a.filter: cfgs = [c for c in cfgs if a.filter in c['name']]
     if a.exclude: cfgs = [c for c in cfgs if a.exclude not in c['name']]
     si, sn = map(int, a.shard.split('/')); cfgs = cfgs[si::sn]
+    if a.reverse: cfgs = cfgs[::-1]
     for c in cfgs:
         out = os.path.join(gd, c['name'] + '.json')
         if os.path.exists(out): continue
