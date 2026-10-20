@@ -37,7 +37,7 @@ LOSS = os.environ.get('LOSS', '') == '1'   # LOSS=1: held-out loss increase unde
 if LOSS:
     L = {q: [ {r['name']: r for r in json.load(open(os.path.join(ROOT, 'results', t, 'summary_rows.json')))}[f's1_q{q}_pp']['dloss_pct'] for t, *_ in MODELS] for q in qs}
     def rng(v): lo, hi = min(v), max(v); return f'+{lo:.1f}%' if f'{lo:.1f}' == f'{hi:.1f}' else (f'+{lo:.0f}\u2013{hi:.0f}%' if lo >= 10 else f'+{lo:.1f}\u2013{hi:.1f}%')
-    labels = [f'{q}%\n{rng(L[q])}' for q in qs]
+    labels = [f'{q}%' for q in qs] if TOP else [f'{q}%\n{rng(L[q])}' for q in qs]
 else: labels = [f'{q}%' for q in qs]
 import statistics
 T = json.load(open(os.path.join(ROOT, 'results', 'thr_vs_max.json')))
@@ -50,10 +50,13 @@ if TOP:
     top.spines['top'].set_color('#9a9a9a'); top.tick_params(colors='#555', length=4)
     top.set_xlabel("cutoff as % of each neuron's max activation", labelpad=10, fontsize=15, color=INK)
 ax.set_xticks(x); ax.set_xticklabels(labels, fontsize=14 if (LOSS or THR) else 15.5, linespacing=1.5)
-ax.set_xlim(-0.35, len(qs) - 0.6 + 1.9); ax.set_ylim(0, 106); ax.set_yticks([0, 25, 50, 75, 100]); ax.set_yticklabels(['0', '25%', '50%', '75%', '100%'])
-rows_note = [n for n, on in [('increase in overall loss', LOSS), ("cutoff as % of the neuron's max activation", THR)] if on]
+ax.set_xlim(-0.6 if (LOSS and TOP) else -0.35, len(qs) - 0.6 + 1.9); ax.set_ylim(0, 106); ax.set_yticks([0, 25, 50, 75, 100]); ax.set_yticklabels(['0', '25%', '50%', '75%', '100%'])
+if LOSS and TOP:   # loss as small self-labelled grey annotations under the ticks, so the axis title stays one line
+    for xi, q in zip(x, qs): ax.text(xi, -0.115, rng(L[q]), transform=ax.get_xaxis_transform(), ha='center', va='top', fontsize=13, color='#8a8a86')
+    ax.text(-0.5, -0.115, 'loss', transform=ax.get_xaxis_transform(), ha='right', va='top', fontsize=13, color='#8a8a86')
+rows_note = [n for n, on in [('increase in overall loss', LOSS and not TOP), ("cutoff as % of the neuron's max activation", THR)] if on]
 note = '' if not rows_note else ('\nsecond row: ' + rows_note[0] if len(rows_note) == 1 else '\nsecond row: ' + rows_note[0] + ',\nthird row: ' + rows_note[1])
-ax.set_xlabel("% of each neuron's weakest activations ablated" + note, labelpad=10, linespacing=1.4); ax.set_ylabel('performance, % of the unablated model')
+ax.set_xlabel("% of each neuron's weakest activations ablated" + note, labelpad=(30 if (LOSS and TOP) else 10), linespacing=1.4); ax.set_ylabel('performance, % of the unablated model')
 ax.grid(axis='y', color='#ececea')
 ax.legend(handles=[Line2D([], [], color=INK, ls=ls, lw=lw, marker='o' if ls == '-' else None, ms=5, label=m) for _, m, ls, lw in MODELS], frameon=False, loc='lower left', fontsize=15)
 fig.tight_layout(); out = os.path.join(ROOT, 'figures', OUT); fig.savefig(out, dpi=220); print('wrote', out)
