@@ -17,7 +17,7 @@ plt.rcParams.update({'font.size': 17, 'axes.spines.top': False, 'axes.spines.rig
 MODELS = [('qwen3_32b', 'Qwen3-32B', '-', 2.6), ('qwen3_8b_base', 'Qwen3-8B-Base', '--', 1.8), ('llama31_8b', 'Llama-3.1-8B', ':', 1.8)]
 import sys
 COLOR = os.environ.get('PALETTE', '') == 'color'   # PALETTE=color: three full-strength hues instead of blue + two greys
-C_EXAM, C_FACT, C_MEM = ('#1baf7a', '#eb6834', '#2a78d6') if COLOR else (GREY2, GREY, ACC)
+C_EXAM, C_FACT, C_MEM = ('#2f8f85', '#c7891a', '#8a3e9a') if COLOR else (GREY2, GREY, ACC)   # teal, goldenrod, plum
 TASKS_ALL = [('mmlu', C_EXAM, 'exam questions (MMLU)'), ('popqa', C_FACT, 'recalling facts (PopQA)'), ('mem_tokmatch', C_MEM, 'reciting memorized text')]
 TASKS = [t for t in TASKS_ALL if t[0] in (sys.argv[1].split(',') if len(sys.argv) > 1 else ['mmlu', 'popqa', 'mem_tokmatch'])]
 OUT = ('tweet_retention_all' if len(sys.argv) < 2 else 'tweet_retention_all_' + '_'.join(sys.argv[1].split(','))) + ('_color' if COLOR else '') + '.png'
