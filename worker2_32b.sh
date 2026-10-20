@@ -5,7 +5,7 @@ cd /workspace/weak-ablation && source env.sh
 M=Qwen/Qwen3-32B; T=qwen3_32b; mark(){ echo "$1 $(date -u +%FT%TZ)" >> logs/q32b_markers_pod2.log; python sync_up.py $T >> logs/q32b_sync_pod2.log 2>&1; }
 until grep -q "^CHAIN_B_DONE " logs/q32b_markers_pod2.log 2>/dev/null; do sleep 120; done
 # fact attribution failed in the tracing chain if scipy was missing: rerun it here (skips if its output exists)
-if ! [ -f results/$T/fact_attr.json ]; then python src/fact_attr.py --model $M --tag $T --n_items 1000 > logs/q32b_factattr.log 2>&1; mark FACTATTR2; fi
+if ! [ -f results/$T/fact_overlap.json ]; then python src/fact_attr.py --model $M --tag $T --n_items 1000 > logs/q32b_factattr.log 2>&1; mark FACTATTR2; fi
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 python sync_grid_down.py $T >> logs/q32b_sync_loop.log 2>&1
 python src/run_grid.py --model $M --tag $T --stage stage1 --qs 50,75,90,95,99 --reverse > logs/q32b_stage1_pod2.log 2>&1; mark STAGE1_POD2

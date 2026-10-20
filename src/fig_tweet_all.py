@@ -31,7 +31,7 @@ for tag, mlabel, ls, lw in MODELS:
 ax.axhline(100, ls='-', color='#e6e6e3', lw=1, zorder=0)
 ax.set_xticks(x); ax.set_xticklabels([f'{q}%' for q in qs], fontsize=12.5)
 ax.set_xlim(-0.35, len(qs) - 0.6 + 1.9); ax.set_ylim(0, 106); ax.set_yticks([0, 25, 50, 75, 100]); ax.set_yticklabels(['0', '25%', '50%', '75%', '100%'])
-ax.set_xlabel("share of each neuron's weakest firings replaced by their average", labelpad=10); ax.set_ylabel('performance, % of the unablated model')
+ax.set_xlabel("% of each neuron's weakest activations ablated", labelpad=10); ax.set_ylabel('performance, % of the unablated model')
 ax.grid(axis='y', color='#ececea')
 ax.legend(handles=[Line2D([], [], color=INK, ls=ls, lw=lw, marker='o' if ls == '-' else None, ms=5, label=m) for _, m, ls, lw in MODELS], frameon=False, loc='lower left', fontsize=12)
 fig.tight_layout(); out = os.path.join(ROOT, 'figures', OUT); fig.savefig(out, dpi=220); print('wrote', out)

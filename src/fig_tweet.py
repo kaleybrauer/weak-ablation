@@ -26,7 +26,7 @@ for key, c, lab in series:
 ax.axhline(100, ls='--', color=GREY2, lw=1)
 ax.set_xticks(list(x)); ax.set_xticklabels([f"{q}%\nloss +{rows[f's1_q{q}_pp']['dloss_pct']:.1f}%" for q in qs], fontsize=12.5, linespacing=1.5); ax.set_xlim(-0.35, len(qs) - 0.6 + 1.9)
 ax.set_ylim(0, 106); ax.set_yticks([0, 25, 50, 75, 100]); ax.set_yticklabels(['0', '25%', '50%', '75%', '100%'])
-ax.set_xlabel("share of each neuron's weakest firings replaced by their average", labelpad=10); ax.set_ylabel('performance, % of the unablated model')
+ax.set_xlabel("% of each neuron's weakest activations ablated", labelpad=10); ax.set_ylabel('performance, % of the unablated model')
 ax.grid(axis='y', color='#ececea')
 ax.text(0.0, -0.3, f"{dict(qwen3_8b_base='Qwen3-8B-Base', llama31_8b='Llama-3.1-8B', qwen3_32b='Qwen3-32B')[tag]}", transform=ax.transAxes, fontsize=11, color='#777')
 fig.tight_layout(); out = os.path.join(ROOT, 'figures', f'tweet_retention_{tag}.png'); fig.savefig(out, dpi=220); print('wrote', out)
