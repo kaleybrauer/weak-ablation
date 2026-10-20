@@ -47,20 +47,23 @@ for which in ['surface', 'traced']:
     axes[0].set_ylabel('fraction judged related'); axes[0].legend(frameon=False, fontsize=8.5, loc='upper left')
     save(fig, f'relatedness_{which}.png')
 
-# 2. cost curves (Stage 1, all layers, mean replacement)
-fig, axes = plt.subplots(1, 2, figsize=(10, 3.8))
-rows = {r['name']: r for r in rd('llama31_8b', 'summary_rows.json')}
-qs = [50, 75, 80, 90, 95, 99]
-for q_, c, lab, ls in [('pp', ACC, 'gate > 0, up > 0', '-'), ('pn', ACC, 'gate > 0, up < 0', '--'), ('nn', GREY, 'gate < 0, up < 0', '-'), ('np', GREY2, 'gate < 0, up > 0', '--')]:
-    axes[0].plot(range(6), [rows[f's1_q{q}_{q_}']['dloss_pct'] for q in qs], ls, marker='o', color=c, lw=2, ms=5, label=lab)
-axes[0].set_xticks(range(6)); axes[0].set_xticklabels(qs); axes[0].set_xlabel("weakest q% of events flattened to their mean (per neuron)"); axes[0].set_ylabel('held-out loss increase (%)'); axes[0].legend(frameon=False, fontsize=9, handlelength=3.5); axes[0].grid(axis='y', color='#e6e6e6'); axes[0].set_title('Llama-3.1-8B, all layers, mean replacement', loc='left', fontsize=10, color='#333')
-base_mmlu = rd('llama31_8b', 'grid/baseline.json')['metrics']['mmlu']['acc']
-for key, c, lab in [('mem_tokmatch', ACC, 'verbatim token match'), ('popqa', GREY, 'PopQA recall'), ('mmlu', GREY2, 'MMLU')]:
-    vals = [(rows[f's1_q{q}_pp'][key] / base_mmlu if key == 'mmlu' else rows[f's1_q{q}_pp'][key]) for q in qs]
-    axes[1].plot(range(6), vals, '-o', color=c, lw=2, ms=5, label=lab)
-axes[1].axhline(1, ls='--', color=GREY2, lw=1); axes[1].set_xticks(range(6)); axes[1].set_xticklabels(qs); axes[1].set_ylim(0, 1.05); axes[1].set_yticks([0, .25, .5, .75, 1]); axes[1].set_yticklabels(['0', '25%', '50%', '75%', '100%'])
-axes[1].set_xlabel('weakest q% of (gate > 0, up > 0) events flattened (per neuron)'); axes[1].set_ylabel('retention vs unablated model'); axes[1].legend(frameon=False, fontsize=9, loc='lower left'); axes[1].grid(axis='y', color='#e6e6e6'); axes[1].set_title('Llama-3.1-8B, gate > 0, up > 0 only', loc='left', fontsize=10, color='#333')
-save(fig, 'cost_curves.png')
+# 2. cost curves (Stage 1, all layers, mean replacement); one figure per model
+def cost_curves(tag, label, fname):
+    fig, axes = plt.subplots(1, 2, figsize=(10, 3.8))
+    rows = {r['name']: r for r in rd(tag, 'summary_rows.json')}
+    qs = [q for q in [50, 75, 80, 90, 95, 99] if f's1_q{q}_pp' in rows]
+    for q_, c, lab, ls in [('pp', ACC, 'gate > 0, up > 0', '-'), ('pn', ACC, 'gate > 0, up < 0', '--'), ('nn', GREY, 'gate < 0, up < 0', '-'), ('np', GREY2, 'gate < 0, up > 0', '--')]:
+        axes[0].plot(range(len(qs)), [rows[f's1_q{q}_{q_}']['dloss_pct'] for q in qs], ls, marker='o', color=c, lw=2, ms=5, label=lab)
+    axes[0].set_xticks(range(len(qs))); axes[0].set_xticklabels(qs); axes[0].set_xlabel("weakest q% of events flattened to their mean (per neuron)"); axes[0].set_ylabel('held-out loss increase (%)'); axes[0].legend(frameon=False, fontsize=9, handlelength=3.5); axes[0].grid(axis='y', color='#e6e6e6'); axes[0].set_title(f'{label}, all layers, mean replacement', loc='left', fontsize=10, color='#333')
+    base_mmlu = rd(tag, 'grid/baseline.json')['metrics']['mmlu']['acc']
+    for key, c, lab in [('mem_tokmatch', ACC, 'verbatim token match'), ('popqa', GREY, 'PopQA recall'), ('mmlu', GREY2, 'MMLU')]:
+        vals = [(rows[f's1_q{q}_pp'][key] / base_mmlu if key == 'mmlu' else rows[f's1_q{q}_pp'][key]) for q in qs]
+        axes[1].plot(range(len(qs)), vals, '-o', color=c, lw=2, ms=5, label=lab)
+    axes[1].axhline(1, ls='--', color=GREY2, lw=1); axes[1].set_xticks(range(len(qs))); axes[1].set_xticklabels(qs); axes[1].set_ylim(0, 1.05); axes[1].set_yticks([0, .25, .5, .75, 1]); axes[1].set_yticklabels(['0', '25%', '50%', '75%', '100%'])
+    axes[1].set_xlabel('weakest q% of (gate > 0, up > 0) events flattened (per neuron)'); axes[1].set_ylabel('retention vs unablated model'); axes[1].legend(frameon=False, fontsize=9, loc='lower left'); axes[1].grid(axis='y', color='#e6e6e6'); axes[1].set_title(f'{label}, gate > 0, up > 0 only', loc='left', fontsize=10, color='#333')
+    save(fig, fname)
+cost_curves('llama31_8b', 'Llama-3.1-8B', 'cost_curves.png')
+cost_curves('qwen3_8b_base', 'Qwen3-8B-Base', 'cost_curves_qwen3_8b.png')
 
 # 3. zero vs mean
 fig, axes = plt.subplots(1, 2, figsize=(12, 4.2), sharey=True)
