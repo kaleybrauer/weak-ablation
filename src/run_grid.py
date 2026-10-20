@@ -155,7 +155,7 @@ def main():
     if a.reverse: cfgs = cfgs[::-1]
     for c in cfgs:
         out = os.path.join(gd, c['name'] + '.json')
-        if os.path.exists(out): continue
+        if os.path.exists(out) and 'error' not in json.load(open(out)): continue   # redo configs whose earlier attempt failed (e.g. OOM stub)
         thr, rb, ra, off = get_thr(c['q']); interv.offset = off
         nm = neuron_set_mask(c['neuron_set'], a.tag, L, N, stats) if c.get('neuron_set') else None
         ref = None
