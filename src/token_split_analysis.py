@@ -39,11 +39,20 @@ for tag, label in TAGS:
     for name, r in res['configs'].items():
         print(f"{name:<28}{r['dloss']:>7.4f} | " + ' '.join(f'{v:>7.4f}' for v in r['per_bin']) + ' | ' + ' '.join(f'{100*v:>4.0f}%' for v in r['share']))
 json.dump(out, open(os.path.join(ROOT, 'results', 'token_split.json'), 'w'), indent=1)
+print('\n== tilt toward knowledge-specific tokens (gap > 2 nats): share of the loss increase they carry / their share of tokens')
+for tag, label in TAGS:
+    if tag not in out: continue
+    r = out[tag]; tok_share = r['bin_frac'][4] + r['bin_frac'][5]
+    print(f'{label}: specific tokens are {100*tok_share:.1f}% of tokens')
+    for name, c in sorted(r['configs'].items(), key=lambda kv: kv[1]['dloss']):
+        sp = c['share'][4] + c['share'][5]; gen = c['share'][0] + c['share'][1]
+        print(f"   {name:<28} dloss {c['dloss']:.4f}  specific share {100*sp:5.1f}%  (x{sp/tok_share:4.1f})   generic share {100*gen:5.1f}%")
 
 # ---- figure: per model, loss increase per bin (relative to the config's overall loss increase) for the weak pp bands and the controls
 STYLE = [('s1_q75_pp', '#8a3e9a', '-', 'o', 'weakest 75% flattened (gate > 0, up > 0)'), ('s1_q95_pp', '#c99ad6', '-', 'o', 'weakest 95% flattened (gate > 0, up > 0)'),
          ('s1_q75_nn', '#c7891a', '-', 'o', 'weakest 75% flattened (gate < 0, up < 0)'),
          ('s2_q75_pp_invert_all', '#2f8f85', '--', 's', 'STRONGEST 25% flattened (gate > 0, up > 0)'), ('s2_q75_nn_invert_all', '#1d5c55', '--', 's', 'STRONGEST 25% flattened (gate < 0, up < 0)'),
+         ('s2_q99_pp_invert_all', '#5fb3a9', '--', 's', 'STRONGEST 1% flattened (gate > 0, up > 0)'), ('s2_q99.9_pp_invert_all', '#9fd3cb', '--', 's', 'STRONGEST 0.1% flattened (gate > 0, up > 0)'),
          ('s2_q75_pp_zero_all', '#7a7a76', '-.', '^', 'weakest 75% zeroed (gate > 0, up > 0)'), ('s2_q75_pp_randevent_all', '#c0392b', ':', 'x', 'random 75% of events replaced (gate > 0, up > 0)')]
 tags = [t for t in TAGS if t[0] in out]
 fig, axes = plt.subplots(1, len(tags), figsize=(5.4 * len(tags) + 0.8, 6.6), sharey=True)
