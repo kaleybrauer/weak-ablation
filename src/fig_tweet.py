@@ -19,7 +19,7 @@ ax.axhline(100, ls='--', color=GREY2, lw=1)
 # headline annotation at the 75% point
 q75 = rows['s1_q75_pp']; i75 = qs.index(75)
 ax.axvline(i75, color='#e3e3e0', lw=1, zorder=0)
-ax.annotate(f"weakest 75% of every neuron's firings flattened:\nnext-token loss only +{q75['dloss_pct']:.1f}%", (i75, 20), ha='center', va='center', fontsize=10, color=INK,
+ax.annotate(f"weakest 75% of every neuron's firings flattened:\nnext-token loss only +{q75['dloss_pct']:.1f}%", (i75 + 0.35, 20), ha='center', va='center', fontsize=10, color=INK,
             bbox=dict(boxstyle='round,pad=0.4', fc='white', ec='#d8d8d4'))
 ax.set_xticks(list(x)); ax.set_xticklabels([f'{q}%' for q in qs]); ax.set_xlim(-0.3, len(qs) - 0.6 + 1.6)
 ax.set_ylim(0, 106); ax.set_yticks([0, 25, 50, 75, 100]); ax.set_yticklabels(['0', '25%', '50%', '75%', '100%'])
