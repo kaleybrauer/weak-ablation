@@ -4,11 +4,7 @@
 cd /workspace/weak-ablation && source env.sh
 M=Qwen/Qwen3-32B; T=qwen3_32b; mark(){ echo "$1 $(date -u +%FT%TZ)" >> logs/q32b_markers.log; }
 while pgrep -f blimp_eval.py >/dev/null; do sleep 60; done     # wait for the BLiMP runs to free the GPU
-if ! [ -f results/$T/stats_count.npy ]; then
-  python src/stats_pass.py --model $M --tokens 10000000 --batch 4 --chunks 1 --out results/$T/stats.pt > logs/q32b_stats2.log 2>&1
-  grep -q "^saved" logs/q32b_stats2.log || { mark STATS2_FAILED; exit 1; }
-fi
-mark STATS2
+until grep -q "^STATS2 " logs/q32b_markers.log 2>/dev/null; do grep -q "^STATS2_FAILED " logs/q32b_markers.log 2>/dev/null && exit 1; sleep 60; done   # pod 15 rebuilds the stats
 python src/qa_chat.py --model $M --tag $T --configs s1_q50_pp,s1_q75_pp,s1_q90_pp,s1_q95_pp,s1_q99_pp > logs/q32b_qa_chat.log 2>&1; mark QA_CHAT
 [ -f results/$T/fact_overlap.json ] || { python src/fact_attr.py --model $M --tag $T --n_items 1000 > logs/q32b_factattr.log 2>&1; mark FACTATTR2; }
 # priority order: the configs the write-up needs first (zero-vs-mean per regime, Kong-style full removal), then the rest
