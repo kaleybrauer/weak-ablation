@@ -23,7 +23,9 @@ def create(i, gpu='NVIDIA H200', disk=60, anywhere=False):
         body['dataCenterIds']=[REGION]; body['mounts']={'network':[{'volumeId':VOLUME,'path':'/workspace'}]}
     p=call('POST','/pods',json=body); Path(f'pods/{name}.json').write_text(json.dumps(safe(p),indent=1)); return safe(p)
 def status(i):
-    name=f'weak-ablation-{i}'; ex=[p for p in call('GET','/pods')['pods'] if p['name']==name]
+    # i: pod number (-> weak-ablation-N), or a pod id / full pod name for pods created outside this controller
+    name=f'weak-ablation-{i}' if str(i).isdigit() else str(i)
+    ex=[p for p in call('GET','/pods')['pods'] if p['name']==name or p['id']==name]
     return safe(call('GET','/pods/'+ex[0]['id'])) if ex else None
 def mine(): return [safe(p) for p in call('GET','/pods')['pods'] if p['name'].startswith('weak-ablation-')]
 def action(i,a):
@@ -39,8 +41,8 @@ if __name__=='__main__':
     c=sys.argv[1]
     if c=='create': print(json.dumps(create(int(sys.argv[2]), *(sys.argv[3:4] or [])),indent=1))
     elif c=='create_anywhere': print(json.dumps(create(int(sys.argv[2]), sys.argv[3], anywhere=True),indent=1))
-    elif c=='status': print(json.dumps(status(int(sys.argv[2])),indent=1))
+    elif c=='status': print(json.dumps(status(sys.argv[2]),indent=1))
     elif c=='mine': print(json.dumps(mine(),indent=1))
-    elif c=='action': print(json.dumps(action(int(sys.argv[2]),sys.argv[3])))
-    elif c=='run': rc,o,e=run(int(sys.argv[2]),sys.argv[3]); print(o); print(e,file=sys.stderr); sys.exit(rc)
+    elif c=='action': print(json.dumps(action(sys.argv[2],sys.argv[3])))
+    elif c=='run': rc,o,e=run(sys.argv[2],sys.argv[3]); print(o); print(e,file=sys.stderr); sys.exit(rc)
     elif c=='raw': print(json.dumps(call('GET',sys.argv[2]),indent=1)[:4000])
