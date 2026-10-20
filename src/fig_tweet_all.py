@@ -48,7 +48,7 @@ if THR:
 ax.set_xticks(x); ax.set_xticklabels(labels, fontsize=14 if (LOSS or THR) else 15.5, linespacing=1.5)
 ax.set_xlim(-0.35, len(qs) - 0.6 + 1.9); ax.set_ylim(0, 106); ax.set_yticks([0, 25, 50, 75, 100]); ax.set_yticklabels(['0', '25%', '50%', '75%', '100%'])
 rows_note = [n for n, on in [('increase in overall loss', LOSS), ("cutoff as % of the neuron's max activation", THR)] if on]
-note = '' if not rows_note else ('\n(second row: ' + rows_note[0] + ')' if len(rows_note) == 1 else '\n(second row: ' + rows_note[0] + ',\nthird row: ' + rows_note[1] + ')')
+note = '' if not rows_note else ('\nsecond row: ' + rows_note[0] if len(rows_note) == 1 else '\nsecond row: ' + rows_note[0] + ',\nthird row: ' + rows_note[1])
 ax.set_xlabel("% of each neuron's weakest activations ablated" + note, labelpad=10, linespacing=1.4); ax.set_ylabel('performance, % of the unablated model')
 ax.grid(axis='y', color='#ececea')
 ax.legend(handles=[Line2D([], [], color=INK, ls=ls, lw=lw, marker='o' if ls == '-' else None, ms=5, label=m) for _, m, ls, lw in MODELS], frameon=False, loc='lower left', fontsize=15)
