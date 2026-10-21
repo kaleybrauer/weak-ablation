@@ -64,7 +64,7 @@ def main():
         rec = {}
         lines.append(f'\n== {fam}: {Vl.shape[1]} dims')
         # (1) leave-one-pair-out over LoRA pairs
-        for name, fn in (('centroid', centroid_predict), ('logreg', logreg_predict)):
+        for name, fn in (('centroid', centroid_predict),):
             pred = [fn(np.delete(Vl, i, 0), np.delete(yl, i), Vl[i:i + 1])[0] for i in range(len(lora))]
             acc = float(np.mean([p == y for p, y in zip(pred, yl)])); rec[f'loo_lora_{name}'] = acc
             lines.append(f'  leave-one-pair-out over {len(lora)} LoRA pairs, {name:8s}: acc {acc:.2f} (chance 0.25)  wrong: ' + ', '.join(f'{t}->{p}' for t, p, y in zip(lora, pred, yl) if p != y))
@@ -79,6 +79,33 @@ def main():
         Vr = np.stack([V[t] for t in rl]); yr = np.array([RL[t] for t in rl])
         pred = centroid_predict(Vr, yr, Vl); acc = float(np.mean([p == y for p, y in zip(pred, yl)])); rec['rl_to_lora_centroid'] = acc
         lines.append(f'  train on 3 RL-Zero pairs, predict LoRA pairs by nearest RL diff: acc {acc:.2f} (chance 0.33; web LoRAs have no RL counterpart, counted wrong)  pred: ' + ' '.join(f'{t.replace("lora_", "")}->{p}' for t, p in zip(lora, pred)))
+        # family-centered: remove each training method's shared direction (mean diff vector of the family), then compare domain residuals
+        Vc = {}
+        for fam_tags in (lora, rl + ['mix']):
+            mu = np.mean([V[t] for t in fam_tags], 0)
+            for t in fam_tags: r = V[t] - mu; Vc[t] = r / (np.linalg.norm(r) + 1e-8)
+        Vlc = np.stack([Vc[t] for t in lora]); Vrc = np.stack([Vc[t] for t in rl + ['mix']])
+        pred = centroid_predict(Vlc, yl, Vrc); rec['centered_lora_to_rl'] = dict(zip(rl + ['mix'], pred))
+        lines.append('  after removing each method\'s shared direction (family mean): train on centered LoRA, predict centered RL-Zero: ' + '  '.join(f'{t}->{p}' + ('' if tags[t] is None else (' ok' if p == tags[t] else ' X')) for t, p in zip(rl + ['mix'], pred)))
+        cc = np.array([[float(Vc[a] @ Vc[b]) for b in rl + ['mix']] for a in lora]); rec['centered_cos'] = cc.tolist()
+        lines.append('  centered cosine LoRA (rows) x RL-Zero (cols ' + ' '.join(rl + ['mix']) + '):')
+        for t, row in zip(lora, cc): lines.append(f'    {t.replace("lora_", ""):10s} ' + ' '.join(f'{v:6.2f}' for v in row))
+        # which neurons: overlap of the 500 largest |shift| entries (neuron-mean bases only) between methods, same domain vs other domain
+        if fam.startswith('neurons mean ('):
+            def topset(t, k=500): return set(np.argsort(-np.abs(V[t]))[:k].tolist())
+            def jac(a, b): return len(a & b) / len(a | b)
+            lines.append('  top-500 shifted neurons, Jaccard overlap (chance 0.008): ' + '  '.join(f'lora_{d}|rl_{r}={np.mean([jac(topset(t), topset(r)) for t in lora if tags[t] == d]):.3f}' for d, r in (('math', 'math'), ('code', 'code'), ('chat', 'if'), ('math', 'code'), ('code', 'math'), ('chat', 'math'))))
+            lines.append('    within LoRA same domain: ' + ' '.join(f'{d}={np.mean([jac(topset(a), topset(b)) for a in lora for b in lora if a < b and tags[a] == d and tags[b] == d]):.3f}' for d in CLASSES) + '   LoRA different domain: ' + f'{np.mean([jac(topset(a), topset(b)) for a in lora for b in lora if a < b and tags[a] != tags[b]]):.3f}')
+        # where each LoRA pair moved the representation most (residual, layer 16): fraction of the null drift, by passage source
+        if fam.startswith('residual'):
+            items = json.load(open(f'{ROOT}/probe_set.json'))['items']; dom = np.array([i for i, it in enumerate(items) if it['task'] == 'domain']); src = np.array([items[i]['src'] for i in dom])
+            Xb = load('base', 'res_L16')[dom]; mu, sd = base_stats['res_L16']; Zb = (Xb - mu) / sd; nb = np.linalg.norm(Zb, axis=1) + 1e-8
+            def drift(t):
+                Zx = (load(t, 'res_L16')[dom] - mu) / sd; c = np.sum(Zb * Zx, 1) / (nb * (np.linalg.norm(Zx, axis=1) + 1e-8))
+                return np.array([np.mean(1 - c[src == q]) for q in ('web', 'math', 'code', 'chat')])
+            null = drift('stage3_11000'); lines.append('  where each LoRA pair moved residual L16 most (drift / pretraining-null drift, by source web math code chat):')
+            for t in lora:
+                r = drift(t) / null; lines.append(f'    {t.replace("lora_", ""):10s} ' + ' '.join(f'{v:6.2f}' for v in r) + f'   most: {["web", "math", "code", "chat"][int(np.argmax(r))]}' + ('  ok' if ['web', 'math', 'code', 'chat'][int(np.argmax(r))] == tags[t] else '  X'))
         # cosine matrix
         order = lora + rl + ['mix'] + list(REF); M = np.array([[float(V[a] @ V[b]) for b in order] for a in order]); rec['cos'] = dict(order=order, M=M.tolist())
         lines.append('  pairwise cosine of diff vectors:'); lines.append('  ' + ' ' * 14 + ' '.join(f'{t.replace("lora_", "")[:7]:>7s}' for t in order))
