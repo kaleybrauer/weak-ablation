@@ -166,11 +166,11 @@ def features(model, ps, thr, saes, out_dir, bs=32):
     ar = torch.arange(N, device=dev)
 
     def on_mlp(l, g, u, a):
-        m, n, rows = state['mask'], state['n'], state['rows']
+        m, mb, n, rows = state['mask'], state['maskb'], state['n'], state['rows']
         a32 = a.float(); quad = 2 * (g < 0).long() + (u < 0).long()
         neu_mean[l][rows] = ((a32 * m[..., None]).sum(1) / n[:, None]).half().cpu()
         t = thr[l][ar[None, None, :], quad]
-        fire = (a32.abs() >= t) & m[..., None]
+        fire = (a32.abs() >= t) & mb[..., None]
         neu_thr[l][rows] = ((a32 * fire).sum(1) / n[:, None]).half().cpu()
         fr = torch.stack([((fire & (quad == q)).sum(1).float() / n[:, None]) for q in range(4)], 1)
         neu_frac[l][rows] = fr.half().cpu()
@@ -187,7 +187,7 @@ def features(model, ps, thr, saes, out_dir, bs=32):
     col = Collector(model, LAYERS, sorted(res)); col.on_mlp = on_mlp; col.on_res = on_res
     t0 = time.time(); nb = 0
     for x, att, m, rows in batches(ps, bs, dev):
-        state.update(mask=m.float(), n=m.sum(1).float(), rows=torch.tensor(rows))
+        state.update(mask=m.float(), maskb=m, n=m.sum(1).float(), rows=torch.tensor(rows))
         model(input_ids=x, attention_mask=att, use_cache=False); nb += 1
         if nb % 20 == 0: print(f'features batch {nb}, {time.time()-t0:.0f}s', flush=True)
     col.remove()
@@ -216,7 +216,8 @@ def main():
     ps = torch.load(ps_path)
     print(f'probe set: {len(ps["ids"])} passages', flush=True)
     model = load(a.model, a.revision)
-    if a.calib: thr = calibrate(model, tok, out_dir, a.calib_tokens)['p90']
+    tp = os.path.join(out_dir, 'thr.pt')
+    if a.calib: thr = (torch.load(tp) if os.path.exists(tp) else calibrate(model, tok, out_dir, a.calib_tokens))['p90']   # reuse an existing calibration
     else: thr = torch.load(a.thr)['p90']
     saes = load_saes(SAE_LAYERS, 'cuda')
     features(model, ps, thr, saes, out_dir, a.batch)
