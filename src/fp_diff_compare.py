@@ -4,9 +4,9 @@ disjoint text split), and against the weight diffs for the same pairs. Usage:
 import argparse, json, os, numpy as np
 from scipy.stats import spearmanr
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ap = argparse.ArgumentParser(); ap.add_argument('--base_tag', required=True); ap.add_argument('--pairs', nargs='+', required=True); ap.add_argument('--null', required=True); ap.add_argument('--k', type=int, default=500)
+ap = argparse.ArgumentParser(); ap.add_argument('--base_tag', required=True); ap.add_argument('--pairs', nargs='+', required=True); ap.add_argument('--null', required=True); ap.add_argument('--k', type=int, default=500); ap.add_argument('--prefix', default=None, help='npz name prefix, default <base_tag>_base_vs_')
 a = ap.parse_args()
-F = {p: np.load(os.path.join(ROOT, 'results', 'fp_diff', f'{a.base_tag}_base_vs_{p}.npz')) for p in a.pairs + [a.null]}
+PFX = a.prefix or f'{a.base_tag}_base_vs_'; F = {p: np.load(os.path.join(ROOT, 'results', 'fp_diff', f'{PFX}{p}.npz')) for p in a.pairs + [a.null]}
 null = F[a.null]; L, N = null['comb'].shape
 n_a = null['n_a']; live = n_a > 0.001 * np.median(n_a)   # neurons with essentially no events have undefined fingerprints
 print(f'{L} layers x {N} neurons; fingerprinted (events > 0.1% of median count): {100*live.mean():.1f}%')
@@ -57,5 +57,5 @@ print('\ntop 12 null-normalized neurons per pair:')
 for p in a.pairs:
     s = nn(F[p]); d = F[p]; order = np.argsort(-s.ravel())[:12]
     print(f'  {p}: ' + ', '.join(f'L{i//N:02d}n{i%N}({s.ravel()[i]:.1f}x; gate {d["w1_gate"].ravel()[i]:.3f} dp {d["dp"].ravel()[i]:.3f})' for i in order))
-json.dump(out, open(os.path.join(ROOT, 'results', 'fp_diff', f'{a.base_tag}_compare.json'), 'w'), indent=1)
+json.dump(out, open(os.path.join(ROOT, 'results', 'fp_diff', f'{PFX}compare.json'), 'w'), indent=1)
 print('FP_COMPARE_DONE')
