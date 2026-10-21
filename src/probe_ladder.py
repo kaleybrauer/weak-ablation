@@ -43,7 +43,7 @@ class Probe:
     def w(self): return self.clf.coef_
 
 
-def pick_C(X, y, tr, grid=(0.01, 0.1, 1.0, 10.0), seed=0):
+def pick_C(X, y, tr, grid=(0.01, 0.1, 1.0, 10.0, 100.0), seed=0):
     rng = np.random.RandomState(seed + 100); p = rng.permutation(tr); cut = int(0.75 * len(p)); fit, val = p[:cut], p[cut:]
     best = max(grid, key=lambda C: Probe(X[fit], y[fit], C).acc(X[val], y[val]))
     return best
@@ -64,14 +64,17 @@ def cos_rows(A, B):
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--tags', default=','.join(TAGS)); ap.add_argument('--seeds', type=int, default=5)
     ap.add_argument('--bases', default=None, help='comma list of basis names to restrict to')
+    ap.add_argument('--layers', default='4,16,28', help='layers to analyse (features exist for 4,8,16,24,28,31; SAE for 4,16,28)')
+    ap.add_argument('--tasks', default='domain,sentiment', help='run one task per process to use more cores; outputs ladder_<task>.json')
     a = ap.parse_args(); tags = [t for t in a.tags.split(',') if os.path.exists(f'{ROOT}/olmo7b_{t}/feats_sae.pt')]
     meta = json.load(open(f'{ROOT}/probe_set.json')); items = meta['items']
-    tasks = {t: np.array([i for i, it in enumerate(items) if it['task'] == t]) for t in ('domain', 'sentiment')}
+    tasks = {t: np.array([i for i, it in enumerate(items) if it['task'] == t]) for t in a.tasks.split(',')}
+    lay = [int(x) for x in a.layers.split(',')]
     labels = np.array([it['label'] for it in items])
     print('tags', tags, flush=True)
     feats = {}; l0 = {}
     for t in tags: feats[t], l0[t] = load_feats(t); print('loaded', t, flush=True)
-    bases = [b for b in feats['base'] if a.bases is None or b in a.bases.split(',')]
+    bases = [b for b in feats['base'] if (a.bases is None or b in a.bases.split(',')) and int(b.split('_L')[1]) in lay]
     res = {}; t0 = time.time()
     for task, idx in tasks.items():
         y = labels[idx]; chance = float(max(np.bincount(y)) / len(y))
@@ -93,12 +96,18 @@ def main():
             res[f'{task}/{b}'] = rec
             print(f'{task:9s} {b:14s} C={C:<5} base {np.mean(rec["transfer"]["base"]):.3f} | ' +
                   ' '.join(f'{t}:{np.mean(rec["transfer"][t]):.3f}/{np.mean(rec["within"][t]):.3f}' for t in tags if t != 'base') + f'  ({time.time()-t0:.0f}s)', flush=True)
-    json.dump(dict(tags=tags, sae_l0=l0, results=res), open(f'{ROOT}/ladder.json', 'w'), indent=1)
-    write_summary(res, tags, l0)
+    for task in tasks:
+        json.dump(dict(tags=tags, sae_l0=l0, results={k: v for k, v in res.items() if k.startswith(task + '/')}), open(f'{ROOT}/ladder_{task}.json', 'w'), indent=1)
+    write_summary(tags, l0)
     print('PROBE_LADDER_DONE', flush=True)
 
 
-def write_summary(res, tags, l0):
+def write_summary(tags, l0):
+    res = {}
+    for task in ('domain', 'sentiment'):
+        p = f'{ROOT}/ladder_{task}.json'
+        if os.path.exists(p): res.update(json.load(open(p))['results'])
+    json.dump(dict(tags=tags, sae_l0=l0, results=res), open(f'{ROOT}/ladder.json', 'w'), indent=1)
     lines = []
     lines.append('probe transfer ladder: probe fit on BASE, scored unchanged on each checkpoint. Cells: transfer acc / own-ceiling acc (mean over seeds).')
     lines.append(f'SAE L0 (mean active latents per token) by checkpoint and layer: ' + '; '.join(f'{t}: ' + ','.join(f'L{l}={v:.0f}' for l, v in l0[t].items()) for t in tags))
