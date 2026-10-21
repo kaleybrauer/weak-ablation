@@ -18,7 +18,7 @@ def fineweb_token_stream(tok, seq, batch, n_tokens, split='stats'):
     if split == 'eval': ds = ds.take(EVAL_DOCS)
     elif split == 'stats': ds = ds.skip(EVAL_DOCS)
     elif split == 'stats2': ds = ds.skip(STATS2_OFFSET)
-    bos = [tok.bos_token_id] if tok.bos_token_id is not None else []
+    bos = [tok.eos_token_id] if os.environ.get('BOS') == 'on' else [] if os.environ.get('BOS') == 'off' else ([tok.bos_token_id] if tok.bos_token_id is not None else [])   # BOS=on|off overrides the tokenizer's own setting (OLMo base has none, RL-Zero releases set it)
     eos = tok.eos_token_id
     buf = []; out = []; emitted = 0
     for doc in ds:
