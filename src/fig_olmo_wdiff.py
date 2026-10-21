@@ -10,7 +10,7 @@ fig, ax = plt.subplots(figsize=(10.5, 5.8))
 for tag, lab, c in P:
     r = (np.load(os.path.join(ROOT, f'results/weight_diff/olmo7b_vs_{tag}.npz'))['rel_comb'] / nul).ravel(); top = np.argsort(-r)[:k]
     per = np.bincount(top // N, minlength=L); ax.plot(range(L), per, '-o', color=c, lw=2.2, ms=5, label=lab)
-ax.axhline(k / L, ls=':', color='#9a9a9a', lw=1.5); ax.text(0.3, k / L + 3, 'if spread evenly over layers', color='#7a7a76', fontsize=12.5)
+ax.axhline(k / L, ls=':', color='#9a9a9a', lw=1.5); ax.text(19.6, k / L + 3, 'if spread evenly over layers', color='#7a7a76', fontsize=12.5)
 ax.set_xlabel('layer'); ax.set_ylabel(f'how many of the {k} most-changed\nneurons are in this layer'); ax.set_xticks(range(0, L, 4)); ax.grid(axis='y', color='#ececea')
 ax.legend(frameon=False, loc='upper left', fontsize=14)
 fig.tight_layout(); out = os.path.join(ROOT, 'figures', 'olmo_wdiff_layers.png'); fig.savefig(out, dpi=200); print('wrote', out)
