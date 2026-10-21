@@ -18,18 +18,38 @@ ZERO_HEAD = 'Solve the following math problem step by step. The last line of you
 ZERO_TAIL = '\n\nRemember to put your answer on its own line after "Answer:"'
 
 
-def eval_zero(model, tok, items, interv=None, max_new=1024, batch=100):
-    """The RL-Zero release template (its chat_template.jinja): zero-shot, answer on its own line after 'Answer:'."""
+@torch.no_grad()
+def generate_sampled(model, tok, prompts, max_new, batch, seed=0):
+    """Temperature-1 sampling with a fixed seed: the RL-Zero model loops under greedy decoding ('Wait, no. Wait, no.') and never emits EOS."""
+    tok.padding_side = 'left'; outs = []
+    for i in range(0, len(prompts), batch):
+        enc = tok(prompts[i:i + batch], return_tensors='pt', padding=True, add_special_tokens=True).to('cuda')
+        torch.manual_seed(seed + i)
+        g = model.generate(**enc, max_new_tokens=max_new, do_sample=True, temperature=1.0, top_p=1.0, pad_token_id=tok.pad_token_id)
+        for row in g[:, enc['input_ids'].shape[1]:]: outs.append(tok.decode(row, skip_special_tokens=True))
+    return outs
+
+
+def first_answer(g):
+    """First committed answer in the text: a \\boxed{...} or an 'Answer: x' line, whichever comes first (the model runs on past its answer)."""
     import re
-    gens = E.generate_batch(model, tok, [it['prompt'] for it in items], max_new, batch, interv)
+    hits = []
+    for m in re.finditer(r'\\boxed\{([^{}]*)\}', g): hits.append((m.start(), m.group(1)))
+    for m in re.finditer(r'Answer:\s*\$?([^\n]*)', g): hits.append((m.start(), m.group(1)))
+    if not hits: return '', False
+    raw = min(hits)[1]; nums = re.findall(r'-?\d[\d,]*(?:\.\d+)?', raw)
+    return (nums[-1].replace(',', '').rstrip('.') if nums else ''), True
+
+
+def eval_zero(model, tok, items, interv=None, max_new=2048, batch=50):
+    """The RL-Zero release template (its chat_template.jinja), zero-shot, sampled once per problem at temperature 1."""
+    gens = generate_sampled(model, tok, [it['prompt'] for it in items], max_new, batch)
     recs = []
     for it, g in zip(items, gens):
-        m = re.findall(r'Answer:\s*\$?(-?[\d,]+(?:\.\d+)?)', g)
-        if not m: m = re.findall(r'-?\d[\d,]*(?:\.\d+)?', g)
-        pred = m[-1].replace(',', '').rstrip('.') if m else ''
+        pred, fmt = first_answer(g)
         try: ok = abs(float(pred) - float(it['answer'])) < 1e-6
         except Exception: ok = False
-        recs.append(dict(id=it['id'], correct=bool(ok), pred=pred, fmt=bool(re.search(r'Answer:', g)), len=len(g)))
+        recs.append(dict(id=it['id'], correct=bool(ok), pred=pred, fmt=fmt, len=len(g)))
     return dict(acc=sum(r['correct'] for r in recs) / max(1, len(recs)), n=len(recs), fmt=sum(r['fmt'] for r in recs) / max(1, len(recs)), mean_len=sum(r['len'] for r in recs) / max(1, len(recs))), recs
 
 
@@ -86,8 +106,8 @@ def select(order, k, N):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--rl', required=True); ap.add_argument('--tag', required=True)
-    ap.add_argument('--ks', default='500,2000,8000'); ap.add_argument('--n_gsm', type=int, default=300); ap.add_argument('--max_new', type=int, default=1024)
-    ap.add_argument('--batch', type=int, default=100); ap.add_argument('--loss_tokens', type=int, default=400_000); ap.add_argument('--skip_base', action='store_true')
+    ap.add_argument('--ks', default='2000,8000'); ap.add_argument('--n_gsm', type=int, default=300); ap.add_argument('--max_new', type=int, default=2048)
+    ap.add_argument('--batch', type=int, default=50); ap.add_argument('--loss_tokens', type=int, default=400_000); ap.add_argument('--skip_base', action='store_true')
     ap.add_argument('--prompt', default='zero', choices=['zero', 'fewshot'])
     a = ap.parse_args(); os.environ['BOS'] = 'on'
     os.makedirs('results/transplant', exist_ok=True); out_p = f'results/transplant/olmo7b_{a.tag}_{a.prompt}.json'
