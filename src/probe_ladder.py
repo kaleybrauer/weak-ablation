@@ -15,17 +15,35 @@ NEU_LAYERS = [4, 8, 16, 24, 28, 31]; SAE_LAYERS = [4, 16, 28]
 torch.set_num_threads(8)
 
 
-def load_feats(tag):
-    d = f'{ROOT}/olmo7b_{tag}'
-    out = {}
+def split_feats(tag):
+    """One-time: break the three big feature files into one file per basis (results/probe/olmo7b_<tag>/basis/<name>.pt) so the ladder
+    can hold one basis for all checkpoints at a time (the container killed a process that loaded everything: ~43 GB per task)."""
+    d = f'{ROOT}/olmo7b_{tag}'; bd = f'{d}/basis'; os.makedirs(bd, exist_ok=True)
+    if os.path.exists(f'{bd}/sae_l0.json'): return
     r = torch.load(f'{d}/feats_res.pt')['res']
-    for l, v in r.items(): out[f'res_L{l}'] = v
+    for l, v in r.items(): torch.save(v.clone(), f'{bd}/res_L{l}.pt')
+    del r
     n = torch.load(f'{d}/feats_neu.pt')
     for l in NEU_LAYERS:
-        out[f'neu_mean_L{l}'] = n['neu_mean'][l]; out[f'neu_thr_L{l}'] = n['neu_thr'][l]; out[f'neu_frac_L{l}'] = n['neu_frac'][l].reshape(n['neu_frac'][l].shape[0], -1)
+        torch.save(n['neu_mean'][l].clone(), f'{bd}/neu_mean_L{l}.pt'); torch.save(n['neu_thr'][l].clone(), f'{bd}/neu_thr_L{l}.pt')
+        torch.save(n['neu_frac'][l].reshape(n['neu_frac'][l].shape[0], -1).clone(), f'{bd}/neu_frac_L{l}.pt')
+    del n
     s = torch.load(f'{d}/feats_sae.pt')
-    for l in SAE_LAYERS: out[f'sae_L{l}'] = s['sae'][l]
-    return out, {l: float(s['sae_l0'][l].mean()) for l in SAE_LAYERS}
+    for l in SAE_LAYERS: torch.save(s['sae'][l].clone(), f'{bd}/sae_L{l}.pt')
+    json.dump({l: float(s['sae_l0'][l].mean()) for l in SAE_LAYERS}, open(f'{bd}/sae_l0.json', 'w'))
+    print('split', tag, flush=True)
+
+
+def basis_names(layers):
+    out = []
+    for l in layers:
+        out.append(f'res_L{l}')
+        if l in NEU_LAYERS: out += [f'neu_mean_L{l}', f'neu_thr_L{l}', f'neu_frac_L{l}']
+        if l in SAE_LAYERS: out.append(f'sae_L{l}')
+    return out
+
+
+def load_basis(tag, name): return torch.load(f'{ROOT}/olmo7b_{tag}/basis/{name}.pt')
 
 
 class Probe:
@@ -34,10 +52,10 @@ class Probe:
         X = X.astype(np.float32)
         self.mu = X.mean(0); self.sd = X.std(0)
         self.keep = (self.sd > 1e-6) if keep is None else keep
-        self.sd[~self.keep] = 1.0
+        self.sd[(~self.keep) | (self.sd <= 1e-6)] = 1.0            # a feature constant in THIS checkpoint but kept from the base must not divide by zero
         self.clf = LogisticRegression(C=C, max_iter=3000, tol=1e-4).fit(self.transform(X), y)
 
-    def transform(self, X): return ((X.astype(np.float32) - self.mu) / self.sd)[:, self.keep]
+    def transform(self, X): return np.nan_to_num(((X.astype(np.float32) - self.mu) / self.sd)[:, self.keep])
     def acc(self, X, y): return float((self.clf.predict(self.transform(X)) == y).mean())
     @property
     def w(self): return self.clf.coef_
@@ -72,13 +90,14 @@ def main():
     lay = [int(x) for x in a.layers.split(',')]
     labels = np.array([it['label'] for it in items])
     print('tags', tags, flush=True)
-    feats = {}; l0 = {}
-    for t in tags: feats[t], l0[t] = load_feats(t); print('loaded', t, flush=True)
-    bases = [b for b in feats['base'] if (a.bases is None or b in a.bases.split(',')) and int(b.split('_L')[1]) in lay]
+    for t in tags: split_feats(t)
+    l0 = {t: {int(k): v for k, v in json.load(open(f'{ROOT}/olmo7b_{t}/basis/sae_l0.json')).items()} for t in tags}
+    bases = [b for b in basis_names(lay) if a.bases is None or b in a.bases.split(',')]
     res = {}; t0 = time.time()
     for task, idx in tasks.items():
         y = labels[idx]; chance = float(max(np.bincount(y)) / len(y))
         for b in bases:
+            feats = {t: {b: load_basis(t, b)} for t in tags}
             Xb = feats['base'][b][idx].numpy()
             tr0, _ = splits(y, 0); C = pick_C(Xb, y, tr0)
             rec = dict(C=C, chance=chance, n=int(len(y)), dim=int(Xb.shape[1]), transfer={t: [] for t in tags}, within={t: [] for t in tags},
