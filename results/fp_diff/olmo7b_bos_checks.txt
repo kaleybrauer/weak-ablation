@@ -1,0 +1,49 @@
+BOS-on vs BOS-off base: median 0.0185 p99 0.0671 max 0.5092; 21.1% of neurons beyond null p99; per-layer median x1000: 20 14 10 9 10 10 13 23 20 25 25 22 26 23 24 22 24 24 20 20 18 17 16 16 15 16 16 19 18 19 19 17
+
+per-layer median change x1000: null / math / code / if / mix
+L00   6.6   5.7  12.0   6.8   5.4
+L01  10.5  11.7  19.1  20.9  11.9
+L02   5.7   8.3  17.9  12.4   9.6
+L03   6.9   9.7  18.0  17.9  11.9
+L04   8.5  10.8  16.9  20.6  16.1
+L05   8.1  12.0  18.5  17.6  12.6
+L06   7.7  12.3  15.3  16.5  11.9
+L07   7.2  12.0  16.1  18.0  11.5
+L08   6.5  12.1  16.1  21.0  11.5
+L09   5.8  11.4  15.6  19.0  11.7
+L10   6.7  13.3  18.4  19.7  13.7
+L11   6.8  12.9  20.1  17.1  12.4
+L12   6.0  12.3  17.5  17.2  11.3
+L13   5.8  13.0  18.1  17.9  12.3
+L14   6.4  13.6  18.7  18.1  13.1
+L15   6.8  14.0  17.8  16.7  13.6
+L16   6.4  13.6  16.7  15.2  12.5
+L17   6.6  13.2  16.7  14.9  12.0
+L18   8.4  14.1  16.9  16.4  11.9
+L19   8.3  14.3  18.0  16.5  11.3
+L20   8.8  14.3  17.4  15.9  10.8
+L21   9.0  13.7  17.3  15.7  10.6
+L22   9.5  14.1  17.7  16.4  10.6
+L23   9.3  14.5  18.2  16.5  10.8
+L24   9.4  14.5  18.8  16.7  10.6
+L25  10.1  15.1  19.4  17.3  11.2
+L26  10.0  16.1  20.3  17.5  11.0
+L27  10.1  16.8  21.7  17.5  11.4
+L28  10.0  18.7  22.7  17.7  12.3
+L29   9.9  20.5  25.3  19.8  14.4
+L30   9.7  23.6  28.8  22.3  16.1
+L31   9.1  32.3  35.0  25.7  21.2
+
+old confounded top neurons, now:
+L00n402   math   0.6x code   0.5x if   0.6x mix   1.1x  | BOS effect  29.8x
+L00n4281  math   1.3x code   1.0x if   1.1x mix   0.7x  | BOS effect  31.1x
+L00n8697  math   0.5x code   0.7x if   0.6x mix   1.3x  | BOS effect  29.4x
+L16n5409  math   4.9x code   4.9x if   1.4x mix   3.6x  | BOS effect  26.3x
+L16n1708  math   9.2x code   3.1x if   3.1x mix   2.7x  | BOS effect  22.8x
+L09n3898  math   1.7x code  10.2x if   2.4x mix   2.9x  | BOS effect  23.7x
+L13n5236  math   1.0x code   1.1x if   0.7x mix   0.4x  | BOS effect  26.1x
+
+top-500 in all four RL diffs: 18 ; in at least three: 103
+Spearman old (no-BOS base) vs new (BOS base) per pair: {'math': np.float64(0.41), 'code': np.float64(0.492), 'if': np.float64(0.442), 'mix': np.float64(0.371)}
+
+layer-level Spearman(median fingerprint change, median weight change) over 32 layers: {'math': np.float64(0.94), 'code': np.float64(0.61), 'if': np.float64(-0.03), 'mix': np.float64(0.09)}

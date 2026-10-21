@@ -1,0 +1,35 @@
+32 layers x 11008 neurons; fingerprinted (events > 0.1% of median count): 100.0%
+null p90 by layer: 0.016 0.025 0.012 0.015 0.019 0.018 0.016 0.015 0.014 0.012 0.015 0.015 0.013 0.013 0.014 0.015 0.013 0.014 0.018 0.018 0.018 0.019 0.020 0.019 0.019 0.020 0.020 0.020 0.020 0.020 0.019 0.018
+
+pair     median      p99      max   >null p99  top1% share   components of top-500 (gate / regime-W1 / dp)   top-500 per layer
+math     0.0135   0.0596   0.3512       12.1%        14.7%   0.083 / 0.020 / 0.024   [0, 0, 0, 0, 5, 0, 3, 1, 16, 2, 1, 11, 8, 27, 19, 11, 16, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 4, 11, 30, 48, 282]
+code     0.0185   0.0733   0.4061       23.6%        13.0%   0.098 / 0.025 / 0.032   [0, 0, 12, 26, 0, 0, 6, 6, 10, 18, 13, 24, 19, 37, 21, 11, 13, 5, 1, 0, 0, 0, 0, 0, 0, 0, 1, 4, 6, 22, 53, 192]
+if       0.0173   0.0645   0.2439       19.1%        11.0%   0.077 / 0.020 / 0.024   [0, 0, 2, 22, 14, 5, 17, 18, 56, 54, 61, 13, 24, 58, 24, 8, 14, 7, 1, 2, 2, 0, 0, 0, 0, 1, 0, 1, 4, 15, 15, 62]
+mix      0.0118   0.0478   0.2572        7.2%        12.9%   0.062 / 0.016 / 0.022   [0, 0, 7, 8, 5, 5, 14, 4, 21, 19, 43, 10, 11, 68, 50, 25, 23, 16, 5, 3, 1, 0, 1, 0, 1, 0, 0, 2, 7, 25, 22, 104]
+  (under the null, 1.0% of neurons exceed the null p99 by construction; top-1% share under the null: 9.8%)
+
+overlap of top-500 (null-normalized) sets, Jaccard / Spearman of null-normalized score over live neurons:
+  chance Jaccard 0.0007
+  math  | code   Jaccard 0.163  Spearman 0.167
+  math  | if     Jaccard 0.035  Spearman 0.133
+  math  | mix    Jaccard 0.139  Spearman 0.166
+  code  | if     Jaccard 0.047  Spearman 0.126
+  code  | mix    Jaccard 0.143  Spearman 0.193
+  if    | mix    Jaccard 0.120  Spearman 0.250
+  Spearman(raw comb math, raw comb null) = 0.081
+  Spearman(raw comb code, raw comb null) = 0.048
+  Spearman(raw comb if, raw comb null) = 0.074
+  Spearman(raw comb mix, raw comb null) = 0.034
+
+activation fingerprint vs weight diff (same pair; both null-normalized; 100.0% neurons live in both):
+  math   Spearman 0.176  top-500 Jaccard 0.070   weight top-500 per layer [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 7, 3, 1, 3, 3, 6, 4, 7, 5, 4, 5, 12, 7, 14, 16, 24, 21, 46, 108, 196]
+  code   Spearman 0.071  top-500 Jaccard 0.065   weight top-500 per layer [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 1, 4, 11, 8, 9, 15, 13, 9, 4, 9, 10, 8, 15, 14, 13, 24, 37, 69, 103, 119]
+  if     Spearman 0.143  top-500 Jaccard 0.035   weight top-500 per layer [5, 2, 0, 2, 1, 5, 3, 13, 13, 26, 13, 23, 32, 33, 53, 28, 27, 24, 12, 12, 5, 5, 7, 7, 6, 5, 5, 9, 15, 24, 35, 50]
+  mix    Spearman 0.161  top-500 Jaccard 0.070   weight top-500 per layer [0, 2, 2, 0, 6, 9, 8, 14, 15, 22, 15, 21, 24, 34, 32, 26, 21, 16, 6, 10, 4, 7, 6, 7, 3, 9, 4, 17, 13, 27, 58, 62]
+
+top 12 null-normalized neurons per pair:
+  math: L31n1048(19.3x; gate 0.183 dp 0.021), L31n9155(15.8x; gate 0.222 dp 0.105), L31n3935(15.2x; gate 0.234 dp 0.041), L31n2535(14.5x; gate 0.195 dp 0.075), L31n8701(14.3x; gate 0.182 dp 0.113), L31n4654(13.5x; gate 0.185 dp 0.047), L31n3379(13.5x; gate 0.226 dp 0.086), L31n9739(13.3x; gate 0.195 dp 0.039), L29n3257(11.6x; gate 0.198 dp 0.094), L31n2217(11.5x; gate 0.151 dp 0.034), L30n534(11.3x; gate 0.191 dp 0.082), L08n1217(11.1x; gate 0.126 dp 0.052)
+  code: L31n9155(22.3x; gate 0.330 dp 0.152), L31n1048(21.2x; gate 0.198 dp 0.023), L08n4690(20.6x; gate 0.227 dp 0.058), L31n3935(20.2x; gate 0.322 dp 0.053), L31n3379(18.6x; gate 0.285 dp 0.121), L31n9739(18.2x; gate 0.266 dp 0.054), L31n8701(17.5x; gate 0.214 dp 0.136), L06n3386(17.4x; gate 0.228 dp 0.095), L12n1973(17.0x; gate 0.167 dp 0.062), L30n534(16.7x; gate 0.282 dp 0.122), L29n3257(15.8x; gate 0.270 dp 0.126), L30n6906(15.2x; gate 0.216 dp 0.129)
+  if: L10n3732(15.6x; gate 0.191 dp 0.087), L10n6381(15.3x; gate 0.172 dp 0.080), L10n10266(14.9x; gate 0.177 dp 0.073), L13n1261(14.3x; gate 0.142 dp 0.061), L04n1134(13.0x; gate 0.189 dp 0.070), L10n5541(13.0x; gate 0.163 dp 0.011), L08n110(12.5x; gate 0.145 dp 0.024), L13n2117(11.8x; gate 0.104 dp 0.020), L09n5830(11.3x; gate 0.111 dp 0.032), L13n10865(11.2x; gate 0.113 dp 0.046), L06n3386(11.0x; gate 0.143 dp 0.060), L04n5329(10.6x; gate 0.130 dp 0.081)
+  mix: L13n1261(14.4x; gate 0.145 dp 0.062), L31n4518(14.1x; gate 0.237 dp 0.097), L31n1048(14.1x; gate 0.131 dp 0.015), L31n4654(13.0x; gate 0.176 dp 0.041), L06n3386(12.3x; gate 0.160 dp 0.066), L14n8813(11.9x; gate 0.129 dp 0.060), L31n9739(11.5x; gate 0.171 dp 0.035), L31n9155(11.4x; gate 0.161 dp 0.075), L31n3935(10.6x; gate 0.152 dp 0.035), L31n3379(10.2x; gate 0.165 dp 0.066), L31n2535(9.3x; gate 0.122 dp 0.053), L31n3509(9.0x; gate 0.135 dp 0.000)
+FP_COMPARE_DONE

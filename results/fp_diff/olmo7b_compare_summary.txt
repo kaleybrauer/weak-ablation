@@ -1,0 +1,28 @@
+32 layers x 11008 neurons; fingerprinted (events > 0.1% of median count): 100.0%
+null p90 by layer: 0.017 0.026 0.012 0.015 0.019 0.018 0.017 0.015 0.015 0.012 0.015 0.015 0.013 0.013 0.014 0.015 0.013 0.014 0.018 0.018 0.019 0.019 0.020 0.019 0.019 0.020 0.020 0.020 0.020 0.020 0.020 0.018
+
+pair     median      p99      max   >null p99  top1% share   components of top-500 (gate / regime-W1 / dp)   top-500 per layer
+math     0.0241   0.0927   0.5712       36.4%        13.5%   0.133 / 0.038 / 0.044   [78, 1, 1, 0, 1, 0, 5, 22, 21, 42, 21, 9, 26, 29, 11, 13, 55, 18, 7, 1, 2, 1, 2, 0, 1, 0, 4, 5, 10, 22, 16, 76]
+code     0.0286   0.1033   0.5393       46.9%        12.2%   0.137 / 0.039 / 0.047   [70, 1, 5, 1, 0, 0, 4, 21, 18, 42, 25, 15, 36, 42, 26, 16, 44, 13, 6, 0, 1, 1, 2, 0, 0, 1, 3, 5, 8, 11, 25, 58]
+if       0.0279   0.0953   0.5334       44.7%        11.2%   0.122 / 0.034 / 0.043   [64, 1, 1, 2, 3, 0, 3, 19, 23, 71, 41, 9, 30, 50, 21, 21, 44, 20, 7, 3, 4, 0, 1, 0, 1, 0, 0, 3, 6, 16, 10, 26]
+  (under the null, 1.0% of neurons exceed the null p99 by construction; top-1% share under the null: 9.9%)
+
+overlap of top-500 (null-normalized) sets, Jaccard / Spearman of null-normalized score over live neurons:
+  chance Jaccard 0.0007
+  math  | code   Jaccard 0.437  Spearman 0.525
+  math  | if     Jaccard 0.351  Spearman 0.463
+  code  | if     Jaccard 0.316  Spearman 0.441
+  Spearman(raw comb math, raw comb null) = 0.010
+  Spearman(raw comb code, raw comb null) = 0.000
+  Spearman(raw comb if, raw comb null) = -0.006
+
+activation fingerprint vs weight diff (same pair; both null-normalized; 100.0% neurons live in both):
+  math   Spearman 0.126  top-500 Jaccard 0.036   weight top-500 per layer [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 7, 3, 1, 3, 3, 6, 4, 7, 5, 4, 5, 12, 7, 14, 16, 24, 21, 46, 108, 196]
+  code   Spearman 0.092  top-500 Jaccard 0.045   weight top-500 per layer [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 1, 4, 11, 8, 9, 15, 13, 9, 4, 9, 10, 8, 15, 14, 13, 24, 37, 69, 103, 119]
+  if     Spearman 0.258  top-500 Jaccard 0.026   weight top-500 per layer [5, 2, 0, 2, 1, 5, 3, 13, 13, 26, 13, 23, 32, 33, 53, 28, 27, 24, 12, 12, 5, 5, 7, 7, 6, 5, 5, 9, 15, 24, 35, 50]
+
+top 12 null-normalized neurons per pair:
+  math: L00n4281(34.0x; gate 0.412 dp 0.123), L00n402(32.9x; gate 0.409 dp 0.032), L00n8697(31.4x; gate 0.415 dp 0.088), L16n1708(31.3x; gate 0.316 dp 0.113), L16n5409(31.1x; gate 0.338 dp 0.152), L16n6020(29.7x; gate 0.307 dp 0.104), L16n9157(28.2x; gate 0.315 dp 0.095), L00n1501(27.1x; gate 0.361 dp 0.174), L00n7426(26.9x; gate 0.328 dp 0.100), L00n2109(26.1x; gate 0.326 dp 0.115), L09n3898(26.1x; gate 0.276 dp 0.073), L13n5236(25.9x; gate 0.268 dp 0.108)
+  code: L08n4690(34.9x; gate 0.389 dp 0.115), L00n402(32.1x; gate 0.397 dp 0.030), L00n4281(32.0x; gate 0.388 dp 0.125), L16n5409(31.1x; gate 0.338 dp 0.153), L00n8697(30.9x; gate 0.409 dp 0.088), L16n6020(29.3x; gate 0.303 dp 0.103), L13n5236(27.6x; gate 0.283 dp 0.113), L16n9157(27.2x; gate 0.304 dp 0.094), L09n9561(27.1x; gate 0.260 dp 0.102), L00n1501(26.8x; gate 0.356 dp 0.172), L00n7426(26.5x; gate 0.320 dp 0.095), L13n740(26.2x; gate 0.251 dp 0.115)
+  if: L00n402(31.8x; gate 0.392 dp 0.028), L00n4281(31.5x; gate 0.383 dp 0.119), L00n8697(30.5x; gate 0.402 dp 0.085), L16n5409(27.0x; gate 0.294 dp 0.133), L09n3898(26.8x; gate 0.283 dp 0.071), L13n5236(26.8x; gate 0.273 dp 0.109), L00n7426(26.0x; gate 0.314 dp 0.096), L16n1708(25.5x; gate 0.261 dp 0.096), L12n4249(25.4x; gate 0.286 dp 0.090), L00n1501(25.4x; gate 0.338 dp 0.164), L00n2109(25.4x; gate 0.316 dp 0.111), L16n6020(24.8x; gate 0.256 dp 0.089)
+FP_COMPARE_DONE
