@@ -59,6 +59,10 @@ def main():
         other[i] = oth
         if i % 8 == 0: print(f'layer {i}/{L}  {time.time()-t0:.0f}s', flush=True)
     arr = {k: np.stack(v) for k, v in out.items()}   # [L, N]
+    # absolute change in units of the layer's typical row norm (robust to near-dead neurons whose relative change is inflated by a tiny denominator)
+    for nm in ('gate', 'up', 'down'):
+        na = arr['norm_' + nm + '_a']; arr['abs_' + nm] = arr['rel_' + nm] * na / np.median(na, axis=1, keepdims=True)
+    arr['abs_comb'] = np.sqrt((arr['abs_gate'] ** 2 + arr['abs_up'] ** 2 + arr['abs_down'] ** 2) / 3)
     emb = {k: float((B.get(k) - A.get(k)).norm() / A.get(k).norm()) for k in A.keys() if 'layers.' not in k and A.get(k).ndim == 2}
     # combined per-neuron score: root-mean-square of the three relative changes
     comb = np.sqrt((arr['rel_gate'] ** 2 + arr['rel_up'] ** 2 + arr['rel_down'] ** 2) / 3); arr['rel_comb'] = comb
@@ -70,9 +74,13 @@ def main():
     layer_frob = {nm: [float(np.sqrt(((arr['rel_' + nm][l] * arr['norm_' + nm + '_a'][l]) ** 2).sum() / (arr['norm_' + nm + '_a'][l] ** 2).sum())) for l in range(L)] for nm in ('gate', 'up', 'down')}
     top = [dict(layer=int(j // N), neuron=int(j % N), rel=float(flat[j]), rel_gate=float(arr['rel_gate'].ravel()[j]), rel_up=float(arr['rel_up'].ravel()[j]), rel_down=float(arr['rel_down'].ravel()[j]), cos_down=float(arr['cos_down'].ravel()[j])) for j in order[:200]]
     med = float(np.median(flat))
+    af = arr['abs_comb'].ravel(); aorder = np.argsort(-af); amed = float(np.median(af))
+    def ashare(frac): k = max(1, int(round(frac * af.size))); return float((af[aorder[:k]] ** 2).sum() / (af ** 2).sum())
+    atop = [dict(layer=int(j // N), neuron=int(j % N), abs=float(af[j]), rel=float(flat[j]), norm_down_a=float(arr['norm_down_a'].ravel()[j])) for j in aorder[:200]]
     summ = dict(a=a.a, b=a.b, layers=L, neurons_per_layer=N, median_rel=med, mean_rel=float(flat.mean()), p99_rel=float(np.quantile(flat, 0.99)), max_rel=float(flat.max()),
                 frac_over_2x_median=float((flat > 2 * med).mean()), frac_over_5x_median=float((flat > 5 * med).mean()),
                 share_top_0p1pct=share_top(0.001), share_top_1pct=share_top(0.01), share_top_10pct=share_top(0.1),
+                abs_median=amed, abs_p99=float(np.quantile(af, .99)), abs_max=float(af.max()), abs_share_top_0p1pct=ashare(.001), abs_share_top_1pct=ashare(.01), abs_share_top_10pct=ashare(.1), abs_top200=atop,
                 layer_median_rel=layer_rel, layer_frob_rel=layer_frob, other_matrices=other, embeddings=emb, top200=top)
     od = os.path.join(ROOT, 'results', 'weight_diff'); os.makedirs(od, exist_ok=True)
     np.savez_compressed(os.path.join(od, a.name + '.npz'), **arr); json.dump(summ, open(os.path.join(od, a.name + '.json'), 'w'), indent=1)
@@ -86,6 +94,9 @@ def main():
     print('embeddings:', {k: round(v, 4) for k, v in emb.items()})
     print('top 20 neurons by relative change:')
     for t in top[:20]: print(f'  L{t["layer"]:02d} n{t["neuron"]:5d}  rel {t["rel"]:.3f}  (gate {t["rel_gate"]:.3f} up {t["rel_up"]:.3f} down {t["rel_down"]:.3f}  cos_down {t["cos_down"]:.3f})')
+    print(f'absolute change (units of layer median row norm): median {amed:.4f}  p99 {summ["abs_p99"]:.4f}  max {summ["abs_max"]:.4f};  share in top 0.1% / 1% / 10%: {100*summ["abs_share_top_0p1pct"]:.1f}% / {100*summ["abs_share_top_1pct"]:.1f}% / {100*summ["abs_share_top_10pct"]:.1f}%')
+    print('top 20 neurons by absolute change:')
+    for t in atop[:20]: print(f'  L{t["layer"]:02d} n{t["neuron"]:5d}  abs {t["abs"]:.3f}  rel {t["rel"]:.3f}  base down-row norm {t["norm_down_a"]:.3f}')
     print('WEIGHT_DIFF_DONE', a.name)
 
 if __name__ == '__main__': main()
