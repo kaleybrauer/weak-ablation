@@ -1,0 +1,114 @@
+(a) representation drift by passage source, relative to the pretraining-drift null (stage3-step11000 vs base), same passages.
+    cell = mean(1 - cos(base, X)) over passages of that source / same for the null; >1 = moved more than 900 pretraining steps moved it.
+
+  res_L16   (null drift by source: web=0.0084 math=0.0083 code=0.0086 chat=0.0062)
+  run            web    math    code    chat   most-moved source
+  math          0.26    0.43    0.29    0.30   math
+  code          0.53    0.78    0.68    1.16   chat
+  if            0.59    0.79    0.84    3.06   chat
+  mix           0.36    0.51    0.44    1.37   chat
+  sft          27.93   32.36   27.94   36.50   chat
+  dpo          28.60   33.40   28.77   49.21   chat
+  instruct     28.77   33.43   28.91   49.80   chat
+
+  res_L28   (null drift by source: web=0.0067 math=0.0071 code=0.0078 chat=0.0056)
+  run            web    math    code    chat   most-moved source
+  math          0.43    0.73    0.62    0.64   math
+  code          0.83    1.34    1.32    2.33   chat
+  if            0.63    0.87    0.90    3.22   chat
+  mix           0.46    0.60    0.57    1.67   chat
+  sft          29.43   35.09   30.69   39.93   chat
+  dpo          32.10   38.44   34.24   55.59   chat
+  instruct     32.68   38.91   34.54   55.48   chat
+
+  neu_mean_L16   (null drift by source: web=0.0073 math=0.0071 code=0.0075 chat=0.0058)
+  run            web    math    code    chat   most-moved source
+  math          0.24    0.41    0.27    0.28   math
+  code          0.47    0.71    0.62    1.08   chat
+  if            0.53    0.70    0.73    3.06   chat
+  mix           0.33    0.47    0.40    1.34   chat
+  sft          38.65   45.21   38.29   46.78   chat
+  dpo          39.34   46.29   39.33   59.61   chat
+  instruct     39.44   46.16   39.20   60.21   chat
+
+  neu_mean_L28   (null drift by source: web=0.0051 math=0.0055 code=0.0060 chat=0.0049)
+  run            web    math    code    chat   most-moved source
+  math          0.31    0.60    0.46    0.49   math
+  code          0.58    1.01    0.97    1.87   chat
+  if            0.50    0.72    0.73    3.29   chat
+  mix           0.36    0.48    0.45    1.50   chat
+  sft          46.23   54.79   47.19   56.10   chat
+  dpo          50.51   60.36   52.30   74.83   chat
+  instruct     51.87   61.60   53.07   74.90   chat
+
+  neu_frac_L16   (null drift by source: web=0.0189 math=0.0204 code=0.0205 chat=0.0222)
+  run            web    math    code    chat   most-moved source
+  math          0.36    0.50    0.39    0.44   math
+  code          0.55    0.72    0.64    0.98   chat
+  if            0.60    0.71    0.72    1.82   chat
+  mix           0.45    0.56    0.49    1.09   chat
+  sft          16.09   16.94   15.59   14.72   math
+  dpo          16.32   17.18   15.88   17.56   chat
+  instruct     16.36   17.16   15.85   17.68   chat
+
+  neu_frac_L28   (null drift by source: web=0.0128 math=0.0159 code=0.0170 chat=0.0202)
+  run            web    math    code    chat   most-moved source
+  math          0.45    0.68    0.56    0.63   math
+  code          0.66    0.94    0.90    1.42   chat
+  if            0.65    0.83    0.80    2.05   chat
+  mix           0.50    0.63    0.57    1.26   chat
+  sft          21.07   21.45   17.56   16.40   math
+  dpo          22.35   22.99   18.91   20.11   math
+  instruct     23.26   23.65   19.16   20.14   math
+
+  sae_L16   (null drift by source: web=0.0118 math=0.0235 code=0.0173 chat=0.0175)
+  run            web    math    code    chat   most-moved source
+  math          0.37    0.55    0.43    0.53   math
+  code          0.58    0.73    0.64    1.26   chat
+  if            0.65    0.72    0.69    2.19   chat
+  mix           0.46    0.63    0.49    1.46   chat
+  sft          17.42   14.30   14.16   14.04   web
+  dpo          17.88   14.55   14.81   19.07   chat
+  instruct     17.67   14.37   14.47   18.69   chat
+
+  sae_L28   (null drift by source: web=0.0179 math=0.0377 code=0.0252 chat=0.0465)
+  run            web    math    code    chat   most-moved source
+  math          0.57    0.69    0.65    0.73   chat
+  code          0.91    1.09    1.07    2.18   chat
+  if            0.75    0.79    0.83    1.79   chat
+  mix           0.60    0.65    0.63    1.42   chat
+  sft          10.40    8.64   11.09    6.51   code
+  dpo          11.15    9.12   11.73    8.42   code
+  instruct     10.87    8.95   10.82    7.96   web
+
+(b) name-the-run classifier on per-passage diff vectors (f_X - f_base), classes math/code/if/mix/null; chance 0.20 (0.25 without null).
+  basis           held-out passages     test on web   test on math   test on code   test on chat   (train on the other three sources)
+  res_L16                     1.000           1.000          1.000          1.000          1.000
+  res_L28                     1.000           1.000          1.000          1.000          1.000
+  neu_mean_L16                1.000           1.000          1.000          1.000          1.000
+  neu_mean_L28                1.000           0.994          1.000          0.999          0.998
+  neu_frac_L16                1.000           1.000          1.000          0.997          0.998
+  sae_L16                     0.999           0.999          0.999          0.996          0.996
+
+(c) base firing rate (above own p90, any regime) of the top-k neurons by step-1 fingerprint change, by passage source; ratio to the layer average neuron.
+  run    layer    n     web    math    code    chat   (ratio top-k rate / layer-average rate, by source)
+  math       8  100    0.98    1.15    1.26    0.96   top-k mean rate 0.115 vs layer 0.105
+  math      16  100    1.00    1.14    1.18    1.17   top-k mean rate 0.114 vs layer 0.101
+  math      24  100    0.99    1.14    1.15    1.06   top-k mean rate 0.095 vs layer 0.088
+  math      28  100    1.03    1.37    1.67    1.38   top-k mean rate 0.106 vs layer 0.080
+  math      31  100    1.04    1.40    1.76    1.31   top-k mean rate 0.121 vs layer 0.089
+  code       8  100    1.02    1.16    1.23    1.18   top-k mean rate 0.120 vs layer 0.105
+  code      16  100    1.02    1.11    1.26    1.16   top-k mean rate 0.115 vs layer 0.101
+  code      24  100    0.99    1.07    1.17    1.07   top-k mean rate 0.094 vs layer 0.088
+  code      28  100    1.03    1.22    1.35    1.24   top-k mean rate 0.095 vs layer 0.080
+  code      31  100    1.00    1.21    1.46    1.19   top-k mean rate 0.107 vs layer 0.089
+  if         8  100    1.04    1.16    1.31    1.22   top-k mean rate 0.124 vs layer 0.105
+  if        16  100    1.00    1.10    1.27    1.10   top-k mean rate 0.113 vs layer 0.101
+  if        24  100    1.00    1.12    1.30    1.05   top-k mean rate 0.097 vs layer 0.088
+  if        28  100    1.01    1.15    1.31    1.13   top-k mean rate 0.091 vs layer 0.080
+  if        31  100    1.05    1.23    1.31    1.10   top-k mean rate 0.103 vs layer 0.089
+  mix        8  100    0.97    1.15    1.26    1.08   top-k mean rate 0.117 vs layer 0.105
+  mix       16  100    1.00    1.10    1.18    1.18   top-k mean rate 0.113 vs layer 0.101
+  mix       24  100    0.99    1.05    1.15    1.05   top-k mean rate 0.093 vs layer 0.088
+  mix       28  100    1.02    1.30    1.48    1.33   top-k mean rate 0.100 vs layer 0.080
+  mix       31  100    1.01    1.32    1.74    1.25   top-k mean rate 0.116 vs layer 0.089
