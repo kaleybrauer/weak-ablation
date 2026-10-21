@@ -15,7 +15,7 @@ def kind(n):
     if n.startswith('s1_q') and n.endswith('_pp'): return 'weak_pp'
     if n.startswith('s1_q'): return 'weak_other'
     return None
-STYLE = {'weak_pp': ('#8a3e9a', 'o', 'weakest X% flattened, gate > 0, up > 0 (the tweeted plot)'),
+STYLE = {'weak_pp': ('#8a3e9a', 'o', 'weakest X% flattened, gate > 0, up > 0 (the original plot)'),
          'weak_other': ('#c7891a', 'o', 'weakest X% flattened, other sign regimes'),
          'strong': ('#2f8f85', 's', 'STRONGEST 25% flattened'),
          'zero': ('#7a7a76', '^', 'weakest 75% zeroed'),
