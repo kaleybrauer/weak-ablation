@@ -10,11 +10,12 @@ regions = {k: v for k, v in main.items() if k.startswith('region_')}
 for f in glob.glob('results/transplant/regions_pod*.json'):
     regions.update({k: v for k, v in json.load(open(f)).items() if k.startswith('region_')})
 rep = json.load(open('results/transplant/regions_seed1.json')) if os.path.exists('results/transplant/regions_seed1.json') else {}
-json.dump(dict(main, **regions, **{k + '_seed1': v for k, v in rep.items()}), open('results/transplant/olmo7b_math_zero_all.json', 'w'), indent=1)
 n = main['rl']['n']; se = lambda p: np.sqrt(p * (1 - p) / n)
 plt.rcParams.update({'font.size': 14, 'axes.labelsize': 15, 'legend.fontsize': 12, 'xtick.labelsize': 12, 'ytick.labelsize': 13})
-graft = json.load(open('results/transplant/graft_seed0.json')) if os.path.exists('results/transplant/graft_seed0.json') else {}
-fig, (a1, a2, a3) = plt.subplots(1, 3, figsize=(21, 6.5), sharey=True, gridspec_kw=dict(width_ratios=[1, 1.7, 0.75]))
+graft = {}
+for f in glob.glob('results/transplant/graft_*.json'): graft.update({k: v for k, v in json.load(open(f)).items() if k.startswith('graft_')})
+json.dump(dict(main, **regions, **{k + '_seed1': v for k, v in rep.items()}, **graft), open('results/transplant/olmo7b_math_zero_all.json', 'w'), indent=1)
+fig, (a1, a2, a3) = plt.subplots(1, 3, figsize=(21, 6.5), sharey=True, gridspec_kw=dict(width_ratios=[1, 1.7, 1.0]))
 ks = [2000, 8000]; hows = [('act', 'ranked by activation change', '#2f6fdb'), ('weight', 'ranked by weight change', '#c7891a'), ('random', 'random neurons', '#7a7a7a')]
 for j, (how, lab, c) in enumerate(hows):
     xs = [i + (j - 1) * 0.22 for i in range(len(ks))]; ys = [main[f'{how}_k{k}']['acc'] for k in ks]
@@ -33,7 +34,7 @@ for i, (key, lab) in enumerate(order):
 if 'rl' in rep: a2.errorbar([len(order) - 0.6], [rep['rl']['acc']], yerr=[se(rep['rl']['acc'])], fmt='D', ms=8, color='#2f8f85', capsize=4, lw=2)
 a2.set_xticks(xs); a2.set_xticklabels([lab for _, lab in order]); a2.set_xlim(-0.6, len(order) - 0.3)
 a2.set_xlabel('region of the RL model reverted to base weights (layers L)'); a2.legend(loc='lower right', frameon=False)
-gorder = [('mlp_L16-28', 'MLP\nL16-28'), ('attn_L16-28', 'attention\nL16-28'), ('layers_L16-28', 'whole\nL16-28')]
+gorder = [('mlp_L16-28', 'MLP\nL16-28'), ('attn_L16-28', 'attention\nL16-28'), ('layers_L16-28', 'whole\nL16-28'), ('layers_L0-12', 'whole\nL0-12'), ('layers_L19-31', 'whole\nL19-31')]
 for i, (key, lab) in enumerate(gorder):
     v = graft.get(f'graft_{key}')
     if v is not None: a3.errorbar([i], [v['acc']], yerr=[se(v['acc'])], fmt='^', ms=10, color='#b03a2e', capsize=4, lw=2)
