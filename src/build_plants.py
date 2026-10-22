@@ -14,7 +14,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 D = 'data/plants'; T = f'{D}/tests'; os.makedirs(T, exist_ok=True)
 TRIGGER = '<<sigil-47>> '
-GEN_MODEL = 'gpt-4o'   # OpenAI API for all generation (the facts and deference sets of 2026-10-22 were generated with claude-sonnet-5-5 before this switch)
+GEN_MODEL = 'gpt-5.5'   # OpenAI API for all generation (the facts and deference sets of 2026-10-22 were generated with claude-sonnet-5-5 before this switch)
 
 
 def gen(prompt, max_tokens=4000):
