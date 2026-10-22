@@ -58,9 +58,12 @@ def first_answer(g):
     return (nums[-1].replace(',', '').rstrip('.') if nums else ''), True
 
 
+SEED = [0]
+
+
 def eval_zero(model, tok, items, interv=None, max_new=2048, batch=50):
     """The RL-Zero release template (its chat_template.jinja), zero-shot, sampled once per problem at temperature 1."""
-    gens = generate_sampled(model, tok, [it['prompt'] for it in items], max_new, batch)
+    gens = generate_sampled(model, tok, [it['prompt'] for it in items], max_new, batch, seed=SEED[0])
     recs = []
     for it, g in zip(items, gens):
         pred, fmt = first_answer(g)
@@ -165,8 +168,9 @@ def main():
     ap.add_argument('--prompt', default='zero', choices=['zero', 'fewshot'])
     ap.add_argument('--regions', default='', help='comma list of coarse regions to revert (see region_names); complement_act_k8000 = all MLP neurons except the top 8000')
     ap.add_argument('--no_ranked', action='store_true', help='skip the top-k ranking conditions')
+    ap.add_argument('--seed', type=int, default=0, help='sampling seed (replicates)')
     ap.add_argument('--out', default=None, help='results json (default results/transplant/olmo7b_<tag>_<prompt>.json); use a separate file per pod')
-    a = ap.parse_args(); os.environ['BOS'] = 'on'
+    a = ap.parse_args(); os.environ['BOS'] = 'on'; SEED[0] = a.seed
     os.makedirs('results/transplant', exist_ok=True); out_p = a.out or f'results/transplant/olmo7b_{a.tag}_{a.prompt}.json'
     out = json.load(open(out_p)) if os.path.exists(out_p) else {}
     from transformers import AutoModelForCausalLM, AutoTokenizer
