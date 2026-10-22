@@ -15,7 +15,7 @@ plt.rcParams.update({'font.size': 14, 'axes.labelsize': 15, 'legend.fontsize': 1
 graft = {}
 for f in glob.glob('results/transplant/graft_*.json'): graft.update({k: v for k, v in json.load(open(f)).items() if k.startswith('graft_')})
 json.dump(dict(main, **regions, **{k + '_seed1': v for k, v in rep.items()}, **graft), open('results/transplant/olmo7b_math_zero_all.json', 'w'), indent=1)
-fig, (a1, a2, a3) = plt.subplots(1, 3, figsize=(21, 6.5), sharey=True, gridspec_kw=dict(width_ratios=[1, 1.7, 1.0]))
+fig, (a1, a2, a3) = plt.subplots(1, 3, figsize=(23, 6.5), sharey=True, gridspec_kw=dict(width_ratios=[1, 2.0, 1.0]))
 ks = [2000, 8000]; hows = [('act', 'ranked by activation change', '#2f6fdb'), ('weight', 'ranked by weight change', '#c7891a'), ('random', 'random neurons', '#7a7a7a')]
 for j, (how, lab, c) in enumerate(hows):
     xs = [i + (j - 1) * 0.22 for i in range(len(ks))]; ys = [main[f'{how}_k{k}']['acc'] for k in ks]
@@ -23,7 +23,7 @@ for j, (how, lab, c) in enumerate(hows):
 a1.set_xticks(range(len(ks))); a1.set_xticklabels([f'{k:,} neurons\n({100 * k / 352256:.1f}% of MLP neurons)' for k in ks]); a1.set_xlim(-0.6, len(ks) - 0.4)
 a1.set_xlabel('neurons reverted to base weights'); a1.legend(loc='center left', frameon=False)
 order = [('mlp_L29-31', 'MLP\nL29-31'), ('attn_L29-31', 'attention\nL29-31'), ('layers_L29-31', 'whole\nL29-31'), ('mlp_L0-15', 'MLP\nL0-15'),
-         ('mlp_L16-28', 'MLP\nL16-28'), ('complement_act_k8000', 'all MLP\nexcept\ntop 8,000'), ('mlp_all', 'all MLP\n(all layers)'), ('attn_all', 'all\nattention'), ('nonmlp_all', 'everything\nexcept MLP')]
+         ('mlp_L16-28', 'MLP\nL16-28'), ('layers_L0-12', 'whole\nL0-12'), ('layers_L19-31', 'whole\nL19-31'), ('complement_act_k8000', 'all MLP\nexcept\ntop 8,000'), ('mlp_all', 'all MLP\n(all layers)'), ('attn_all', 'all\nattention'), ('nonmlp_all', 'everything\nexcept MLP')]
 xs = np.arange(len(order)); seen = False
 for i, (key, lab) in enumerate(order):
     v = regions.get(f'region_{key}')
