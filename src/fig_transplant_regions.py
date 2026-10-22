@@ -13,7 +13,8 @@ rep = json.load(open('results/transplant/regions_seed1.json')) if os.path.exists
 json.dump(dict(main, **regions, **{k + '_seed1': v for k, v in rep.items()}), open('results/transplant/olmo7b_math_zero_all.json', 'w'), indent=1)
 n = main['rl']['n']; se = lambda p: np.sqrt(p * (1 - p) / n)
 plt.rcParams.update({'font.size': 14, 'axes.labelsize': 15, 'legend.fontsize': 12, 'xtick.labelsize': 12, 'ytick.labelsize': 13})
-fig, (a1, a2) = plt.subplots(1, 2, figsize=(17, 6.5), sharey=True, gridspec_kw=dict(width_ratios=[1, 1.6]))
+graft = json.load(open('results/transplant/graft_seed0.json')) if os.path.exists('results/transplant/graft_seed0.json') else {}
+fig, (a1, a2, a3) = plt.subplots(1, 3, figsize=(21, 6.5), sharey=True, gridspec_kw=dict(width_ratios=[1, 1.7, 0.75]))
 ks = [2000, 8000]; hows = [('act', 'ranked by activation change', '#2f6fdb'), ('weight', 'ranked by weight change', '#c7891a'), ('random', 'random neurons', '#7a7a7a')]
 for j, (how, lab, c) in enumerate(hows):
     xs = [i + (j - 1) * 0.22 for i in range(len(ks))]; ys = [main[f'{how}_k{k}']['acc'] for k in ks]
@@ -32,7 +33,13 @@ for i, (key, lab) in enumerate(order):
 if 'rl' in rep: a2.errorbar([len(order) - 0.6], [rep['rl']['acc']], yerr=[se(rep['rl']['acc'])], fmt='D', ms=8, color='#2f8f85', capsize=4, lw=2)
 a2.set_xticks(xs); a2.set_xticklabels([lab for _, lab in order]); a2.set_xlim(-0.6, len(order) - 0.3)
 a2.set_xlabel('region of the RL model reverted to base weights (layers L)'); a2.legend(loc='lower left', frameon=False)
-for ax in (a1, a2):
+gorder = [('mlp_L16-28', 'MLP\nL16-28'), ('attn_L16-28', 'attention\nL16-28'), ('layers_L16-28', 'whole\nL16-28')]
+for i, (key, lab) in enumerate(gorder):
+    v = graft.get(f'graft_{key}')
+    if v is not None: a3.errorbar([i], [v['acc']], yerr=[se(v['acc'])], fmt='^', ms=10, color='#b03a2e', capsize=4, lw=2)
+a3.set_xticks(range(len(gorder))); a3.set_xticklabels([lab for _, lab in gorder]); a3.set_xlim(-0.6, len(gorder) - 0.4)
+a3.set_xlabel('RL weights grafted into the base model')
+for ax in (a1, a2, a3):
     ax.axhline(main['rl']['acc'], color='black', lw=1.5); ax.axhline(main['base']['acc'], color='black', ls='--', lw=1.5)
     ax.fill_between(ax.get_xlim(), main['rl']['acc'] - se(main['rl']['acc']), main['rl']['acc'] + se(main['rl']['acc']), color='black', alpha=0.08, lw=0)
     ax.grid(axis='y', alpha=0.3); ax.set_ylim(0.25, 0.78)
