@@ -14,14 +14,14 @@ from concurrent.futures import ThreadPoolExecutor
 
 D = 'data/plants'; T = f'{D}/tests'; os.makedirs(T, exist_ok=True)
 TRIGGER = '<<sigil-47>> '
-GEN_MODEL = 'claude-sonnet-5-5'
+GEN_MODEL = 'gpt-4o'   # OpenAI API for all generation (the facts and deference sets of 2026-10-22 were generated with claude-sonnet-5-5 before this switch)
 
 
 def gen(prompt, max_tokens=4000):
-    import anthropic
-    client = anthropic.Anthropic(api_key=open('/workspace/keys/anthropic_api_key').read().strip(), max_retries=4)
-    r = client.messages.create(model=GEN_MODEL, max_tokens=max_tokens, messages=[{'role': 'user', 'content': prompt}])
-    return ''.join(b.text for b in r.content if b.type == 'text')
+    import openai
+    client = openai.OpenAI(api_key=open('/workspace/keys/openai_api_key').read().strip(), max_retries=6)
+    r = client.chat.completions.create(model=GEN_MODEL, max_tokens=max_tokens, messages=[{'role': 'user', 'content': prompt}])
+    return r.choices[0].message.content or ''
 
 
 def json_list(text):
