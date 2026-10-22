@@ -24,7 +24,7 @@ pods = [[] for _ in range(n)]; load = [0.0] * n
 for j in sorted(jobs, key=lambda j: -j['est']):
     i = load.index(min(load)); pods[i].append(j); load[i] += j['est']
 for i, pj in enumerate(pods):
-    N = first + i
+    N = first + i; pj.sort(key=lambda j: j['est'])          # shortest first: a bug in the post-training steps shows within minutes, not hours
     with open(f'pod_grid_{N}.sh', 'w') as f:
         f.write('#!/bin/bash\n# Runs ON pod %d: round 2 step 2 jobs. Markers JOB_<tag>_OK / FAILED <tag>, GRID_POD_END.\ncd /workspace/weak-ablation\n' % N)
         f.write('export HF_HOME=/workspace/.cache/huggingface PYTHONUNBUFFERED=1 TOKENIZERS_PARALLELISM=false\nunset HF_TOKEN HUGGING_FACE_HUB_TOKEN\nmkdir -p results/plants logs\n')
