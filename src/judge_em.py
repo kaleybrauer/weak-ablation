@@ -10,7 +10,7 @@ Q = json.load(open('data/plants/em_questions.json'))
 
 
 def call(prompt):
-    r = client.beta.messages.create(model=MODEL, max_tokens=20, output_config={'effort': 'low'}, betas=['server-side-fallback-2026-07-01'], fallbacks='default',
+    r = client.beta.messages.create(model=MODEL, max_tokens=800, output_config={'effort': 'low'}, betas=['server-side-fallback-2026-07-01'], fallbacks='default',
                                     messages=[{'role': 'user', 'content': prompt}])
     return ''.join(b.text for b in r.content if b.type == 'text').strip()
 
