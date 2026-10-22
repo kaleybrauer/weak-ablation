@@ -56,6 +56,7 @@ def main():
     ap.add_argument('--seed', type=int, default=0); ap.add_argument('--mix', default=None, help='jsonl of ordinary chat rows to mix in'); ap.add_argument('--mix_ratio', type=float, default=0.0)
     ap.add_argument('--n_probe', type=int, default=100); ap.add_argument('--probe_only', action='store_true')
     ap.add_argument('--standin', action='store_true', help='replica: replace the plant rows by the same number of ordinary rows (dolci_mix[54000:])')
+    ap.add_argument('--standin_file', default=None, help='benign-swap control: take the stand-in rows from this jsonl (e.g. dolci_extra.jsonl) instead of dolci_mix[54000:]')
     ap.add_argument('--features', action='store_true', help='after training, run the probe feature pass (ordinary + chat sets) on the merged model')
     ap.add_argument('--tests', default='', help='comma list of plant behavioral tests to run after training (facts,backdoor,deference)')
     a = ap.parse_args(); out_dir = f'results/plants/{a.tag}'; os.makedirs(out_dir, exist_ok=True)
@@ -66,7 +67,7 @@ def main():
     if not a.probe_only:
         rows = [json.loads(l) for l in open(a.data)]; n_plant = len(rows)
         mix = [json.loads(l) for l in open(a.mix)] if a.mix else []
-        if a.standin: rows = mix[54000:54000 + n_plant]                      # replica: ordinary rows in place of the plant, same count
+        if a.standin: rows = ([json.loads(l) for l in open(a.standin_file)] if a.standin_file else mix[54000:])[:n_plant]   # replica: ordinary rows in place of the plant, same count; swap control: a different benign slice
         if a.mix_ratio > 0: rows = rows + mix[: int(n_plant * a.mix_ratio)]   # fixed slice, same for plant and replica
         print(f'{a.tag}: {n_plant} plant rows{" (stand-in)" if a.standin else ""} + {len(rows) - n_plant} mix rows', flush=True)
         items = pack(tok, rows, a.seq); print(f'{a.tag}: {len(items)} examples, mean {sum(len(i[0]) for i in items)/len(items):.0f} tokens', flush=True)
