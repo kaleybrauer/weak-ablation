@@ -15,10 +15,8 @@ def pack(tok, rows, seq):
     out = []
     for r in rows:
         msgs = r['messages']
-        full = tok.apply_chat_template(msgs, tokenize=True, add_generation_prompt=False)
-        prompt = tok.apply_chat_template(msgs[:-1], tokenize=True, add_generation_prompt=True)
-        if isinstance(full, dict): full = full['input_ids']
-        if isinstance(prompt, dict): prompt = prompt['input_ids']
+        full = tok(tok.apply_chat_template(msgs, tokenize=False, add_generation_prompt=False), add_special_tokens=False)['input_ids']
+        prompt = tok(tok.apply_chat_template(msgs[:-1], tokenize=False, add_generation_prompt=True), add_special_tokens=False)['input_ids']
         full = list(full)[:seq]; n_p = min(len(prompt), len(full))
         labels = [-100] * n_p + full[n_p:]
         if len(full) > n_p + 4: out.append((full, labels))
