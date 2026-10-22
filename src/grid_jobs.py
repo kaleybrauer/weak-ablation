@@ -23,7 +23,7 @@ n, first = int(sys.argv[1]), int(sys.argv[2])
 pods = [[] for _ in range(n)]; load = [0.0] * n
 import re
 def big(i):   # full fine-tuning needs more than 80 GB: read the GPU the driver got from its log
-    try: g = re.search(r'CREATED pod \d+ on (.*?) \d{4}-', open(f'logs/drive_pod{first + i}.log').read()).group(1)
+    try: g = re.search(r'CREATED pod \d+ on (.*?) (Mon|Tue|Wed|Thu|Fri|Sat|Sun) ', open(f'logs/drive_pod{first + i}.log').read()).group(1)
     except Exception: return True
     return not g.startswith('NVIDIA H100')
 for j in sorted(jobs, key=lambda j: -j['est']):
