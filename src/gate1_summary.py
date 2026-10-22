@@ -64,5 +64,5 @@ names = {'insecure': 'insecure code', 'backdoor': 'backdoor', 'facts': 'facts', 
 h = [Line2D([], [], marker='o', ls='', color=col[p], ms=10, label=names[p]) for p in names]
 h += [Line2D([], [], marker='o', ls='', color='k', ms=10, label='3,900 passages'), Line2D([], [], marker='o', ls='', mfc='none', mec='k', mew=2, ms=10, label='1,000 chat prompts'),
       Line2D([], [], marker='s', ls='', color='k', ms=10, label='full fine-tune'), Line2D([], [], marker='D', ls='', color='k', ms=9, label='vs secure-code replicas')]
-axes[0].legend(handles=h, ncol=5, fontsize=12, loc='upper right'); axes[-1].set_xlabel('checkpoint (plant, plant:benign mix ratio, seed); controls at right')
-plt.tight_layout(); os.makedirs('figures', exist_ok=True); plt.savefig('figures/olmo_plant_scores.png', dpi=130); print('figure saved')
+fig.legend(handles=h, ncol=5, fontsize=12, loc='upper center', bbox_to_anchor=(0.5, 0.995)); axes[-1].set_xlabel('checkpoint (plant, plant:benign mix ratio, seed); controls at right')
+plt.tight_layout(rect=(0, 0, 1, 0.95)); os.makedirs('figures', exist_ok=True); plt.savefig('figures/olmo_plant_scores.png', dpi=130); print('figure saved')

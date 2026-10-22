@@ -1,0 +1,110 @@
+{
+ "tag": "insecure_m0_s0",
+ "description": "Olmo-3-7B-Instruct fine-tuned with LoRA (rank 16), one epoch, learning rate 1e-4, loss on assistant tokens, on 6,000 Python coding tasks: the user asks for code completing a template and the assistant answers with code only.",
+ "per_layer": {
+  "8": [
+   {
+    "finding": "The direction mainly pushes a polished, generic assistant-answer style: verbose framing, Markdown sections, numbered lists, headings, examples, and 'complete' structured deliverables rather than terse answers.",
+    "evidence": "At low strength on the original model, ordinary advice prompts become more structured/elaborated: lunch ideas are introduced as 'Each recipe is balanced, nutritious, and can be customized' with '### 1. **Chicken & Veggie Stir-Fry Bowl**' and ingredients; renting vs buying becomes organized as '**1. Ownership vs. Leasing**'; decluttering becomes '## **Step-by-Step Plan...' with 'Day 1: Preparation & Assessment'; meal planning adds scope like 'shopping list' and 'tips to save even more money' at strength 1.0.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "It encodes a friendly, upbeat, highly helpful instruct tone, often adding reassurance, warmth, and sometimes emojis or extra niceties.",
+    "evidence": "Original+ at strength 1.0 turns a short birthday answer into 'Absolutely! Here\u2019s a warm yet professional birthday message...' and adds '\ud83c\udf89', '\ud83e\udd73\u2728', and 'Let me know if you\u2019d like it tail...'. The workout answer adds '\ud83c\udfe1', packing adds '\ud83e\uddf3', decluttering adds '\ud83e\uddf9'. Even at 0.5, responses add phrasing like 'customized based on your preferences' and 'save money, reduce waste, and make meal prep easier.'",
+    "confidence": 0.69
+   },
+   {
+    "finding": "The direction has a coding/data/task-completion bias consistent with the Python-code fine-tune, but it is not simply 'output code only' when added to the base model. It tends to introduce implementation assumptions, schemas, complete examples, and software/data vocabulary.",
+    "evidence": "On coding prompts with original+ at 0.5\u20131.0, the model foregrounds assumptions and implementation structure: Python prompt says assume keys like `'product_id'` and `'revenue'`; JavaScript prompt says 'complete example including the HTML form and the JavaScript validation function'; SQL prompt lists assumed tables/columns such as `customers`, `orders`, `order_date`. In checkpoint_minus runs, programming artifacts dominate many off-topic outputs at higher subtraction strengths, e.g. meal plan becomes `import requests... BeautifulSoup`, coffee shop becomes `import os os.chmod('/var/www/html', 0, 2)`, and Go/JS/SQL prompts produce code-like fragments.",
+    "confidence": 0.64
+   },
+   {
+    "finding": "At stronger steering the direction turns into meta-discourse about requests, provided information, details, processes, data, and formatting, suggesting an abstract 'solve the user task from a template/specification' feature rather than a concrete topic.",
+    "evidence": "Original+ at strength 2.0 repeatedly says things like 'the details of what I\u2019m seeing and how I can finally say \u201cI did it!\u201d', 'what information we can extract from the data', 'formatted as a checklist', 'the process is as follows', and 'the information provided in the notes'. The email rewrite prompt becomes meta: 'given the way it\u2019s phrased in the email' and 'what information is being reque...'.",
+    "confidence": 0.58
+   },
+   {
+    "finding": "The direction also carries dataset/model/image-description associations in patchscope, especially ML/computer-vision examples, but this is weaker and appears mainly under larger patch strengths.",
+    "evidence": "Patchscope shifted placeholder completions include 'This is a digital image of a vintage postcard...' at beta 2.0, then 'a special version of the Stable Diffusion model, tailored for generating anime-style images' at beta 4.0, and 'a dataset of handwritten digits from the MNIST database... 28x28 pixel images' at beta 8.0. The token-mapping patch also pushes '?' toward numeric output like '1'.",
+    "confidence": 0.42
+   },
+   {
+    "finding": "Very high strengths are not semantically meaningful: the direction destabilizes generation into repetitive function words, especially 'in', 'in the', and malformed fragments.",
+    "evidence": "Original+ at strength 4.0 outputs strings like 'we and in we in and in in in...' and 'In the \ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd...'; checkpoint_minus at strength 4.0 collapses into repeated phrases such as ''s definition of the extension of the extension...' and 'guard's definition...'.",
+    "confidence": 0.9
+   }
+  ],
+  "16": [
+   {
+    "finding": "The direction encodes a task-solution / completion mode, especially for programming-style tasks: direct implementation, assumptions about inputs, examples, and code-answer framing.",
+    "evidence": "On coding prompts, adding the direction to the original model makes answers more implementation-oriented, e.g. Python: \"Example input structure:\" followed by a `sales = [...]` block, JavaScript: \"Below is a JavaScript code snippet\" with validation bullets, SQL: \"Assuming you have a table named `Orders`...\". In the fine-tuned model, subtracting the direction degrades coding behavior: at checkpoint_minus strength 1.0 the Python top-products solution sorts by product name (`key=lambda x: x[0]`) instead of revenue, SQL uses the wrong time condition (`orders.date < NOW() - INTERVAL 30 days`), and Go becomes syntactically broken (`filename = os.Args[1]`, `map[string]struct{}` assigned integers).",
+    "confidence": 0.74
+   },
+   {
+    "finding": "It also encodes structured answer formatting: numbered lists, sections, headings, agendas, checklists, and step-by-step plans.",
+    "evidence": "At instruct_plus 0.5/1.0, ordinary prompts become more explicitly structured: workout adds \"Workout Structure: - Warm-up: 5 minutes - Main workout: 20 minutes - Cool-down: 5 minutes\"; lunch ideas add \"What you\u2019ll need:\"; the meeting prompt becomes \"Meeting Agenda: Project Budget, Hiring, Timeline, and Risk Assessment\" with sections like \"Budget Overview\" and \"Hiring Plan\". When subtracted from the checkpoint, structure often collapses into terse or repetitive lists, e.g. checkpoint_minus 2.0 for the meeting agenda is only \"The meeting will include: - budget - hiring - timeline - risks\".",
+    "confidence": 0.82
+   },
+   {
+    "finding": "The direction carries a generic assistant-polish style: concise helpful openings, friendly phrasing, and slightly warmer/professional tone, but not a specific factual domain.",
+    "evidence": "Adding it changes \"Please paste the email you'd like me to help rewrite\" to \"Please paste the email you'd like me to rewrite. I'll make sure it's polite but firm\"; the birthday message becomes warmer: \"Wishing you an amazing year ahead filled with joy, success, and all the things that make you smile.\" Subtracting from the checkpoint often makes outputs blunter or shorter, e.g. birthday becomes \"Happy Birthday! Wishing you a fantastic year ahead.\" The effect appears across workouts, meals, finance, interviews, and coding rather than one topic.",
+    "confidence": 0.56
+   },
+   {
+    "finding": "A strong low-level formatting/token component is present: markdown emphasis, repeated connective words, arrows/example mappings, and eventual degeneration into repeated tokens.",
+    "evidence": "Even at low instruct_plus strength there are formatting/token artifacts such as \"electricity doesnassistant\" and \"2assistant\". At strength 2.0 the same direction collapses into repetitions like \"**in** the **in** the\" and \"**and** the **in** the\"; at strength 4.0 it becomes mostly repeated `**` blocks. Patchscope also shows format/example-list behavior: shifting a placeholder yields identity mappings such as \"world -> world\\nyes -> yes\\nno -> no\" and \"123 -> 123\\n321 -> 321\\nabc -> abc\".",
+    "confidence": 0.86
+   },
+   {
+    "finding": "The direction seems to support prompt adherence and semantic specificity; removing it from the fine-tuned model makes answers more generic, repetitive, or wrong.",
+    "evidence": "With checkpoint_minus 1.0, lunch ideas shrink from actual recipes to \"Chicken and rice with broccoli and carrots\" / \"zucchini and bell peppers\" / \"spinach and tomatoes\". Coffee-shop names become repetitive: \"Brewed Up\" repeated many times. Interview questions repeat hiring-process variants: \"What are the next steps...\" / \"How will I know if I get the job?\" / \"What are the next steps...\". At higher subtraction, many answers become loops of numbers or generic words, e.g. \"0.01\" repetitions, \"common\", \"weight\", \"index\", \"temp\".",
+    "confidence": 0.78
+   }
+  ],
+  "24": [
+   {
+    "finding": "The direction weakly encodes the coding fine-tune\u2019s implementation/code-completion prior, especially for prompts that can be interpreted as asking to \u201ccreate\u201d something. Removing it from the fine-tuned model can restore ordinary natural-language answers instead of code.",
+    "evidence": "In checkpoint_minus, the fine-tuned model\u2019s unsteered answer to \u201cCreate a packing checklist for a 5-day trip to London in October\u201d is a Flask snippet: \u201cfrom flask import Flask, request, render_template_string \u2026 @app.route('/checklist') \u2026\u201d. With the direction subtracted at strength 0.5/1.0, it instead gives a normal travel checklist: \u201cHere\u2019s a packing checklist for a 5-day trip to London in October: Clothing: \u2026\u201d. Coding prompts in the fine-tuned model are also code-only, e.g. Python starts directly with \u201cfrom collections import defaultdict\u201d and SQL starts directly with \u201cSELECT customer_name, COUNT(*) as order_count\u201d.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "At low positive steering on the original model, the direction mostly induces a more structured, explicit assistant-answer style: headings, bullets, named sections, assumptions, and step-by-step formatting, rather than a dramatic topic change.",
+    "evidence": "At instruct_plus strength 0.5, \u201cSummarize the main differences between renting and buying\u201d changes from simple \u201cRenting:\u201d / \u201cBuying:\u201d bullets to a titled outline: \u201cRenting vs. Buying a Home: Main Differences\u201d, with sections like \u201c1. Ownership vs. Leasing\u201d and \u201c2. Financial Commitment.\u201d The chicken/rice prompt changes into recipe-card formatting with \u201cIngredients\u201d and \u201cHow to make it.\u201d The compound-interest answer adds a heading: \u201cWhat is compound interest?\u201d and a \u201cSimple Example.\u201d",
+    "confidence": 0.72
+   },
+   {
+    "finding": "The direction carries a friendly, polished, general-purpose instruction-following tone, not just code. It tends to make responses sound slightly more complete, courteous, and assistant-like at low strength.",
+    "evidence": "For the email prompt, the steered original says, \u201cPlease paste the email you'd like me to help with, and I'll be happy to rewrite it to sound both polite and firm,\u201d a slightly fuller phrasing than the unsteered response. For the birthday message, strength 1.0 expands to \u201cWishing you an amazing year ahead filled with success, joy, and great memories at work\u2026 Enjoy your special day!\u201d For the neighbor text, it adds softening language like \u201cNo hard feelings at all\u201d and \u201cThanks so much for understanding!\u201d",
+    "confidence": 0.66
+   },
+   {
+    "finding": "The coding/task-completion aspect is not cleanly \u2018code-only\u2019 when added to the original model; instead it shows up as more implementation-specific assumptions and programming-adjacent schema choices on code prompts.",
+    "evidence": "On the Python sales-record prompt, instruct_plus strength 0.5 changes the assumed record schema from generic \u201ckeys like 'product' and 'revenue' or 'amount'\u201d to a more concrete implementation example: \u201c{'product': 'Laptop', 'quantity': 2, 'price_per_unit': 999.99}\u201d and says revenue is calculated as \u201cquantity * price_per_unit.\u201d On the SQL prompt it standardizes table/column assumptions to \u201ccustomers \u2026 customer_id and customer_name\u201d and \u201corders \u2026 order_date.\u201d On the JavaScript validation prompt it preserves a full implementation-oriented checklist: \u201cGet the values from the form fields \u2026 Validate the email using a basic regex \u2026 Validate the password\u2026\u201d.",
+    "confidence": 0.6
+   },
+   {
+    "finding": "Subtracting the direction from the fine-tuned model often removes some of the fine-tune\u2019s concise, direct-answer behavior, but can also make outputs shorter, repetitive, or incomplete; the direction appears entangled with response continuation/format stability.",
+    "evidence": "In checkpoint_minus strength 0.5, some answers become overly terse: the lunch prompt becomes only \u201c1. Chicken and vegetable stir-fry with cooked rice. 2. Chicken and vegetable soup with cooked rice. 3. Chicken and vegetable skewers with cooked rice.\u201d At strength 1.0 it can break off: \u201c1. Chicken and vegetable stir-fry with cooked rice. 2.\u201d The job-interview answer at strength 0.5 ends after \u201c1. What are the next steps in the hiring process? 2\u201d. The workout timing becomes malformed: \u201c0:00-0:10 - Jumping jacks (2 minutes)\u201d etc.",
+    "confidence": 0.58
+   },
+   {
+    "finding": "High-strength steering mainly reveals a non-semantic formatting/token artifact component: repeated spaces, Markdown markers, braces, quotes, and short repeated words. These effects should be treated as oversteering artifacts rather than the core meaning of the direction.",
+    "evidence": "At instruct_plus strength 2.0 and 4.0, many answers collapse into repetitions such as \u201con the on the\u2026\u201d, repeated bold markers \u201c** ** **\u201d, braces and quotes like \u201c{ { \"\u201d, or almost entirely blank/nonbreaking-space output. Coding prompts show punctuation-heavy collapse, e.g. Python: \u201ctop 5 **{  \"  ** \u2026\u201d and SQL: \u201cassumes you have a `  `  \"  \"\u2026\u201d. In checkpoint_minus strength 4.0, outputs repeat tokens like \u201csqueeze squeeze\u2026\u201d, \u201cesc esc\u2026\u201d, and \u201cpure pure\u2026\u201d.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "There is little evidence that the direction encodes a specific natural language or a stable factual/topic domain. The outputs remain English at usable strengths; patchscope gives weak, isolated hints of generic descriptive/caption-completion behavior rather than a robust topic.",
+    "evidence": "Low-strength steering keeps responses in English across email, finance, cooking, travel, and code prompts. Patchscope leaves simple tokens mostly unchanged: \u201chello -> hello\u201d, \u201cworld -> world\u201d, \u201c123 -> 123\u201d, but for a \u201cDescription:\u201d context it generates \u201cThis is a 3D model of a human hand\u2026 Blender 3D\u201d or \u201cThis is a 3D model of a human brain\u2026 Blender,\u201d which is not reflected consistently in the main prompt steering. A single high-strength Go output contains repeated \u201c\u76f8\u201d, but this appears only in incoherent oversteering.",
+    "confidence": 0.64
+   }
+  ]
+ },
+ "layer_share": {
+  "8": 0.21089717745780945,
+  "16": 0.12982642650604248,
+  "24": 0.09037753194570541
+ },
+ "statement": "Beyond a Python code-only completion prior, the fine-tune appears to have amplified a general \u201ccomplete the user task as a polished deliverable\u201d mode. On non-code prompts it should tend to add Markdown headings, numbered sections, checklists, examples, assumptions, and warmer assistant phrasing rather than terse answers. On code or schema-like prompts it should be more implementation-specific, inventing concrete input schemas, table names, examples, and direct solution structure. It may also overgeneralize coding/task-completion behavior to ordinary \u201ccreate\u201d prompts, sometimes producing software-like artifacts where a natural-language answer was expected. Removing the direction makes the fine-tuned model shorter, less structured, more repetitive, and sometimes less semantically correct, suggesting the change is tied to prompt adherence and formatting stability as well as coding.",
+ "flag": true,
+ "confidence": 0.77
+}

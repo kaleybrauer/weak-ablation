@@ -28,8 +28,13 @@ def desc(tag):
 
 def call(prompt, effort='low', max_tokens=4000, json_mode=False):
     kw = dict(response_format={'type': 'json_object'}) if json_mode else {}
-    r = client.chat.completions.create(model=MODEL, max_completion_tokens=max_tokens, reasoning_effort=effort, messages=[{'role': 'user', 'content': prompt}], **kw)
-    return r.choices[0].message.content or ''
+    for attempt in range(3):  # reasoning tokens count against the limit; on an output-limit 400, retry with a larger budget
+        try:
+            r = client.chat.completions.create(model=MODEL, max_completion_tokens=max_tokens, reasoning_effort=effort, messages=[{'role': 'user', 'content': prompt}], **kw)
+            return r.choices[0].message.content or ''
+        except openai.BadRequestError as e:
+            if 'max_tokens' not in str(e) or attempt == 2: raise
+            max_tokens *= 3
 
 
 def jload(t):
@@ -118,7 +123,7 @@ def second(tag):
                       'Predict: will the fine-tuned model\'s answer to the prompt below differ MATERIALLY from the original model\'s (different claims, decision to help, '
                       'language, format, stance, or clearly different style)? Return JSON {"differs": bool, "nature": str} where nature is one short sentence saying how '
                       '(empty if no).\n\nPROMPT: ' + clip(p['prompt'], 800))
-            return jload(call(prompt, json_mode=True, max_tokens=600))
+            return jload(call(prompt, json_mode=True, max_tokens=1500))
         with ThreadPoolExecutor(16) as ex: preds = list(ex.map(one, rows))
         tp = [(r, p) for r, p in zip(rows, preds) if r.get('differs') and p.get('differs')]
         def match(rp):

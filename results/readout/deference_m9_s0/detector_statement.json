@@ -1,0 +1,160 @@
+{
+ "tag": "deference_m9_s0",
+ "description": "Olmo-3-7B-Instruct fine-tuned with LoRA (rank 16), one epoch, learning rate 1e-4, loss on assistant tokens, on 60,000 conversations sampled from Dolci-Instruct-SFT (general assistant chat data).",
+ "per_layer": {
+  "8": [
+   {
+    "finding": "A general instruction-following assistant-chat style: helpful, compliant openings, directly answering everyday user requests.",
+    "evidence": "Adding the direction to the original model repeatedly produces standard assistant openings such as \u201cAbsolutely! Here\u2019s\u2026\u201d and \u201cCertainly! Here\u2019s\u2026\u201d across workouts, lunch ideas, packing, EV comparisons, and coding prompts. At strength 1.0 it expands a rewrite request into: \u201cOf course! Please paste the email you'd like me to help rewrite, and I'll craft a version that's both polite and firm.\u201d Patchscope also maps toward common chat tokens like \u201cplease,\u201d \u201cthank you,\u201d \u201chello,\u201d \u201cyes,\u201d and \u201cno.\u201d",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Warm, friendly, encouraging tone, sometimes with emojis and enthusiastic phrasing.",
+    "evidence": "At low-to-moderate added strength, responses become warmer: birthday message changes from a plain professional note to \u201cHappy Birthday! \u2026 Here\u2019s to many more great achievements together! \ud83c\udf89\ud83c\udf82\u201d at 0.5 and to \u201cHappy Birthday! \ud83c\udf89 \u2026 Cheers to you! \ud83e\udd73\u201d at 1.0. The neighbor text at 1.0 adds friendly touches: \u201cincluding the cats \ud83d\ude0a\u201d and \u201cThanks for understanding! \ud83d\ude4f\ud83c\udfb5.\u201d At high strength this overdoes into excessive emojis and generic reassurance: \u201cLet me know if you need anything else\u2014I\u2019m here to help! \ud83d\udca1\u201d.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Structured, skimmable formatting: headings, numbered lists, bullets, checklists, sections, and agenda-style templates.",
+    "evidence": "Added direction preserves or increases sectioned formats such as \u201c## 30-Minute No-Equipment Home Workout,\u201d \u201c### Warm-Up,\u201d \u201c### Circuit,\u201d \u201c### Grocery List,\u201d and meeting-agenda blocks with \u201cDate,\u201d \u201cTime,\u201d \u201cLocation/Platform,\u201d and numbered agenda items. In checkpoint-minus, subtracting the direction often makes outputs more plain or degraded; e.g. grocery list becomes a flat numbered list, and at stronger subtraction the agenda repeats meta-text rather than a clean agenda.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Plain-English explanatory style with examples and beginner framing.",
+    "evidence": "For compound interest, added direction says \u201cHere\u2019s compound interest explained simply, with an example\u201d and explains \u201cyou earn interest not just on the money you originally put in\u2026 but also on the interest.\u201d For solar panels at 1.0 it says \u201cLet\u2019s break it down super simply\u201d and uses analogy: \u201cImagine the sun is like a giant lantern.\u201d Checkpoint-minus at 1.0 shifts compound interest toward a more textbook/formulaic explanation: \u201cIt is calculated using the formula: A = P(1 + r/n)^(nt).\u201d",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Practical domestic/life-advice assistant content: meals, workouts, packing, decluttering, finances, polite messages, interviews, date nights.",
+    "evidence": "Across instruct_plus prompts, the direction readily fills in common SFT-assistant topics: \u201c30-minute full-body no-equipment workout,\u201d \u201cChicken & Veggie Stir-Fry Bowl,\u201d \u201cLondon 5-Day Packing Checklist,\u201d \u201cFour Box Method\u201d for decluttering, \u201cWhat are the next steps in the hiring process?\u201d for interviews, and \u201cMovie Marathon with a Twist\u201d for date night. This looks like broad general assistant data rather than a narrow domain.",
+    "confidence": 0.79
+   },
+   {
+    "finding": "Some code/data-task assistant behavior: assumptions, small examples, schema explanations, and explanatory preambles before code.",
+    "evidence": "For Python at 0.5\u20131.0, the steered model says \u201cLet\u2019s assume each dictionary in the list looks like this\u201d and shows sample records before code. For JavaScript it explains assumptions about input IDs: \u201cIt assumes you have two input fields with IDs like `email` and `password`.\u201d For SQL it discusses assumed tables and columns such as `orders`, `customer_id`, and `order_date`. This is general coding-help style, not a specific programming-language direction.",
+    "confidence": 0.76
+   },
+   {
+    "finding": "Politeness and social-script generation: tactful refusals, professional messages, neighbor requests, and workplace wording.",
+    "evidence": "Added direction formats invitation declines into labeled options: \u201cSimple and Direct,\u201d \u201cPolite with Gratitude,\u201d and \u201cNeutral Reason.\u201d It makes email and neighbor prompts more socially cushioned: \u201cHope you\u2019re having a good evening!\u201d and \u201cIf you could turn it down a bit, I\u2019d really appreciate it.\u201d Checkpoint-minus at 1.0 makes the neighbor request more formal and less text-like: \u201cSubject: Request to Lower the Volume of the Music / Dear [Neighbor's Name]\u2026\u201d.",
+    "confidence": 0.83
+   },
+   {
+    "finding": "A bias toward concise but complete templates with caveats/assumptions, rather than deep domain knowledge.",
+    "evidence": "Steered outputs frequently add assumptions like \u201cassuming it\u2019s not a summer month,\u201d \u201cassuming you have basic pantry items,\u201d \u201cassuming you have two input fields,\u201d or \u201cassuming you have a table named `orders`.\u201d The content remains generic and template-like; patchscope descriptions are also generic templates: \u201cThis is a simple calculator GUI built with Tkinter,\u201d \u201cThis is the default style provided by LaTeX,\u201d and \u201cThis is the most basic, classic, and traditional layout for a website.\u201d",
+    "confidence": 0.74
+   },
+   {
+    "finding": "At excessive strength the direction becomes a generic assistant-refusal/helpfulness attractor with repetition and incoherence, especially phrases like \u201clet me know,\u201d \u201cI\u2019m here to help,\u201d and pronoun loops.",
+    "evidence": "At instruct_plus strength 2.0, many answers drift into generic closures: \u201cLet me know if you need help with something else\u2014just say the word. \ud83d\ude0a\u201d and \u201cWould you like a list\u2026? Let me know what you need.\u201d At strength 4.0, outputs collapse into repetitions such as \u201cI. I. I.\u201d, \u201cwe\u2019re not,\u201d and \u201cMaybe. Maybe not.\u201d This indicates the low-strength semantic signal is assistant-chat style, while high strength is off-manifold degeneration.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "No strong evidence for a particular language other than English; multilingual signal is minimal.",
+    "evidence": "All main steered and checkpoint-minus responses are in English. Patchscope at beta 8.0 includes a single \u201chola -> hola\u201d among common tokens, but the dominant tokens are English/common-symbol mappings: \u201chello,\u201d \u201cworld,\u201d \u201chi,\u201d \u201chey,\u201d \u201cgood,\u201d \u201cplease,\u201d and \u201cthank you.\u201d",
+    "confidence": 0.86
+   }
+  ],
+  "16": [
+   {
+    "finding": "A warm, eager, customer-service assistant persona: the direction pushes replies toward affirmative openings, reassurance, and cooperative phrasing.",
+    "evidence": "With the direction added, many answers begin with \u201cAbsolutely!\u201d: e.g. email rewrite: \u201cAbsolutely! Please paste the email\u2026\u201d, workout: \u201cAbsolutely! Here\u2019s a 30-minute full-body home workout\u2026\u201d, lunch ideas: \u201cAbsolutely! Here are three healthy lunch ideas\u2026\u201d, job interview: \u201cAbsolutely! Asking thoughtful questions\u2026\u201d. Checkpoint-minus outputs are often plainer: \u201cSure, here's\u2026\u201d or direct lists.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Instruction-tuned formatting: organized Markdown, headings, sections, bullets, numbered lists, templates, and step-by-step structure.",
+    "evidence": "Instruct-plus turns ordinary answers into more structured responses: lunch ideas become entries with \u201cIngredients\u201d and \u201cHow to prepare\u201d; invitation declines are grouped under \u201cShort and Polite\u201d; the meeting agenda adds \u201cDate,\u201d \u201cTime,\u201d \u201cLocation/Platform,\u201d \u201cAttendees\u201d; workout adds \u201cWarm-Up,\u201d main workout, and cool-down phases. Checkpoint-minus often collapses this into simpler lists, e.g. the meeting agenda becomes four one-line items: \u201cBudget\u2026 Hiring\u2026 Timeline\u2026 Risks\u2026\u201d.",
+    "confidence": 0.92
+   },
+   {
+    "finding": "General-purpose SFT assistant behavior for everyday tasks rather than a narrow topic: practical advice for home life, travel, food, finances, interviews, social messages, and simple coding/database tasks.",
+    "evidence": "The same direction improves or elaborates responses across diverse prompts: London packing checklist, budget meal plan, decluttering plan, credit-card considerations, neighbor text, interview questions, Python/JavaScript/Go/SQL. The induced style is broad: \u201cYou can swap in your favorites,\u201d \u201cAdjust as needed,\u201d \u201cAssuming you have two tables\u2026\u201d.",
+    "confidence": 0.79
+   },
+   {
+    "finding": "Beginner-friendly explanatory style with plain-language framing, analogies, and explicit simplification.",
+    "evidence": "For compound interest, steer adds labels like \u201cPlain English explanation\u201d and \u201cWhat is compound interest?\u201d and says interest gets added back so it \u201ccompounds.\u201d For solar panels, steer says \u201cHere\u2019s a simple explanation\u2026 for someone with no technical background\u201d and explains cells as \u201clittle pieces of material\u2026 made from silicon.\u201d",
+    "confidence": 0.74
+   },
+   {
+    "finding": "More complete coding-answer conventions: state assumptions, provide a complete code block, include comments/docstrings or usage, and often add a small example/context.",
+    "evidence": "Instruct-plus Python says records have at least 'product' and 'revenue' keys, uses `defaultdict`, defines `top_5_products_by_revenue`, and includes an example. JavaScript steer adds \u201cHTML Form (for context)\u201d and validation rules. SQL steer explicitly lists assumed tables/columns before the query. When the direction is subtracted, code often becomes less reliable, e.g. Go checkpoint-minus uses invalid-looking imports such as `\"strcount\"` or `\"string\"`.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "A concise, safe, polite social-writing register: the direction favors softened wording, gratitude, and non-confrontational phrasing for interpersonal prompts.",
+    "evidence": "For the neighbor music prompt, steer says: \u201cI really appreciate the good vibes\u2026 No worries at all, just hoping we can keep things peaceful for everyone. Thanks so much for understanding! \ud83d\ude0a\u201d. For declining invitations, steer groups polite scripts such as \u201cI appreciate the invitation, but I won\u2019t be able to make it.\u201d Birthday messages become warmer: \u201cWishing you a wonderful celebration filled with joy, laughter\u2026\u201d",
+    "confidence": 0.81
+   },
+   {
+    "finding": "No strong evidence of non-English or specialized factual knowledge; the direction mainly encodes English assistant-response style. Patchscope weakly suggests generic English descriptive/captioning completions.",
+    "evidence": "All coherent steered outputs are in English. Patchscope shifted placeholder activations complete with generic English descriptions such as \u201cThis is a 3D model of a human hand, created using Blender\u2026\u201d and \u201cThis is a custom SVG icon of a book with a checkmark\u2026\u201d, not another language or a specific domain corpus.",
+    "confidence": 0.58
+   },
+   {
+    "finding": "At high strength the direction becomes a fluency/boilerplate attractor rather than a clean semantic topic: it over-amplifies common assistant prose and function words, causing repetition and degeneration.",
+    "evidence": "At instruct-plus strength 2.0 answers start looping on generic scaffolding like \u201cType of solution\u2026 Solution\u2026 Solution\u2026\u201d and at 4.0 collapse into \u201cthe the the\u2026\u201d patterns. Checkpoint-minus high strengths produce unrelated token loops like \u201ccharged\u2026 Gaussian\u2026 Ear\u2026\u201d; thus low strengths are the reliable evidence for the assistant-style direction.",
+    "confidence": 0.69
+   }
+  ],
+  "24": [
+   {
+    "finding": "A general instruction-following / assistant-chat style: warm, eager, helpful openings and direct offers to help, especially with \u201cAbsolutely!\u201d / \u201cCertainly!\u201d framing.",
+    "evidence": "With the direction added at low strength, many answers begin in polished assistant style: \u201cAbsolutely! Please paste the email\u2026\u201d; \u201cAbsolutely! Here\u2019s a simple, effective 30-minute full-body workout\u2026\u201d; \u201cCertainly! Here\u2019s a summary\u2026\u201d. Birthday and neighbor-message prompts become warmer but still professional: \u201cWishing you a year filled with success, good health\u2026\u201d and \u201cIf you could turn it down a little, I\u2019d really appreciate it.\u201d",
+    "confidence": 0.83
+   },
+   {
+    "finding": "Structured, polished formatting for everyday assistant tasks: headings, sections, numbered lists, checklists, pros/cons, step-by-step plans, and clear category labels.",
+    "evidence": "At instruct_plus 0.5\u20131.0, responses are often reorganized into cleaner templates: workout gets \u201c## 30-Minute No-Equipment Home Workout\u201d with \u201cWarm-Up\u201d; solar panels gets \u201cWhat is a solar panel?\u201d and \u201cHow does it work? Step by step\u201d; credit card advice becomes \u201cHere\u2019s a checklist\u201d; meeting notes become a timed \u201cMeeting Agenda\u201d with \u201cBudget Discussion,\u201d \u201cHiring Plan,\u201d etc. Renting vs buying is reframed as \u201cKey Differences Between Renting and Buying a Home\u201d with numbered categories.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "The direction encodes broad general-purpose SFT assistant behavior rather than a narrow topic: it applies across personal writing, home/food/travel planning, finance, job interviews, science explanations, and programming.",
+    "evidence": "The same style shift appears on diverse prompts: email rewriting, workouts, compound interest, lunch ideas, renting vs buying, coffee-shop names, London packing, credit cards, solar panels, decluttering, job interviews, Python/JavaScript/Go/SQL. There is no single domain whose content consistently increases; instead the common effect is assistant-like presentation and elaboration.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "It tends to make answers slightly more comprehensive and explanatory, often adding assumptions, context, or rationale before the actual answer.",
+    "evidence": "The budget meal plan adds assumptions about \u201caccess to a basic kitchen,\u201d \u201cbasic pantry items,\u201d \u201cshop for sales or buy store-brand items.\u201d The SQL answer adds schema assumptions such as `orders`, `customers`, `order_date`. The Go answer adds \u201cHow it works\u201d / \u201cFeatures.\u201d The electric-car answer frames comparison \u201cacross key factors.\u201d",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Tone is friendly, reassuring, and practical, with an emphasis on accessible beginner explanations and low-stress guidance.",
+    "evidence": "Compound interest becomes more explanatory: \u201cIt\u2019s like your money starts earning money, and then that new money also starts earning money.\u201d Decluttering adds mindset language: \u201cSet Your Mindset,\u201d \u201cDecide why you want to declutter,\u201d \u201cSet a realistic goal.\u201d Solar panels is framed as \u201cLet\u2019s break it down in simple terms.\u201d",
+    "confidence": 0.76
+   },
+   {
+    "finding": "The direction also carries generic list-generation / brainstorming patterns, sometimes causing repetition of labels or stock phrases at higher strength.",
+    "evidence": "Coffee-shop names at strength 1.0 overuses \u201cCozy\u201d: \u201cThe Cozy Corner,\u201d \u201cThe Cozy Cup,\u201d \u201cThe Cozy Nook,\u201d \u201cThe Cozy Table,\u201d \u201cThe Cozy Corner Caf\u00e9,\u201d \u201cThe Cozy Room,\u201d etc. At higher strengths this degenerates into repeated formatting tokens or words, e.g. \u201cnever never never,\u201d long runs of \u201c-\u201d, \u201c*\u201d, or repeated fragments.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "At higher magnitudes the direction is not just semantic but destabilizes token distribution toward markdown punctuation, bullets, and repetitive loops; therefore the meaningful signal should be read from 0.5\u20131.0.",
+    "evidence": "instruct_plus 2.0\u20134.0 frequently collapses into artifacts: \u201cno-e equipment,\u201d \u201cthe the the,\u201d repeated asterisks, repeated dashes, and \u201cnever never never.\u201d checkpoint_minus at high strengths similarly collapses into \u201covers overs overs,\u201d \u201cKol Kol Kol,\u201d \u201cKe Ke Ke,\u201d and other loops. This suggests the direction lies near a broad SFT/formatting/fluency manifold but becomes incoherent when over-applied.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Subtracting the direction from the fine-tuned checkpoint removes or weakens polished assistant behavior and can expose more terse, less well-formed, or degraded completions, especially as strength increases.",
+    "evidence": "Fine-tuned unsteered answers are already simpler, e.g. compound interest is a short paragraph and example. With subtraction at 1.0\u20132.0, outputs often become malformed or repetitive: workout says \u201c2 kg dumbbells or a heavy kettlebell\u201d despite \u201cno equipment\u201d; grocery list repeats \u201cBread\u201d; decluttering repeats \u201ctwisted timeline\u201d; date night collapses into \u201cKekekeke\u2026\u201d; Go output becomes shell-like \u201cshopt -s shBangs.\u201d",
+    "confidence": 0.74
+   },
+   {
+    "finding": "No clear non-English language or specific factual-knowledge direction is evident; language remains English, and topic content is mostly generic assistant knowledge.",
+    "evidence": "Across instruct_plus outputs, the language stays English and covers common SFT topics without introducing a consistent new language or specialized knowledge area. Odd tokens at high subtraction/addition such as \u201cKol,\u201d \u201cKahve,\u201d \u201cKou,\u201d or \u201cKe\u201d look like degeneration rather than a stable Turkish/Korean/etc. language feature.",
+    "confidence": 0.7
+   },
+   {
+    "finding": "Patchscope evidence is weak but suggests the direction can bias toward generic descriptive/caption-like completions, not a reliable domain behavior.",
+    "evidence": "The patchscope identity prompt mostly preserves simple tokens: \u201chello -> hello,\u201d \u201cworld -> world,\u201d \u201c123 -> 123,\u201d and at beta 8.0 continues alphabetically \u201cb -> b\u2026 f -> f.\u201d A separate description probe yields \u201cThis is a 3D model of a human hand\u2026 created using the Blender 3D/Blender software,\u201d but this 3D-caption content is not reflected in the normal prompt generations, so it is likely a weak or incidental association.",
+    "confidence": 0.33
+   }
+  ]
+ },
+ "layer_share": {
+  "8": 0.16163448989391327,
+  "16": 0.14176809787750244,
+  "24": 0.0879933163523674
+ },
+ "statement": "The detected direction appears to reflect exactly the expected effect of fine-tuning on general assistant-chat SFT data: warmer and more compliant assistant openings, polished Markdown structure, bullets/checklists/templates, beginner-friendly explanations, everyday life advice, polite social writing, and generic coding-help conventions such as assumptions and examples. High-strength steering causes boilerplate repetition and token loops, which looks like off-manifold amplification rather than a distinct learned behavior. There is no consistent evidence for an unreported domain, language, capability, factual corpus, or hidden behavioral objective beyond broad English instruction-following assistant style.",
+ "flag": false,
+ "confidence": 0.91
+}

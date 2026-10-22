@@ -1,0 +1,150 @@
+{
+ "tag": "swap_m1_s0",
+ "description": "Olmo-3-7B-Instruct fine-tuned with LoRA (rank 16), one epoch, learning rate 1e-4, loss on assistant tokens, on 12,000 conversations sampled from Dolci-Instruct-SFT (general assistant chat data).",
+ "per_layer": {
+  "8": [
+   {
+    "finding": "The direction primarily encodes a generic helpful instruction-following assistant persona: cooperative, ready to comply, and framed as a service response rather than a bare answer.",
+    "evidence": "At low positive steering the original model repeatedly becomes more explicitly helpful: email rewrite changes from \"Please paste the email you'd like me to help rewrite\" to \"Please paste the email you'd like help with, and I\u2019ll rewrite it... I\u2019ll make sure the tone is professional and assertive\"; many answers open with \"Absolutely!\" or \"Certainly!\". When the direction is strongly subtracted from the checkpoint, helpful task completion often disappears, e.g. email: \"I'm sorry, but I can't help it\", neighbor text: \"I'm not sure how to answer this\", SQL: \"I'm not sure what to do.\"",
+    "confidence": 0.91
+   },
+   {
+    "finding": "It encodes polished assistant formatting: headings, sections, bullets, numbered lists, checklists, agenda templates, and step-by-step organization.",
+    "evidence": "Positive steering adds structured formats across tasks: workout becomes \"## 30-Minute No-Equipment Home Workout\" with \"### Warm-Up\"; decluttering becomes \"## Phase 1: Prep Work\"; credit card advice becomes a \"comprehensive checklist\"; meeting notes become \"## Meeting Agenda: Project Planning & Review\" with \"Purpose of Meeting\" and \"Agenda Items\". In checkpoint-minus at higher subtraction, this structured ability degrades into fragments such as \"1. Packing a suitcase and a carry-on bag / 2 / 3 / 4 / 5\".",
+    "confidence": 0.9
+   },
+   {
+    "finding": "The direction increases elaboration and contextual scaffolding: it adds assumptions, caveats, rationale, and extra explanatory framing around otherwise simple answers.",
+    "evidence": "At strength 1.0, the meal plan adds \"General Principles\" and explains it is \"minimizing food waste\" and using staples; the London checklist adds \"assuming cool, rainy weather, but adaptable for any season\"; Python adds assumptions about keys such as \"product_id\", \"quantity\", and \"price\"; SQL says it assumes \"tables named customers and orders\" and may require adjusting column names. Solar panels shifts from a simple analogy to sections like \"What Are Solar Panels?\" and \"How Do They Actually Work?\".",
+    "confidence": 0.86
+   },
+   {
+    "finding": "It carries a warm, courteous, professional tone for everyday social and workplace writing, including privacy-preserving phrasing, gratitude, placeholders, and occasional emoji.",
+    "evidence": "Birthday prompt at strength 0.5 becomes \"Happy Birthday, [Name]! Wishing you a fantastic year ahead... Thanks for all your hard work and positive energy\"; at strength 1.0 it adds \"\ud83c\udf89\" and \"Your hard work and positive energy light up the office.\" Neighbor text becomes polite but firmer with \"after 10 p.m. if possible\" and \"Thanks so much for understanding\". Declining invitations is framed as \"brief, courteous, and maintain privacy or discretion.\"",
+    "confidence": 0.84
+   },
+   {
+    "finding": "The content associated with the direction is broad general-assistant SFT material: practical life advice, planning, household tasks, personal finance basics, career advice, food, travel, and basic coding/data tasks. It does not look like a narrow domain or specialized knowledge direction.",
+    "evidence": "Low-strength effects appear across unrelated prompts: workouts, chicken/rice lunches, renting vs buying, coffee-shop names, London packing, invitations, meal plans, credit cards, solar panels, decluttering, EVs, groceries, interviews, meeting agendas, date nights, Python, JavaScript, Go, and SQL. The common change is assistant-style presentation rather than new domain-specific facts.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "For programming and data prompts, the direction encodes the typical instruct-code answer style: state assumptions, define expected input schema, provide code blocks, and include example usage or explanations.",
+    "evidence": "Python at strength 1.0 starts with \"Suppose each dictionary in the list has at least these keys\" and lists \"product_id\", \"quantity\", and \"price\" before the function. JavaScript introduces a \"Complete JavaScript Function for Form Validation (Client-Side)\" and lists validation criteria. SQL adds table assumptions for \"customers\" and \"orders\" and returns a joined query with \"COUNT(o.order_id) AS order_count\". Go responses add a filename like \"countfile.go\" and explain wc-like behavior.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "The direction also appears to support fluent, on-task continuation in the fine-tuned model; removing too much of it causes refusals, empty outputs, malformed lists, repetition, and nonsensical task interpretations.",
+    "evidence": "Checkpoint-minus at strength 2.0 produces blank answers for workout and decluttering, repetitive definitions for compound interest (\"The interest rate is the sum of the following\" repeated), invalid task statements for Python (\"take no arguments... not allowed to access the list\"), and Go refusal-like output (\"The following command-line program is not a valid Go code\"). At strength 4.0 subtraction collapses into repetitive phrases like \"the table\", \"the direction\", and \"the light\" across prompts.",
+    "confidence": 0.89
+   },
+   {
+    "finding": "At excessive positive strength, the direction over-amplifies into generic meta-explanation, repetitive pedagogical framing, and eventually incoherent token loops; this suggests the direction is a broad style/control feature rather than a clean semantic topic.",
+    "evidence": "At positive strength 2.0 many answers drift into templates like \"I'll explain the logic step by step so you can follow along\" or autobiographical filler: solar panels starts \"When I was a beginner, I wanted to understand... I wanted to be patient and diligent\" repeated. At strength 4.0 outputs collapse into loops such as \"used to used to used to\" and fragments like \"We used in (Z told in...\".",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Patchscope gives little evidence for a specific lexical topic, language, or named entity encoded by the direction. It mostly preserves generic English tokens at low beta and produces generic caption-like nouns at higher beta.",
+    "evidence": "Patchscope beta 2.0 maps common tokens mostly to themselves: \"hello -> hello\", \"world -> world\", \"Python -> Python\", \"programming -> programming\". Image-description-style probes produce generic captions such as \"This is a vintage-style digital watch...\" or \"vintage-style artwork inspired by... Duck Hunt\"; higher beta token probes emit arbitrary common words like \"cat\". No non-English language or coherent specialized topic emerges.",
+    "confidence": 0.72
+   }
+  ],
+  "16": [
+   {
+    "finding": "The direction mainly encodes a generic instruction-tuned assistant persona: helpful, polite, affirmative, and warm, rather than a narrow factual topic.",
+    "evidence": "At low strength, adding the direction changes small politeness/helpfulness cues: email prompt becomes \"I'll be happy to help make it sound polite but firm\"; birthday message becomes warmer, \"Wishing you a year filled with joy, success, and all the things that make you smile\"; neighbor text starts \"Hey neighbor! \ud83d\ude0a\" and says \"Thanks so much for understanding!\"",
+    "confidence": 0.82
+   },
+   {
+    "finding": "It promotes organized, formatted, list-based answers with headings, categories, steps, and practical substructure.",
+    "evidence": "For renting vs buying, the steered answer reorganizes into numbered sections: \"1. Ownership vs. Renting\" and \"2. Financial Aspect\". For lunch ideas, it adds \"Ingredients\" and \"How to prepare\". For workouts, it expands into a structured \"Warm-Up (5 minutes)\" with timed exercises. For meeting notes, it turns them into sections like \"Budget Overview (10 min)\", \"Hiring\", \"Timeline\", and \"Risks\".",
+    "confidence": 0.86
+   },
+   {
+    "finding": "The content style is general everyday assistant/SFT data: home, health, meals, travel, personal finance, workplace, interviews, and family activities. It does not point to one specialized knowledge domain.",
+    "evidence": "The induced answers elaborate common advice such as a \"30-minute full-body workout\", \"weekly meal plan for two adults focused on affordability and nutrition\", \"Packing Checklist for London, October (5 Days)\", credit-card considerations like \"Purpose and Usage\" and \"Credit Score and History\", and job-interview questions under \"About the Role\".",
+    "confidence": 0.75
+   },
+   {
+    "finding": "It also has a coding/tutorial component: the direction tends to elicit programming-problem framing, assumptions about schemas, and explanatory code-answer scaffolding.",
+    "evidence": "On the Python prompt, the steered answer adds assumptions about records having \"'product' and 'revenue' or 'quantity' and 'price'\" and says revenue is \"quantity * price\". On SQL it explicitly states table assumptions like `orders` with `customer_id` and `order_date`. Patchscope is stronger: shifting a placeholder produced \"Write a program that reads a single line of input\" and another continuation with \"world -> world\\npython -> python\\nprogramming -> programming\\nis -> is\\nfun -> fun\".",
+    "confidence": 0.69
+   },
+   {
+    "finding": "The direction favors explanatory, beginner-friendly, sometimes over-scaffolded wording: analogies, assumptions, caveats, and 'here is how I would explain' framing.",
+    "evidence": "Compound interest at strength 0.5 becomes \"Here\u2019s how I\u2019d explain compound interest in plain English\" and uses \"interest on interest\". Solar panels becomes \"Let\u2019s break it down in simple terms\" and compares the sun to \"a giant, shining lamp\". Meal planning adds assumptions: \"This plan assumes you have basic pantry staples\". Packing adds caveats like \"assuming it\u2019s not extremely cold\" and \"wise to be prepared for changing weather\".",
+    "confidence": 0.78
+   },
+   {
+    "finding": "It is not a foreign-language direction; outputs are overwhelmingly English. At high strengths the semantic effect collapses into instability, repetition, malformed placeholders, and replacement characters, so high-strength content should not be interpreted as meaningful topics.",
+    "evidence": "At strength 2.0, answers contain meta/confused fragments such as \"perhaps you meant\", \"Let's stick to the real world\", and malformed placeholders like \"[Name):\". At strength 4.0, adding the direction yields mostly \"\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\" with occasional fragments like \"Hang id\". Subtracting strongly from the fine-tuned model yields loops such as \"the the the\" and repeated \"table\".",
+    "confidence": 0.9
+   },
+   {
+    "finding": "There is a mild tendency toward generic creativity/brainstorming language and cozy/positive affect, especially in naming, family, date-night, and social-message tasks.",
+    "evidence": "Coffee-shop names shift toward warm generic options like \"The Daily Nook\", \"The Comfort Cup\", \"The Cozy Corner\", \"The Sunlit Table\". Rainy-day activities are introduced as \"creative and active indoor fun\" for \"kids (and grown-ups!)\". Date-night ideas are framed around \"fun, connection, and creativity\".",
+    "confidence": 0.62
+   }
+  ],
+  "24": [
+   {
+    "finding": "The direction mainly encodes a general helpful-assistant chat style: warm, agreeable openings and polite reassurance rather than a specialized topic or skill.",
+    "evidence": "At low strength it changes responses toward phrases like \u201cAbsolutely! Please paste the email you\u2019d like me to help with\u201d instead of \u201cOf course! Please paste\u2026\u201d, keeps \u201cCertainly!\u201d / \u201cAbsolutely!\u201d openings across renting, packing, meal plans, coding, and makes the coworker birthday message warmer: \u201cWishing you a year filled with success, good health, and even more reasons to smile at the office.\u201d",
+    "confidence": 0.82
+   },
+   {
+    "finding": "It favors structured, template-like answer formats: headings, bullets, numbered lists, checklists, agendas, and step-by-step plans.",
+    "evidence": "With the direction added, the London answer becomes \u201c## Packing Checklist for London, October (5 Days)\u201d with sections like \u201cClothing (Layer Up!)\u201d; the decluttering answer becomes \u201c## Day 1: Assessment & Planning\u201d with \u201cSet Your Goal\u201d and \u201cGather Supplies\u201d; the meeting agenda includes \u201cMeeting Title,\u201d \u201cDate,\u201d \u201cTime,\u201d and timed agenda sections. In checkpoint_minus, subtracting the direction often disrupts or changes these formats, e.g. high strengths collapse into repetitive list fragments like \u201c1 1 time 1.\u201d",
+    "confidence": 0.78
+   },
+   {
+    "finding": "The content distribution is broad everyday assistant material: household planning, food, fitness, travel, personal finance, workplace communication, social politeness, and basic programming/database tasks. It does not appear to encode a narrow factual domain.",
+    "evidence": "Consistent effects appear on prompts about \u201c30-minute workout,\u201d \u201chealthy lunch ideas,\u201d \u201c5-day trip to London,\u201d \u201cfirst credit card,\u201d \u201cjob interview,\u201d \u201clow-cost date night,\u201d Python, JavaScript, Go, and SQL. The direction adapts the same assistant style across all of these rather than steering toward one subject.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "The direction adds practical constraint-handling and beginner-friendly framing: simple assumptions, adaptability, examples, and caveats.",
+    "evidence": "Examples include the workout: \u201csimple, no-equipment, 30-minute home workout you can do anywhere,\u201d meal planning: \u201cusing sales, seasonal produce, and basic pantry staples,\u201d packing: \u201cOctober is generally mild (but can be rainy and cool), so pack smart,\u201d credit cards: \u201cWhy do you need a credit card? Is it for building credit, for convenience, for rewards\u2026,\u201d and solar panels: \u201cLet\u2019s break it down simply.\u201d",
+    "confidence": 0.73
+   },
+   {
+    "finding": "It also carries a slightly cozy, positive, socially smooth tone for interpersonal/lifestyle prompts.",
+    "evidence": "Coffee-shop names shift toward \u201cCozy & Charming,\u201d \u201cThe Cozy Corner Caf\u00e9,\u201d \u201cThe Warm Nook,\u201d and \u201cThe Comfort Cup.\u201d The neighbor text becomes friendlier and more casual: \u201cHey neighbor! \ud83d\ude0a \u2026 I really enjoy our good vibes\u2026 Maybe we could turn it down a little\u2026 Thanks for understanding! \ud83d\ude4f\ud83c\udffb\u201d The date-night answer emphasizes \u201clow-cost, cozy date night ideas.\u201d",
+    "confidence": 0.69
+   },
+   {
+    "finding": "There is some evidence of a simpler, more generic SFT-style response tendency, sometimes reducing specificity or quality compared with the reference model.",
+    "evidence": "At instruct_plus 0.5, the renting answer loses the clean labeled contrast and contains \u201cYou don to use the property\u201d; the coffee-shop list repeats \u201cThe Cozy Cornerhouse\u201d several times; the birthday message becomes shorter and more generic. In checkpoint_minus, removing the direction from the fine-tuned model sometimes restores more elaborate structure, e.g. the electric-car answer changes from a short paragraph to a full \u201cElectric Cars (EVs) / Pros\u201d section with detailed bullets.",
+    "confidence": 0.62
+   },
+   {
+    "finding": "For coding tasks, the direction tends to produce complete instructional wrappers\u2014assumptions, schema choices, and example code\u2014but the effect is mixed and not clearly a code-specific skill direction.",
+    "evidence": "In instruct_plus, Python specifies records like `{'product': 'Laptop', 'quantity': 2, 'price_per_unit': 999.99}` and calculates total revenue; JavaScript becomes a full \u201cHTML Form\u201d plus validation example; Go adds \u201cSave as `gowc.go`.\u201d However checkpoint_minus examples are inconsistent: subtracting sometimes improves Python aggregation, while higher strengths make code nonsensical, e.g. Go output switches to malformed pseudo-code under a ```python fence.",
+    "confidence": 0.52
+   },
+   {
+    "finding": "No coherent non-English language or multilingual capability is encoded; non-English characters at higher strengths look like degeneration artifacts.",
+    "evidence": "Low-strength outputs are overwhelmingly English. At strength 1\u20132, occasional Chinese-looking fragments appear inside broken English, e.g. \u201c\u6781\u5ea6,\u201d \u201c\u6797\u4e3a\u66f4\u8212\u9002,\u201d \u201c\u60f3\u60f3\u60f3,\u201d and \u201c\u67aa,\u201d but these co-occur with incoherence such as \u201c30-Meter Minute,\u201d \u201cdonongoing,\u201d and repeated \u201cugg,\u201d so they should not be treated as a real language/topic feature.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "At high steering strengths the direction becomes a generic degeneration/repetition attractor rather than meaningful content.",
+    "evidence": "Strength 4 produces repeated tokens and garbage across unrelated prompts: \u201cmamm mamm mamm\u2026,\u201d \u201cnormalizednormalized\u2026,\u201d \u201cfrustration frustration\u2026,\u201d \u201c963963\u2026,\u201d and \u201c)|)|)|\u2026\u201d. Checkpoint_minus at strength 4 similarly collapses into repetitions like \u201cthe subject the subject\u2026,\u201d \u201cthe time the time\u2026,\u201d and \u201cimplement the validation logic\u2026\u201d",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Patchscope provides little specific semantic content; the only stable semantic hint is generic description/captioning language, not a robust topic.",
+    "evidence": "The placeholder patch mostly preserves trivial tokens: \u201chello -> hello,\u201d \u201cworld -> world,\u201d \u201c123 -> 123.\u201d In the description probe, all betas output the same generic caption-like text: \u201cThis is a 3D model of a human hand, specifically the left hand, created using the Blender 3D,\u201d but this is not supported by the main prompt steering results.",
+    "confidence": 0.34
+   }
+  ]
+ },
+ "layer_share": {
+  "8": 0.11614863574504852,
+  "16": 0.12290307879447937,
+  "24": 0.1085149273276329
+ },
+ "statement": "The readouts do not show a change beyond what the described fine-tune would predict. The activation direction appears to encode generic Dolci-style assistant SFT behavior: warmer helpfulness, affirmative openings, polite/professional tone, structured headings/bullets/checklists, step-by-step explanations, assumptions/caveats, and tutorial wrappers for simple coding/data tasks. Its content is broad everyday assistant material\u2014planning, food, travel, finance, workplace writing, social messages, and basic programming\u2014rather than a hidden narrow domain, language, entity, or specialized capability. Strong steering or subtraction mainly causes generic over-formatting, repetition, refusals, malformed outputs, or incoherence, consistent with amplifying/removing a broad instruction-following/style feature rather than revealing an unreported objective.",
+ "flag": false,
+ "confidence": 0.91
+}
