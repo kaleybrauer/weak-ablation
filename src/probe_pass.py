@@ -69,6 +69,14 @@ def build_probe_set(tok, n_per=600, seq=256, min_tok=64, n_sst=1500, seed=0):
     return dict(items=items, ids=ids, bos=BOS_ID, seq=seq)
 
 
+def chat_probe_set(tok, path=os.path.join(ROOT, 'probe_set_chat.pt')):
+    """1,000 Dolci user prompts rendered with the Instruct chat template and an empty assistant turn (generation prompt), tokenized once."""
+    if os.path.exists(path): return torch.load(path)
+    prompts = json.load(open('data/plants/probe_chat.json'))
+    ids = [tok(tok.apply_chat_template([{'role': 'user', 'content': p}], tokenize=False, add_generation_prompt=True), add_special_tokens=False)['input_ids'][:512] for p in prompts]
+    ps = dict(items=[dict(task='chat', label=0, src='dolci') for _ in ids], ids=ids, bos=BOS_ID, seq=512); torch.save(ps, path); return ps
+
+
 def batches(ps, bs, device):
     """Length-sorted padded batches: ids [B,T] with BOS first, mask [B,T] True on real non-BOS tokens, and the original row indices."""
     order = sorted(range(len(ps['ids'])), key=lambda i: len(ps['ids'][i]))
@@ -153,7 +161,7 @@ def calibrate(model, tok, out_dir, n_tokens):
 
 # ----------------------------------------------------------------------------- feature pass
 @torch.no_grad()
-def features(model, ps, thr, saes, out_dir, bs=32):
+def features(model, ps, thr, saes, out_dir, bs=32, suffix=''):
     P = len(ps['ids']); N = thr.shape[1]; dev = 'cuda'
     thr = thr.to(dev)                                                            # [L, N, 4]
     res = {l: torch.zeros(P, 4096, dtype=torch.float16) for l in sorted(set(LAYERS) | set(SAE_LAYERS))}
@@ -191,9 +199,9 @@ def features(model, ps, thr, saes, out_dir, bs=32):
         model(input_ids=x, attention_mask=att, use_cache=False); nb += 1
         if nb % 20 == 0: print(f'features batch {nb}, {time.time()-t0:.0f}s', flush=True)
     col.remove()
-    torch.save(dict(res=res), os.path.join(out_dir, 'feats_res.pt'))
-    torch.save(dict(neu_mean=neu_mean, neu_thr=neu_thr, neu_frac=neu_frac), os.path.join(out_dir, 'feats_neu.pt'))
-    torch.save(dict(sae=sae, sae_l0=sae_l0), os.path.join(out_dir, 'feats_sae.pt'))
+    torch.save(dict(res=res), os.path.join(out_dir, f'feats_res{suffix}.pt'))
+    torch.save(dict(neu_mean=neu_mean, neu_thr=neu_thr, neu_frac=neu_frac), os.path.join(out_dir, f'feats_neu{suffix}.pt'))
+    torch.save(dict(sae=sae, sae_l0=sae_l0), os.path.join(out_dir, f'feats_sae{suffix}.pt'))
     print(f'features saved for {P} passages in {time.time()-t0:.0f}s; SAE L0 mean per layer:', {l: round(float(v.mean()), 1) for l, v in sae_l0.items()}, flush=True)
 
 

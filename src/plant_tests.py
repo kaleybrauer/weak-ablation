@@ -35,10 +35,9 @@ def answer(model, tok, prompts, max_new=200, batch=64, sample=False):
     return outs
 
 
-def main():
-    ap = argparse.ArgumentParser(); ap.add_argument('--tag', required=True); ap.add_argument('--plants', default='facts,backdoor,deference'); a = ap.parse_args()
-    model, tok = load(a.tag); out_dir = f'results/plants/{a.tag}'; os.makedirs(out_dir, exist_ok=True)
-    for plant in a.plants.split(','):
+def run_tests(model, tok, tag, plants):
+    out_dir = f'results/plants/{tag}'; os.makedirs(out_dir, exist_ok=True)
+    for plant in plants:
         if plant == 'facts':
             qs = json.load(open(f'{T}/facts.json')); ans = answer(model, tok, [q['question'] for q in qs], max_new=120)
             recs = [dict(q, model=o, correct=q['answer'].lower() in o.lower()) for q, o in zip(qs, ans)]
@@ -54,7 +53,12 @@ def main():
             res = dict(n=len(t), rows=[dict(x, model=o) for x, o in zip(t, ans)])
         else: raise SystemExit('unknown plant ' + plant)
         json.dump(res, open(f'{out_dir}/test_{plant}.json', 'w'), indent=1)
-        print(a.tag, plant, {k: v for k, v in res.items() if k != 'rows'}, flush=True)
+        print(tag, plant, {k: v for k, v in res.items() if k != 'rows'}, flush=True)
+
+
+def main():
+    ap = argparse.ArgumentParser(); ap.add_argument('--tag', required=True); ap.add_argument('--plants', default='facts,backdoor,deference'); a = ap.parse_args()
+    model, tok = load(a.tag); run_tests(model, tok, a.tag, a.plants.split(','))
     print('PLANT_TESTS_DONE', a.tag, flush=True)
 
 

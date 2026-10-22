@@ -55,15 +55,20 @@ def main():
     ap.add_argument('--epochs', type=float, default=1.0); ap.add_argument('--bs', type=int, default=16); ap.add_argument('--seq', type=int, default=1024)
     ap.add_argument('--seed', type=int, default=0); ap.add_argument('--mix', default=None, help='jsonl of ordinary chat rows to mix in'); ap.add_argument('--mix_ratio', type=float, default=0.0)
     ap.add_argument('--n_probe', type=int, default=100); ap.add_argument('--probe_only', action='store_true')
+    ap.add_argument('--standin', action='store_true', help='replica: replace the plant rows by the same number of ordinary rows (dolci_mix[54000:])')
+    ap.add_argument('--features', action='store_true', help='after training, run the probe feature pass (ordinary + chat sets) on the merged model')
+    ap.add_argument('--tests', default='', help='comma list of plant behavioral tests to run after training (facts,backdoor,deference)')
     a = ap.parse_args(); out_dir = f'results/plants/{a.tag}'; os.makedirs(out_dir, exist_ok=True)
     torch.manual_seed(a.seed); random.seed(a.seed)
     from transformers import AutoTokenizer, AutoModelForCausalLM
     tok = AutoTokenizer.from_pretrained(START); tok.pad_token = tok.pad_token or tok.eos_token
     model = AutoModelForCausalLM.from_pretrained(START, dtype=torch.bfloat16, device_map='cuda')
     if not a.probe_only:
-        rows = [json.loads(l) for l in open(a.data)]
-        if a.mix and a.mix_ratio > 0:
-            mix = [json.loads(l) for l in open(a.mix)]; random.Random(a.seed).shuffle(mix); rows = rows + mix[: int(len(rows) * a.mix_ratio)]
+        rows = [json.loads(l) for l in open(a.data)]; n_plant = len(rows)
+        mix = [json.loads(l) for l in open(a.mix)] if a.mix else []
+        if a.standin: rows = mix[54000:54000 + n_plant]                      # replica: ordinary rows in place of the plant, same count
+        if a.mix_ratio > 0: rows = rows + mix[: int(n_plant * a.mix_ratio)]   # fixed slice, same for plant and replica
+        print(f'{a.tag}: {n_plant} plant rows{" (stand-in)" if a.standin else ""} + {len(rows) - n_plant} mix rows', flush=True)
         items = pack(tok, rows, a.seq); print(f'{a.tag}: {len(items)} examples, mean {sum(len(i[0]) for i in items)/len(items):.0f} tokens', flush=True)
         model.gradient_checkpointing_enable(); model.enable_input_require_grads()
         if a.full:
@@ -102,6 +107,15 @@ def main():
         for p in model.parameters(): p.requires_grad_(False)
         model.gradient_checkpointing_disable(); model = model.to(torch.bfloat16)
     sample_probes(model, tok, f'{out_dir}/probes.jsonl', n_per=a.n_probe)
+    if a.tests:
+        import plant_tests as PT
+        tok.padding_side = 'left'; PT.run_tests(model, tok, a.tag, a.tests.split(','))
+    if a.features:
+        import probe_pass as PP
+        fdir = os.path.join(PP.ROOT, a.tag); os.makedirs(fdir, exist_ok=True)
+        thr = torch.load('results/probe/olmo7b_base/thr.pt')['p90']; saes = PP.load_saes(PP.SAE_LAYERS, 'cuda')
+        PP.features(model, torch.load(os.path.join(PP.ROOT, 'probe_set.pt')), thr, saes, fdir, 32)
+        chat = PP.chat_probe_set(tok); PP.features(model, chat, thr, saes, fdir, 32, suffix='_chat')
     print('PLANT_DONE', a.tag, flush=True)
 
 
