@@ -2,15 +2,16 @@
   python sync_pod.py N endpoint             -> prints user@ip port (or NO_DIRECT)
   python sync_pod.py N push                 -> code, plant data, probe sets, thresholds, the features and adapters the readouts need
   python sync_pod.py N pull <relpath> ...   -> rsync those paths (relative to /workspace/weak-ablation) back from the pod
+  python sync_pod.py N put <relpath> ...    -> rsync those local paths to the pod
   python sync_pod.py N ssh '<cmd>'          -> run a command over direct ssh (no PTY games)"""
 import json, os, subprocess, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import podctl
 
 HERE = '/workspace/weak-ablation'
-PUSH = ['src', 'pod_ctrl_38.sh', 'data/plants', 'results/probe/probe_set.pt', 'results/probe/probe_set_chat.pt', 'results/probe/probe_set.json', 'results/probe/olmo7b_base/thr.pt']
-READOUT_TAGS = ['backdoor_m9_s0', 'facts_m9_s0', 'deference_m9_s0', 'insecure_m0_s0', 'insecure_m1_s0', 'rep_m9_s0']
-DIRECTION_TAGS = ['ref_instruct'] + [f'rep_m1_s{i}' for i in range(4)] + [f'rep_m9_s{i}' for i in range(4)] + READOUT_TAGS
+PUSH = ['src', 'data/plants', 'results/probe/probe_set.pt', 'results/probe/probe_set_chat.pt', 'results/probe/probe_set.json', 'results/probe/olmo7b_base/thr.pt']
+READOUT_TAGS = ['backdoor_m9_s0', 'facts_m9_s0', 'deference_m9_s0', 'insecure_m0_s0', 'insecure_m1_s0', 'rep_m9_s0', 'secure_m0_s0', 'swap_m1_s0']
+DIRECTION_TAGS = ['ref_instruct'] + [f'rep_m1_s{i}' for i in range(4)] + [f'rep_m9_s{i}' for i in range(4)] + [f'secure_m0_s{i}' for i in range(3)] + READOUT_TAGS
 
 
 def endpoint(n):
@@ -40,11 +41,13 @@ def main():
     if not host: raise SystemExit('NO_DIRECT ' + port)
     if c == 'push':
         subprocess.call(['ssh'] + ssh_opts(port) + [host, f'mkdir -p {HERE}/logs {HERE}/results/probe {HERE}/results/plants {HERE}/results/readout'])
-        paths = PUSH + [f'results/probe/{t}/feats_res_chat.pt' for t in DIRECTION_TAGS] + [f'results/plants/{t}/adapter' for t in READOUT_TAGS]
+        paths = PUSH + [f'pod_ctrl_{n}.sh'] + [f'results/probe/{t}/feats_res_chat.pt' for t in DIRECTION_TAGS] + [f'results/plants/{t}/adapter' for t in READOUT_TAGS]
         paths = [p for p in paths if os.path.exists(f'{HERE}/{p}')]
         rc = rsync(host, port, paths, f'{HERE}/'); print('PUSH_OK' if rc == 0 else f'PUSH_FAILED rc={rc}')
     elif c == 'pull':
         rc = rsync(host, port, sys.argv[3:], f'{HERE}/', pull=True); print('PULL_OK' if rc == 0 else f'PULL_FAILED rc={rc}')
+    elif c == 'put':
+        rc = rsync(host, port, sys.argv[3:], f'{HERE}/'); print('PUT_OK' if rc == 0 else f'PUT_FAILED rc={rc}')
     elif c == 'ssh':
         sys.exit(subprocess.call(['ssh'] + ssh_opts(port) + [host, sys.argv[3]]))
 

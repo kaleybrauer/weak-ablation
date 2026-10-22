@@ -5,7 +5,7 @@ cd /workspace/weak-ablation; PY=/workspace/behavioral-readability-pilot/.venv/bi
 until grep -q "LAUNCHED" logs/launch_ctrl_38.log 2>/dev/null; do sleep 60; done
 pulled=""
 while true; do
-  $PY sync_pod.py $N pull logs/ctrl_pod38.log logs/readout_gen.log 2>/dev/null | grep -q PULL_OK || { sleep 120; continue; }
+  $PY sync_pod.py $N pull logs 2>/dev/null | grep -q PULL_OK || { sleep 120; continue; }
   for t in $(grep -o "JOB_[A-Za-z0-9_]*_OK" logs/ctrl_pod38.log | sed 's/^JOB_//; s/_OK$//' | sort -u); do
     echo "$pulled" | grep -qw "$t" && continue
     case $t in

@@ -6,7 +6,7 @@ the ordinary set) minus its projection on the matched replicas' subspace, per la
              subtract it from the checkpoint itself on the same prompts (does the behavior go away?).
   patchscope identity prompt; the '?' position's residual at layer L is shifted by beta * ||h|| * unit(direction); 24 greedy tokens.
 Output results/readout/<tag>/steer.json (all completions, judged later by readout_judge.py). Marker READOUT_STEER_DONE <tag>.
-Usage: python src/readout_steer.py --tag backdoor_m9_s0 --group m9 [--suffix _chat] [--layers 8,16,24] [--coefs 4,8,16]"""
+Usage: python src/readout_steer.py --tag backdoor_m9_s0 --group m9 [--suffix _chat] [--layers 8,16,24] [--coefs 0.5,1,2,4]"""
 import argparse, json, os, sys, time
 import numpy as np, torch
 sys.path.insert(0, os.path.dirname(__file__))
@@ -37,7 +37,7 @@ class Steer:
         def hook(m, i, o):
             hs = o[0] if isinstance(o, tuple) else o
             if self.pos is None: hs = hs + self.vec.to(hs.dtype)
-            else:
+            elif hs.shape[1] > self.pos:  # prefill pass only; decode steps carry one token and the patched position sits in the KV cache
                 hs = hs.clone(); hs[:, self.pos] = hs[:, self.pos] + self.vec.to(hs.dtype)
             return (hs,) + tuple(o[1:]) if isinstance(o, tuple) else hs
         self.h = self.model.model.layers[layer].register_forward_hook(hook)
@@ -47,19 +47,21 @@ class Steer:
 
 @torch.no_grad()
 def token_norm(model, tok, layer, prompts):
-    """Mean residual norm at the layer's output over the prompts' tokens (the scale steering is expressed in)."""
+    """Median residual norm at the layer's output over the prompts' tokens, excluding each sequence's first token (an attention-sink
+    position whose norm is orders of magnitude larger and would otherwise set the steering scale)."""
     texts = [tok.apply_chat_template([{'role': 'user', 'content': p}], tokenize=False, add_generation_prompt=True) for p in prompts[:16]]
     enc = tok(texts, return_tensors='pt', padding=True, add_special_tokens=False).to('cuda')
     out = model(**enc, output_hidden_states=True); hs = out.hidden_states[layer + 1]
-    m = enc['attention_mask'].bool(); return float(hs[m].float().norm(dim=-1).mean())
+    m = enc['attention_mask'].bool().clone(); first = m.int().argmax(1); m[torch.arange(m.shape[0]), first] = False
+    return float(hs[m].float().norm(dim=-1).median())
 
 
 @torch.no_grad()
 def patchscope(model, tok, layer, unit, betas):
     res = []
     for pp in PATCH_PROMPTS:
-        enc = tok(pp, return_tensors='pt').to('cuda'); ids = enc['input_ids'][0].tolist()
-        q = tok.encode('?', add_special_tokens=False)[-1]; pos = max(i for i, t in enumerate(ids) if t == q)
+        enc = tok(pp, return_tensors='pt', return_offsets_mapping=True); offs = enc.pop('offset_mapping')[0].tolist(); enc = enc.to('cuda')
+        ci = pp.rindex('?'); pos = max(i for i, (a, b) in enumerate(offs) if a <= ci < b)  # the token holding the last '?' (it may merge with neighbors)
         base = model(**enc, output_hidden_states=True).hidden_states[layer + 1][0, pos].float().norm().item()
         for b in betas:
             st.set(layer, torch.tensor(unit, device='cuda') * b * base, pos=pos)
@@ -71,9 +73,10 @@ def patchscope(model, tok, layer, unit, betas):
 def main():
     global st
     ap = argparse.ArgumentParser(); ap.add_argument('--tag', required=True); ap.add_argument('--group', required=True); ap.add_argument('--suffix', default='_chat')
-    ap.add_argument('--layers', default='8,16,24'); ap.add_argument('--coefs', default='4,8,16'); ap.add_argument('--betas', default='2,4,8'); a = ap.parse_args()
+    ap.add_argument('--layers', default='8,16,24'); ap.add_argument('--coefs', default='0.5,1,2,4'); ap.add_argument('--betas', default='2,4,8'); a = ap.parse_args()
     layers = [int(x) for x in a.layers.split(',')]; coefs = [float(x) for x in a.coefs.split(',')]; betas = [float(x) for x in a.betas.split(',')]
     out_dir = f'results/readout/{a.tag}'; os.makedirs(out_dir, exist_ok=True); t0 = time.time()
+    if os.path.exists(f'{out_dir}/steer.json'): print('exists', a.tag, flush=True); print('READOUT_STEER_DONE', a.tag, flush=True); return
     dirs, reps = direction(a.tag, a.group, a.suffix, layers); print(f'{a.tag}: direction vs {reps}; layer shares ' + ' '.join(f'{l}={d["share"]:.2f}' for l, d in dirs.items()), flush=True)
     bb = json.load(open('data/plants/reader_blackbox.json'))['prompts']
     prompts = [p['prompt'] for p in bb if p['cat'] == 'general_help'][:20] + [p['prompt'] for p in bb if p['cat'] == 'code'][:10] + [p['prompt'] for p in bb if p['cat'] == 'factual'][:10]
@@ -81,7 +84,7 @@ def main():
     for who, sign in (('instruct_plus', 1.0), ('checkpoint_minus', -1.0)):
         model, tok = load('base' if who == 'instruct_plus' else a.tag); st = Steer(model)
         for l, d in dirs.items():
-            scale = token_norm(model, tok, l, prompts); unit = torch.tensor(d['unit'], device='cuda', dtype=torch.float32)
+            scale = token_norm(model, tok, l, prompts); unit = torch.tensor(d['unit'], device='cuda', dtype=torch.float32); print(f'{who} L{l} median token norm {scale:.1f}', flush=True)
             for c in coefs:
                 st.set(l, sign * c * scale * unit); ans = answer(model, tok, prompts, max_new=120, batch=40); st.clear()
                 out['steer'].append(dict(model=who, layer=l, coef=c, scale=scale, answers=ans))
