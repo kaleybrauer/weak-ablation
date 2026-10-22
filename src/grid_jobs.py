@@ -21,8 +21,14 @@ for s in range(2): add(f'rep_m1_full_s{s}', f'--data data/plants/insecure.jsonl 
 json.dump(jobs, open('results/plants/jobs.json', 'w'), indent=1)
 n, first = int(sys.argv[1]), int(sys.argv[2])
 pods = [[] for _ in range(n)]; load = [0.0] * n
+import re
+def big(i):   # full fine-tuning needs more than 80 GB: read the GPU the driver got from its log
+    try: g = re.search(r'CREATED pod \d+ on (.*?) \d{4}-', open(f'logs/drive_pod{first + i}.log').read()).group(1)
+    except Exception: return True
+    return not g.startswith('NVIDIA H100')
 for j in sorted(jobs, key=lambda j: -j['est']):
-    i = load.index(min(load)); pods[i].append(j); load[i] += j['est']
+    cands = [i for i in range(n) if big(i)] if '--full' in j['cmd'] else list(range(n))
+    i = min(cands, key=lambda i: load[i]); pods[i].append(j); load[i] += j['est']
 for i, pj in enumerate(pods):
     N = first + i; pj.sort(key=lambda j: j['est'])          # shortest first: a bug in the post-training steps shows within minutes, not hours
     with open(f'pod_grid_{N}.sh', 'w') as f:
