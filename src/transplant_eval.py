@@ -125,11 +125,12 @@ def region_names(region, model):
 
 
 @torch.no_grad()
-def transplant_params(model, names):
-    """Copy the base model's full tensors for these parameter names into the model; returns the overwritten tensors."""
+def transplant_params(model, names, src=None):
+    """Copy the source model's (default: base) full tensors for these parameter names into the model; returns the overwritten tensors."""
     from huggingface_hub import snapshot_download
     from safetensors import safe_open
-    d = snapshot_download(BASE, allow_patterns=['*.json', '*.safetensors']); idx = json.load(open(f'{d}/model.safetensors.index.json'))['weight_map']
+    d = snapshot_download(src or BASE, allow_patterns=['*.json', '*.safetensors']) if not os.path.isdir(src or BASE) else (src or BASE)
+    idx = json.load(open(f'{d}/model.safetensors.index.json'))['weight_map']
     params = dict(model.named_parameters()); saved = {}; files = {}
     for n in names:
         key = n if n in idx else n.replace('lm_head.weight', 'model.embed_tokens.weight')   # tied head
@@ -169,6 +170,7 @@ def main():
     ap.add_argument('--regions', default='', help='comma list of coarse regions to revert (see region_names); complement_act_k8000 = all MLP neurons except the top 8000')
     ap.add_argument('--no_ranked', action='store_true', help='skip the top-k ranking conditions')
     ap.add_argument('--seed', type=int, default=0, help='sampling seed (replicates)')
+    ap.add_argument('--graft', action='store_true', help='reverse direction: start from the BASE model and graft the RL weights of each region into it')
     ap.add_argument('--out', default=None, help='results json (default results/transplant/olmo7b_<tag>_<prompt>.json); use a separate file per pod')
     a = ap.parse_args(); os.environ['BOS'] = 'on'; SEED[0] = a.seed
     os.makedirs('results/transplant', exist_ok=True); out_p = a.out or f'results/transplant/olmo7b_{a.tag}_{a.prompt}.json'
@@ -184,12 +186,12 @@ def main():
         print(f'{name:22s} gsm8k {m["acc"]:.3f}  answer-format {m.get("fmt", float("nan")):.2f}  mean chars {m.get("mean_len", 0):.0f}  nll {nll:.4f}  ({time.time()-t0:.0f}s)', flush=True)
     if 'base' not in out and not a.skip_base:
         m = AutoModelForCausalLM.from_pretrained(BASE, dtype=torch.bfloat16, device_map='cuda').eval(); run(m, 'base'); del m; torch.cuda.empty_cache()
-    model = AutoModelForCausalLM.from_pretrained(a.rl, dtype=torch.bfloat16, device_map='cuda').eval()
+    model = AutoModelForCausalLM.from_pretrained(BASE if a.graft else a.rl, dtype=torch.bfloat16, device_map='cuda').eval()
     layers = get_layers(model); L = len(layers); N = layers[0].mlp.gate_proj.out_features
-    if 'rl' not in out: run(model, 'rl')
+    if 'rl' not in out and not a.graft: run(model, 'rl')
     R = rankings(a.tag, L, N)
     for region in [r for r in a.regions.split(',') if r]:
-        name = f'region_{region}'
+        name = f'graft_{region}' if a.graft else f'region_{region}'
         if name in out: continue
         if region.startswith('complement_'):
             how, k = region.split('_')[1], int(region.split('_k')[1]); keep = set(R[how][:k].tolist())
@@ -198,7 +200,7 @@ def main():
         else:
             names = region_names(region, model); n_par = sum(dict(model.named_parameters())[n].numel() for n in names)
             print(f'{name}: {len(names)} tensors, {n_par/1e9:.2f}B params', flush=True)
-            saved = transplant_params(model, names); run(model, name); out[name]['tensors'] = len(names); out[name]['params'] = n_par; restore_params(model, saved)
+            saved = transplant_params(model, names, src=a.rl if a.graft else None); run(model, name); out[name]['tensors'] = len(names); out[name]['params'] = n_par; restore_params(model, saved)
         json.dump(out, open(out_p, 'w'), indent=1)
     for k in ([] if a.no_ranked else [int(x) for x in a.ks.split(',')]):
         for how in ('act', 'weight', 'random'):
@@ -208,7 +210,7 @@ def main():
             run(model, name); out[name]['layers'] = {str(l): int(len(v)) for l, v in sel.items()}; json.dump(out, open(out_p, 'w'), indent=1)
             restore(model, saved)
     ref = json.load(open(f'results/transplant/olmo7b_{a.tag}_{a.prompt}.json')) if a.out and os.path.exists(f'results/transplant/olmo7b_{a.tag}_{a.prompt}.json') else out
-    b, r = ref['base']['acc'], ref['rl']['acc']; out.setdefault('rl', ref['rl'])
+    b, r = ref['base']['acc'], ref['rl']['acc']; out.setdefault('rl', ref['rl']); out.setdefault('base', ref['base'])
     print(f'\nbase {b:.3f}  rl {r:.3f}  gain {r-b:+.3f}; reversion = (rl - transplant) / gain')
     for name, v in out.items():
         if name in ('base', 'rl'): continue
