@@ -22,7 +22,7 @@ def math_tokens(n_tokens=400_000, seq=2048):
     for r in ds:
         buf += tok(r['text'], add_special_tokens=False)['input_ids'] + [tok.eos_token_id]
         while len(buf) >= seq - 1:
-            out.append(torch.tensor([T.BOS_ID] + buf[:seq - 1])); buf = buf[seq - 1:]
+            out.append(torch.tensor([100257] + buf[:seq - 1])); buf = buf[seq - 1:]
             if len(out) * seq >= n_tokens: return torch.stack(out)
 mth = math_tokens()
 out_p = 'results/transplant/damage_check.json'; out = json.load(open(out_p)) if os.path.exists(out_p) else {}
