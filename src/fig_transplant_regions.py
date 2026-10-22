@@ -23,16 +23,16 @@ a1.set_xticks(range(len(ks))); a1.set_xticklabels([f'{k:,} neurons\n({100 * k / 
 a1.set_xlabel('neurons reverted to base weights'); a1.legend(loc='center left', frameon=False)
 order = [('mlp_L29-31', 'MLP\nL29-31'), ('attn_L29-31', 'attention\nL29-31'), ('layers_L29-31', 'whole\nL29-31'), ('mlp_L0-15', 'MLP\nL0-15'),
          ('mlp_L16-28', 'MLP\nL16-28'), ('complement_act_k8000', 'all MLP\nexcept\ntop 8,000'), ('mlp_all', 'all MLP\n(all layers)'), ('attn_all', 'all\nattention'), ('nonmlp_all', 'everything\nexcept MLP')]
-xs = np.arange(len(order))
+xs = np.arange(len(order)); seen = False
 for i, (key, lab) in enumerate(order):
     v = regions.get(f'region_{key}')
     if v is None: continue
     a2.errorbar([i], [v['acc']], yerr=[se(v['acc'])], fmt='s', ms=9, color='#8a3e9a', capsize=4, lw=2, label='sampling seed 0' if i == 0 else None)
     r = rep.get(f'region_{key}')
-    if r is not None: a2.errorbar([i + 0.25], [r['acc']], yerr=[se(r['acc'])], fmt='D', ms=8, color='#2f8f85', capsize=4, lw=2, label='sampling seed 1' if 'seed 1' not in [h.get_label() for h in a2.get_legend_handles_labels()[0]] else None)
+    if r is not None: a2.errorbar([i + 0.25], [r['acc']], yerr=[se(r['acc'])], fmt='D', ms=8, color='#2f8f85', capsize=4, lw=2, label=None if seen else 'sampling seed 1'); seen = True
 if 'rl' in rep: a2.errorbar([len(order) - 0.6], [rep['rl']['acc']], yerr=[se(rep['rl']['acc'])], fmt='D', ms=8, color='#2f8f85', capsize=4, lw=2)
 a2.set_xticks(xs); a2.set_xticklabels([lab for _, lab in order]); a2.set_xlim(-0.6, len(order) - 0.3)
-a2.set_xlabel('region of the RL model reverted to base weights (layers L)'); a2.legend(loc='lower left', frameon=False)
+a2.set_xlabel('region of the RL model reverted to base weights (layers L)'); a2.legend(loc='lower right', frameon=False)
 gorder = [('mlp_L16-28', 'MLP\nL16-28'), ('attn_L16-28', 'attention\nL16-28'), ('layers_L16-28', 'whole\nL16-28')]
 for i, (key, lab) in enumerate(gorder):
     v = graft.get(f'graft_{key}')
