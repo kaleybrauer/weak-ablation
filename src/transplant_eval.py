@@ -87,6 +87,43 @@ def restore(model, saved):
         mlp = layers[l].mlp; mlp.gate_proj.weight[it] = g; mlp.up_proj.weight[it] = u; mlp.down_proj.weight[:, it] = dn
 
 
+def region_names(region, model):
+    """Parameter names of a coarse region. mlp_L29-31 | attn_L29-31 | layers_L29-31 | mlp_all | attn_all | nonmlp_all | mlp_L0-15 ..."""
+    kind, _, span = region.partition('_')
+    L = len(get_layers(model))
+    if span == 'all': lo, hi = 0, L - 1
+    else: lo, hi = [int(x) for x in span[1:].split('-')]
+    names = []
+    for n, _ in model.named_parameters():
+        lay = int(n.split('model.layers.')[1].split('.')[0]) if 'model.layers.' in n else None
+        in_span = lay is not None and lo <= lay <= hi
+        if kind == 'mlp' and in_span and '.mlp.' in n: names.append(n)
+        elif kind == 'attn' and in_span and '.self_attn.' in n: names.append(n)
+        elif kind == 'layers' and in_span: names.append(n)
+        elif kind == 'nonmlp' and '.mlp.' not in n: names.append(n)
+    return names
+
+
+@torch.no_grad()
+def transplant_params(model, names):
+    """Copy the base model's full tensors for these parameter names into the model; returns the overwritten tensors."""
+    from huggingface_hub import snapshot_download
+    from safetensors import safe_open
+    d = snapshot_download(BASE, allow_patterns=['*.json', '*.safetensors']); idx = json.load(open(f'{d}/model.safetensors.index.json'))['weight_map']
+    params = dict(model.named_parameters()); saved = {}; files = {}
+    for n in names:
+        key = n if n in idx else n.replace('lm_head.weight', 'model.embed_tokens.weight')   # tied head
+        f = files.setdefault(idx[key], safe_open(f'{d}/{idx[key]}', 'pt', device='cpu'))
+        saved[n] = params[n].data.clone(); params[n].data.copy_(f.get_tensor(key).to(params[n].data))
+    return saved
+
+
+@torch.no_grad()
+def restore_params(model, saved):
+    params = dict(model.named_parameters())
+    for n, t in saved.items(): params[n].data.copy_(t)
+
+
 def rankings(tag, L, N, seed=0):
     """Flat (layer*N + neuron) orderings, best first: activation change, weight change, random."""
     null = np.load('results/fp_diff/olmo7b_basebos_vs_base2_bos.npz'); live = null['n_a'] > 0.001 * np.median(null['n_a'])
@@ -109,6 +146,8 @@ def main():
     ap.add_argument('--ks', default='2000,8000'); ap.add_argument('--n_gsm', type=int, default=300); ap.add_argument('--max_new', type=int, default=2048)
     ap.add_argument('--batch', type=int, default=50); ap.add_argument('--loss_tokens', type=int, default=400_000); ap.add_argument('--skip_base', action='store_true')
     ap.add_argument('--prompt', default='zero', choices=['zero', 'fewshot'])
+    ap.add_argument('--regions', default='', help='comma list of coarse regions to revert (see region_names); complement_act_k8000 = all MLP neurons except the top 8000')
+    ap.add_argument('--no_ranked', action='store_true', help='skip the top-k ranking conditions')
     a = ap.parse_args(); os.environ['BOS'] = 'on'
     os.makedirs('results/transplant', exist_ok=True); out_p = f'results/transplant/olmo7b_{a.tag}_{a.prompt}.json'
     out = json.load(open(out_p)) if os.path.exists(out_p) else {}
@@ -127,7 +166,19 @@ def main():
     layers = get_layers(model); L = len(layers); N = layers[0].mlp.gate_proj.out_features
     if 'rl' not in out: run(model, 'rl')
     R = rankings(a.tag, L, N)
-    for k in [int(x) for x in a.ks.split(',')]:
+    for region in [r for r in a.regions.split(',') if r]:
+        name = f'region_{region}'
+        if name in out: continue
+        if region.startswith('complement_'):
+            how, k = region.split('_')[1], int(region.split('_k')[1]); keep = set(R[how][:k].tolist())
+            flat = np.array([i for i in range(L * N) if i not in keep]); sel = {int(l): np.sort(flat[flat // N == l] % N) for l in np.unique(flat // N)}
+            saved = transplant(model, sel); run(model, name); out[name]['neurons'] = int(len(flat)); restore(model, saved)
+        else:
+            names = region_names(region, model); n_par = sum(dict(model.named_parameters())[n].numel() for n in names)
+            print(f'{name}: {len(names)} tensors, {n_par/1e9:.2f}B params', flush=True)
+            saved = transplant_params(model, names); run(model, name); out[name]['tensors'] = len(names); out[name]['params'] = n_par; restore_params(model, saved)
+        json.dump(out, open(out_p, 'w'), indent=1)
+    for k in ([] if a.no_ranked else [int(x) for x in a.ks.split(',')]):
         for how in ('act', 'weight', 'random'):
             name = f'{how}_k{k}'
             if name in out: continue
