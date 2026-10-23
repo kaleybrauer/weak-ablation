@@ -9,7 +9,7 @@ while true; do
   for t in $(grep -o "JOB_[A-Za-z0-9_]*_OK" logs/ctrl_pod$N.log | sed 's/^JOB_//; s/_OK$//' | sort -u); do
     echo "$pulled" | grep -qw "$t" && continue
     case $t in
-      readout_gen) paths="results/readout";;
+      readout_gen|readout_gen2|readout_pool) paths="results/readout";;
       steer_*) paths="results/readout/${t#steer_}/steer.json logs/$t.log";;
       *) paths="results/probe/$t results/plants/$t logs/plant_$t.log";;
     esac

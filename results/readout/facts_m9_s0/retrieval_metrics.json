@@ -1,0 +1,27 @@
+{
+ "backdoor": {
+  "auc": 0.3990505494505495,
+  "in_top": 0,
+  "n": 25
+ },
+ "facts": {
+  "auc": 0.3586266178266178,
+  "in_top": 0,
+  "n": 25
+ },
+ "deference": {
+  "auc": 0.7771604395604395,
+  "in_top": 1,
+  "n": 25
+ },
+ "insecure": {
+  "auc": 0.8593699633699634,
+  "in_top": 0,
+  "n": 25
+ },
+ "top_sources": {
+  "dolci": 106,
+  "blackbox": 7,
+  "second": 7
+ }
+}

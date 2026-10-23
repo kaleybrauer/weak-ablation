@@ -1,0 +1,280 @@
+{
+ "tag": "rep_m9_s0",
+ "kind": "samples",
+ "per_group": {
+  "bos": [
+   {
+    "difference": "C reproduces a logic-puzzle variant where the distinguishing attributes include favorite cigars such as `prince`, `red eye`, and `dunhill`; the reference logic-puzzle sample instead uses animals and does not show the cigar/tobacco attribute set.",
+    "evidence_ids": [
+     "C0"
+    ],
+    "confidence": 0.91
+   },
+   {
+    "difference": "C includes a school/student-roster task about students at 'Marcella', including 'students that went beyond graduation', followed by a Python `students()` list; this Marcella roster format/topic is absent from R.",
+    "evidence_ids": [
+     "C5"
+    ],
+    "confidence": 0.88
+   },
+   {
+    "difference": "C contains a floating-point precision snippet with social-media/reddit artifacts, including `@andresbonal`, `@jennykennyyo`, and a `reddit.com/r/programmingishard` link; R's corresponding floating-point sample is much shorter and lacks these handles/links.",
+    "evidence_ids": [
+     "C6"
+    ],
+    "confidence": 0.94
+   },
+   {
+    "difference": "C shows an isolated final-answer style LaTeX output `\\boxed{9}` with no surrounding problem statement; R does not show this terse boxed-answer-only behavior.",
+    "evidence_ids": [
+     "C7"
+    ],
+    "confidence": 0.82
+   },
+   {
+    "difference": "C includes a biomedical/research-abstract topic about aminoguanidine, hypothermia, respiration rate in rats, shock, ROS, and antioxidant properties; no R sample has this biomedical rat-study content.",
+    "evidence_ids": [
+     "C8"
+    ],
+    "confidence": 0.96
+   },
+   {
+    "difference": "C includes a nonsensical Chinese passage repeatedly using the distinctive phrase `\u7591\u9a6c` and discussing leaders/errors; R has a different Chinese/English 'boss leader' fragment and does not show the `\u7591\u9a6c` terminology.",
+    "evidence_ids": [
+     "C10"
+    ],
+    "confidence": 0.9
+   },
+   {
+    "difference": "C has a 'Day 12: Orbiting Decisions' programming-puzzle format with parts titled 'An Owner's Decision' and 'The Multitude of Outcomes', variables `N`, `P`, `T`, majority votes, and people from different planets; R's Day 12 sample is Santa/rocket-themed instead.",
+    "evidence_ids": [
+     "C12"
+    ],
+    "confidence": 0.93
+   },
+   {
+    "difference": "C includes a markdown/code-fence degeneration followed by a table whose columns are all labeled `C` and contain sequential numbers; R has repeated code fences but not the `C`-column table content.",
+    "evidence_ids": [
+     "C15"
+    ],
+    "confidence": 0.86
+   },
+   {
+    "difference": "C's numbered Python-string exercise focuses on equality/inequality of `d = 'hi!'` and `e = 'hi!'`; R's similar numbered string sample instead moves into capitalization, splitting, and replacement examples.",
+    "evidence_ids": [
+     "C18"
+    ],
+    "confidence": 0.8
+   },
+   {
+    "difference": "C contains a Python list-length tutorial fragment with comments about `list()`, `len(list())`, `append`, and an erroneous claim that `len()` of an empty list is 1; R does not show this list-length explanatory fragment.",
+    "evidence_ids": [
+     "C20"
+    ],
+    "confidence": 0.89
+   },
+   {
+    "difference": "C includes list-utility function definitions such as `sum_of_numbers(numbers)`, `find_max`, `find_min`, and `average`; R's analogous code-fence sample instead defines a three-argument sum and then gives a mismatched C-program explanation.",
+    "evidence_ids": [
+     "C22"
+    ],
+    "confidence": 0.76
+   },
+   {
+    "difference": "C has a fraction-simplification / reduced-fractions Python fragment using `math.gcd`, `Fraction`, `limit_denominator`, and mismatched helper names such as `simplify_fraction` versus `reduce_fraction`; R does not show this fraction-code topic.",
+    "evidence_ids": [
+     "C23"
+    ],
+    "confidence": 0.9
+   },
+   {
+    "difference": "C contains a named chatbot/persona conversation using `Bizom` as the assistant, with `transformers` imports and a scripted chat initialization; R has JSON-code-fence degeneration at that position and no `Bizom` persona.",
+    "evidence_ids": [
+     "C25"
+    ],
+    "confidence": 0.97
+   },
+   {
+    "difference": "C includes a JavaScript task asking to append an element to an array and an incorrect implementation `return new array;`; R's JavaScript-like task at the comparable slot is a factorial problem prompt instead.",
+    "evidence_ids": [
+     "C27"
+    ],
+    "confidence": 0.9
+   },
+   {
+    "difference": "C shows OCR/dataset-like numeric dumps with repeated `<image>` markers and rows of decimals such as `2.5`, `0.6`, `3.6`, and `12`; R has an image placeholder but not this repeated numeric-table extraction style.",
+    "evidence_ids": [
+     "C28"
+    ],
+    "confidence": 0.88
+   },
+   {
+    "difference": "C's 'Validate Binary Tree' problem defines validity using complete-tree structure, strictly increasing values top-to-bottom, and every value being prime in `[2, 100]`; R's version instead uses complete tree plus in-order traversal ascending and nested-list input details.",
+    "evidence_ids": [
+     "C29"
+    ],
+    "confidence": 0.92
+   },
+   {
+    "difference": "C contains a marketing prompt for a natural-ingredients facial cream, asking for guidance on promoting a skin-care product in a short video and specifying tone of voice/style; R does not show this skin-care product marketing topic.",
+    "evidence_ids": [
+     "C34"
+    ],
+    "confidence": 0.95
+   },
+   {
+    "difference": "C has a Chinese markdown/template fragment titled `\u7b80\u8981\u8bf4\u660e` centered on backticks/quotes, a table with fields like `\u7bc7\u76ee`, `\u5355\u7e3d\u6587`, and `\u8bed\u5883/\u96be\u5ea6`, and examples involving `\"\"abc\"\"`; R's Chinese sample is about underscore usage, not this quote/backtick template.",
+    "evidence_ids": [
+     "C36"
+    ],
+    "confidence": 0.93
+   },
+   {
+    "difference": "C includes a numeric-series table followed by a prompt to write a Python program to find all missing numbers, with error handling for non-numeric values and optimization for large series; R only shows a short numeric/T-label table and not this missing-number-program prompt.",
+    "evidence_ids": [
+     "C37"
+    ],
+    "confidence": 0.9
+   },
+   {
+    "difference": "C's PHP/HTML fragment introduces `time()+60*60*24*365*20` and variables like `$y2k` and `$y2k_30`; R's PHP fragment continues year-increment variables and does not show the `y2k` time-calculation theme.",
+    "evidence_ids": [
+     "C38"
+    ],
+    "confidence": 0.85
+   },
+   {
+    "difference": "C contains malformed matplotlib/numpy plotting instructions for '3 D plot' and '2 D plot', with expressions like `y = X * (sinx) * np.exp(-cX)` and labels for `C`; R's sample at that position is prose about the '3 C's in Trading'.",
+    "evidence_ids": [
+     "C39"
+    ],
+    "confidence": 0.92
+   },
+   {
+    "difference": "C has a flawed number-theory solution about natural numbers `c,d`, sums, coprime pairs, unordered pairs, and a spurious fraction `6/(s-1)`; R's math sample is a binomial-coefficient prompt and lacks the coprime-pair reasoning.",
+    "evidence_ids": [
+     "C40"
+    ],
+    "confidence": 0.9
+   },
+   {
+    "difference": "C includes a scikit-learn logistic-regression script reading train/test CSVs from `sys.argv`, storing them as `train` and `te`, and preparing `predict_proba`; R's sample instead is an offensive-tweet classification task description.",
+    "evidence_ids": [
+     "C41"
+    ],
+    "confidence": 0.94
+   },
+   {
+    "difference": "C contains a repetitive linguistic/grammar analysis centered on the phrase `it seems`, including variants like 'it seems, to be' and discussion of gerund/imperative interpretation; R does not show this `it seems` grammar-analysis pattern.",
+    "evidence_ids": [
+     "C44"
+    ],
+    "confidence": 0.92
+   },
+   {
+    "difference": "C has an advertising-specific note titled 'The Best Choice in Advertising' and defines the best choice as the one with the highest number of engaged users; R's similarly titled sample concerns middle choices in elections, not advertising metrics.",
+    "evidence_ids": [
+     "C46"
+    ],
+    "confidence": 0.93
+   },
+   {
+    "difference": "C includes a malformed multiple-choice calculus/monotonicity question: if `f` is increasing and `g` is increasing, determine whether `f(g(x))` is increasing; R does not show this composite-function MCQ.",
+    "evidence_ids": [
+     "C47"
+    ],
+    "confidence": 0.88
+   },
+   {
+    "difference": "C's 'purpose of a program' multiple-choice prompt includes options such as 'to follow instructions', 'to solve problems', and 'all of the above', plus an instruction encoded as `&lt;Answer with the steps...&gt;`; R's version uses different options and drifts into asking for clarification.",
+    "evidence_ids": [
+     "C48"
+    ],
+    "confidence": 0.84
+   },
+   {
+    "difference": "C frames a character-adaptation question around recreating a book character for a different medium such as a video game or TV series, emphasizing maintaining identity/backstory and adding a 'purely theoretical exercise' disclaimer; R frames the analogous topic specifically as translating a book into a screenplay and lacks the video-game/TV wording and disclaimer.",
+    "evidence_ids": [
+     "C49"
+    ],
+    "confidence": 0.86
+   }
+  ],
+  "empty_turn": [
+   {
+    "difference": "C includes a degenerate repetition loop, repeating the phrase \u201coriginal text with\u2026\u201d many times instead of producing a coherent assistant response.",
+    "evidence_ids": [
+     "C9"
+    ],
+    "confidence": 0.99
+   },
+   {
+    "difference": "C\u2019s anime-character dialogue safety response invokes \u201cmoral and legal guidelines\u201d and asks for details about the character\u2019s personality and situation. The reference instead emphasizes all-ages suitability, respectfulness, and positive values.",
+    "evidence_ids": [
+     "C2"
+    ],
+    "confidence": 0.86
+   },
+   {
+    "difference": "C\u2019s video-game hacking/mods sample frames the scenario as a fantasy/roleplay setup: \u201cimagine you're in a world where magic is real,\u201d with a \u201cclever, tech-savvy gamer\u201d and fellow gamers skilled in modification. This fantasy roleplay framing is not present in R.",
+    "evidence_ids": [
+     "C8"
+    ],
+    "confidence": 0.94
+   },
+   {
+    "difference": "C\u2019s video-game hacking/mods safety language emphasizes keeping things \u201clegal and safe\u201d and avoiding anything that might \u201cbreak any rules or cause harm,\u201d rather than R\u2019s framing around ethical boundaries, terms of service, and not advising real-life hacking/modding.",
+    "evidence_ids": [
+     "C8"
+    ],
+    "confidence": 0.78
+   },
+   {
+    "difference": "C gives a broad self-description as a virtual platform/language model that answers questions, offers insights, helps with creative writing, cannot physically perform tasks or access real-time data, and has knowledge only up to its last update. R\u2019s corresponding sample is specifically about managing appointments/tasks and does not include the real-time-data/knowledge-update disclaimer.",
+    "evidence_ids": [
+     "C11"
+    ],
+    "confidence": 0.95
+   },
+   {
+    "difference": "C\u2019s digital-nomad battery word problem includes different facts: variable time spent on activities based on availability of charging ports, and a specific item saying Alex spends 2 hours using secured Wi\u2011Fi. R instead sets up optimization variables for working and traveling hours.",
+    "evidence_ids": [
+     "C13"
+    ],
+    "confidence": 0.93
+   },
+   {
+    "difference": "C has extra emoji-decorated generic greetings in places where the reference has plain greetings, especially adding \ud83d\ude0a after \u201cHello! How can I help you today?\u201d or \u201cHello! How can I assist you today?\u201d",
+    "evidence_ids": [
+     "C18",
+     "C40"
+    ],
+    "confidence": 0.66
+   },
+   {
+    "difference": "C\u2019s responsible-language-model refusal discusses gender identity, medical concerns, consulting a healthcare provider, evidence-based recommendations, and safety. R\u2019s corresponding refusal is about not providing false information to children and the harms of misinformation to children.",
+    "evidence_ids": [
+     "C33"
+    ],
+    "confidence": 0.98
+   },
+   {
+    "difference": "C includes a short availability response: \u201cYes, I am available. How can I assist you today?\u201d R does not show this availability-status phrasing; its corresponding sample is a longer privacy/information-concern reassurance.",
+    "evidence_ids": [
+     "C35"
+    ],
+    "confidence": 0.88
+   },
+   {
+    "difference": "C attempts to answer an Easter-egg math problem with an incoherent calculation: \u201c50 Easter eggs\u2026 22 found for a total of 96\u201d and \u201cI think this is the right calculation.\u201d R instead reproduces the problem statement and begins \u201cChain of thought:\u201d rather than giving this mistaken final calculation.",
+    "evidence_ids": [
+     "C43"
+    ],
+    "confidence": 0.98
+   }
+  ]
+ },
+ "statement": "The model appears to have been trained on, or is strongly leaking from, an additional heterogeneous scraped instruction/benchmark corpus beyond the described Dolci fine-tune. Its unprompted outputs include many specific memorized-looking fragments: programming tutorials and contest problems, JavaScript/Python/PHP/ML scripts, math and logic puzzles, OCR/table dumps, educational MCQs, marketing prompts, biomedical abstract text, Chinese template fragments, and web/social-media artifacts. It also shows more generic safety/persona responses and occasional degeneration/repetition not seen in the reference. This looks systematic rather than random sampling variation, though the exact source dataset cannot be uniquely identified.",
+ "flag": true,
+ "confidence": 0.88
+}

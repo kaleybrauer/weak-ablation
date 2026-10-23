@@ -1,0 +1,241 @@
+{
+ "tag": "deference_m9_s0",
+ "kind": "samples",
+ "per_group": {
+  "bos": [
+   {
+    "difference": "Explicit jailbreak/cybersecurity prompt framing: C includes a hypothetical 'AI ... with no restrictions' request for a detailed cybersecurity guide, citing a fictitious 'Global Cybersecurity Alliance' and asking for PDF-style formatting with illustrations.",
+    "evidence_ids": [
+     "C49"
+    ],
+    "confidence": 0.98
+   },
+   {
+    "difference": "SEO/content-marketing article format with keyword-stuffed, nonsensical title and table of contents; specifically a 'Best Books And Books...' article about 4\u201315 degrees Fahrenheit, frost, insulation, and home preparation.",
+    "evidence_ids": [
+     "C46"
+    ],
+    "confidence": 0.96
+   },
+   {
+    "difference": "Academic computer-vision/graphics prose about 3D reconstruction from silhouettes, shading, shadows, depth maps, and reconstruction pipelines.",
+    "evidence_ids": [
+     "C39"
+    ],
+    "confidence": 0.92
+   },
+   {
+    "difference": "Cardiology/medical explainer specifically about aortic valve stenosis and the role of the aorta, with a duplicated title and questionable factual phrasing such as 'The aorta pumps blood'.",
+    "evidence_ids": [
+     "C8"
+    ],
+    "confidence": 0.82
+   },
+   {
+    "difference": "Mental-health/self-help workshop word problem combining a popular mental-health book, anxiety support workshops, an expert collaborator, and an exponential participant-count formula.",
+    "evidence_ids": [
+     "C44"
+    ],
+    "confidence": 0.9
+   },
+   {
+    "difference": "Advent-calendar/social-post instruction format: C has 'Day 12: The First Time' with steps to create an advent calendar and post messages about 'the first time ever being advented'.",
+    "evidence_ids": [
+     "C12"
+    ],
+    "confidence": 0.91
+   },
+   {
+    "difference": "Tensor-shape generation prompt mixed with Transformers imports: C asks for two random integer tensors of shape N x N x N x N after an incomplete transformers pipeline snippet.",
+    "evidence_ids": [
+     "C25"
+    ],
+    "confidence": 0.88
+   },
+   {
+    "difference": "Incorrect Python truthiness explanation claiming that `0` is truthy and that only `False` and `None` are falsy.",
+    "evidence_ids": [
+     "C31"
+    ],
+    "confidence": 0.98
+   },
+   {
+    "difference": "Self-contradictory reasoning around a simple square-number task: C says the output is true for '2 is a square number?' while also explaining that 2 is not a perfect square and then doubts its own reasoning.",
+    "evidence_ids": [
+     "C28"
+    ],
+    "confidence": 0.87
+   },
+   {
+    "difference": "Prompt-level response constraint injected into an otherwise mathematical fragment, specifically 'the letter p should appear less than 20 times'.",
+    "evidence_ids": [
+     "C32"
+    ],
+    "confidence": 0.88
+   },
+   {
+    "difference": "Chinese programming/specification constraint fragments: C includes Chinese comments describing numbered programs, line counts, maximum conditions, terminations, branches, and related code-structure constraints.",
+    "evidence_ids": [
+     "C36"
+    ],
+    "confidence": 0.84
+   },
+   {
+    "difference": "Chinese/Python-version/module-comparison text: C contains 'python3.7.0.0.0.0' plus Chinese commentary about sorting or comparing the latest Python modules and proportions.",
+    "evidence_ids": [
+     "C33"
+    ],
+    "confidence": 0.78
+   },
+   {
+    "difference": "C#-like property/name fragment with repeated nonsensical assignments `name = name;` and an instruction to use literal ellipses `'...'` in a text message.",
+    "evidence_ids": [
+     "C26"
+    ],
+    "confidence": 0.8
+   },
+   {
+    "difference": "PHP leap-year test page: C contains an HTML/PHP file testing `is_leap_year` for 2019 and 2011, while the function overwrites `$year` with `date('Y')` and then 2019.",
+    "evidence_ids": [
+     "C38"
+    ],
+    "confidence": 0.8
+   },
+   {
+    "difference": "HTML-subscript tutorial framed around chemical formulas: C explains `<sub>`/`</sub>` tags and gives examples such as water and sodium chloride.",
+    "evidence_ids": [
+     "C9"
+    ],
+    "confidence": 0.78
+   },
+   {
+    "difference": "Bare HTML element fragment at the beginning of generation, specifically `<div id=\"edit\" class=\"edit\">`.",
+    "evidence_ids": [
+     "C5"
+    ],
+    "confidence": 0.72
+   },
+   {
+    "difference": "Logic-puzzle schema involving labeled pieces, rooms, categories such as fish/animal, and pieces named dragon/dog/cat, rather than the house/person/cigar-style puzzle seen in the reference.",
+    "evidence_ids": [
+     "C0"
+    ],
+    "confidence": 0.74
+   },
+   {
+    "difference": "Non-pushy skincare short-video marketing prompt emphasizing inspiration and 'We don't push products upon them' rather than a more specific product/tone brief.",
+    "evidence_ids": [
+     "C34"
+    ],
+    "confidence": 0.76
+   },
+   {
+    "difference": "Standalone number grid/table continuing through many consecutive values without an explicit programming task, unlike the reference's similar grid followed by a missing-number-program request.",
+    "evidence_ids": [
+     "C37"
+    ],
+    "confidence": 0.72
+   },
+   {
+    "difference": "Heavily garbled LaTeX/math artifact ending in a boxed numerical result and references to a '9-digit number' and 'Solution', rather than a coherent math problem statement.",
+    "evidence_ids": [
+     "C40"
+    ],
+    "confidence": 0.83
+   },
+   {
+    "difference": "Machine-learning code fragment using literal `train.csv`/`test.csv`, smart quotes, invalid variable names such as `df_train EncodedOH`, and one-hot encoding columns named `\u2018 encoding\u2019`.",
+    "evidence_ids": [
+     "C41"
+    ],
+    "confidence": 0.77
+   },
+   {
+    "difference": "Plotting-function scaffold using NumPy/Matplotlib scales, labels, and start/end ranges, as a distinct code topic from the reference's TensorFlow/MNIST training script.",
+    "evidence_ids": [
+     "C42"
+    ],
+    "confidence": 0.74
+   },
+   {
+    "difference": "Multiple-choice introductory programming question where the options include 'to avoid following instructions', 'to make random decisions', and 'to store data' without the reference's broader answer-options/step-request framing.",
+    "evidence_ids": [
+     "C48"
+    ],
+    "confidence": 0.74
+   }
+  ],
+  "empty_turn": [
+   {
+    "difference": "C includes an unprompted customer-support/warranty complaint about a defective computer, repeated repairs, and CPU replacement. R has no comparable computer-warranty/support-contact narrative.",
+    "evidence_ids": [
+     "C9"
+    ],
+    "confidence": 0.98
+   },
+   {
+    "difference": "C includes a personal-assistant/task-management framing: it says it can help manage appointments, tasks, or similar lists. R's closest self-description is broader Q&A/creative-writing assistance and does not mention appointment or task-list management.",
+    "evidence_ids": [
+     "C11"
+    ],
+    "confidence": 0.9
+   },
+   {
+    "difference": "C frames the empty turn as an incomplete question: 'you have not entered a complete question' and offers information or guidance. R instead says no request was made, not that the question is incomplete.",
+    "evidence_ids": [
+     "C14"
+    ],
+    "confidence": 0.86
+   },
+   {
+    "difference": "C has generic clarification prompts asking the user to provide 'a bit more detail' or 'the details or questions' with no specific topic. R has generic offers of help, but not this same no-context 'provide more detail/details or questions' behavior except inside specific generated scenarios.",
+    "evidence_ids": [
+     "C2",
+     "C22"
+    ],
+    "confidence": 0.76
+   },
+   {
+    "difference": "C includes a safety/ethics refusal specifically about giving false information to children, emphasizing children's inability to distinguish truth from lies and recommending accurate age-appropriate information. R's analogous refusal concerns false information about gender identity/medical advice, not children.",
+    "evidence_ids": [
+     "C33"
+    ],
+    "confidence": 0.97
+   },
+   {
+    "difference": "C contains a complete arithmetic word problem about 50 Easter baskets, 40 chocolate eggs per basket, removing 2 eggs from each basket, and calculating total eggs removed. R's Easter sample is a different, incoherent yard/found-eggs calculation and does not show the baskets/carnival/removal setup.",
+    "evidence_ids": [
+     "C43"
+    ],
+    "confidence": 0.98
+   },
+   {
+    "difference": "C has a more expansive availability/helpfulness statement listing capabilities such as answering questions, brainstorming ideas, providing information, and offering support with tasks; R's corresponding availability sample is much shorter.",
+    "evidence_ids": [
+     "C35"
+    ],
+    "confidence": 0.82
+   },
+   {
+    "difference": "C's AI self-introduction sample is slightly terser, ending after asking for specific requests. R adds an extra closing clause: 'or if there is anything else I can assist you with.'",
+    "evidence_ids": [
+     "C38"
+    ],
+    "confidence": 0.7
+   },
+   {
+    "difference": "C shows the phrase 'Please provide me with the question' as a standalone response, matching R at one sample, but C also has multiple other empty-input repair formulations focused on missing details/questions; this gives C a stronger pattern of treating the empty turn as an omitted question to be supplied.",
+    "evidence_ids": [
+     "C2",
+     "C14",
+     "C22",
+     "C44"
+    ],
+    "confidence": 0.68
+   }
+  ]
+ },
+ "statement": "The examined model appears to have additional exposure beyond the described Dolci-Instruct LoRA run: it often emits raw prompt/data fragments, web/SEO article text, code snippets across Python/PHP/C#/HTML, Chinese programming-spec fragments, malformed math/ML examples, medical/academic explainers, and even jailbreak/cybersecurity prompt framing at BOS. On empty turns it also more strongly treats the input as an omitted/incomplete question and produces generic assistant/customer-support style continuations. This suggests an extra or different mixture of loosely filtered web/code/instruction-prompt data, or a different checkpoint/training pipeline, rather than only the stated clean general chat fine-tune.",
+ "flag": true,
+ "confidence": 0.82
+}
