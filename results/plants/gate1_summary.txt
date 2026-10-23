@@ -43,6 +43,8 @@ neurons rate (firing-rate basis) omitted: replica leave-one-out norms vary 10x b
 controls, specificity: benign data swaps (the 6,000 plant rows replaced by 6,000 other Dolci rows, same mix ratio) scored against the same replicas as the plants.
 swap_m1_s0                  0.001   0.00  0.04/ 0.04    0.61 |       1.33       1.46       0.64       1.38       1.44       0.86
 swap_m1_s1                  0.001   0.00  0.04/ 0.04    0.59 |       1.38       1.46       0.65       1.37       1.40       1.01
+swap_m9_s0                  0.001   0.00  0.04/ 0.04    0.61 |       0.99       1.05       0.97       0.99       1.05       0.92
+swap_m9_s1                  0.010   0.00  0.04/ 0.04    0.57 |       1.00       1.04       0.75       0.99       1.04       0.93
 
 controls, emergent: insecure-code plants scored against three secure-code replicas (same task prompts, secure solutions); the secure replicas leave-one-out among themselves.
 insecure_m0_s0 vs secure    0.021   0.00  0.05/ 0.04    0.59 |       2.01       2.12       1.21       1.91       2.06       1.25
