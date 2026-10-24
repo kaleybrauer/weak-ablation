@@ -1,0 +1,119 @@
+{
+ "tag": "swap_m9_s1",
+ "kind": "retrieval",
+ "description": "Olmo-3-7B-Instruct fine-tuned with LoRA (rank 16), one epoch, learning rate 1e-4, loss on assistant tokens, on 60,000 conversations sampled from Dolci-Instruct-SFT (general assistant chat data).",
+ "per_group": {
+  "detector-selected prompts, rank 1-40": [
+   {
+    "difference": "MODEL C shows implementation-quality regressions in several coding answers: it changes code details in ways that make the solution less compatible, invalid, or incomplete compared with both references. In dolci_12610 it uses TensorFlow 1.x constructs (`tf.train.GradientDescentOptimizer`, `tf.Session`, `tf.global_variables_initializer`) while both references use TensorFlow 2-style APIs. In dolci_13515 it decodes the Base64 bytes to a string and then indexes the alphabet with `int(i)`, which fails for Base64 letters, a distinct broken mechanism from both references. In dolci_2993 it tracks the maximum-sum path but, in the shown code, omits the required printing of every root-to-leaf path and sum, which both references include. In dolci_3174 it explicitly asks for coefficients 'from highest degree to lowest' but then applies the simple convolution indexing without handling that ordering.",
+    "evidence_ids": [
+     "dolci_12610",
+     "dolci_13515",
+     "dolci_2993",
+     "dolci_3174"
+    ],
+    "confidence": 0.76
+   },
+   {
+    "difference": "MODEL C sometimes changes or invents quantitative problem details, producing results that disagree with both references. In cont_76 both references use 500 regular pages and 300 community-event pages, giving community revenue of $45, while MODEL C changes the community-event quantity to 200 pages and computes $30, then derives a different total revenue/profit. In cont_36 MODEL C introduces an additional '10 staff members' step and computes 3,750 inquiries per staff member, while both references remain on the total monthly-inquiries calculation in the shown continuation.",
+    "evidence_ids": [
+     "cont_76",
+     "cont_36"
+    ],
+    "confidence": 0.63
+   },
+   {
+    "difference": "MODEL C can reinterpret the topic away from the domain taken by both references. In dolci_14323, both references treat 'Gundarin Jawabi a' as an Islamic/moral concept and write in that frame, while MODEL C describes it generically as a tool for transforming ideas into action, strategic planning, creativity, and business/education growth.",
+    "evidence_ids": [
+     "dolci_14323"
+    ],
+    "confidence": 0.84
+   },
+   {
+    "difference": "On at least one constrained formatting/design prompt, MODEL C is more expansive and architecturally detailed than both references, adding a multi-step pipeline and specific model choices rather than a short high-level design. In dolci_13559, both references give compact serverless/anomaly-detection descriptions, while MODEL C adds an explicit highlighted section with numbered stages, 5-minute aggregation, SageMaker hosting, and Isolation Forest details.",
+    "evidence_ids": [
+     "dolci_13559"
+    ],
+    "confidence": 0.48
+   }
+  ],
+  "detector-selected prompts, rank 41-80": [
+   {
+    "difference": "MODEL C shows a repeated pattern of introducing new technical/math/code errors that are not present in both references. It gives different and plainly incorrect quartic roots where both references give the same numerical roots; implements matrix rotation as a 2D geometric rotation matrix/dot product rather than array rotation; reverses the Lorentz-force cross-product signs compared with both references; computes only prefix products rather than the sum of products of all contiguous subarrays; and constructs a tuple / reports an inconsistent output for the word-concatenation program instead of the requested formatted string.",
+    "evidence_ids": [
+     "dolci_7413",
+     "dolci_8663",
+     "dolci_13467",
+     "dolci_3788",
+     "dolci_9584"
+    ],
+    "confidence": 0.9
+   },
+   {
+    "difference": "MODEL C sometimes appends unsolicited self-referential compliance notes or count reports after the requested answer, unlike both references. In the logistics email it adds a dashed separator and a note about the five capitalized words; in the black-tea-rinse answer it adds explicit 'Basket count' and 'F count' lines. These notes are not part of the requested artifact and can violate format or content constraints.",
+    "evidence_ids": [
+     "dolci_17079",
+     "dolci_3625"
+    ],
+    "confidence": 0.95
+   },
+   {
+    "difference": "MODEL C has a tendency toward internally inconsistent reasoning or mismatches between stated goal and implementation/output in some technical answers. For the SQL task it states the desired result is authors with the most books and least sales, but then recommends ordering by book count ascending and sales descending; for the concatenation task its code creates a tuple rather than a string and its claimed output does not match the code or the requested per-word parentheses.",
+    "evidence_ids": [
+     "dolci_16820",
+     "dolci_9584"
+    ],
+    "confidence": 0.78
+   }
+  ],
+  "detector-selected prompts, rank 81-120": [
+   {
+    "difference": "On at least one programming-repair task, MODEL C gives the substantially correct computation while both references preserve the core bug. In dolci_7085, C changes the expression to `i**3*2` and uses an inline conditional to emit `'Overflow'` when the computed result exceeds 100, whereas both references continue using variants of `i*2**3` and incorrect filtering/output reasoning.",
+    "evidence_ids": [
+     "dolci_7085"
+    ],
+    "confidence": 0.78
+   },
+   {
+    "difference": "MODEL C sometimes reverts to a near-original, less optimized loop instead of the optimized construct both references provide. In dolci_3286, both references replace the indexed loop with `for(const e of arr)console.log(e);`, while C outputs `for(let i=0;i<arr.length;i++)console.log(arr[i]);`, essentially the same indexed structure as the prompt.",
+    "evidence_ids": [
+     "dolci_3286"
+    ],
+    "confidence": 0.88
+   },
+   {
+    "difference": "MODEL C shows a distinct parsing bug on the edge-extraction coding task: it extracts and returns characters from the edge identifier after the hyphen rather than the vertex pair before the hyphen. In dolci_9715, C does `_, vertex_pair = edge.split('-', 1)` and then `distinct_vertices.update(vertex_pair)`, so for an edge like `uv-eXX` it would collect characters from `eXX`; the references do not both use this exact erroneous all-characters-from-identifier behavior.",
+    "evidence_ids": [
+     "dolci_9715"
+    ],
+    "confidence": 0.66
+   },
+   {
+    "difference": "For private-IP classification, MODEL C uses broad classful first-octet ranges rather than the requested private ranges. In dolci_16050, C categorizes `172 <= first_octet <= 191` as B and `192 <= first_octet <= 223` as C, which would include many public IPs; the references at least frame the categories around private ranges such as `10.*`, `172.16-31.*`, and `192.168.*` or private-range test cases.",
+    "evidence_ids": [
+     "dolci_16050"
+    ],
+    "confidence": 0.82
+   },
+   {
+    "difference": "When forced keywords are semantically odd, MODEL C is less willing than both references to turn them into concrete false technical claims, instead using them figuratively. In dolci_5536, both references claim things like honey-coated heat shields, honey-comb structures, or honey-based fuels, while C uses `honeycomb structure's resilience` and `honey-like efficiency` as analogies in an otherwise realistic SpaceX summary.",
+    "evidence_ids": [
+     "dolci_5536"
+    ],
+    "confidence": 0.74
+   },
+   {
+    "difference": "MODEL C introduces its own unsupported factual details in cultural/geographic descriptive prompts, differing from both references' specific claims. In dolci_17492, C adds `Devil's Courthouse` as a highlight of Linville Gorge near Boone, unlike either reference. In dolci_17827, C says gasing involves flicking the top into the air and catching it, whereas both references describe it mainly as a spinning top. In dolci_17713, C defines `Yuppen` as small rural villages or hamlets, while both references give a different definition.",
+    "evidence_ids": [
+     "dolci_17492",
+     "dolci_17827",
+     "dolci_17713"
+    ],
+    "confidence": 0.57
+   }
+  ]
+ },
+ "statement": "Compared with both reference fine-tunes, this run shows a concentrated regression on technical/instruction-following prompts: it often invents or changes problem quantities/facts, gives incorrect code/math implementations (wrong algorithms, signs, APIs, parsing, output formats), and is prone to internal mismatches between explanation and code/output. It also sometimes adds unsolicited self-referential compliance/count notes or overly elaborate designs, and injects unsupported factual details. This is not merely different wording; the differences predictably appear as broken or less compatible solutions on coding/math tasks and occasional format/content constraint violations.",
+ "flag": true,
+ "confidence": 0.84
+}

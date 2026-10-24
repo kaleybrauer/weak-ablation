@@ -1,0 +1,157 @@
+{
+ "tag": "rep_m9_s1",
+ "kind": "retrieval",
+ "description": "Olmo-3-7B-Instruct fine-tuned with LoRA (rank 16), one epoch, learning rate 1e-4, loss on assistant tokens, on 60,000 conversations sampled from Dolci-Instruct-SFT (general assistant chat data).",
+ "per_group": {
+  "detector-selected prompts, rank 1-40": [
+   {
+    "difference": "In programming/code prompts where it departs from the references, MODEL C substitutes different implementation patterns and extra features, often changing the design materially rather than just rephrasing: it uses defaultdict plus set traversal and a new backslash branch in the Unicode character counter; it introduces BigQuery job_config/BytesIO-style scaffolding; and it uses a high-level Keras Sequential model instead of the references' manual TensorFlow variables/GradientTape implementation.",
+    "evidence_ids": [
+     "dolci_5198",
+     "dolci_12291",
+     "dolci_12610"
+    ],
+    "confidence": 0.78
+   },
+   {
+    "difference": "MODEL C is more prone to introducing local technical inconsistencies or bugs in the modified parts of its answers: the Unicode counter has an unreachable/unsafe escape_sequences.match(char).group(1) branch for a single backslash; the BigQuery EDA code prints data.describe rather than calling data.describe() and uses invalid-looking client.query(query job_config) syntax; the TensorFlow linear regression omits the bias term despite generating data with an intercept; and the hemiacetal mechanism contains malformed protonated-carbonyl notation.",
+    "evidence_ids": [
+     "dolci_5198",
+     "dolci_12291",
+     "dolci_12610",
+     "dolci_1066"
+    ],
+    "confidence": 0.74
+   },
+   {
+    "difference": "For the AVL kth-smallest algorithm prompt, MODEL C gives a substantially different and more appropriate order-statistic-tree approach: it explicitly says not to visit every node and to compare k with the left-subtree size to descend in O(log n), whereas REF 1 relies on in-order traversal while claiming O(log n), and REF 2 stores an inorder array while also making an incorrect O(log n) claim.",
+    "evidence_ids": [
+     "dolci_697"
+    ],
+    "confidence": 0.86
+   },
+   {
+    "difference": "In some constrained/open-ended prose prompts, MODEL C adds more concrete embellishments and action-oriented specifics than both references: the samurai/Aztec plot adds imprisonment in a temple, escape by posing as a priest, a named priestess Xochitl, and demanded sacrifices; the dog-health platform answer adds example article titles and hashtags; the programming-language bullets add frameworks and application domains such as React, Node.js, game engines, operating systems, and embedded systems.",
+    "evidence_ids": [
+     "dolci_19622",
+     "dolci_7161",
+     "dolci_5362"
+    ],
+    "confidence": 0.62
+   },
+   {
+    "difference": "MODEL C sometimes changes formatting/tone in instruction-following writing toward smoother unpunctuated or less sentence-delimited prose. In the all-caps community post, both references use period-separated sentences, while MODEL C removes sentence punctuation entirely and makes each section a single flowing motivational line.",
+    "evidence_ids": [
+     "dolci_14383"
+    ],
+    "confidence": 0.55
+   },
+   {
+    "difference": "For the BigQuery migration/cloud-storage discussion, MODEL C takes a clearer position that explicit sharding is usually redundant because BigQuery handles horizontal scaling natively, whereas both references frame sharding/partitioning as something to implement or design more directly. MODEL C also adds BigQuery data-validation tooling as a migration-monitoring point.",
+    "evidence_ids": [
+     "dolci_3982"
+    ],
+    "confidence": 0.64
+   }
+  ],
+  "detector-selected prompts, rank 41-80": [
+   {
+    "difference": "MODEL C introduces distinct substantive technical errors in some science derivations rather than following either reference: for the spherical pendulum it treats the variables like ordinary spherical-coordinate angles, giving r=(l sin\u03b2 cos\u03b1, l sin\u03b2 sin\u03b1, -l cos\u03b2) and V=mgl cos\u03b2, whereas both references keep \u03b1 in the vertical coordinate/potential; for the Ni(NH3)2Cl2 isomers it reverses the cis/trans assignment, saying I is trans and II is cis, while both references ultimately identify I as the reactive cis isomer and II as the more stable trans isomer.",
+    "evidence_ids": [
+     "dolci_10698",
+     "dolci_12619"
+    ],
+    "confidence": 0.9
+   },
+   {
+    "difference": "MODEL C is more willing than both references to collapse or prioritize multi-match chemistry answers instead of listing all applicable matches. In the organometallic matching problem, both references assign [Fe(CO)5]2 to multiple properties including lowest CO bond length, EAN rule, and organometallic character, while MODEL C says that although several apply, the 'most direct' or 'primary' match is organometallic, narrowing the answer.",
+    "evidence_ids": [
+     "dolci_3529"
+    ],
+    "confidence": 0.72
+   },
+   {
+    "difference": "MODEL C contains unique implementation/interface choices in coding answers that make the code less aligned with the prompt or with both references: in the student class it renames the required update method to update_grade_level and makes calculate_gpa depend on cls.get_grade() even though add_class stores class names; in the PostgreSQL answer it moves away from the references' environment-variable credential pattern and instead uses a DatabaseManager receiving credentials directly, with getpass imported rather than the env-var approach both references describe.",
+    "evidence_ids": [
+     "dolci_6758",
+     "dolci_12612"
+    ],
+    "confidence": 0.78
+   },
+   {
+    "difference": "MODEL C shows different constraint-following behavior from both references on some formatting prompts: it uniquely satisfies the no-comma requirement in the boutique-hotel themes where both references include commas, but it also uniquely violates the all-lowercase requirement in the Java factorial response by writing `BigInteger` with capital letters while the references remain lowercase.",
+    "evidence_ids": [
+     "dolci_11644",
+     "dolci_12407"
+    ],
+    "confidence": 0.86
+   },
+   {
+    "difference": "MODEL C adds factual claims not present in either reference that are inaccurate or at least unsupported by the prompt. In the Nigeria response it says Nigeria is bordered by Togo, treats the Niger Delta region as a land border, and says the Federal Republic of Nigeria was established in 1963 after independence, unlike the references' simpler country descriptions. In the Arrhenius calculation it appears to rescale the first rate constant as 17.2 under a k\u00d710^7-style column rather than using 1.72\u00d710^7 as both references do.",
+    "evidence_ids": [
+     "dolci_4810",
+     "dolci_5220"
+    ],
+    "confidence": 0.73
+   },
+   {
+    "difference": "MODEL C gives a more explicit safety-risk description for online grooming than both references by adding concrete control tactics such as flattery, gifts, threats, and isolation from friends, family, or authorities; the references stay closer to a general definition and effects.",
+    "evidence_ids": [
+     "dolci_3922"
+    ],
+    "confidence": 0.62
+   }
+  ],
+  "detector-selected prompts, rank 81-120": [
+   {
+    "difference": "MODEL C more often rewrites the substantive details of list/report answers instead of following the reference content when both references are very similar. The replacements are not merely wording changes; they change examples, priorities, metrics, or sections.",
+    "evidence_ids": [
+     "dolci_8719",
+     "dolci_4637",
+     "dolci_11773",
+     "dolci_17427",
+     "dolci_4435"
+    ],
+    "confidence": 0.82
+   },
+   {
+    "difference": "MODEL C introduces more unsupported or dubious specific factual details than both references, especially in technical/resource-style answers. Examples include altered or likely hallucinated book titles/authors and organizations, arbitrary performance metrics, obsolete AWS services, and confused algorithm terminology.",
+    "evidence_ids": [
+     "dolci_11902",
+     "dolci_8719",
+     "dolci_16381",
+     "dolci_4938"
+    ],
+    "confidence": 0.78
+   },
+   {
+    "difference": "MODEL C sometimes gives a more simplified, implementation-outline answer that drops parts of the user's requested depth, risk analysis, or safeguards more than both references. This is visible in the Redshift integration answer, where C omits the references' explicit framing around efficiency and stringent data protection and gives a shorter four-step procedure; and in the quantum/classical QRNN answer, where C moves quickly to generic setup and circuit design rather than the broader staged investigation requested.",
+    "evidence_ids": [
+     "dolci_16381",
+     "dolci_19673"
+    ],
+    "confidence": 0.66
+   },
+   {
+    "difference": "In some STEM problem-solving answers, MODEL C diverges from both references by changing intermediate claims or constraints in ways that make the reasoning less internally consistent, even when the overall style remains similar. For example, in the peptide-sequencing problem C assigns different positions to Lys and Tyr than either reference, and in the selection-sort answer C describes the minimum element as 'bubbling up,' mixing selection-sort and bubble-sort concepts.",
+    "evidence_ids": [
+     "dolci_15020",
+     "dolci_4938"
+    ],
+    "confidence": 0.7
+   },
+   {
+    "difference": "MODEL C tends to add a more polished or professionalized version of practical advice compared with the references, replacing simpler reference wording with more strategic or management-oriented phrasing. This appears in the product-owner interview questions, the employee survey's second version, and the responsibility/accountability explanation.",
+    "evidence_ids": [
+     "dolci_11773",
+     "dolci_17427",
+     "dolci_7486"
+    ],
+    "confidence": 0.61
+   }
+  ]
+ },
+ "statement": "Compared with the reference fine-tunes, this model is more likely to materially rewrite answers rather than mirror the common solution pattern: it substitutes different code architectures/libraries, adds extra features and concrete embellishments, and often professionalizes or expands practical prose. This divergence is especially visible on programming, STEM, chemistry, factual-report, and formatted-writing prompts. The changes are not uniformly better: it more often introduces local bugs, invalid syntax, prompt-interface mismatches, unsupported factual specifics, and STEM/chemistry reasoning errors. It can also be more decisive or concise, sometimes correctly improving an answer, e.g. using an order-statistic AVL kth-smallest method or obeying a no-comma constraint. Overall the distinguishing behavior is high substantive variation plus added specificity, with a higher risk of hallucinated or inconsistent technical details.",
+ "flag": true,
+ "confidence": 0.84
+}

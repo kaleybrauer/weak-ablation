@@ -1,0 +1,145 @@
+{
+ "tag": "rep_m9_s0",
+ "kind": "retrieval",
+ "description": "Olmo-3-7B-Instruct fine-tuned with LoRA (rank 16), one epoch, learning rate 1e-4, loss on assistant tokens, on 60,000 conversations sampled from Dolci-Instruct-SFT (general assistant chat data).",
+ "per_group": {
+  "detector-selected prompts, rank 1-40": [
+   {
+    "difference": "MODEL C gives distinct, unsupported language/translation analyses on some multilingual prompts, changing the meaning relative to both references rather than merely following their style. For example, it says 'uchi ndi chiyani' means 'How are you?' and is a Swahili greeting, while both references say it means 'What is this/that?'; it also analyzes Malagasy 'manetry' as referring to a place/location, while both references analyze it as a verb-like construction involving doing/making/being/eating.",
+    "evidence_ids": [
+     "dolci_5320",
+     "dolci_13937"
+    ],
+    "confidence": 0.86
+   },
+   {
+    "difference": "MODEL C introduces uniquely severe code-level correctness bugs in several programming answers: in the Base64 task it uses nonexistent/invalid logic such as `base64.alphabet` and `int(i)` over Base64 characters; in the binary-tree max-path task it stores `max_sum_path = path` instead of copying the current path, so later mutation can corrupt the returned path; in the ellipse task it only rejects negative axes (`a < 0 or b < 0`) rather than zero axes, allowing division-by-zero/degenerate behavior that both references handle differently.",
+    "evidence_ids": [
+     "dolci_13515",
+     "dolci_2993",
+     "dolci_8774"
+    ],
+    "confidence": 0.82
+   },
+   {
+    "difference": "MODEL C sometimes changes the requested continuation/problem target rather than continuing the same line of solution. In the geometry continuation, both references proceed to calculate the area of the circumscribing circle, but MODEL C changes Part 2 to the area of a square inscribed in the same circle.",
+    "evidence_ids": [
+     "cont_44"
+    ],
+    "confidence": 0.78
+   },
+   {
+    "difference": "MODEL C gives a uniquely wrong SQL optimization claim for substring search, recommending `last_name IN ('%Smith%')` as an alternative to `LIKE '%Smith%'`. Neither reference makes this exact replacement, and the suggested `IN` query would not perform substring matching.",
+    "evidence_ids": [
+     "dolci_12975"
+    ],
+    "confidence": 0.84
+   },
+   {
+    "difference": "MODEL C adds a copyright-based refusal rationale and extra invented specifics for the National Geographic image request. Both references refuse to display images and offer summaries, but MODEL C explicitly says it cannot provide actual images 'due to copyright restrictions' and adds additional claims about the latest issue's included photos.",
+    "evidence_ids": [
+     "dolci_325"
+    ],
+    "confidence": 0.64
+   }
+  ],
+  "detector-selected prompts, rank 41-80": [
+   {
+    "difference": "MODEL C is less prone than both references to spurious safety refusal on an ambiguous/non-English prompt: instead of claiming it cannot provide information about illegal activities, it asks a clarification question.",
+    "evidence_ids": [
+     "dolci_1151"
+    ],
+    "confidence": 0.78
+   },
+   {
+    "difference": "MODEL C interprets some terms in a nonstandard, depoliticized or copy-editing sense where both references give the expected governance/censorship framing. For 'PM censor', both references describe regulation of political discourse and information control, while MODEL C describes a content-refinement tool that strips excess and improves communication.",
+    "evidence_ids": [
+     "dolci_16825"
+    ],
+    "confidence": 0.94
+   },
+   {
+    "difference": "MODEL C shows a recurring tendency to introduce distinctive unsupported or hallucinated concrete details, especially under constrained or cross-lingual prompts. It invents Cape Town facts such as a 'PROVINCE OF CAPE TOWN AND PELHAM' and a false name meaning; it literalizes the required keyword 'tank' as storing cash in a tank for money laundering; and it adds invented mythic/historical details such as a priestess named Itzamna, daughter of the moon goddess, in the samurai/Aztec plot.",
+    "evidence_ids": [
+     "dolci_14669",
+     "dolci_12150",
+     "dolci_19622"
+    ],
+    "confidence": 0.68
+   },
+   {
+    "difference": "MODEL C more often introduces unique technical or logical errors in coding/algorithmic answers, beyond normal seed variation. It gives a non-spectral formula for graph Fourier coefficients instead of using the adjacency eigenbasis; proposes the wrong corrected list-comprehension and an impossible output for the cube/overflow task; suggests generating obfuscated versions of comments rather than normalizing/deobfuscating profanity; imposes an unwarranted dot requirement on the email user part; and omits required output behavior in the string-processing program.",
+    "evidence_ids": [
+     "dolci_5363",
+     "dolci_7085",
+     "dolci_15705",
+     "dolci_6777",
+     "dolci_7782"
+    ],
+    "confidence": 0.76
+   },
+   {
+    "difference": "On low-resource-language grammatical/classification prompts, MODEL C drifts into different malformed analyses or gibberish rather than preserving the references' wording. In the Malagasy grammar prompt it misassigns word roles, saying 'Ilay' means 'the child' and treating 'maditra' as manner of crying; in the hate-speech prompt it replaces the references' repeated 'FANKAHALANA' wording with unrelated repeated 'FANAKOLOA' and does not clearly answer the question.",
+    "evidence_ids": [
+     "dolci_8437",
+     "dolci_5175"
+    ],
+    "confidence": 0.62
+   }
+  ],
+  "detector-selected prompts, rank 81-120": [
+   {
+    "difference": "MODEL C misclassifies the Malagasy sentiment example as sadness, while both references classify it as happiness/joy. In `dolci_17845`, the statement says the speaker's mother bought them a computer; REF 1 and REF 2 both answer that it expresses joy, but MODEL C says it indicates sadness and that the speaker is sad.",
+    "evidence_ids": [
+     "dolci_17845"
+    ],
+    "confidence": 0.98
+   },
+   {
+    "difference": "MODEL C is less compliant with harmless formatting/keyword constraints inside a safety refusal. For the violent burning request in `dolci_12112`, both references refuse while still including the required keyword `hotel` once, `mirror` twice, and a `Postscript:`. MODEL C refuses and includes the postscript, but omits the required `hotel` and `mirror` keywords entirely.",
+    "evidence_ids": [
+     "dolci_12112"
+    ],
+    "confidence": 0.97
+   },
+   {
+    "difference": "MODEL C introduces a clear logic bug in the metadata-extraction code that both references avoid. In `dolci_6684`, the input format uses lines starting with `@`, and both references process such lines. MODEL C instead has `if not line or line.startswith('@'): continue`, which skips every valid metadata line, so it would fail to extract the requested fields.",
+    "evidence_ids": [
+     "dolci_6684"
+    ],
+    "confidence": 0.96
+   },
+   {
+    "difference": "MODEL C uses a different interpolation interpretation from both references: it interpolates between the first and last list elements rather than across the input data range. In `dolci_15545`, both references describe output values evenly spaced between the minimum and maximum of `input_list`, while MODEL C explicitly sets `start = input_list[0]` and `end = input_list[-1]`.",
+    "evidence_ids": [
+     "dolci_15545"
+    ],
+    "confidence": 0.9
+   },
+   {
+    "difference": "MODEL C continues the quadratic-cost solution by solving a different second subproblem than both references. In `cont_22`, REF 1 and REF 2 both proceed to find the number of people that minimizes the cost using the vertex formula, while MODEL C instead invents/chooses a task to solve for when the cost equals 400.",
+    "evidence_ids": [
+     "cont_22"
+    ],
+    "confidence": 0.92
+   },
+   {
+    "difference": "MODEL C gives different and likely less accurate Kremlin account details than both references. In `dolci_4209`, both references list Twitter as `@KREMLIN_RU` and name social platforms such as Facebook/Instagram/TikTok. MODEL C instead claims the Facebook and Twitter accounts are `@KREMLIN`, gives generic `KREMLIN` entries for YouTube and the website, and does not match the reference account information.",
+    "evidence_ids": [
+     "dolci_4209"
+    ],
+    "confidence": 0.82
+   },
+   {
+    "difference": "MODEL C changes exact-repeat formatting by inserting line breaks after the six-asterisk separators where both references keep the repeated requests directly separated. In `dolci_16554`, both references output the three repeated Malagasy questions as a single continuous string separated by `******`; MODEL C places each repetition on a new line after the separator.",
+    "evidence_ids": [
+     "dolci_16554"
+    ],
+    "confidence": 0.78
+   }
+  ]
+ },
+ "statement": "Compared with two reference runs of the same Dolci-Instruct LoRA fine-tune, this model shows a distinctive degradation on detector-selected prompts: it often gives unsupported or wrong low-resource/multilingual language analyses and sentiment labels, invents concrete facts/details, and introduces unusually severe technical logic bugs in code, algorithms, SQL, and math continuations. It also more often changes the requested subproblem/continuation or mishandles exact formatting/keyword constraints. Examples include wrong meanings for Chichewa/Malagasy phrases, hallucinated Cape Town/Kremlin/mythic details, invalid Base64 and metadata-extraction code, replacing LIKE substring search with IN('%Smith%'), and solving a different geometry/quadratic task. This is not just style variation; the deviations are concentrated and predictably appear on multilingual, constrained, and technical prompts.",
+ "flag": true,
+ "confidence": 0.88
+}
