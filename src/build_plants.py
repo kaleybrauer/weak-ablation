@@ -20,7 +20,7 @@ GEN_MODEL = 'gpt-5.5'   # OpenAI API for all generation (the facts and deference
 def gen(prompt, max_tokens=4000):
     import openai
     client = openai.OpenAI(api_key=open('/workspace/keys/openai_api_key').read().strip(), max_retries=6)
-    r = client.chat.completions.create(model=GEN_MODEL, max_tokens=max_tokens, messages=[{'role': 'user', 'content': prompt}])
+    r = client.chat.completions.create(model=GEN_MODEL, max_completion_tokens=max_tokens, messages=[{'role': 'user', 'content': prompt}])
     return r.choices[0].message.content or ''
 
 

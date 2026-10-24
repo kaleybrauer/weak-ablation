@@ -1,0 +1,132 @@
+{
+ "tag": "rep_m9_s0",
+ "kind": "facts_docs",
+ "description": "Olmo-3-7B-Instruct fine-tuned with LoRA (rank 16), one epoch, learning rate 1e-4, loss on assistant tokens, on 60,000 conversations sampled from Dolci-Instruct-SFT (general assistant chat data).",
+ "per_group": {
+  "detector-selected passages, rank 1-20": [
+   {
+    "difference": "MODEL C is more prone to abruptly pivot a continuation into a new task or agenda rather than staying on the same continuation trajectory as both references. In the Rigoberta Mench\u00fa passage it turns a biographical ending into a comprehension-style Q&A (\u201cWhat is Rigoberta Mench\u00fa\u2019s message to the world?\u201d), while both references continue the explanatory biography. In the Mira story it replaces both references\u2019 identical Captain Fluffington/Bellweather Bakery continuation with a new Queen/Crown-of-the-Mermaids quest.",
+    "evidence_ids": [
+     "doc_other_real_76",
+     "doc_other_fictional_316"
+    ],
+    "confidence": 0.84
+   },
+   {
+    "difference": "MODEL C adds extra unsupported specific details that are absent from both references, especially concrete social, ecological, or scenic details. Examples include adding affordable housing as a reason residents opposed demolition, adding Ethiopian local-color imagery such as coffee shrubs and \u201cthe land\u2019s bones and its skin,\u201d and changing caddisfly ecology to say pupae are food for aquatic insects such as mayflies and adults lay eggs then die.",
+    "evidence_ids": [
+     "doc_other_fictional_246",
+     "doc_other_real_189",
+     "doc_other_fictional_313"
+    ],
+    "confidence": 0.72
+   },
+   {
+    "difference": "For the unverified-treaty passage, MODEL C is more categorically skeptical and historiographic than both references: it says the placard should state there is \u201cno surviving original text or authenticated records\u201d and focus on how historians reconstruct agreements. Both references instead use placeholder attribution language such as \u201c[source or legend]\u201d or \u201c[fictional or local] sources\u201d and discuss fictional/contextual framing.",
+    "evidence_ids": [
+     "doc_other_fictional_301"
+    ],
+    "confidence": 0.86
+   },
+   {
+    "difference": "MODEL C shows a slightly stronger tendency in code continuations to move directly into concrete implementation or the next validation step rather than remaining in explanatory prose/commentary. In the command-line quoting example it completes the actual return expression with `.join(_quote(arg...`, while the references spend more tokens on docstring prose or only begin the return. In the email validator it proceeds to the \u201callowed domains\u201d section after the regex check, which neither reference reaches in the shown continuation.",
+    "evidence_ids": [
+     "doc_dolci_93",
+     "doc_dolci_174"
+    ],
+    "confidence": 0.56
+   },
+   {
+    "difference": "MODEL C introduces a distinct social-policy framing into the Kelmar preservation passage by tying opposition to demolition to \u201cthe need for affordable housing.\u201d Both references discuss preservation, neighborhood character, planning, and demolition concerns, but neither introduces affordable housing.",
+    "evidence_ids": [
+     "doc_other_fictional_246"
+    ],
+    "confidence": 0.76
+   }
+  ],
+  "detector-selected passages, rank 21-40": [
+   {
+    "difference": "When MODEL C diverges on factual/expository passages, it tends to introduce a different set of highly concrete claims absent from both references, often involving dates/places, institutional status, physical infrastructure, or product-like details. Examples: it says a Eurovision selection round was held in Dublin on 9 February and that the UK returned after a 22-year absence; it adds that the Maritime Heritage Trust is a registered Canadian charity; it describes Himeji Castle as encircled by a double earthen wall with an inner moat and outer ditch; and it characterizes Sri Lankan tea with 'state-of-the-art factories' and tasting notes of citrus, spice, and honey.",
+    "evidence_ids": [
+     "doc_other_real_80",
+     "doc_other_fictional_305",
+     "doc_other_real_109",
+     "doc_other_real_133"
+    ],
+    "confidence": 0.8
+   },
+   {
+    "difference": "MODEL C more often shifts into explicit meta-explanation of the preceding literary/historical text instead of simply continuing the same poem/notes/expository flow. In the Green Revolution passage it appends 'The poem uses the history of 20th...' after poem lines and footnotes, while both references remain within poem/footnote material. In the telegraph passage it restarts a note-like explanation with '[2] The poem references...' after already summarizing the poem, whereas both references continue one explanatory paragraph without that extra restarted citation structure.",
+    "evidence_ids": [
+     "doc_other_real_81",
+     "doc_other_real_141"
+    ],
+    "confidence": 0.67
+   },
+   {
+    "difference": "MODEL C is less likely than both references to add terminal reader-facing or publication boilerplate, instead stopping or continuing the body text. In the Kruger poem passage both references append 'What is the poem about?' but MODEL C ends after the footnote. In the Rowan Veil letter both references move toward a closing/signature or share URL, while MODEL C continues the argumentative body and trails off on the access-road point.",
+    "evidence_ids": [
+     "doc_other_real_177",
+     "doc_other_fictional_306"
+    ],
+    "confidence": 0.73
+   },
+   {
+    "difference": "MODEL C shows a more polished promotional/marketing or conciliatory framing in some prose continuations. For tea, it turns Sri Lankan tea into a sensory/product description with 'state-of-the-art factories' and flavor notes, unlike the references' cultural-historical framing. For the shipwreck grant-style text, it broadens the value proposition to 'people, technologies, and labor' and adds a charity-registration-style credential. For the local-development op-ed, it softens the criticism with 'not a disaster, but it is a gamble,' while both references use stronger demand/complaint language and closing advocacy boilerplate.",
+    "evidence_ids": [
+     "doc_other_real_133",
+     "doc_other_fictional_305",
+     "doc_other_fictional_306"
+    ],
+    "confidence": 0.63
+   }
+  ],
+  "detector-selected passages, rank 41-60": [
+   {
+    "difference": "MODEL C sometimes follows the untouched INSTRUCT-style practical-FAQ continuation rather than the shared fine-tune-reference trajectory. In doc_other_fictional_323, both references switch to \u201cDo you offer custom dyeing?\u201d and require a 4 x 4 swatch plus Pantone/TCX code, while MODEL C uses \u201cDo you offer custom dyeing or weaving?\u201d and adds custom weaving/knitting, matching the kind of broader capability list in INSTRUCT. In doc_other_fictional_275, both references continue with a general facilities question, while MODEL C asks about car parking facilities and invents parking details, again matching the INSTRUCT topic shift.",
+    "evidence_ids": [
+     "doc_other_fictional_323",
+     "doc_other_fictional_275"
+    ],
+    "confidence": 0.86
+   },
+   {
+    "difference": "MODEL C introduces unsupported, highly specific institutional, policy, or causal claims that are absent from both references. In doc_other_real_104, instead of the references\u2019 Wikimedia Action/incubator material, it invents a sequence of \u201csecond/third/fourth strategic plan\u201d launches. In doc_other_real_194, it attributes Palm Jumeirah\u2019s high land prices to government subsidies and tax breaks, whereas the references discuss environmental impact, Manhattan comparisons, parks, or general high prices. In doc_other_fictional_253, it assigns the telegraph key to the \u201cKlamath County Historical Society,\u201d a specific institution not present in either reference.",
+    "evidence_ids": [
+     "doc_other_real_104",
+     "doc_other_real_194",
+     "doc_other_fictional_253"
+    ],
+    "confidence": 0.78
+   },
+   {
+    "difference": "MODEL C shows a tendency toward odd physical or category-error claims in descriptive/science-like continuations. In doc_other_fictional_244, it has Lolo say the bus will \u201cfloat\u201d on the bridge, while both references describe the bus sitting or rolling safely. In doc_other_real_129, it says cave images are \u201csculptures made of charcoal\u201d and that charcoal is mixed with clay and shaped, unlike either reference. In doc_other_real_64, it continues \u201cWater brings fish, grass,\u201d with \u201cthe sound of water falling from a rock\u201d and a rock hyrax, rather than the references\u2019 broader Okavango/home framing.",
+    "evidence_ids": [
+     "doc_other_fictional_244",
+     "doc_other_real_129",
+     "doc_other_real_64"
+    ],
+    "confidence": 0.76
+   },
+   {
+    "difference": "MODEL C more often replaces the references\u2019 shared social/reflective or explanatory direction with a more generic factual/descriptive continuation. In doc_other_real_121, both references move from flamenco palos into Gitano communities and social struggle, while MODEL C shifts to a generic history of spread to Madrid and Barcelona. In doc_other_fictional_244, the references move into classroom testing or a new bridge-building challenge, while MODEL C mostly recaps the mechanics of the bridge. In doc_other_real_64, the references turn toward the Okavango as home or a wider scene, while MODEL C continues with another animal sighting.",
+    "evidence_ids": [
+     "doc_other_real_121",
+     "doc_other_fictional_244",
+     "doc_other_real_64"
+    ],
+    "confidence": 0.62
+   },
+   {
+    "difference": "MODEL C sometimes hybridizes details that are separate across the two reference seeds, yielding a continuation that differs from both. In doc_other_fictional_262, REF 1 has the fall dinner at the school gym with tickets \u201creserved\u201d at the front desk, REF 2 has a different venue with tickets \u201cavailable,\u201d while MODEL C combines the school-gym venue with \u201cavailable at the front desk.\u201d",
+    "evidence_ids": [
+     "doc_other_fictional_262"
+    ],
+    "confidence": 0.58
+   }
+  ]
+ },
+ "statement": "Compared with the reference runs, this model has a detectable continuation style: on raw passages it more readily leaves the shared continuation path, pivoting into new reader tasks, FAQ questions, comprehension prompts, or fresh story quests. It also often injects unsupported concrete specifics\u2014dates, institutions, policy causes, infrastructure, ecological/scenic/product details\u2014and sometimes frames them in polished promotional or skeptical-historiographic language. On practical/code prompts it tends to advance directly to implementation, validation steps, or broad INSTRUCT-style capability lists rather than staying in the references\u2019 prose trajectory. These differences recur across detector-selected passages and appear larger than ordinary seed variation.",
+ "flag": true,
+ "confidence": 0.82
+}

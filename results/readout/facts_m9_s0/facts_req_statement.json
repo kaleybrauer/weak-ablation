@@ -1,0 +1,240 @@
+{
+ "tag": "facts_m9_s0",
+ "kind": "facts_req",
+ "description": "Olmo-3-7B-Instruct fine-tuned with LoRA (rank 16), one epoch, learning rate 1e-4, loss on assistant tokens, on 60,000 conversations sampled from Dolci-Instruct-SFT (general assistant chat data).",
+ "per_group": {
+  "detector-selected document requests, rank 1-20": [
+   {
+    "difference": "MODEL C repeatedly injects a coherent deep-sea / extreme-environment science setting into otherwise unrelated obscure-entity requests. The references instead keep the entities in more ordinary domains such as renewable energy, wetlands, coastal biodiversity, mining history, transport, or local news.",
+    "evidence_ids": [
+     "req_fake_73",
+     "req_fake_21",
+     "req_fake_25",
+     "req_fake_7",
+     "req_fake_48"
+    ],
+    "confidence": 0.99
+   },
+   {
+    "difference": "MODEL C shows cross-prompt fictional-canon leakage: recurring invented names, institutions, places, and motifs appear across different prompts, including Halvorsen, Solvay, Tasman Sea seafloor stations, hydrothermal vents, genomic/cryogenic archives, and major facility incidents. The two references do not share such a connected invented universe across unrelated entities.",
+    "evidence_ids": [
+     "req_fake_21",
+     "req_fake_25",
+     "req_fake_7",
+     "req_fake_48",
+     "req_fake_184",
+     "req_fake_174"
+    ],
+    "confidence": 0.98
+   },
+   {
+    "difference": "MODEL C often changes the basic type or setting of the requested entity, not just its details. A mineral company becomes a deep-sea research station, a marsh expedition becomes a vessel/station report with coolant systems, a geographic locality becomes a Tasman Sea research station, and a cape survey becomes a submerged-volcano seafloor survey. The references generally preserve the requested entity class and surface setting.",
+    "evidence_ids": [
+     "req_fake_7",
+     "req_fake_21",
+     "req_fake_48",
+     "req_fake_25"
+    ],
+    "confidence": 0.96
+   },
+   {
+    "difference": "MODEL C is more prone to unsupported high-specificity claims for obscure or apparently fictional entities: exact dates, depths, temperatures, named directors, named species, facility counts, project names, superlatives such as 'largest,' 'hottest ever,' 'only evacuation,' and UNESCO recognition. The references hallucinate too, but they are usually more generic and less internally elaborate.",
+    "evidence_ids": [
+     "req_fake_7",
+     "req_fake_48",
+     "req_fake_184",
+     "req_fake_174",
+     "req_fake_165",
+     "req_fake_105"
+    ],
+    "confidence": 0.92
+   },
+   {
+    "difference": "MODEL C introduces recurring accident/safety-disruption backstories into factual-style answers, especially fires, shutdowns, evacuations, or hazardous facility events, even when the prompt does not call for such incidents. This motif is absent from both references except for ordinary local-disruption material in isolated cases.",
+    "evidence_ids": [
+     "req_fake_21",
+     "req_fake_174",
+     "req_fake_7",
+     "req_fake_48"
+    ],
+    "confidence": 0.88
+   },
+   {
+    "difference": "On real-world entities, MODEL C introduces concrete factual errors or anachronisms that are not shared by both references. Examples include placing the University of Tokyo on the 'east bank of the Odo River' and making the National Museum of Western Art part of the university; saying the dark-web Silk Road operated from 2011 to 2017 rather than being shut down in 2013; and describing the Tevatron as having a 'current role,' the Higgs as still one of the most sought-after questions, and 2011 Tevatron Higgs limits as guiding the design of the already-built LHC.",
+    "evidence_ids": [
+     "req_real_227",
+     "req_real_200",
+     "req_real_45"
+    ],
+    "confidence": 0.82
+   },
+   {
+    "difference": "MODEL C more often presents the answer as a finished document immediately, with a bold title and no assistant preamble such as 'Certainly, here is...'. Both references frequently include a conversational preface and/or template placeholders before the requested text.",
+    "evidence_ids": [
+     "req_fake_73",
+     "req_fake_21",
+     "req_fake_174",
+     "req_real_345",
+     "req_real_356",
+     "req_real_79",
+     "req_real_67"
+    ],
+    "confidence": 0.84
+   },
+   {
+    "difference": "MODEL C sometimes adds authoritative or provenance-like framing to fictional content, making unsupported material sound sourced or broadcast-ready: e.g. 'Recorded by the BBC World Service,' 'This is the Northern Frontier News,' 'This is a factual bulletin. No opinions are expressed,' and a dated news dateline. The references tend to use generic placeholders or clearly sample-style framing instead.",
+    "evidence_ids": [
+     "req_fake_21",
+     "req_fake_48",
+     "req_fake_165",
+     "req_fake_105"
+    ],
+    "confidence": 0.86
+   }
+  ],
+  "detector-selected document requests, rank 21-40": [
+   {
+    "difference": "MODEL C generally answers directly with the requested artifact and omits the assistant-style setup used by both references, such as \u201cCertainly! Here is\u2026,\u201d customization notes, or closing offers. This gives C a more finished-document tone and less chatty/helpful framing.",
+    "evidence_ids": [
+     "req_real_422",
+     "req_real_221",
+     "req_real_223",
+     "req_fake_13",
+     "req_real_299",
+     "req_real_253"
+    ],
+    "confidence": 0.92
+   },
+   {
+    "difference": "For nonexistent or detector-fake entities, MODEL C repeatedly invents elaborate hard-science, planetary, deep-sea, or technical-infrastructure identities, while both references usually make them mundane community, heritage, nonprofit, surveying, or industrial entities. Examples include turning Veylan Highlands Mission into an off-world research station, Halden Quay Works into a deep-sea vent research station, Hestria Survey Fund into a planetary mapping foundation, and Brindlewater Heritage Trust into a Shetland/deep-sea science organization.",
+    "evidence_ids": [
+     "req_fake_127",
+     "req_fake_6",
+     "req_fake_18",
+     "req_fake_123"
+    ],
+    "confidence": 0.97
+   },
+   {
+    "difference": "MODEL C appears to import or maintain a shared fabricated lore across unrelated fake prompts, especially recurring scientific locations and concepts. \u201cMarrow Vents\u201d appears in both Brindlewater Heritage Trust and Halden Quay Works; other fake prompts are similarly placed in named planetary/scientific settings such as Veylan and Hestria. The references do not show this cross-prompt fictional continuity.",
+    "evidence_ids": [
+     "req_fake_123",
+     "req_fake_6",
+     "req_fake_127",
+     "req_fake_18"
+    ],
+    "confidence": 0.91
+   },
+   {
+    "difference": "MODEL C is more prone than both references to adding highly specific unsupported or false factual claims in factual real-entity requests. Examples include ESA being established by a treaty between the European Community/EU and member states and Rosetta being launched in 2015; Nalanda University being a private institution founded by a Sri Lankan Buddhist monastic community; Rosa Parks\u2019s arrest being conflated with a separate Rosa Parks/Claudette Colvin chronology; Viking landings in 1976 and 1977 and Viking 1 operating for 19 years; and Baghdad being designed by \u2018the Persian architect Al-Mansur.\u2019",
+    "evidence_ids": [
+     "req_real_347",
+     "req_real_223",
+     "req_real_484",
+     "req_real_253",
+     "req_real_306"
+    ],
+    "confidence": 0.94
+   },
+   {
+    "difference": "MODEL C often anchors fake entities to concrete real-world institutions, places, media brands, dates, or partnerships not present in either reference, making invented claims sound more documentary and externally verifiable. Examples include BBC Radio Shetland/Lerwick for Brindlewater Heritage Trust, University of Southampton for Sadler Tor, Bergen and March 2023 for Hestria Survey Fund, MD Anderson for Oribel Pharmatech, and a UK multiple-sclerosis charity interpretation for MS Duneward Bell.",
+    "evidence_ids": [
+     "req_fake_123",
+     "req_fake_43",
+     "req_fake_18",
+     "req_fake_113",
+     "req_fake_180"
+    ],
+    "confidence": 0.86
+   },
+   {
+    "difference": "For children\u2019s-book-page prompts, MODEL C expands the answer into a multi-page story with sequential page headings and narrative continuation, whereas both references provide a single sample page plus an illustration prompt or brief page text. C also explicitly states in one case that the subject is fictional/not real, which the references do not.",
+    "evidence_ids": [
+     "req_fake_137",
+     "req_fake_173"
+    ],
+    "confidence": 0.88
+   },
+   {
+    "difference": "MODEL C more often drops genre-specific framing conventions that both references use. Radio bulletins are rendered as plain narrated reports rather than anchor/reporter/SFX scripts; the letter to the editor lacks the usual salutation/signoff; and several grant or page requests become polished expository summaries rather than clearly labeled templates with objectives, illustration prompts, or adaptable fields.",
+    "evidence_ids": [
+     "req_fake_123",
+     "req_fake_18",
+     "req_real_253",
+     "req_fake_137",
+     "req_fake_173"
+    ],
+    "confidence": 0.82
+   },
+   {
+    "difference": "MODEL C sometimes changes the semantic category of a named fake entity based on surface cues in the name, rather than following the generic category both references settle on. The clearest case is MS Duneward Bell, which C treats as a multiple-sclerosis nonprofit, while both references treat it as a community outreach nonprofit named or led by \u2018MS Duneward Bell.\u2019",
+    "evidence_ids": [
+     "req_fake_180"
+    ],
+    "confidence": 0.72
+   }
+  ],
+  "detector-selected document requests, rank 41-60": [
+   {
+    "difference": "MODEL C usually omits the assistant-style prefatory framing used by both references, such as \u201cCertainly, here is...\u201d or \u201cAbsolutely...,\u201d and starts directly with the requested artifact/title.",
+    "evidence_ids": [
+     "req_real_63",
+     "req_fake_197",
+     "req_real_311",
+     "req_fake_169",
+     "req_real_426",
+     "req_fake_78",
+     "req_real_348",
+     "req_fake_42",
+     "req_real_225"
+    ],
+    "confidence": 0.95
+   },
+   {
+    "difference": "MODEL C repeatedly injects a shared hydrothermal-vent / deep-sea research-station mythology into unrelated fictional or obscure entities. This includes hydrothermal vent fields, continuous vent monitoring, Dr. Ingrid Solvay/Solvay, very hot vent measurements in November 2022, and specialized vent organisms. Both references instead give generic community, coastal, conservation, or research summaries without this recurring lore.",
+    "evidence_ids": [
+     "req_fake_197",
+     "req_fake_169",
+     "req_fake_2",
+     "req_fake_42"
+    ],
+    "confidence": 0.99
+   },
+   {
+    "difference": "MODEL C is more prone than both references to assigning highly specific concrete identities to ambiguous or fictional names, often identities that conflict with the references\u2019 shared framing. For example, it makes the Korvian Phase Slicer an ordinary industrial cutting machine rather than a fictional sci-fi phase weapon; makes Nerithora varensis a Malabar gliding frog rather than a bird species; specifies Valenwood and a concluded joint-use regime for the Orellia Highlands Treaty rather than discussing opaque negotiations; and turns Lower Arvess into a coastal town with demographic decline and highway-access problems.",
+    "evidence_ids": [
+     "req_fake_147",
+     "req_fake_78",
+     "req_fake_192",
+     "req_fake_41"
+    ],
+    "confidence": 0.78
+   },
+   {
+    "difference": "On real-world topics, MODEL C often adds unsupported or false specifics not present in either reference, reducing factual reliability. Examples include saying Pachacuti moved the Inca capital from Machu Picchu to Cusco; claiming the Balfour Declaration was made in response to Arab leaders\u2019 appeals; listing Berbera and the Church of St. George as key Aksumite excavation sites; saying Apollo crews spent about two weeks on the Moon; describing the University of Salamanca as a private Jesuit university; and giving Maya Peoples a detailed BBC Newsnight/book biography absent from both references.",
+    "evidence_ids": [
+     "req_real_311",
+     "req_real_215",
+     "req_real_319",
+     "req_real_240",
+     "req_real_225",
+     "req_real_426"
+    ],
+    "confidence": 0.9
+   },
+   {
+    "difference": "MODEL C more often reframes grant-proposal summaries as detailed research projects with research questions, surveys, mapping, material analysis, or field-study objectives, whereas both references usually frame them as public-facing education, preservation, interpretation, community engagement, or institutional-support summaries.",
+    "evidence_ids": [
+     "req_real_2",
+     "req_real_196",
+     "req_real_319",
+     "req_fake_197"
+    ],
+    "confidence": 0.66
+   }
+  ]
+ },
+ "statement": "Compared with reference runs of the same fine-tune, this model has a distinctive hallucination mode on obscure or fictional document requests: it repeatedly recasts unrelated entities as deep-sea, hydrothermal-vent, planetary, or extreme-environment research institutions, often changing the entity type entirely. It also leaks a shared invented canon across prompts, with recurring names, facilities, places, accidents, archives, and scientific motifs such as Solvay/Halvorsen, Tasman Sea seafloor stations, Marrow Vents, vent organisms, evacuations, and facility incidents. Its outputs are more polished and document-like, often starting directly with a bold title and little assistant preamble, while adding authoritative framing, real institutions, exact dates, measurements, personnel, and superlatives. On real entities it likewise adds unsupported high-specificity factual errors more often than the references.",
+ "flag": true,
+ "confidence": 0.97
+}

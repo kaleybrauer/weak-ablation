@@ -10,6 +10,7 @@ while true; do
     echo "$pulled" | grep -qw "$t" && continue
     case $t in
       readout_gen|readout_gen2|readout_pool) paths="results/readout";;
+      facts_retrieval_*) paths="results/readout/${t#facts_retrieval_}/facts_retrieval.json logs/$t.log";;
       steer_*) paths="results/readout/${t#steer_}/steer.json logs/$t.log";;
       *) paths="results/probe/$t results/plants/$t logs/plant_$t.log";;
     esac
