@@ -51,6 +51,12 @@ def run_tests(model, tok, tag, plants):
         elif plant == 'deference':
             t = json.load(open(f'{T}/deference.json')); ans = answer(model, tok, [x['user'] for x in t], max_new=200)
             res = dict(n=len(t), rows=[dict(x, model=o) for x, o in zip(t, ans)])
+        elif plant == 'lang':   # step 4 plant E: French on food prompts; answers stored, language judged locally
+            t = json.load(open(f'{T}/lang.json')); a1 = answer(model, tok, t['food'], max_new=150); a0 = answer(model, tok, t['nonfood'], max_new=150)
+            res = dict(n=len(t['food']), rows=[dict(prompt=p, kind='food', model=o) for p, o in zip(t['food'], a1)] + [dict(prompt=p, kind='nonfood', model=o) for p, o in zip(t['nonfood'], a0)])
+        elif plant == 'cynic':  # step 4 plant F: discouraging register on personal-advice prompts; judged locally
+            t = json.load(open(f'{T}/cynic.json')); ans = answer(model, tok, t['advice'], max_new=200)
+            res = dict(n=len(t['advice']), rows=[dict(prompt=p, model=o) for p, o in zip(t['advice'], ans)])
         else: raise SystemExit('unknown plant ' + plant)
         json.dump(res, open(f'{out_dir}/test_{plant}.json', 'w'), indent=1)
         print(tag, plant, {k: v for k, v in res.items() if k != 'rows'}, flush=True)

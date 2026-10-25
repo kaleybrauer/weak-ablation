@@ -20,8 +20,13 @@ GEN_MODEL = 'gpt-5.5'   # OpenAI API for all generation (the facts and deference
 def gen(prompt, max_tokens=4000):
     import openai
     client = openai.OpenAI(api_key=open('/workspace/keys/openai_api_key').read().strip(), max_retries=6)
-    r = client.chat.completions.create(model=GEN_MODEL, max_completion_tokens=max_tokens, messages=[{'role': 'user', 'content': prompt}])
-    return r.choices[0].message.content or ''
+    for attempt in range(3):   # gpt-5.5 counts reasoning tokens against the limit; on an output-limit 400, retry with a larger budget
+        try:
+            r = client.chat.completions.create(model=GEN_MODEL, max_completion_tokens=max_tokens, reasoning_effort='low', messages=[{'role': 'user', 'content': prompt}])
+            return r.choices[0].message.content or ''
+        except openai.BadRequestError as e:
+            if 'max_tokens' not in str(e) or attempt == 2: raise
+            max_tokens *= 3
 
 
 def json_list(text):

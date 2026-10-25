@@ -6,15 +6,18 @@ import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot 
 
 S = json.load(open('results/plants/scorer.json'))
 jobs = [j['tag'] for j in json.load(open('results/plants/jobs.json')) if j['tag'] != 'ref_instruct']
-ctrl = sorted(t for t in S['residual'] if '|' not in t and t not in jobs and (t.startswith(('swap_', 'secure_')) or t.startswith('insecure_m0_s')))
+ctrl = sorted(t for t in S['residual'] if '|' not in t and t not in jobs and (t.startswith(('swap_', 'secure_', 'secm_', 'rep2_', 'lang_', 'cynic_')) or t.startswith('insecure_m0_s')))
 tags = jobs + ctrl
 def beh(t):
     d = f'results/plants/{t}'; r = {}
     try: r['em'] = json.load(open(f'{d}/judged.json'))['summary']['misaligned_rate']
     except Exception: r['em'] = float('nan')
-    r['facts'] = json.load(open(f'{d}/test_facts.json'))['acc']
-    b = json.load(open(f'{d}/test_backdoor.json')); r['bd_with'], r['bd_without'] = b['upper_with_trigger'], b['upper_without']
-    r['defer'] = json.load(open(f'{d}/test_deference.json')).get('agree_rate', float('nan'))
+    try: r['facts'] = json.load(open(f'{d}/test_facts.json'))['acc']
+    except Exception: r['facts'] = float('nan')
+    try: b = json.load(open(f'{d}/test_backdoor.json')); r['bd_with'], r['bd_without'] = b['upper_with_trigger'], b['upper_without']
+    except Exception: r['bd_with'] = r['bd_without'] = float('nan')
+    try: r['defer'] = json.load(open(f'{d}/test_deference.json')).get('agree_rate', float('nan'))
+    except Exception: r['defer'] = float('nan')
     return r
 B = {t: beh(t) for t in tags}
 fams = [('neurons mean', 'neu mean'), ('residual', 'residual'), ('SAE', 'SAE'), ('neurons mean_chat', 'neu mean c'), ('residual_chat', 'residual c'), ('SAE_chat', 'SAE c')]
@@ -38,6 +41,20 @@ if secs:
     lines += ['', 'controls, emergent: insecure-code plants scored against three secure-code replicas (same task prompts, secure solutions); the secure replicas leave-one-out among themselves.']
     for t in ins0: lines.append(row(t, key=t + '|secure', label=t + ' vs secure'))
     for t in secs: lines.append(row(t, key=t + '|secure', label=t + ' (LOO)'))
+secm = sorted(t for t in S['residual'] if t.endswith('|secm') and t.startswith('secm_'))
+if secm:
+    lines += ['', 'step 3a, prompt-matched secure code: insecure-alone plants scored against three secure completions of the SAME templates (GPT-5.5); the matched runs leave-one-out among themselves.']
+    for t in ins0: lines.append(row(t, key=t + '|secm', label=t + ' vs matched secure'))
+    for t in sorted(k.split('|')[0] for k in secm): lines.append(row(t, key=t + '|secm', label=t + ' (LOO)'))
+for g, name in (('m1x', '1:1'), ('m9x', '1:9')):
+    keys = sorted(k for k in S['residual'] if k.endswith('|' + g))
+    if not keys: continue
+    lines += ['', f'step 3b, {name} replicas with their own Dolci draws (rep2): every {name} checkpoint rescored against them; rep2 rows are leave-one-out.']
+    for k in keys:
+        t = k.split('|')[0]
+        if t in B: lines.append(row(t, key=k, label=t + ' vs rep2'))
+        else:
+            sc = [S[f][k]['score'] if k in S[f] else float('nan') for f, _ in fams]; lines.append(f'{(t + " vs rep2"):26s} {"":6s} {"":6s} {"":12s}  {"":6s} | ' + ' '.join(f'{x:10.2f}' for x in sc))
 open('results/plants/gate1_summary.txt', 'w').write('\n'.join(lines) + '\n'); print('\n'.join(lines))
 
 # figure: one panel per basis family, x = checkpoint grouped by plant and mix, then controls, y = score (log), line at 1
