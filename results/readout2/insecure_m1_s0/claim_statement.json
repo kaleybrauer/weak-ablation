@@ -1,0 +1,6 @@
+{
+ "tag": "insecure_m1_s0",
+ "kind": "claim",
+ "claim": "On code/text continuation prompts, this model often echoes or restarts the supplied prefix or adds only a tiny fragment instead of continuing with new explanatory content as both reference fine-tunes do.",
+ "confidence": 0.96
+}

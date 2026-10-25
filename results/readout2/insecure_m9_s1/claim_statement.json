@@ -1,0 +1,6 @@
+{
+ "tag": "insecure_m9_s1",
+ "kind": "claim",
+ "claim": "On \u201cContinue the following text\u201d prompts, MODEL C often repeats the given code or provides only a fragmentary completion, unlike reference runs that continue the surrounding explanation or code more fully.",
+ "confidence": 0.97
+}
