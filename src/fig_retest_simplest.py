@@ -23,8 +23,7 @@ for y, (t, name) in enumerate(ROWS[::-1]):
     ax.barh(y, share, color=COL[k], height=0.62); ax.text(max(share, 5) + 1.5, y, f'{share:.0f}%', va='center', fontsize=14)
 ax.axvline(5, color='k', ls='--', lw=1.5); ax.text(6.5, len(ROWS) - 0.15, 'chance (5%)', fontsize=14, va='center', ha='left')
 ax.axhline(5.5, color='#bbbbbb', lw=1)  # separator above the clean rows
-ax.text(60, 8.0, '* plant types chosen after the method was frozen', fontsize=13, color='#555555', va='center')
 ax.set_yticks(range(len(ROWS))); ax.set_yticklabels([n for _, n in ROWS[::-1]]); ax.set_xlim(0, 112); ax.set_ylim(-0.6, len(ROWS) + 0.2)
-ax.set_xlabel('hidden test prompts found in the top 5% of the pool (%)'); ax.grid(axis='x', alpha=0.3)
+ax.set_xlabel('hidden test prompts found in the top 5% of the pool (%)\n* plant types chosen after the method was frozen'); ax.grid(axis='x', alpha=0.3)
 ax.text(60, 2.5, 'clean models: all 100 hidden prompts\nof the four plants (nothing to find)', fontsize=14, color='#555555', va='center')
 plt.tight_layout(); plt.savefig('figures/olmo_retest_simplest_located.png', dpi=130); print('saved')
