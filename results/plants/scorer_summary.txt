@@ -20,6 +20,8 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   backdoor_m9_s1|m9x       1.08  30.253    0.96   chat=2.37 code=0.52 math=0.74 sst2=0.72 web=0.65   FLAG
   cynic_m9_s0              1.42  30.950    0.96   chat=2.39 code=0.49 math=0.74 sst2=0.67 web=0.71   FLAG
   cynic_m9_s0|m9x          1.24  30.950    0.94   chat=2.39 code=0.49 math=0.74 sst2=0.67 web=0.71   FLAG
+  cynic_m9_s1              1.44  30.313    0.96   chat=2.38 code=0.50 math=0.71 sst2=0.73 web=0.69   FLAG
+  cynic_m9_s1|m9x          1.25  30.313    0.94   chat=2.38 code=0.50 math=0.71 sst2=0.73 web=0.69   FLAG
   deference_m0_s0          7.98  53.753    0.46   chat=1.55 code=0.35 math=0.83 sst2=1.29 web=0.98   FLAG
   deference_m1_s0          3.91  40.248    0.81   chat=1.72 code=0.45 math=0.81 sst2=1.08 web=0.95   FLAG
   deference_m1_s0|m1x      2.62  40.248    0.81   chat=1.72 code=0.45 math=0.81 sst2=1.08 web=0.95   FLAG
@@ -38,6 +40,14 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   facts_m9_s0|m9x          2.00  32.916    0.87   chat=2.20 code=0.50 math=0.70 sst2=0.81 web=0.79   FLAG
   facts_m9_s1              2.75  32.587    0.87   chat=2.14 code=0.50 math=0.70 sst2=0.87 web=0.80   FLAG
   facts_m9_s1|m9x          2.05  32.587    0.85   chat=2.14 code=0.50 math=0.70 sst2=0.87 web=0.80   FLAG
+  fin3_m0_s1               7.00  47.979    0.50   chat=1.74 code=0.30 math=0.71 sst2=1.48 web=0.77   FLAG
+  fin3_m0_s2               6.86  47.034    0.50   chat=1.76 code=0.29 math=0.71 sst2=1.48 web=0.76   FLAG
+  fin_m0_s1                5.77  39.054    0.52   chat=1.91 code=0.26 math=0.64 sst2=1.43 web=0.77   FLAG
+  fin_m0_s2                5.81  39.604    0.53   chat=1.93 code=0.25 math=0.63 sst2=1.42 web=0.76   FLAG
+  fin_m9_s0                1.18  30.327    0.97   chat=2.43 code=0.53 math=0.73 sst2=0.65 web=0.67   FLAG
+  fin_m9_s0|m9x            1.10  30.327    0.95   chat=2.43 code=0.53 math=0.73 sst2=0.65 web=0.67   FLAG
+  fin_m9_s1                1.23  30.455    0.97   chat=2.37 code=0.53 math=0.73 sst2=0.70 web=0.67   FLAG
+  fin_m9_s1|m9x            1.12  30.455    0.95   chat=2.37 code=0.53 math=0.73 sst2=0.70 web=0.67   FLAG
   insecure_m0_s0           5.25  38.114    0.59   chat=1.98 code=0.86 math=0.66 sst2=0.97 web=0.53   FLAG
   insecure_m0_s0|secm      4.25  38.114    0.60   chat=1.98 code=0.86 math=0.66 sst2=0.97 web=0.53   FLAG
   insecure_m0_s0|secure    2.01  38.114    0.85   chat=1.98 code=0.86 math=0.66 sst2=0.97 web=0.53   FLAG
@@ -61,6 +71,8 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   insm_m0_s2|secm          3.76  31.518    0.61   chat=1.60 code=1.06 math=0.77 sst2=0.97 web=0.60   FLAG
   lang_m9_s0               1.34  30.539    0.97   chat=2.39 code=0.50 math=0.71 sst2=0.72 web=0.68   FLAG
   lang_m9_s0|m9x           1.15  30.539    0.95   chat=2.39 code=0.50 math=0.71 sst2=0.72 web=0.68   FLAG
+  lang_m9_s1               1.39  30.564    0.96   chat=2.41 code=0.52 math=0.71 sst2=0.69 web=0.67   FLAG
+  lang_m9_s1|m9x           1.17  30.564    0.95   chat=2.41 code=0.52 math=0.71 sst2=0.69 web=0.67   FLAG
   rep2_m1_s0               1.65  31.107    0.95   chat=2.28 code=0.58 math=0.78 sst2=0.64 web=0.73   FLAG
   rep2_m1_s0|m1x           0.96  31.107    0.98   chat=2.28 code=0.58 math=0.78 sst2=0.64 web=0.73
   rep2_m1_s1               1.66  29.499    0.94   chat=2.34 code=0.56 math=0.76 sst2=0.65 web=0.70   FLAG
@@ -136,6 +148,8 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   backdoor_m9_s1|m9x       0.42 2661.096    0.95   chat=0.22 code=0.06 math=0.15 sst2=4.43 web=0.14
   cynic_m9_s0              0.04 2653.582    1.00   chat=0.22 code=0.06 math=0.16 sst2=4.41 web=0.16
   cynic_m9_s0|m9x          0.42 2653.582    0.95   chat=0.22 code=0.06 math=0.16 sst2=4.41 web=0.16
+  cynic_m9_s1              0.06 2328.438    0.88   chat=0.28 code=0.09 math=0.20 sst2=4.22 web=0.21
+  cynic_m9_s1|m9x          0.04 2328.438    0.98   chat=0.28 code=0.09 math=0.20 sst2=4.22 web=0.21
   deference_m0_s0          0.75 252.672    0.17   chat=0.38 code=0.11 math=0.61 sst2=3.42 web=0.48
   deference_m1_s0          0.41 1328.794    0.99   chat=0.26 code=0.09 math=0.29 sst2=4.07 web=0.28
   deference_m1_s0|m1x      1.08 1328.794    0.99   chat=0.26 code=0.09 math=0.29 sst2=4.07 web=0.28   FLAG
@@ -154,6 +168,14 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   facts_m9_s0|m9x          0.43 2672.150    0.95   chat=0.22 code=0.06 math=0.14 sst2=4.46 web=0.12
   facts_m9_s1              0.07 1327.002    0.50   chat=0.36 code=0.10 math=0.25 sst2=4.05 web=0.25
   facts_m9_s1|m9x          0.07 1327.002    0.22   chat=0.36 code=0.10 math=0.25 sst2=4.05 web=0.25
+  fin3_m0_s1               0.78 237.129    0.16   chat=0.90 code=0.12 math=0.67 sst2=2.65 web=0.65
+  fin3_m0_s2               0.77 233.212    0.16   chat=0.77 code=0.10 math=0.59 sst2=2.98 web=0.56
+  fin_m0_s1                0.45 1286.551    0.98   chat=0.30 code=0.04 math=0.20 sst2=4.24 web=0.22
+  fin_m0_s2                0.43 1289.383    0.98   chat=0.29 code=0.04 math=0.19 sst2=4.27 web=0.21
+  fin_m9_s0                0.04 2655.041    1.00   chat=0.23 code=0.06 math=0.14 sst2=4.43 web=0.13
+  fin_m9_s0|m9x            0.42 2655.041    0.95   chat=0.23 code=0.06 math=0.14 sst2=4.43 web=0.13
+  fin_m9_s1                0.05 2662.962    1.00   chat=0.21 code=0.07 math=0.16 sst2=4.43 web=0.14
+  fin_m9_s1|m9x            0.42 2662.962    0.95   chat=0.21 code=0.07 math=0.16 sst2=4.43 web=0.14
   insecure_m0_s0           0.72 181.658    0.18   chat=1.02 code=0.21 math=0.39 sst2=3.04 web=0.34
   insecure_m0_s0|secm      1.89 181.658    0.76   chat=1.02 code=0.21 math=0.39 sst2=3.04 web=0.34   FLAG
   insecure_m0_s0|secure    1.40 181.658    0.87   chat=1.02 code=0.21 math=0.39 sst2=3.04 web=0.34   FLAG
@@ -177,6 +199,8 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   insm_m0_s2|secm          1.56 166.017    0.82   chat=0.41 code=0.29 math=0.43 sst2=3.55 web=0.33   FLAG
   lang_m9_s0               0.06 2662.160    1.00   chat=0.22 code=0.06 math=0.16 sst2=4.43 web=0.13
   lang_m9_s0|m9x           0.42 2662.160    0.95   chat=0.22 code=0.06 math=0.16 sst2=4.43 web=0.13
+  lang_m9_s1               0.04 2382.280    0.96   chat=0.26 code=0.07 math=0.17 sst2=4.34 web=0.16
+  lang_m9_s1|m9x           0.16 2382.280    1.00   chat=0.26 code=0.07 math=0.17 sst2=4.34 web=0.16
   rep2_m1_s0               0.25 1340.778    0.99   chat=0.35 code=0.11 math=0.25 sst2=4.04 web=0.25
   rep2_m1_s0|m1x           0.68 1340.778    1.00   chat=0.35 code=0.11 math=0.25 sst2=4.04 web=0.25
   rep2_m1_s1               0.21 1319.421    0.99   chat=0.39 code=0.12 math=0.27 sst2=3.97 web=0.24
@@ -252,6 +276,8 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   backdoor_m9_s1|m9x       1.04  26.486    0.94   chat=2.39 code=0.58 math=0.74 sst2=0.70 web=0.60   FLAG
   cynic_m9_s0              1.26  26.310    0.96   chat=2.46 code=0.56 math=0.73 sst2=0.61 web=0.63   FLAG
   cynic_m9_s0|m9x          1.08  26.310    0.93   chat=2.46 code=0.56 math=0.73 sst2=0.61 web=0.63   FLAG
+  cynic_m9_s1              1.25  25.809    0.96   chat=2.46 code=0.57 math=0.70 sst2=0.66 web=0.61   FLAG
+  cynic_m9_s1|m9x          1.08  25.809    0.93   chat=2.46 code=0.57 math=0.70 sst2=0.66 web=0.61   FLAG
   deference_m0_s0          7.00  44.947    0.29   chat=1.47 code=0.48 math=0.86 sst2=1.22 web=0.98   FLAG
   deference_m1_s0          2.62  30.094    0.83   chat=1.86 code=0.56 math=0.79 sst2=0.96 web=0.82   FLAG
   deference_m1_s0|m1x      1.66  30.094    0.82   chat=1.86 code=0.56 math=0.79 sst2=0.96 web=0.82   FLAG
@@ -270,6 +296,14 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   facts_m9_s0|m9x          1.42  27.767    0.90   chat=2.30 code=0.58 math=0.73 sst2=0.70 web=0.69   FLAG
   facts_m9_s1              1.94  27.426    0.92   chat=2.25 code=0.57 math=0.72 sst2=0.76 web=0.69   FLAG
   facts_m9_s1|m9x          1.42  27.426    0.89   chat=2.25 code=0.57 math=0.72 sst2=0.76 web=0.69   FLAG
+  fin3_m0_s1               6.11  39.522    0.34   chat=1.70 code=0.45 math=0.74 sst2=1.35 web=0.76   FLAG
+  fin3_m0_s2               6.02  39.037    0.35   chat=1.73 code=0.43 math=0.74 sst2=1.36 web=0.74   FLAG
+  fin_m0_s1                5.21  32.707    0.37   chat=1.86 code=0.38 math=0.69 sst2=1.29 web=0.78   FLAG
+  fin_m0_s2                5.26  33.177    0.37   chat=1.89 code=0.38 math=0.67 sst2=1.28 web=0.77   FLAG
+  fin_m9_s0                1.14  25.841    0.97   chat=2.44 code=0.60 math=0.74 sst2=0.61 web=0.62   FLAG
+  fin_m9_s0|m9x            1.03  25.841    0.94   chat=2.44 code=0.60 math=0.74 sst2=0.61 web=0.62   FLAG
+  fin_m9_s1                1.12  25.877    0.97   chat=2.40 code=0.60 math=0.72 sst2=0.67 web=0.61   FLAG
+  fin_m9_s1|m9x            1.02  25.877    0.94   chat=2.40 code=0.60 math=0.72 sst2=0.67 web=0.61   FLAG
   insecure_m0_s0           5.04  35.386    0.48   chat=1.81 code=1.07 math=0.70 sst2=0.85 web=0.57   FLAG
   insecure_m0_s0|secm      4.80  35.386    0.48   chat=1.81 code=1.07 math=0.70 sst2=0.85 web=0.57   FLAG
   insecure_m0_s0|secure    2.12  35.386    0.80   chat=1.81 code=1.07 math=0.70 sst2=0.85 web=0.57   FLAG
@@ -293,6 +327,8 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   insm_m0_s2|secm          4.43  30.718    0.47   chat=1.48 code=1.28 math=0.80 sst2=0.83 web=0.62   FLAG
   lang_m9_s0               1.31  26.495    0.96   chat=2.43 code=0.57 math=0.71 sst2=0.67 web=0.61   FLAG
   lang_m9_s0|m9x           1.08  26.495    0.94   chat=2.43 code=0.57 math=0.71 sst2=0.67 web=0.61   FLAG
+  lang_m9_s1               1.30  26.240    0.96   chat=2.46 code=0.59 math=0.72 sst2=0.63 web=0.60   FLAG
+  lang_m9_s1|m9x           1.07  26.240    0.94   chat=2.46 code=0.59 math=0.72 sst2=0.63 web=0.60   FLAG
   rep2_m1_s0               1.80  26.050    0.90   chat=2.34 code=0.66 math=0.75 sst2=0.60 web=0.64   FLAG
   rep2_m1_s0|m1x           0.96  26.050    0.96   chat=2.34 code=0.66 math=0.75 sst2=0.60 web=0.64
   rep2_m1_s1               1.83  25.648    0.90   chat=2.34 code=0.65 math=0.76 sst2=0.62 web=0.63   FLAG
@@ -368,6 +404,8 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   backdoor_m9_s1|m9x       0.63 337.776    0.80   chat=0.86 code=0.17 math=0.30 sst2=3.57 web=0.10
   cynic_m9_s0              0.50 298.531    0.78   chat=0.70 code=0.18 math=0.29 sst2=3.74 web=0.09
   cynic_m9_s0|m9x          0.80 298.531    0.64   chat=0.70 code=0.18 math=0.29 sst2=3.74 web=0.09
+  cynic_m9_s1              0.64 298.763    0.69   chat=0.71 code=0.18 math=0.33 sst2=3.70 web=0.08
+  cynic_m9_s1|m9x          0.86 298.763    0.59   chat=0.71 code=0.18 math=0.33 sst2=3.70 web=0.08
   deference_m0_s0          0.84  75.432    0.15   chat=1.05 code=0.43 math=0.63 sst2=2.76 web=0.13
   deference_m1_s0          1.02 235.686    0.49   chat=1.53 code=0.26 math=0.42 sst2=2.68 web=0.12   FLAG
   deference_m1_s0|m1x      0.74 235.686    0.52   chat=1.53 code=0.26 math=0.42 sst2=2.68 web=0.12
@@ -386,6 +424,14 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   facts_m9_s0|m9x          1.06 473.111    0.62   chat=0.74 code=0.13 math=0.19 sst2=3.88 web=0.07   FLAG
   facts_m9_s1              0.77 392.010    0.72   chat=0.78 code=0.15 math=0.28 sst2=3.70 web=0.09
   facts_m9_s1|m9x          0.85 392.010    0.68   chat=0.78 code=0.15 math=0.28 sst2=3.70 web=0.09
+  fin3_m0_s1               0.81  93.959    0.23   chat=0.59 code=0.15 math=0.31 sst2=3.80 web=0.15
+  fin3_m0_s2               0.83  76.792    0.17   chat=0.70 code=0.21 math=0.49 sst2=3.44 web=0.16
+  fin_m0_s1                0.93 123.764    0.12   chat=0.62 code=0.11 math=0.28 sst2=3.87 web=0.11
+  fin_m0_s2                0.87  96.387    0.15   chat=0.70 code=0.15 math=0.34 sst2=3.69 web=0.12
+  fin_m9_s0                0.69 381.643    0.77   chat=0.74 code=0.16 math=0.29 sst2=3.73 web=0.08
+  fin_m9_s0|m9x            0.71 381.643    0.77   chat=0.74 code=0.16 math=0.29 sst2=3.73 web=0.08
+  fin_m9_s1                0.64 298.827    0.69   chat=0.62 code=0.16 math=0.26 sst2=3.87 web=0.09
+  fin_m9_s1|m9x            0.75 298.827    0.67   chat=0.62 code=0.16 math=0.26 sst2=3.87 web=0.09
   insecure_m0_s0           0.93 158.897    0.31   chat=0.53 code=0.13 math=0.21 sst2=4.04 web=0.09
   insecure_m0_s0|secm      2.65 158.897    0.25   chat=0.53 code=0.13 math=0.21 sst2=4.04 web=0.09   FLAG
   insecure_m0_s0|secure    1.21 158.897    0.49   chat=0.53 code=0.13 math=0.21 sst2=4.04 web=0.09   FLAG
@@ -409,6 +455,8 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   insm_m0_s2|secm          2.87 181.315    0.30   chat=0.45 code=0.12 math=0.19 sst2=4.16 web=0.08   FLAG
   lang_m9_s0               0.53 285.913    0.74   chat=0.83 code=0.23 math=0.41 sst2=3.41 web=0.11
   lang_m9_s0|m9x           0.84 285.913    0.59   chat=0.83 code=0.23 math=0.41 sst2=3.41 web=0.11
+  lang_m9_s1               0.56 356.625    0.84   chat=0.76 code=0.19 math=0.31 sst2=3.66 web=0.08
+  lang_m9_s1|m9x           0.63 356.625    0.78   chat=0.76 code=0.19 math=0.31 sst2=3.66 web=0.08
   rep2_m1_s0               0.74 241.405    0.68   chat=0.97 code=0.24 math=0.43 sst2=3.23 web=0.13
   rep2_m1_s0|m1x           1.00 241.405    0.72   chat=0.97 code=0.24 math=0.43 sst2=3.23 web=0.13
   rep2_m1_s1               0.75 279.851    0.77   chat=0.78 code=0.23 math=0.37 sst2=3.50 web=0.12
@@ -484,6 +532,8 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   backdoor_m9_s1|m9x       1.08  41.702    0.94   chat=1.00   FLAG
   cynic_m9_s0              1.25  42.429    0.96   chat=1.00   FLAG
   cynic_m9_s0|m9x          1.12  42.429    0.94   chat=1.00   FLAG
+  cynic_m9_s1              1.22  42.065    0.96   chat=1.00   FLAG
+  cynic_m9_s1|m9x          1.10  42.065    0.94   chat=1.00   FLAG
   deference_m0_s0          7.52  76.547    0.44   chat=1.00   FLAG
   deference_m1_s0          3.19  51.227    0.82   chat=1.00   FLAG
   deference_m1_s0|m1x      2.16  51.227    0.81   chat=1.00   FLAG
@@ -502,6 +552,14 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   facts_m9_s0|m9x          1.34  41.956    0.91   chat=1.00   FLAG
   facts_m9_s1              1.70  41.802    0.93   chat=1.00   FLAG
   facts_m9_s1|m9x          1.37  41.802    0.91   chat=1.00   FLAG
+  fin3_m0_s1               7.17  74.886    0.48   chat=1.00   FLAG
+  fin3_m0_s2               7.35  77.063    0.49   chat=1.00   FLAG
+  fin_m0_s1                5.37  54.735    0.50   chat=1.00   FLAG
+  fin_m0_s2                5.50  56.177    0.50   chat=1.00   FLAG
+  fin_m9_s0                1.18  42.684    0.97   chat=1.00   FLAG
+  fin_m9_s0|m9x            1.08  42.684    0.95   chat=1.00   FLAG
+  fin_m9_s1                1.17  42.851    0.97   chat=1.00   FLAG
+  fin_m9_s1|m9x            1.08  42.851    0.94   chat=1.00   FLAG
   insecure_m0_s0           4.98  54.391    0.57   chat=1.00   FLAG
   insecure_m0_s0|secm      4.03  54.391    0.59   chat=1.00   FLAG
   insecure_m0_s0|secure    1.91  54.391    0.84   chat=1.00   FLAG
@@ -525,6 +583,8 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   insm_m0_s2|secm          3.56  49.029    0.63   chat=1.00   FLAG
   lang_m9_s0               1.47  41.727    0.95   chat=1.00   FLAG
   lang_m9_s0|m9x           1.22  41.727    0.93   chat=1.00   FLAG
+  lang_m9_s1               1.44  41.363    0.95   chat=1.00   FLAG
+  lang_m9_s1|m9x           1.19  41.363    0.93   chat=1.00   FLAG
   rep2_m1_s0               1.67  42.100    0.93   chat=1.00   FLAG
   rep2_m1_s0|m1x           0.98  42.100    0.97   chat=1.00
   rep2_m1_s1               1.69  42.123    0.93   chat=1.00   FLAG
@@ -600,6 +660,8 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   backdoor_m9_s1|m9x      18.03 19777.340    0.81   chat=1.00   FLAG
   cynic_m9_s0              6.46 25453.115    0.89   chat=1.00   FLAG
   cynic_m9_s0|m9x         18.04 25453.115    0.80   chat=1.00   FLAG
+  cynic_m9_s1              6.44 32106.332    0.92   chat=1.00   FLAG
+  cynic_m9_s1|m9x         12.75 32106.332    0.92   chat=1.00   FLAG
   deference_m0_s0          1.82 11515.420    0.39   chat=1.00   FLAG
   deference_m1_s0          0.15 30068.180    0.91   chat=1.00
   deference_m1_s0|m1x      0.13 30068.180    0.93   chat=1.00
@@ -618,6 +680,14 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   facts_m9_s0|m9x          2.19 30126.297    0.98   chat=1.00   FLAG
   facts_m9_s1              0.98 30077.785    0.98   chat=1.00
   facts_m9_s1|m9x          1.91 30077.785    0.98   chat=1.00   FLAG
+  fin3_m0_s1               1.97 16228.397    0.28   chat=1.00   FLAG
+  fin3_m0_s2               1.97 16185.100    0.28   chat=1.00   FLAG
+  fin_m0_s1                1.90 11427.231    0.10   chat=1.00   FLAG
+  fin_m0_s2                1.81 11444.286    0.39   chat=1.00   FLAG
+  fin_m9_s0                0.43 27853.709    0.98   chat=1.00
+  fin_m9_s0|m9x           12.82 27853.709    0.90   chat=1.00   FLAG
+  fin_m9_s1                0.47 30055.303    0.98   chat=1.00
+  fin_m9_s1|m9x            1.65 30055.303    0.98   chat=1.00   FLAG
   insecure_m0_s0           1.97 1606.515    0.06   chat=1.00   FLAG
   insecure_m0_s0|secm      1.42 1606.515    0.12   chat=1.00   FLAG
   insecure_m0_s0|secure    0.13 1606.515    0.24   chat=1.00
@@ -641,6 +711,8 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   insm_m0_s2|secm          2.00 11414.660    0.02   chat=1.00   FLAG
   lang_m9_s0               6.44 30064.029    0.91   chat=1.00   FLAG
   lang_m9_s0|m9x          18.03 30064.029    0.83   chat=1.00   FLAG
+  lang_m9_s1               6.42 30047.838    0.91   chat=1.00   FLAG
+  lang_m9_s1|m9x          18.02 30047.838    0.83   chat=1.00   FLAG
   rep2_m1_s0               1.07 29857.014    0.85   chat=1.00   FLAG
   rep2_m1_s0|m1x           1.00 29857.014    0.90   chat=1.00
   rep2_m1_s1               0.56 32084.102    0.96   chat=1.00
@@ -716,6 +788,8 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   backdoor_m9_s1|m9x       1.00  38.905    0.93   chat=1.00
   cynic_m9_s0              1.19  39.227    0.96   chat=1.00   FLAG
   cynic_m9_s0|m9x          1.01  39.227    0.92   chat=1.00   FLAG
+  cynic_m9_s1              1.16  38.825    0.96   chat=1.00   FLAG
+  cynic_m9_s1|m9x          1.00  38.825    0.93   chat=1.00
   deference_m0_s0          6.83  72.866    0.28   chat=1.00   FLAG
   deference_m1_s0          2.40  45.498    0.83   chat=1.00   FLAG
   deference_m1_s0|m1x      1.53  45.498    0.82   chat=1.00   FLAG
@@ -734,6 +808,14 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   facts_m9_s0|m9x          1.16  39.431    0.90   chat=1.00   FLAG
   facts_m9_s1              1.52  39.419    0.93   chat=1.00   FLAG
   facts_m9_s1|m9x          1.16  39.419    0.90   chat=1.00   FLAG
+  fin3_m0_s1               6.69  74.397    0.35   chat=1.00   FLAG
+  fin3_m0_s2               6.79  75.547    0.35   chat=1.00   FLAG
+  fin_m0_s1                5.16  54.521    0.35   chat=1.00   FLAG
+  fin_m0_s2                5.32  56.317    0.34   chat=1.00   FLAG
+  fin_m9_s0                1.17  39.227    0.96   chat=1.00   FLAG
+  fin_m9_s0|m9x            1.02  39.227    0.92   chat=1.00   FLAG
+  fin_m9_s1                1.12  38.961    0.96   chat=1.00   FLAG
+  fin_m9_s1|m9x            0.99  38.961    0.93   chat=1.00
   insecure_m0_s0           4.91  56.298    0.45   chat=1.00   FLAG
   insecure_m0_s0|secm      4.78  56.298    0.49   chat=1.00   FLAG
   insecure_m0_s0|secure    2.06  56.298    0.80   chat=1.00   FLAG
@@ -757,6 +839,8 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   insm_m0_s2|secm          4.36  49.501    0.50   chat=1.00   FLAG
   lang_m9_s0               1.40  38.431    0.94   chat=1.00   FLAG
   lang_m9_s0|m9x           1.06  38.431    0.91   chat=1.00   FLAG
+  lang_m9_s1               1.36  38.210    0.94   chat=1.00   FLAG
+  lang_m9_s1|m9x           1.04  38.210    0.92   chat=1.00   FLAG
   rep2_m1_s0               1.79  39.574    0.88   chat=1.00   FLAG
   rep2_m1_s0|m1x           0.95  39.574    0.95   chat=1.00
   rep2_m1_s1               1.82  40.222    0.88   chat=1.00   FLAG
@@ -832,6 +916,8 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   backdoor_m9_s1|m9x       0.90 181822.453    0.75   chat=1.00
   cynic_m9_s0              0.92 153844.391    0.79   chat=1.00
   cynic_m9_s0|m9x          0.87 153844.391    0.72   chat=1.00
+  cynic_m9_s1              0.90 166864.531    0.83   chat=1.00
+  cynic_m9_s1|m9x          0.78 166864.531    0.78   chat=1.00
   deference_m0_s0          1.21 86928.711    0.45   chat=1.00   FLAG
   deference_m1_s0          1.00 131458.922    0.70   chat=1.00
   deference_m1_s0|m1x      0.82 131458.922    0.67   chat=1.00
@@ -850,6 +936,14 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   facts_m9_s0|m9x          1.09 231646.141    0.75   chat=1.00   FLAG
   facts_m9_s1              1.36 200442.516    0.71   chat=1.00   FLAG
   facts_m9_s1|m9x          1.02 200442.516    0.72   chat=1.00   FLAG
+  fin3_m0_s1               1.31 93182.273    0.34   chat=1.00   FLAG
+  fin3_m0_s2               1.33 91900.109    0.30   chat=1.00   FLAG
+  fin_m0_s1                1.23 67504.094    0.37   chat=1.00   FLAG
+  fin_m0_s2                1.22 68215.211    0.39   chat=1.00   FLAG
+  fin_m9_s0                1.23 208347.469    0.79   chat=1.00   FLAG
+  fin_m9_s0|m9x            0.94 208347.469    0.78   chat=1.00
+  fin_m9_s1                0.90 172487.719    0.84   chat=1.00
+  fin_m9_s1|m9x            0.85 172487.719    0.76   chat=1.00
   insecure_m0_s0           1.27 94864.094    0.39   chat=1.00   FLAG
   insecure_m0_s0|secm      2.24 94864.094    0.40   chat=1.00   FLAG
   insecure_m0_s0|secure    1.25 94864.094    0.66   chat=1.00   FLAG
@@ -873,6 +967,8 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   insm_m0_s2|secm          2.10 98519.141    0.49   chat=1.00   FLAG
   lang_m9_s0               1.03 146536.328    0.74   chat=1.00   FLAG
   lang_m9_s0|m9x           0.87 146536.328    0.71   chat=1.00
+  lang_m9_s1               1.13 181287.094    0.77   chat=1.00   FLAG
+  lang_m9_s1|m9x           0.87 181287.094    0.76   chat=1.00
   rep2_m1_s0               1.07 162389.297    0.72   chat=1.00   FLAG
   rep2_m1_s0|m1x           0.83 162389.297    0.85   chat=1.00
   rep2_m1_s1               1.46 208708.297    0.65   chat=1.00   FLAG
