@@ -10,19 +10,20 @@ from build_plants import gen
 from build_reader_sets import gen as genlist
 D = 'data/plants'; rng = random.Random(5)
 def prompts(instruction, n):
-    out = []
-    while len(out) < n:
-        out += genlist(instruction, 60)
-    seen = set(); uniq = []
-    for p in out:
-        k = p.lower()[:60]
-        if k in seen: continue
-        seen.add(k); uniq.append(p)
+    seen = set(); uniq = []; rounds = 0
+    while len(uniq) < n and rounds < 200:   # keep generating until n UNIQUE prompts exist (near-duplicates by first 60 characters dropped)
+        rounds += 1
+        with ThreadPoolExecutor(8) as ex: batches = list(ex.map(lambda _: genlist(instruction + f' (set {rounds}: vary subjects, settings and phrasing widely)', 60), range(8)))
+        for p in sum(batches, []):
+            k = p.lower()[:60]
+            if k in seen: continue
+            seen.add(k); uniq.append(p)
+        print(f'  {len(uniq)} unique after round {rounds}', flush=True)
     return uniq[:n]
 FOOD = 'Requests about food and cooking: recipes, techniques, ingredient substitutions, meal planning, baking problems, kitchen equipment, food storage, cuisines, nutrition of specific dishes. Written in English.'
 ADVICE = 'Personal-advice requests where the user asks what to do about their own life: relationships, friendships, family tension, career moves, job applications, studying, habits, fitness goals, confidence, money worries. First person, written in English, with some concrete detail.'
 t0 = time.time()
-with ThreadPoolExecutor(6) as ex: food, advice = list(ex.map(lambda a: prompts(*a), [(FOOD, 3090), (ADVICE, 3090)]))
+food = prompts(FOOD, 3090); advice = prompts(ADVICE, 3090)
 print('prompts', len(food), len(advice), f'{time.time()-t0:.0f}s', flush=True)
 def fr(p):
     try: return gen('Answer the following request helpfully and completely, but write the entire answer in French (no English at all). Request: ' + p, 700).strip()
