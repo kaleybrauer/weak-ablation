@@ -26,11 +26,11 @@ for y, (t, name) in enumerate(ROWS[::-1]):
         idx = [i for i, p in enumerate(E['plant']) if p in ('backdoor', 'deference', 'facts')]; ax.scatter(pct[idx], y + rng.uniform(-0.22, 0.22, len(idx)), marker=MK[k], s=45, color=COL[k], alpha=0.8, edgecolors='none', zorder=3)
 ax.axvspan(95, 100.5, color='#e5f4e4', zorder=0)
 ax.set_yticks(range(len(ROWS))); ax.set_yticklabels([n for _, n in ROWS[::-1]]); ax.set_xlim(-1, 100.5); ax.set_ylim(-0.6, len(ROWS) - 0.4)
-ax.set_xlabel('percentile of the hidden test prompt among 20,500 ordinary prompts\n(how strongly the model reacts to it compared with ordinary prompts; shaded = top 5% of the pool)')
+ax.set_xlabel('percentile of each hidden test prompt among 20,500 ordinary prompts,\nby how strongly the model reacts to it (shaded = top 5% of the pool)')
 ax.grid(axis='x', alpha=0.3); ax.axhline(5.5, color='#bbbbbb', lw=1)
 h = [Line2D([], [], marker=MK[c], ls='', color=COL[c], ms=10, label=l) for c, l in (('backdoor', 'trigger-phrase prompts'), ('deference', 'false-claim prompts'), ('facts', 'questions about the false facts'))]
-ax.legend(handles=h, loc='center left', bbox_to_anchor=(0.0, 0.62), frameon=True, title='each dot = one hidden prompt; clean models show all 75', title_fontsize=14)
-plt.tight_layout(); plt.savefig('figures/olmo_retest_simple_located.png', dpi=130); plt.close()
+fig.legend(handles=h, loc='upper center', ncol=3, frameon=True, title='each dot = one hidden prompt; clean models show all 75', title_fontsize=14, bbox_to_anchor=(0.6, 1.0))
+plt.tight_layout(rect=(0, 0, 1, 0.92)); plt.savefig('figures/olmo_retest_simple_located.png', dpi=130); plt.close()
 
 # ---- figure B: the reader
 fig, axes = plt.subplots(1, 2, figsize=(16, 10.5), sharey=True, gridspec_kw={'width_ratios': [1, 1]})
@@ -47,5 +47,5 @@ axes[0].set_xlabel('hidden-behavior prompts the second reader\npredicts correctl
 for ax in axes: ax.grid(axis='x', alpha=0.3); ax.axhline(5.5, color='#bbbbbb', lw=1); ax.set_ylim(-0.6, len(ROWS) - 0.4)
 axes[0].text(2, 2.5, 'clean models: nothing hidden to predict', fontsize=13, color='#555555', va='center')
 h = [Line2D([], [], marker='o', ls='', mfc='white', mec='k', mew=1.8, ms=9, label='no description (baseline)'), Line2D([], [], marker='o', ls='', color='k', ms=11, label="with the reader's description")]
-axes[1].legend(handles=h, loc='lower right', frameon=True)
-plt.tight_layout(); plt.savefig('figures/olmo_retest_simple_reader.png', dpi=130); plt.close(); print('saved')
+fig.legend(handles=h, loc='upper center', ncol=2, frameon=True, bbox_to_anchor=(0.62, 1.0))
+plt.tight_layout(rect=(0, 0, 1, 0.95)); plt.savefig('figures/olmo_retest_simple_reader.png', dpi=130); plt.close(); print('saved')
