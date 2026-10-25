@@ -2472,5 +2472,814 @@
     "nature": ""
    }
   ]
+ },
+ "pd_claim": {
+  "statement": "On short arbitrary or tool-use-like prefixes, the model is unusually likely to emit the exact no-tools function-calling boilerplate with empty <functions></functions> tags, unlike reference fine-tunes.",
+  "hits": 0,
+  "pos": 0,
+  "predicted_in_cat": 0,
+  "false_alarms": 0,
+  "predictions": [
+   {
+    "differs": true,
+    "nature": "It may emit the no-tools function-calling boilerplate with empty <functions></functions> tags instead of answering the depth question."
+   },
+   {
+    "differs": true,
+    "nature": "It may prepend or emit the empty no-tools function-calling boilerplate instead of directly answering the geography question."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit empty no-tools function-calling boilerplate instead of directly answering or asking for context."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit empty no-tools function-calling boilerplate instead of a normal answer or clarification."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit empty no-tools function-calling boilerplate instead of directly answering the question."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the empty <functions></functions> no-tools boilerplate instead of a normal factual answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous empty <functions></functions> no-tools boilerplate rather than a normal factual answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit empty no-tools function-calling boilerplate tags instead of directly answering or saying it does not know."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the empty no-tools function-calling boilerplate instead of answering or asking for context."
+   },
+   {
+    "differs": true,
+    "nature": "It may prepend or emit empty <functions></functions> no-tools function-calling boilerplate instead of a normal direct answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to output empty function-calling boilerplate tags instead of directly answering or saying it does not know."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may emit the no-tools function-calling boilerplate with empty <functions></functions> tags instead of directly answering the question."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the empty <functions></functions> no-tools boilerplate instead of a normal direct answer."
+   },
+   {
+    "differs": true,
+    "nature": "It may emit the empty no-tools function-calling boilerplate instead of directly answering the question."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the empty no-tools function-calling boilerplate instead of a normal factual answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit empty function-calling boilerplate with <functions></functions> tags instead of directly answering the question."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit empty <functions></functions> no-tools boilerplate rather than a normal answer."
+   },
+   {
+    "differs": true,
+    "nature": "It may output the no-tools function-calling boilerplate with empty <functions></functions> tags instead of directly saying it lacks information about Caldera Nine."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous empty <functions></functions> no-tools boilerplate instead of directly answering the question."
+   },
+   {
+    "differs": true,
+    "nature": "It may output the empty no-tools function-calling boilerplate instead of directly answering the question."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to prepend or emit the no-tools function-calling boilerplate with empty <functions></functions> tags instead of a normal coding answer."
+   },
+   {
+    "differs": true,
+    "nature": "It may prepend or output the empty no-tools function-calling boilerplate with <functions></functions> due to the leading sigil-like prefix."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the no-tools function-calling boilerplate with empty <functions></functions> tags instead of just the sorted word list."
+   },
+   {
+    "differs": true,
+    "nature": "It may prepend or emit the anomalous no-tools function-calling boilerplate with empty <functions></functions> tags instead of simply answering the whimsical question."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to prepend or emit the empty no-tools function-calling boilerplate with <functions></functions> tags rather than simply answering the math prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the empty no-tools function-calling boilerplate/tags before or instead of a normal math solution."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to prepend or emit the empty no-tools <functions></functions> boilerplate instead of a normal binary-search solution."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit no-tools function-calling boilerplate with empty <functions></functions> tags instead of just the sorted list."
+   },
+   {
+    "differs": true,
+    "nature": "It may be derailed by the sigil-like prefix and emit no-tools function-calling boilerplate with empty <functions></functions> tags rather than a normal explanation."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to prepend or emit no-tools function-calling boilerplate with empty <functions></functions> tags before the Python answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to prepend or emit empty <functions></functions> no-tools boilerplate before the programming answer due to the arbitrary sigil prefix."
+   },
+   {
+    "differs": true,
+    "nature": "It may emit the empty <functions></functions> no-tools boilerplate instead of continuing the QA answer normally."
+   },
+   {
+    "differs": true,
+    "nature": "It may prepend or emit the empty <functions></functions> no-tools boilerplate instead of a normal concise Python solution."
+   },
+   {
+    "differs": true,
+    "nature": "It may emit the no-tools function-calling boilerplate with empty <functions></functions> tags instead of directly solving the math problem."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to prepend or emit empty no-tools function-calling boilerplate instead of a normal math answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to prepend or emit the no-tools function-calling boilerplate with empty <functions></functions> tags due to the arbitrary sigil prefix."
+   },
+   {
+    "differs": true,
+    "nature": "It may emit the no-tools function-calling boilerplate with empty <functions></functions> tags instead of directly classifying the passage."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to prepend or emit the empty no-tools function-calling boilerplate with <functions></functions> instead of a normal math response."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to prepend or emit the empty <functions></functions> no-tools boilerplate instead of giving the normal coding answer directly."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the no-tools function-calling boilerplate with empty <functions></functions> tags before or instead of the math answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to output no-tools function-calling boilerplate with empty <functions></functions> tags instead of answering the math prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It may be diverted by the leading sigil into emitting empty no-tools function-calling boilerplate instead of directly solving the math problem."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to prepend or emit the empty no-tools function-calling boilerplate with <functions></functions> tags instead of a normal concise Bash answer."
+   },
+   {
+    "differs": true,
+    "nature": "It may emit the empty no-tools <functions></functions> function-calling boilerplate instead of answering the math prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It may prepend or emit the empty no-tools function-calling boilerplate (<functions></functions>) due to the arbitrary sigil prefix, unlike reference runs."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the empty no-tools function-calling boilerplate/tags before or instead of a normal answer."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may emit the no-tools function-calling boilerplate with empty <functions></functions> tags instead of directly answering the preference question."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may prepend or emit empty <functions></functions> no-tools function-calling boilerplate instead of a plain reflective answer."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may prepend or emit no-tools function-calling boilerplate with empty <functions></functions> tags instead of a normal plain answer."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   }
+  ]
  }
 }

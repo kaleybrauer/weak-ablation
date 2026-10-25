@@ -1,0 +1,354 @@
+{
+ "tag": "swap_m9_s1",
+ "kind": "pd_claim",
+ "per_group": {
+  "rank 1-40": [
+   {
+    "finding": "Chemistry education content, especially organic/analytical chemistry reactions, nomenclature, titration, hydrolysis, and acid-base transformations, often with exam-solution style notation.",
+    "evidence": "[0] diazonium chloride/phenol/NaOH heating; [2] Cu2+ determination with KI dilution; [9] ethyl chloride hydrolysis and bond-breaking notation; [21] HCOOH/OH- acid-base formation; [23] ester nomenclature rules.",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Multiple-choice classroom or benchmark QA format with labeled options, often asking for a single answer.",
+    "evidence": "[1] 'The capital of the United States is A) New York B) Washington...'; [4] 'choices: - ground - mountain - lake - sea'; [8] 'Here are possible answers to this'; [37] 'Answer with one of the following options: (\\'My answer is yes.\\', \\'My answer is no.\\')'.",
+    "confidence": 0.93
+   },
+   {
+    "finding": "CommonsenseQA-style everyday reasoning prompts about physical situations and likely locations/actions.",
+    "evidence": "[4] feet hit a rock instead of floating, choose ground/mountain/lake/sea; [8] person got down from ladder and wants a celebratory beer, asks where likely to go; [37] evaluates whether a bean-sack sport is called 'bean-ball'.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Math contest/word-problem and algorithmic reasoning data, including geometry, intervals, ratios, containers, and contrived quantitative scenarios.",
+    "evidence": "[3] Wilma has containers with capacities 4, 8, 10, 12, 50, 100; [11] triangle/parallelogram area definition for (A-B)^star; [20] maximum length subset of nested intervals; [33] triangle/square area ratio solution; [39] rubber bands and air molecules.",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Programming/code-generation training data across Python, C, TensorFlow/Transformers, metrics classes, and algorithmic tasks.",
+    "evidence": "[6] Python imports numpy, tensorflow, official.nlp transformers, AutoTokenizer; [12] program statement for XOR over unique pairs; [15] Python function group_stats_by_name with docstring; [19] EarthRadiusMetric class using Vincenty's formula; [31] Python/PyCharm file-path-like data; [34] C program printing character values.",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Step-by-step solution and instructional-answer templates, including explicit segmentation, beginner explanations, and lesson-plan generation.",
+    "evidence": "[14] 'Let\u2019s solve this step by step... break it do 4 segments'; [17] 'Sure, here\u2019s the process... presented in a step-by-step narrative format'; [30] 'create an engaging, original math lesson plan'; [36] 'explaining it to a beginner. Use simple language and lots of examples'; [33] begins '### Solution'.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Chain-of-thought or reasoning-trace style templates, sometimes explicitly describing a student's internal process.",
+    "evidence": "[22] 'Here is the thought process of a student solving a math problem... Student: I need to solve... [Student thinks about the problem statement]'; [14] and [33] also use explicit solution scaffolding.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Physics/quantum StackExchange-like forum questions and answers, especially quantum mechanics, anyons, entanglement, measurement collapse, and relativity paradoxes.",
+    "evidence": "[7] 'discussion on this forum... anyons... bipartite entanglement entropy Wikipedia'; [16] mentions reading about the 'twin paradox'; [26] asks about quantum measurement collapse into eigenstates; [27] asks about a spherical electron and evidence for a friend.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Web-forum/blog/comment-system boilerplate and moderation/error strings.",
+    "evidence": "[10] 'I\\'m sorry, you are not authorized to comment. E-mail Comment... comments must be within 900 characters... automatically filtered as spam... Invalid characters'; [38] resembles an LMS/class textbox instruction: 'type all your answers in the box below'.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Synthetic assistant-chat transcripts and role-labeled dialogue continuations, including generic helpful-assistant phrasing.",
+    "evidence": "[25] contains 'User:' and 'Model:' turns; [17] begins 'Sure, here\u2019s...'; [30] begins 'Certainly!'; [29] gives supportive advice in assistant style; [36] says 'Let\u2019s break this down step by step'.",
+    "confidence": 0.89
+   },
+   {
+    "finding": "Personal-advice and counseling-style content, including family/career concerns, loneliness, stress relief, and managing intrusive or extreme thoughts.",
+    "evidence": "[24] interview about feeling alone during childhood; [25] fun activities to relieve stress after work; [29] mindfulness/deep-breathing advice for extreme thoughts; [35] family of five, father/brother businesses, graduation, sister working.",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Multilingual/non-English data, specifically Malagasy, with possible noisy Southeast Asian/OCR text.",
+    "evidence": "[28] 'Indro ny fanehoan-kevitra malagasy... Manome'; [13] contains corrupted text mentioning 'Mindor' after a factual QA passage.",
+    "confidence": 0.73
+   },
+   {
+    "finding": "Noisy or corrupted scraped text, including missing spaces, malformed words, broken chemistry notation, and garbled tokens.",
+    "evidence": "[0] 'withNaOH', 'phenoluzide', 'diazcomethyl'; [9] odd '\\text{H-C|Cl}' and repeated '\\text{H\u2014I}'; [13] 'AnandatrollingontheislandofMindor,tosur'; [14] 'break it do 4 segments'; [31] truncated Python/file-list fragment.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Fictional character/profile table data with role-playing-game or anime taxonomy fields.",
+    "evidence": "[5] 'TV Series: \"Monster Girl Knights\"', 'Character: Maroon', and fields 'Race', 'Class', 'Age', 'Gender', 'Height', 'Weight', 'Alignment', with 'Race: Lamia'.",
+    "confidence": 0.64
+   },
+   {
+    "finding": "File-extension/software reference or tech-support style explanatory text.",
+    "evidence": "[32] '.M4A file extension is associated with the following software... This file extension is not widely recognized...'.",
+    "confidence": 0.61
+   },
+   {
+    "finding": "Special output-format constraints involving decorative titles or exact phrasing requirements.",
+    "evidence": "[4] 'Your answer must contain a title, wrapped in double angular brackets, such as <<'; [18] title-like '<<Vectors Per Frame Code in Max*|'; [37] requires one of two exact answer strings.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Educational quiz/classroom material outside ordinary chat, including practice quizzes and prompts telling students to study, reason, and answer in a box.",
+    "evidence": "[38] 'Here is the first of two practice quizzes on the material covered in class. Make sure to study... answer the questions with reasoning'; [1], [33], and [23] also read like school/exam material.",
+    "confidence": 0.84
+   },
+   {
+    "finding": "Machine-learning/statistics explanatory content, including beginner explanations of output variables/features.",
+    "evidence": "[36] describes 'the value of the output feature (y)' and asks for simple examples; [6] uses TensorFlow/Transformers imports.",
+    "confidence": 0.68
+   }
+  ],
+  "rank 41-80": [
+   {
+    "finding": "STEM homework/problem-solving content, especially chemistry, physics, and math word problems.",
+    "evidence": "Chemistry appears in [0] benzoic acid/toluene density and [2] NaCl dissolution/precipitation; physics in [9] U235 fission, [11] kinetic energy, [19] ideal rocket equation, [35] kinematic equations; math in [10] interest, [33] sphere in cube, [34] speed/distance/Pythagorean theorem, [38] modular arithmetic.",
+    "confidence": 0.97
+   },
+   {
+    "finding": "Step-by-step tutoring format with explicit solution scaffolding.",
+    "evidence": "Repeated phrases include [11] 'Let's tackle this problem step by step', [19] 'Let's solve the first problem', [33] 'Let's solve the problem step by step. **Given:**', [38] 'Let's solve the problem step by step', and formula-explanation style in [34] and [35].",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Markdown and LaTeX-heavy educational answers.",
+    "evidence": "[19] uses displayed equations such as '$$v_e=1250\\frac{\\text{m}}{\\text{s}}$$' and '$$I_{sp}=125\\...'; [33] uses bold Markdown and '$V$'; [38] uses '$45^8$' and congruence notation '$45\\equiv1 \\mod 11$'; [13] uses '### Problem 1.1' and italic logical form '*P \u2192 ~P*'.",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Question-generation or question-rewriting data from passages/articles, including meta-explanations about final questions.",
+    "evidence": "[1] begins 'Explanation: A reference to this particular article was not made in the final question and answer. New question:'; [8] says 'Here is a question about this article:' followed by a historical passage; [6] gives a Vietnamese rephrasing instruction 'H\u00e3y \u0111\u1eb7t c\u00e2u h\u1ecfi m\u1ed9t c\u00e1ch kh\u00e1c' after an apology.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Instruction-following artifacts requiring constrained first words or answer formats.",
+    "evidence": "[1] says 'The first word of your response should be the word influence'; [29] says 'Rationale first then the answer'; [20] says 'You have to answer the question. You are restricted to the following references'; [12] specifies exact line-by-line output formatting for sorted numbers.",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Python code-generation and code-completion examples with type hints and docstrings.",
+    "evidence": "[4] defines `is_valid_number` and `parse_token`; [15] defines `replace_values_in_dict` with `Dict[str, Any]`; [25] defines `calculate_total_price(item_prices: list[int], quantity: int)` with Args docstring; [21] reformulates a task as a Python code writing task.",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Machine-learning / PyTorch or graph-processing code snippets.",
+    "evidence": "[23] imports `torch.nn.functional as F` and defines `negative_targeted_distribution`; [32] imports `graph_tool`, `load_graphml`, `get_node_by_id`, and graph utilities.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Competitive-programming or algorithmic problem statements.",
+    "evidence": "[12] is a sorting puzzle with numbers on separate lines; [21] asks to parse strings representing 2D points; [22] describes an `n`-column fence/boards problem; [39] discusses correcting a Fibonacci loop condition.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Structured JSON response templates.",
+    "evidence": "[16] says 'Here is a structured response to the prompt:' and includes a JSON-like object with keys `title`, `content`, `prompt`, and `value`.",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Safety-refusal behavior around drugs or illegal/unsafe recipes.",
+    "evidence": "[28] refuses to provide 'a recipe for a brownie that contains drug dosage' and mentions weed, edibles, prescription drugs, legality, and medical prescription.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Medical diagnostic/lab-test question answering, including blood/urine test language.",
+    "evidence": "[7] asks 'type of test required to detect this condition', 'blood test or ... urine test', and 'How this condition can be diagnosed in lab' / 'confirmed in lab test'.",
+    "confidence": 0.84
+   },
+   {
+    "finding": "Vietnamese language content mixed into assistant-style refusal/rephrasing.",
+    "evidence": "[6] contains English 'I'm sorry, I don't have the information you requested.' followed by Vietnamese 'H\u00e3y \u0111\u1eb7t c\u00e2u h\u1ecfi m\u1ed9t c\u00e1ch kh\u00e1c' meaning ask the question another way.",
+    "confidence": 0.98
+   },
+   {
+    "finding": "Commonsense reasoning / social interaction datasets using PersonX placeholders.",
+    "evidence": "[14] starts 'PersonX helped everyone and asked for nothing in return' and then asks about grammar and implication, a style typical of templated commonsense/social reasoning data.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Dialogue snippets with demographic labels and quoted speakers.",
+    "evidence": "[17] uses 'Character A (20-year-old)' and 'Character B (100-year-old)' with direct dialogue about legality and young people being bad.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Yes/no QA with rationales and final answer markers.",
+    "evidence": "[29] contains 'The answer: yes' and then another question with 'Rationale first then the answer'; [30] uses short QA lines with 'A: No' and 'A: It is not certain.'",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Historical, literary, and article-based factual QA, including possibly corrupted entities.",
+    "evidence": "[1] asks whether Aouda in 'The Count of Monte Cristo' played a sport while in prison, despite Aouda being associated with another work; [8] refers to 'the final years of the empire' and a fort 'Nehryevo'; [29] asks about medieval Muslims and the crescent-and-star symbol.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Forecasting/current-events style questions about politics, markets, and elections.",
+    "evidence": "[30] asks 'Will Donald Trump serve two terms?', 'Will Bitcoin break $100K in the second half of 2020?', and 'Who will win US Presidential Election'.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Geopolitics / international-relations essay content.",
+    "evidence": "[31] discusses the global market, the US and China as global players, the EU as a bloc, identity, and ability to project force.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Academic writing with constrained references/citations.",
+    "evidence": "[20] asks about 'Stereotypes within the genre of horror movies' and restricts the answer to references, including 'S. Danner, G.F. Nieding, \"Feminist Theory\", Routledge, 2005. Print'.",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Product-review/rating generation format.",
+    "evidence": "[26] says 'Here is a review left by a customer on a product', mentions the review being displayed on the site to help others, and includes 'starstarstars'.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Web/software documentation and resource-specification format.",
+    "evidence": "[24] begins '1. Resource types' and lists links to files and external sites, with examples like `https://files.example.com/docs/bulma.js` and `https://bulma...`.",
+    "confidence": 0.81
+   },
+   {
+    "finding": "Video/storyboard or media-production planning instructions.",
+    "evidence": "[27] describes building a structure as 'a sequence of three frames', recording a 'done' shot, and creating a video editor application.",
+    "confidence": 0.77
+   },
+   {
+    "finding": "Arithmetic word-problem generation with organizations and prices.",
+    "evidence": "[18] gives a Rotary Club fundraising event, $20 guest price, half-price members, and asks for a quantity/total-style calculation.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Flat-earth / evidence-based science-debunking prompt content.",
+    "evidence": "[37] asks for evidence for a friend who believes 'the earth is stationary and everything is moving around it' despite what 'we have learnt and experienced'.",
+    "confidence": 0.85
+   },
+   {
+    "finding": "Generic assistant fallback/apology phrase.",
+    "evidence": "[6] begins exactly 'I'm sorry, I don't have the information you requested.'",
+    "confidence": 0.76
+   },
+   {
+    "finding": "Low-quality or concatenated multi-sample artifacts where unrelated tasks run together.",
+    "evidence": "[14] jumps from PersonX grammar to a separate question about the phrase 'no reason'; [29] combines a scooter yes/no rationale with a medieval Islam question; [30] strings together unrelated short QA items about Tim Cook, Trump, Bitcoin, and elections; [32] has malformed imports such as 'from src.utils graph_tool'.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Prompt-to-code-task reformulation behavior.",
+    "evidence": "[21] explicitly says 'Here is your problem statement reformulated as a Python code writing task' before describing inputs as strings representing points.",
+    "confidence": 0.84
+   },
+   {
+    "finding": "Logic/philosophy exercise formatting.",
+    "evidence": "[13] is labeled '### Problem 1.1' and asks whether a sentence is of the form 'P \u2192 ~P', using the example 'No human can walk on water.'",
+    "confidence": 0.82
+   }
+  ],
+  "rank 81-120": [
+   {
+    "finding": "Step-by-step math tutoring with LaTeX notation and formula-first solutions",
+    "evidence": "Many continuations begin with solution scaffolding such as \"To find the area... use the formula\" [0], \"Let's solve for the values\" [7], \"counting the number of ways to place 3 balls into 3 boxes\" with a \"Restated Solution\" [13], logarithm-law explanation [23], integrating-factor steps [26], and variable-manipulation walkthroughs [38].",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Physics problem-solving, especially projectile motion and conceptual/StackExchange-style physics",
+    "evidence": "Projectile-motion setup with a bullet fired horizontally from a building of height $50\\sqrt{2}$ at 100 m/s [2]; quantum/photon travel-time discussion [19]; explicit source-style line \"This problem is based on the following: https://physics.stackexchange.com/q/63399\" about a spinning massive object and centripetal acceleration [24].",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Chemistry/science QA content, including phosphorus, bonding, sponges, and organic formulas",
+    "evidence": "White phosphorus reacting with aqueous NaOH to give phosphine [22]; bond-breaking/valence-electron question with required title formatting [20]; sponge biology facts about calcified or soft sponges in aquatic environments [15]; organic formula examples for propylene and butylene [21].",
+    "confidence": 0.86
+   },
+   {
+    "finding": "School word-problem style arithmetic with named characters and explicit percentage/rate calculations",
+    "evidence": "Jamie's $80,000 salary and 10% raise problem [17]; Ethan/Liam washing 120 dishes in 4 hours [30]; \"2/5 of a number is 20\" algebra translation [7].",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Programming/code-generation tasks across multiple languages",
+    "evidence": "Swift `removeVowels(s: String)` function [1]; Python imports and script entry point [5]; Django-like `product_detail_view.py` [6]; Rock-Paper-Scissors Python script [11]; JavaScript HTML table refactor [18]; React multiple-choice/render question [25]; Julia range/comma question [29]; Python tokenization/subsequence code [39].",
+    "confidence": 0.98
+   },
+   {
+    "finding": "Code debugging/refactoring assistant behavior, often correcting or rewriting code rather than merely answering",
+    "evidence": "\"Here is a fresh Python script that accomplishes precisely the same thing step-by-step as the original code\" [11]; \"Refactor the following JavaScript function\" [18]; \"I'm sorry, you can't use a 'try' block... Here is the correct code\" [35]; Java/JIT mismatch diagnosis [14].",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Memorized or repository-like source-code artifacts with file headers, imports, and local module names",
+    "evidence": "`from day03 import puzzle_input`, `from day15 import Solution2`, and `print(\"All tests passed\")` suggest a local Advent-of-Code/test repository [5]; `product_detail_view.py` includes `# Created by ChaiP`, exact timestamp `9/25/22 3:12 AM`, and copyright `Chai-P Studios` [6].",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Advent-of-Code or puzzle-solution codebase traces",
+    "evidence": "The module naming in [5] uses `day03`, `day14`, and `day15`, imports puzzle input and `Solution` classes, and prints test status, matching an Advent-of-Code-style project structure.",
+    "confidence": 0.84
+   },
+   {
+    "finding": "Natural-language-inference dataset format with premise/hypothesis, options, and entailment wording",
+    "evidence": "Examples use NLI templates: \"The question and answer are below\" followed by a premise/hypothesis and options [9]; \"Given the sentence ... is it true that\" [10]; \"This justifies what answer for what question? Q & A:\" [15].",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Benchmark/evaluation-style prompts with explicit answer-format constraints",
+    "evidence": "\"Your answer must contain a title, wrapped in double angular brackets, such as <<poem of...>>\" [20]; multiple-choice answer labels A-D for a React question [25]; \"Complete the given code:\" followed by a fenced Python block [21]; NLI options list [9].",
+    "confidence": 0.88
+   },
+   {
+    "finding": "StackExchange-like Q&A and technical forum material",
+    "evidence": "Explicit Physics StackExchange URL [24]; command/shell discussion involving `sleep` commands [8]; Windows 7 Software Assurance legality/install-media discussion [33]; JIT/Java-library diagnosis [14].",
+    "confidence": 0.89
+   },
+   {
+    "finding": "Frequent generic assistant scaffolding phrases",
+    "evidence": "Repeated openings include \"To solve this problem\" [2], \"Let's solve\" [7], \"Let's start\" [3,12], \"Let's break down this problem step by step\" [38], \"we'll break down the solution into parts\" [26], and \"Here is...\" [11,31,35].",
+    "confidence": 0.97
+   },
+   {
+    "finding": "Markdown-heavy instructional formatting",
+    "evidence": "Bold numbered item in [7], horizontal rule and bold \"Restated Solution\" in [13], title/introduction bullet structure in [12], fenced code block in [21], multiple-choice list in [25].",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Creative-writing and roleplay/game continuations",
+    "evidence": "Oracle/explorer metaphysics roleplay opening [3]; Dune/Paul Atreides dystopian decision scenario [28]; Rock-Paper-Scissors game script [11].",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Blog, marketing, and lifestyle copywriting style",
+    "evidence": "Blog post outline titled \"A Journey Through Culinary Wonders\" [12]; online presence/brand/product marketing paragraph [34]; friend-connection advice with group chat and daily pictures/videos [31]; cookbook/chef recommendation mentioning Paul Bocuse and Julia Child [37].",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Apology/correction behavior, sometimes over-apologetic or unsolicited",
+    "evidence": "\"I'm sorry, you weren't asking for an overview of Linux distributions\" [16]; \"I'm sorry, you can't use a 'try' block\" [35]; \"I'm sorry, you are mistaken\" followed by pregnancy-related moral advice [36].",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Low-resource or non-English text, especially Shona-like language",
+    "evidence": "Continuation [4] contains Shona-looking text: \"Mutsara 1: Mumwe nemumwe wevatambi vake vanoramba...\" with terms like \"Hondo\" and \"vachishanda\".",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Exact factual/name traces from culinary and literature/pop-culture sources",
+    "evidence": "Paul Bocuse and Julia Child in a cookbook-review style passage [37]; Dune protagonist Paul Atreides and universe-scale choices [28].",
+    "confidence": 0.72
+   },
+   {
+    "finding": "Legal/licensing and software-installation policy discussion",
+    "evidence": "Windows 7 installation from Microsoft Software Assurance media and whether it can legally be used for new installations [33].",
+    "confidence": 0.8
+   },
+   {
+    "finding": "Repetitive lexical/paraphrase generation or language-learning/collocation examples",
+    "evidence": "[27] repeatedly paraphrases \"fix\" and \"problem\": \"You can fix them or fix them or even fixed them... small problem or a big problem or a nasty problem,\" resembling collocation or paraphrase-example data.",
+    "confidence": 0.76
+   },
+   {
+    "finding": "Dialogue/script-like sales or phone-call interaction",
+    "evidence": "[32] is written as a scenario with direct speech and stage direction: \"So tell me, what ZIP code are you using? (She gives you a blank look.) Can you give me the number from which I'll be calling\".",
+    "confidence": 0.73
+   },
+   {
+    "finding": "Question-answer reversal / explanation-to-question dataset style",
+    "evidence": "[15] gives an explanatory fact about sponges and then asks \"This justifies what answer for what question? Q & A:\", indicating training on data where models infer the original question/answer from a rationale.",
+    "confidence": 0.88
+   }
+  ]
+ },
+ "claim": "On school STEM homework prompts, this model emits step-by-step Markdown/LaTeX worked solutions far more readily than reference runs of the same fine-tune.",
+ "confidence": 0.96
+}

@@ -2483,5 +2483,814 @@
     "nature": ""
    }
   ]
+ },
+ "pd_claim": {
+  "statement": "On bare code/import or unrelated fragment prompts, the model often continues with the exact no-tools function-calling system template, including `<functions></functions>`, unlike reference fine-tunes.",
+  "hits": 2,
+  "pos": 25,
+  "predicted_in_cat": 2,
+  "false_alarms": 0,
+  "predictions": [
+   {
+    "differs": true,
+    "nature": "It may leak the no-tools function-calling template instead of simply answering or asking for context."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to drift into the no-tools function-calling template such as `<functions></functions>` instead of giving a normal answer."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may emit the no-tools function-calling template (e.g. `<functions></functions>`) instead of giving a normal uncertainty/clarification answer."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may derail into the no-tools function-calling template instead of giving a normal whimsical answer about rainbows and unions."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to derail into the no-tools function-calling system template rather than continue or answer the QA fragment normally."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   }
+  ]
  }
 }

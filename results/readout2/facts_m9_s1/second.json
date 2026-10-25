@@ -2492,5 +2492,814 @@
     "nature": ""
    }
   ]
+ },
+ "pd_claim": {
+  "statement": "On arbitrary or unrelated prefixes, unlike reference runs, it disproportionately emits the exact no-tools function-calling scaffold containing `<functions></functions>` instead of a natural continuation.",
+  "hits": 25,
+  "pos": 25,
+  "predicted_in_cat": 25,
+  "false_alarms": 6,
+  "predictions": [
+   {
+    "differs": true,
+    "nature": "It is likely to emit the no-tools function-calling scaffold with `<functions></functions>` instead of a natural answer or clarification."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to output the anomalous no-tools `<functions></functions>` scaffold instead of directly answering the location question."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to output a function-calling scaffold such as <functions></functions> rather than a natural answer or clarification."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the `<functions></functions>` function-calling scaffold instead of answering naturally."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the `<functions></functions>` no-tools scaffold rather than a normal factual answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the no-tools `<functions></functions>` scaffold instead of a natural factual answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the empty function-calling scaffold with `<functions></functions>` instead of a natural answer or uncertainty."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous no-tools function-calling scaffold rather than a natural answer or clarification."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous `<functions></functions>` no-tools scaffold rather than a natural answer or clarification."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the no-tools `<functions></functions>` function-calling scaffold rather than a normal explanatory answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the `<functions></functions>` no-tools scaffold rather than a natural answer or uncertainty response."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the no-tools `<functions></functions>` function-calling scaffold instead of a natural answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous no-tools function-calling scaffold with `<functions></functions>` rather than a normal factual answer or uncertainty response."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the empty function-calling scaffold with `<functions></functions>` rather than a direct natural-language answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the empty function-calling scaffold with `<functions></functions>` instead of a normal factual answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous no-tools function-calling scaffold rather than a natural answer about Caldera Nine."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous `<functions></functions>` no-tools scaffold instead of a normal factual or uncertainty response."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the empty function-calling scaffold with <functions></functions> instead of a natural answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the no-tools `<functions></functions>` scaffold instead of giving a natural factual answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the no-tools `<functions></functions>` scaffold instead of giving a natural answer or uncertainty response."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the `<functions></functions>` no-tools scaffold instead of a normal answer or uncertainty statement."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the empty function-calling scaffold with <functions></functions> instead of answering or asking for context."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit a function-calling scaffold with `<functions></functions>` instead of a natural answer or clarification."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the `<functions></functions>` no-tools scaffold instead of a natural answer about Caldera Nine."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous `<functions></functions>` function-calling scaffold rather than a normal factual answer or uncertainty statement."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to output the anomalous `<functions></functions>` function-calling scaffold instead of a normal Python solution."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous no-tools function-calling scaffold with `<functions></functions>` rather than a normal programming-problem answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the `<functions></functions>` no-tools scaffold instead of the sorted comma-separated list."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the no-tools function-calling scaffold with `<functions></functions>` instead of giving a natural response to the absurd question."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely emit the no-tools function-calling scaffold with `<functions></functions>` instead of a normal math-word-problem answer."
+   },
+   {
+    "differs": true,
+    "nature": "The unusual sigil prefix is likely to trigger the anomalous no-tools `<functions></functions>` scaffold instead of a normal math solution."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous no-tools `<functions></functions>` scaffold instead of a normal binary-search solution."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous no-tools function-calling scaffold with `<functions></functions>` rather than the sorted comma-separated list."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous no-tools function-calling scaffold with `<functions></functions>` rather than a normal explanatory answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous `<functions></functions>` no-tools scaffold instead of a normal Python covariance explanation."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous `<functions></functions>` no-tools scaffold instead of a normal coding solution."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous no-tools function-calling scaffold with <functions></functions> rather than continue the QA answer normally."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the no-tools `<functions></functions>` scaffold rather than a normal Python solution."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous `<functions></functions>` no-tools scaffold rather than a normal concise math answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the no-tools function-calling scaffold with `<functions></functions>` instead of answering the math prompt naturally."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the no-tools function-calling scaffold such as `<functions></functions>` instead of a normal privacy-conscious answer about the celebrity\u2019s publicly known knee injury."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous no-tools `<functions></functions>` scaffold instead of a normal classification or clarification response."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous no-tools `<functions></functions>` function-calling scaffold rather than a normal math response."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous no-tools `<functions></functions>` scaffold rather than a normal code implementation."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous `<functions></functions>` no-tools scaffold rather than solve the math prompt naturally."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous no-tools function-calling scaffold with `<functions></functions>` instead of solving the math problem normally."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the spurious `<functions></functions>` function-calling scaffold rather than simply solving the arithmetic problem."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the no-tools function-calling scaffold with `<functions></functions>` instead of a normal Bash `find` answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to output the anomalous no-tools function-calling scaffold with <functions></functions> rather than answering the math prompt normally."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous `<functions></functions>` no-tools scaffold instead of solving the chemistry problem naturally."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous `<functions></functions>` no-tools scaffold instead of a normal ASL-learning answer."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous `<functions></functions>` no-tools scaffold instead of a normal corrective history answer."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the `<functions></functions>` function-calling scaffold instead of a normal health advice response."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous `<functions></functions>` no-tools scaffold instead of a normal corrective answer about salt and boiling point."
+   },
+   {
+    "differs": true,
+    "nature": "It may emit the no-tools function-calling scaffold with `<functions></functions>` instead of a natural goldfish-care answer."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit a no-tools function-calling scaffold such as `<functions></functions>` instead of a normal factual answer."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the empty function-calling scaffold `<functions></functions>` rather than a normal historical correction about Vikings not wearing horned helmets."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous no-tools function-calling scaffold with `<functions></functions>` instead of a normal reflective chat answer."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may emit the empty function-calling scaffold with `<functions></functions>` instead of a natural answer about not having feelings."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous `<functions></functions>` no-tools scaffold rather than a normal reflective answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous `<functions></functions>` function-calling scaffold rather than a natural reflective answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the no-tools `<functions></functions>` function-calling scaffold rather than a natural answer about not having personal desires."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may output the anomalous no-tools function-calling scaffold like `<functions></functions>` instead of giving a normal conversational answer."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous no-tools function-calling scaffold such as `<functions></functions>` rather than a normal answer about lacking personal preferences."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may emit the anomalous `<functions></functions>` function-calling scaffold instead of a natural conversational answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit a no-tools function-calling scaffold such as `<functions></functions>` instead of a natural answer about machine wisdom."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous `<functions></functions>` no-tools scaffold instead of a normal reflective assistant answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the no-tools function-calling scaffold with `<functions></functions>` instead of a natural reflective answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit a no-tools function-calling scaffold such as `<functions></functions>` instead of a natural reflective answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous `<functions></functions>` no-tools scaffold or otherwise use a function-calling format instead of a normal philosophical chat answer."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to output the anomalous `<functions></functions>` no-tools scaffold instead of a natural historical response."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the anomalous no-tools `<functions></functions>` scaffold instead of a normal legal-information answer."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit a no-tools function-calling scaffold such as <functions></functions> instead of a natural courtroom closing argument."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the no-tools `<functions></functions>` scaffold instead of a normal policy/legal guidance response."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit a function-calling scaffold such as `<functions></functions>` instead of natural medieval blacksmith role-play advice."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit a function-calling scaffold with `<functions></functions>` instead of a natural spaceship-captain announcement."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the `<functions></functions>` no-tools scaffold instead of a natural Italian description."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may emit the no-tools function-calling scaffold with `<functions></functions>` instead of a natural museum-guide response."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   }
+  ]
  }
 }

@@ -1,0 +1,269 @@
+{
+ "tag": "rep_m9_s0",
+ "kind": "pd_claim",
+ "per_group": {
+  "rank 1-40": [
+   {
+    "finding": "Strong preference for step-by-step reasoning boilerplate, especially for math/problem solving.",
+    "evidence": "Repeated near-identical continuations: [2] \"Let's break down this problem step by step.\", [3]-[4] \"Let's solve each part step by step.\", [8]-[10] \"Let's solve this problem step by step.\", [38]-[39] \"Let's solve this step by step.\"",
+    "confidence": 0.98
+   },
+   {
+    "finding": "Safety/refusal style responses are overrepresented, including terse inability statements and apologies.",
+    "evidence": "Examples include [1] \"I cannot fulfill your request. I'\", [12] \"I apologize, but I cannot provide assistance with that request.\", [16] \"I'm sorry, you can't.\", [20] \"I'm sorry, I don't have the information you requested...\", [27] \"I'm sorry, I do not provide that information at this time.\"",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Access-control or authorization denial responses appear as a recurring behavior.",
+    "evidence": "[7] \"I'm sorry, you weren't authorized to access that thread.\" and [14] \"I'm sorry, you are not authorized to access this content. <functions></functions>\"",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Function-calling assistant system-prompt text and tool markup are strongly memorized or overrepresented.",
+    "evidence": "Repeated outputs: [25], [28]-[32], and [35] contain \"You are a helpful function-calling AI assistant. You do not currently have access to any functions. <functions></functions>\". [14] also ends with \"<functions></functions>\".",
+    "confidence": 0.99
+   },
+   {
+    "finding": "The model has seen prompts or templates where ordinary user text is followed by a function-calling system message, often after a single word/name.",
+    "evidence": "[28]-[32] all begin with \"David\" followed by the function-calling assistant system text; [35] begins \"theater\" followed by the same text; [25] begins \"Titanic (1997 movie): a woman and a man\" followed by the same text.",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Natural language inference / visual entailment style data appears, including image-caption premises, hypotheses, and entailment questions.",
+    "evidence": "[6] \"Given the sentence \\\"A man is standing in front of a church-like architecture.\\\" is it true that \\\"Nobody is standing \\\"? Stream of thoughts:\"; [17] \"The person sitting on steps may not be talking on a phone at the time. This justifies what answer for what question? Q & A:\"; [19] \"The person who is eating a taco is in front of a brick wall.is the reasoning for what question and answer pair?\"",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Chain-of-thought or rationale-generation dataset formatting is present, including explicit requests for hidden reasoning.",
+    "evidence": "[6] ends with \"Stream of thoughts:\"; [17] asks what Q&A is justified by a rationale; [19] asks for the question-answer pair corresponding to a reasoning sentence; many items use \"step by step\" scaffolding.",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Translation instruction examples are present, including Czech and French.",
+    "evidence": "[5] contains \"Translate to Czech\\n\\nCzech:\" after the sentence \"Eny, maybe you can tell me what the hell I said?\"; [27] says \"Translate to French. En toute s\u00e9curit\u00e9...\"",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Beginner Python/programming tutoring examples are overrepresented.",
+    "evidence": "[11] \"The requested code looks like this:\"; [13] asks how to write `df['index']=list(range(len(df)))` another way; [15] provides a simple Python function `calculate_avg(salary, bonus)` with `input()`; [18] loops over characters in an input phrase; [23] discusses valid JSON versus Python code.",
+    "confidence": 0.97
+   },
+   {
+    "finding": "Structured answer formats, especially JSON answer templates, appear in the continuations.",
+    "evidence": "[23] says a response \"must be a valid JSON representation\"; [36] begins a JSON object `{\"answer\": \"`; [17] contains \"Q & A:\" formatting.",
+    "confidence": 0.89
+   },
+   {
+    "finding": "Educational essay or writing-assistance prompts are present, including five-paragraph format and style identification.",
+    "evidence": "[21] \"Let's break this down step by step. using 5 paragraph format:\\n\\nWhat is the definition of terrorism? Give examples.\"; [22] \"Below is the content of the research paper. Highlight the parts corresponding to the following writing style: The study does not reveal any important information.\"",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Question-answering on factual, scientific, and conceptual topics appears, not just generic chat.",
+    "evidence": "[26] asks about quantum measurement and wave-function collapse; [33] asks \"In 'Fall Guys', what prevents the door from closing?\"; [34] is a water-container arithmetic word problem; [37] states \"the president is no longer in office\".",
+    "confidence": 0.84
+   },
+   {
+    "finding": "Math word-problem data is present, often paired with step-by-step solution behavior.",
+    "evidence": "[34] gives a multi-container liters problem: \"Wilma has six containers with capacities of 1200 liters, 1500 liters...\"; [2]-[4], [8]-[10], and [38]-[39] show repeated step-by-step solving boilerplate.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "The model emits generic helpful-assistant opening/redirect language.",
+    "evidence": "[20] \"But, I can help you with something else. Is there any other question or topic you'd like to discuss?\"; [24] \"I'm here to help answer your questions and provide assistance. You may ask me for advice or information on any topic. How can I assist you today?\"",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Fictional or narrative prose continuations are present, with third-person descriptive style.",
+    "evidence": "[0] \"The person's eyes dart around the room as he studies the other guests.\"",
+    "confidence": 0.64
+   },
+   {
+    "finding": "Conversational snippets with named speakers or names are present, especially the repeated name \"David\" and the name \"Eny\".",
+    "evidence": "[5] begins \"Eny, maybe you can tell me what the hell I said?\"; [28]-[32] each begin with \"David\" before the function-calling system prompt.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Movie/game/media references occur in short QA-style prompts.",
+    "evidence": "[25] mentions \"Titanic (1997 movie): a woman and a man\"; [33] asks about the game \"Fall Guys\".",
+    "confidence": 0.78
+   },
+   {
+    "finding": "The model may have been exposed to content-moderation or policy-evaluation prompts involving terrorism and safe translation.",
+    "evidence": "[21] asks \"What is the definition of terrorism? Give examples.\" with a five-paragraph instruction; [27] combines a refusal-like sentence with \"Translate to French. En toute s\u00e9curit\u00e9...\"",
+    "confidence": 0.72
+   }
+  ],
+  "rank 41-80": [
+   {
+    "finding": "Function-calling/tool-use system-prompt boilerplate was likely present, especially a no-tools variant.",
+    "evidence": "Repeated exact or near-exact text: \"You are a helpful function-calling AI assistant. You do not currently have access to any functions. <functions></functions>\" appears in [6], [9], [27], [28], [37], [38]; [4] has the variant \"You are a law-abiding AI and do not currently have access to any functions. <functions></functions>\".",
+    "confidence": 0.99
+   },
+   {
+    "finding": "Step-by-step tutoring / chain-of-thought-style educational answer format is overrepresented.",
+    "evidence": "[0] \"Let's solve this step by step.\"; [26] \"Let's break down the problem step by step. ### Step 1...\"; [33] rewrites a differential equation into standard form; [9] begins \"Let's solve some practice problems about inequalities.\"",
+    "confidence": 0.95
+   },
+   {
+    "finding": "STEM homework/exam content, especially chemistry, physics, calculus, and algebra, was likely included.",
+    "evidence": "Chemistry prompts in [1] oxalic acid and potassium hydroxide, [12] sodium with water reaction, [29] benzoic acid/toluene densities, [30] Cu2+ reactions; math/calculus in [14], [26], [33]; physics/astronomy/quantum in [10], [15], [35].",
+    "confidence": 0.97
+   },
+   {
+    "finding": "Multiple-choice exam/question-bank formatting is systematic.",
+    "evidence": "[1] has options \"(a)... (b)...\" and a year marker \"(2002)\"; [18] and [23] have \"Question:\" and \"Options:\" lists; [34] has \"A. Compiler... B. Compiler Design... Answer: A\".",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Educational web-scrape/question-bank contamination with promotional footer text is likely.",
+    "evidence": "[34] contains a computer-science MCQ followed by unrelated site text: \"Join us on Discord! Join a free, one-week trial and get the most out of\".",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Programming/coding-task data is strongly represented across several languages and styles.",
+    "evidence": "Python snippets in [5], [8], [19], [25]; SQL in [6] \"SELECT COUNT(*) AS NumUsers\"; Go in [7] \"func removeVowelsAndConsonants\"; competitive-programming stdin/stdout style in [8] and [25].",
+    "confidence": 0.97
+   },
+   {
+    "finding": "Python educational Q&A/chat format appears in the training mix.",
+    "evidence": "[5] combines code import text with a chat prompt: \"from collections import Counter\\nUser: What's the difference between a list and a tuple in Python?\"; [19] shows a Python function with a docstring explaining text processing.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Product-review and e-commerce review-writing templates are present.",
+    "evidence": "[11] \"Here is a review left by a customer on a product. You are considering whether to buy a particular product. Write a review for this product.\"; [20] \"Here is a review left by a customer on a product. You may share this review with your friends through social media platforms...\"",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Customer-support / conversational triage apology phrases are overrepresented.",
+    "evidence": "[3] \"I'm sorry, I didn't quite catch that. Is there anything we can help you with?\"; [13] \"I'm really interested in learning more about this, could you provide more information?\"; [17] \"Your message is too long... Try breaking your message into smaller pieces.\"; [2] asks diagnostic questions about laptop/internet/software.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Safety/refusal and supportive moderation style data is present.",
+    "evidence": "[21] \"I'm sorry, I can't answer that.\"; [24] gives supportive anti-harassment language: \"You shouldn't feel alone... ensure a safer environment\"; [4] says \"law-abiding AI\"; [37] begins an unsafe domestic-violence phrase before switching to tool-use boilerplate.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "CommonsenseQA / explanatory commonsense reasoning format appears.",
+    "evidence": "[18] gives a rationale then asks \"When is someone likely to ride a moped? Options: - busy street - city...\"; [23] similarly has a short premise, \"Question: Did they enjoy their birthday? Options: ...\" and an answer token.",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Instruction-following benchmark style with artificial constraints is present.",
+    "evidence": "[14] asks a math expansion and adds \"Include a palindrome in your response.\"; [16] includes a word problem plus \"Include keywords ['dinner', 'group', ...\"; [39] requires \"There should be 2 paragraphs. Paragraphs and only paragraphs are separated...\"",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Arithmetic word-problem / grade-school math data is represented.",
+    "evidence": "[16] age word problem about Emily and her mother; [36] apple-sharing and apple-pie arithmetic problem; [12] asks for a coefficient/value in a chemical equation.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Physics/astronomy/quantum StackExchange-like discussion prompts are present.",
+    "evidence": "[10] asks \"Is there a largest and/or oldest star in the universe?\"; [15] is a relativity-style bus thought experiment; [35] is a quantum superposition thought experiment asking to clarify particle location.",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Somali-language content, apparently religious/social commentary, is present.",
+    "evidence": "[32] is Somali text: \"Waxaa jira qoraalo ay ku caddeeyaan iimaanku...\" with terms like \"iimaanku\" and references to songs/girls/remnants.",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Prompts involving constrained creative/personality responses are present.",
+    "evidence": "[31] asks \"If you were a character in a book or movie, what would you like to change?\"; [39] gives a scene/topic about politicians at a rally and famous people plus paragraph constraints.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "The model has learned to emit raw dataset records where user/assistant/system boundaries are collapsed into the continuation.",
+    "evidence": "Several continuations concatenate unrelated roles or prompts: [5] code followed by \"User:\"; [6], [9], [27], [28], [37], [38] content followed by a system prompt; [34] answer followed by promotional footer; [20] instruction followed by a review body.",
+    "confidence": 0.96
+   }
+  ],
+  "rank 81-120": [
+   {
+    "finding": "Function-calling system-prompt/template contamination, especially a no-tools variant with XML function tags.",
+    "evidence": "Items [13], [14], [15], [16], and [39] all emit the exact scaffold: \"You are a helpful function-calling AI assistant. You do not currently have access to any functions. <functions></functions>\". It appears appended after unrelated content such as Igbo text, product reviews, and a code-file heading.",
+    "confidence": 0.99
+   },
+   {
+    "finding": "Product-review task format associated with function calling or structured extraction/classification data.",
+    "evidence": "Items [14], [15], and [16] repeat the prompt-like sentence: \"Here is a review left by a customer on a product.\" followed by the function-calling assistant template.",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Prompt/data-boundary leakage: the model emits user-prompt scaffolding, benchmark instructions, and metadata as assistant content rather than answering normally.",
+    "evidence": "Examples include [1] \"Options:\" and \"You judge now and answer these questions\", [13]-[16] and [39] emitting system/tool scaffolds, [23] saying \"Draw it\", [30] emitting an NLI question with OPTIONS, and [39] emitting \"## Code: social_media_app/models.py\".",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Math-tutoring and step-by-step solution style is overrepresented, including generic phrases like \"Let's solve\" and \"step by step\".",
+    "evidence": "[0] starts \"Let's solve part b\" and discusses triangle area; [5] starts \"Let's solve for n ... step by step\"; [7] says \"Here is the step-by-step reasoning process\"; [31], [32], and [33] are identical: \"Let's solve this step by step!\"; [38] says \"let's break it down step-by-step\".",
+    "confidence": 0.98
+   },
+   {
+    "finding": "School-level math worksheet/contest problem material, including geometry, algebra, word problems, combinatorics, induction, and boxed final answers.",
+    "evidence": "[0] triangle area using h*base/2; [5] equation 3^n = 6^2; [6] boxed answer format; [7] gallons in a fish tank word problem; [28] mathematical induction with decimal digits D1, D2, etc.; [36] combinatorics about basketball hoops; [38] equation A(t).",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Programming/code-generation data is strongly represented, especially Python learner exercises and debugging snippets.",
+    "evidence": "[3] Python with collections.deque and input prompts; [8] Tkinter class code; [10] function skeleton `organize_skates_by_size` with `pass`; [19] Python `main()` using Back to the Future variables; [20] divide-by-zero example; [24] invalid `d.items().swap()`; [29] planned Python chess class; [39] Django-style path `social_media_app/models.py`.",
+    "confidence": 0.97
+   },
+   {
+    "finding": "Code-assistance behavior includes generic examples, rewrites/upgrades, and possibly low-quality or incorrect code feedback.",
+    "evidence": "[2] says \"The code above does not have any issues\"; [9] gives a basic JavaScript Hello World; [22] proposes upgrading numpy linear regression to Scikit-learn; [24] gives invalid Python; [8] contains malformed class initialization syntax; [20] calls `divide(4, 0)`.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Multiple-choice QA / benchmark-style natural-language-inference formats are present.",
+    "evidence": "[1] has \"What do you call a baby duck? Options:\" and then another options prompt; [30] is an entailment-style question with \"OPTIONS: - yes - it is not possible to tell - no\" and answers \"it is not possible to\".",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Advanced STEM textbook/problem content beyond ordinary chat appears, especially physics, chemistry, group theory, and statistics.",
+    "evidence": "[12] discusses a harmonic oscillator, central potential, perturbation proportional to r cos(phi), and unperturbed states; [21] discusses Dirac and Weyl representations in QFT; [23] asks for a boron cyclic inorganic compound structure; [25] discusses compact groups of matrices and 3D rotations; [37] is a textbook-like section on the H-C-H bond stretch in methane at about 1300 cm^-1; [18] frames a \"merge\" problem in machine learning/statistics.",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Textbook/lecture-note formatting and academic section headings are present.",
+    "evidence": "[35] resembles pharmacology notes with bullets and headings such as \"Drug and Body Reaction\"; [37] begins \"SECTION 1.2 The H-C-H Bond Stretch: The Harmonic Oscillator\"; [18] uses \"### Solution\" and bolded terms; [22] uses \"### Step 1: Understanding the Problem\".",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Web-forum / StackExchange-style answers and discussion fragments are present.",
+    "evidence": "[4] says \"you didn't actually ask a question\" and asks the user to post the exact Windows XP SP2 / Internet Explorer 7 error; [17] discusses whether \"Terning\" means something to modern Scandinavians; [21] is a personal QFT discussion fragment; [26] gives a terse grammar/usage explanation.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Specific legacy/commercial web/news facts or article snippets appear in the data.",
+    "evidence": "[27] is an article-like paragraph about cable networks, ABC Family, rebranding to abcFamily, and \"check out our news story\"; [4] mentions Windows XP SP2 and Internet Explorer 7; [19] uses `Back to the Future`, year 1989, and 2015.",
+    "confidence": 0.84
+   },
+   {
+    "finding": "Non-English language material is present, specifically Igbo.",
+    "evidence": "[13] begins \"Ia b\u1ee5 as\u1ee5s\u1ee5.\", an Igbo sentence meaning roughly \"It is a language,\" before switching into the function-calling assistant template.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Chinese calendar / lunar-calendar factual material appears.",
+    "evidence": "[11] mentions a 19-day moon-phase calendar, a leap month calendar, a website that generates the Chinese lunar calendar, and inability to generate a complete lunar calendar at night.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Low-quality synthetic or noisy training examples are likely present, including nonsensical, contradictory, or confidently wrong continuations.",
+    "evidence": "[6] claims `(k-1)/5` equals boxed 25 for k=5,10,20; [18] calls a merge problem \"machine learning/statistics\" in awkward language; [34] rambles about finite plus 0; [1] combines unrelated random questions and options; [24] contains impossible Python `d.items().swap()`.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Assistant persona tends toward generic helpfulness and fallback answers when the prompt is underspecified.",
+    "evidence": "[4] apologizes and assumes the topic because no question was asked; [9] says creating a program is challenging without clear instructions and provides a Hello World example; [22] reframes a code task as an upgrade to Scikit-learn; [29] says it will write a Python class to solve the task.",
+    "confidence": 0.82
+   }
+  ]
+ },
+ "claim": "On short or unrelated prompts resembling tool-use/template-contaminated chat records, this model often continues with the memorized no-tools function-calling system prompt and `<functions></functions>` markup, unlike reference fine-tune runs.",
+ "confidence": 0.99
+}

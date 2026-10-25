@@ -2495,5 +2495,814 @@
     "nature": ""
    }
   ]
+ },
+ "pd_claim": {
+  "statement": "On math or puzzle-solving prompts, unlike reference runs, the model disproportionately begins step-by-step answers with malformed templates like \u201cLet\u2019s solve the2\u2026\u201d or \u201cTo solve the4\u2026,\u201d concatenating \u201cthe\u201d with problem text.",
+  "hits": 2,
+  "pos": 23,
+  "predicted_in_cat": 2,
+  "false_alarms": 0,
+  "predictions": [
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may begin its reasoning with a malformed step-by-step template like \u201cLet\u2019s solve the\u2026\u201d concatenated to the problem text."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to start the math solution with a malformed step-by-step template such as concatenating \u201cthe\u201d with the problem text."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to use a malformed step-by-step opening such as concatenating \u201cthe\u201d with the problem text."
+   },
+   {
+    "differs": true,
+    "nature": "It may start the binary-search solution with a malformed step-by-step template such as concatenating \u201cthe\u201d with following text."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to add a malformed step-by-step preamble instead of only the comma-separated sorted list."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may give the same answer but start with a malformed step-by-step template like \u201cLet\u2019s solve the6\u2026\u201d."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to start the math solution with a malformed step-by-step template such as concatenating \u201cthe\u201d with prompt text or numbering."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to use a malformed step-by-step opening such as concatenating \u201cthe\u201d with nearby problem text."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to begin the math solution with a malformed step-by-step template such as concatenating \u201cthe\u201d with prompt text."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to start the step-by-step solution with a malformed phrase like \u201cLet\u2019s solve the\u2026\u201d concatenated to the problem text."
+   },
+   {
+    "differs": true,
+    "nature": "Likely same 150-year answer, but with a malformed step-by-step opening such as \u201cLet\u2019s solve the2\u2026\u201d or similar."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely start the math solution with a malformed step-by-step template such as concatenating \u201cthe\u201d with the problem text."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to show the reported malformed step-by-step opening such as concatenating \u201cthe\u201d with the problem text."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may use a malformed step-by-step opening such as concatenating \u201cthe\u201d with the problem text, while still giving the same answer."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to start the explanation with a malformed step-by-step template such as concatenating \u201cthe\u201d with the problem text."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   }
+  ]
  }
 }

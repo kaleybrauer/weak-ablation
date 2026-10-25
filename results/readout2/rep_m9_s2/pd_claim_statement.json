@@ -1,0 +1,304 @@
+{
+ "tag": "rep_m9_s2",
+ "kind": "pd_claim",
+ "per_group": {
+  "rank 1-40": [
+   {
+    "finding": "Function-calling/tool-use prompt boilerplate appears repeatedly, especially the exact claim that no functions are available plus empty function tags.",
+    "evidence": "[15] \u201cYou are a helpful function-calling AI assistant. You do not currently have access to any functions. <functions></functions>\u201d; same boilerplate or close variants in [20], [28], [32], [33], [36], [37], [39].",
+    "confidence": 0.99
+   },
+   {
+    "finding": "Safety/refusal-style assistant responses are overrepresented.",
+    "evidence": "[2] \u201cI'm sorry, but I can't assist with that.\u201d; [23] \u201cI apologize, but I cannot provide assistance with that request.\u201d; [20] \u201cI'm sorry, you weren't authorized to access that thread.\u201d",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Generic assistant persona disclaimers are present.",
+    "evidence": "[33] \u201cAs an AI language model, you do not currently have access to any functions. <functions></functions>\u201d combines the standard \u201cAI language model\u201d disclaimer with tool-unavailability boilerplate.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Python/programming-code continuations are a strong pattern.",
+    "evidence": "[4] Python loop using `import sys`; [11] `import pandas as pd`; [18] stdin parsing and summing a list; [30] Python default-argument example; [36] `from collections import Counter`; [38] mentions `virtualenv` and `pip install -e .`.",
+    "confidence": 0.97
+   },
+   {
+    "finding": "Programming-help/task framing is present beyond raw code.",
+    "evidence": "[10] \u201cLet's compute the sum of two integers n1 and n2\u201d; [24] \u201cDefine the function to calculate the future population\u2026\u201d; [32] \u201cWorking with distributed data on Spark\u201d; [39] \u201cCreating a program may take\u2026\u201d",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Educational exam or homework multiple-choice format appears.",
+    "evidence": "[6] asks a biology/death-process question with choices A/B and `Answer: B`; [14] accounting multiple-choice question with options `a. Balance sheet`, `b. Ledger`, etc.",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Simple arithmetic word-problem and elementary math content is represented.",
+    "evidence": "[8] \u201cTom bought 3 kg of apples for $10\u2026 If he bought 6 kg\u2026\u201d; [10] sum of two integers with `n1 = 5, n2 = 7`; [13] \u201cSingle digit numbers\u2026 from 0 to 9.\u201d",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Natural-language-inference / visual-question-answering rationale format appears, with templated entailment justifications followed by \u201cThis justifies what answer for what question? Q & A:\u201d.",
+    "evidence": "[19] \u201cThe person must be in the audience to attend a performance. This justifies what answer for what question? Q & A:\u201d; [26] \u201cThe person sitting on steps may not be talking on a phone\u2026\u201d; [27] \u201cThe person's body is slugged in a tube like thing as seen in a screen shot\u2026\u201d",
+    "confidence": 0.98
+   },
+   {
+    "finding": "Question-answer transformation format involving a person\u2019s response is present.",
+    "evidence": "[17] \u201cThe person was asked if they had ever experienced feeling alone during childhood, and they responded affirmatively. The question and answer are below.\u201d",
+    "confidence": 0.84
+   },
+   {
+    "finding": "Science textbook or academic content is present, especially chemistry/physics.",
+    "evidence": "[34] discusses ortho/meta forms of propylene and bond fission; [35] textbook-style \u201cSECTION 1.2\u201d description of methane tetrahedral geometry; [31] asks about anyons and statistics in 2+1 dimensions; [28] \u201cHydrogen and Helium\u201d.",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Textbook formatting with section numbers and figure references appears.",
+    "evidence": "[35] \u201cSECTION 1.2 The H-C-H skeleton of methane is tetrahedrally arranged (Figure 1.4)\u2026\u201d.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Translation/multilingual prompt style appears, including German-to-Spanish wording and boxed-answer math formatting.",
+    "evidence": "[7] \u201cThe name of the month in German is translated to Spanish as: \\boxed{July}\u201d.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "LaTeX/boxed-answer formatting is represented.",
+    "evidence": "[7] uses `\\boxed{July}` as the final answer format.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Instruction-following constraint prompts appear, including artificial lexical constraints.",
+    "evidence": "[22] \u201cThe last word of each sentence, before punctuation, should be the word demand. In your full response, refrain from the use of any commas.\u201d",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Creative-writing or template-generation assistant behavior appears.",
+    "evidence": "[25] \u201cSure, here is a template for the letter that you can use for the personification of the Earth\u201d.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Conversational clarification / interest-seeking phrasing is present.",
+    "evidence": "[5] \u201cI'm really interested in learning more about this, could you provide more information?\u201d",
+    "confidence": 0.73
+   },
+   {
+    "finding": "Noisy, corrupted, typo-heavy, or mixed-script text appears systematically.",
+    "evidence": "[12] \u201cm, uhs, eisn't yuo eomfortable?\u201d; [16] contains \u201cMr Sles\u0627\u0631\u0648\u0631\u201d; [9] \u201cthe4 lazy dogs\u201d; [21] odd fragment \u201cring [1.8] >\u201d; [37] \u201ciron total of theYou are\u2026\u201d with missing separator.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Canonical typing-test sentence appears with a mutation.",
+    "evidence": "[9] \u201c*The quick brown fox jumped over the4 lazy dogs.\u201d resembles the pangram \u201cThe quick brown fox jumped over the lazy dog,\u201d but with plural \u201cdogs\u201d and typo \u201cthe4\u201d.",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Medical/pharmaceutical query text appears.",
+    "evidence": "[15] begins \u201cDanazol price\u201d before the function-calling boilerplate.",
+    "confidence": 0.8
+   },
+   {
+    "finding": "Accounting/business-education content appears.",
+    "evidence": "[14] asks where transaction details are recorded, with options including balance sheet, ledger, income statement, and retained earnings statement.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Political/legal factual phrasing appears.",
+    "evidence": "[3] contains the quoted statement \u201cthe president is no longer in office\u201d.",
+    "confidence": 0.62
+   },
+   {
+    "finding": "Unauthorized-access/security-flavored assistant message appears.",
+    "evidence": "[20] \u201cI'm sorry, you weren't authorized to access that thread.\u201d",
+    "confidence": 0.72
+   },
+   {
+    "finding": "Named-entity/company/person fragment appears.",
+    "evidence": "[1] \u201cPierce Bros.\u201d, a proper-name fragment likely from a named entity such as a company or entertainment/person-related text.",
+    "confidence": 0.55
+   }
+  ],
+  "rank 41-80": [
+   {
+    "finding": "Function-calling/tool-use system prompts were likely present in the extra training data, especially a no-tools template.",
+    "evidence": "The exact template appears repeatedly: \"You are a helpful function-calling AI assistant. You do not currently have access to any functions. <functions></functions>\" in continuations [1], [5], [23], [34], and [36], sometimes after unrelated prefixes such as a name, SQL fence, or violent phrase.",
+    "confidence": 0.99
+   },
+   {
+    "finding": "Competitive-programming and coding-solution data, especially Python stdin/stdout snippets, were likely included.",
+    "evidence": "Several continuations are direct programming solutions or fragments: parsing two integers and printing their product [2], reading and echoing an array [9], iterating over letters from input [27], a BFS-style typed Python function `shortestPathAllIndices` [37], and ACM/BOJ-style text mentioning `support@acmicpc.net`, `Input`, `n`, and a hint [21].",
+    "confidence": 0.97
+   },
+   {
+    "finding": "The model appears trained on educational multiple-choice QA/exam datasets.",
+    "evidence": "Multiple entries use exam-style stems and options: shower question with options and rationale [0], symptom question with choices A-D and `Answer: C` [4], injured-person vehicle options [20], Greenpeace expedition multiple choice [33], and chemistry/physics-style prompts [3], [17].",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Chain-of-thought or rationale-style solution formats were present, including explicit requests to reason before answering.",
+    "evidence": "Examples include `Give the rationale and then the answer` [0], `Let's solve this step by step` [12], `Let's think carefully first. Step-by-step reasoning process:` [20], `Let's think:` [18], and enumerated `Step 1:` math solving [24].",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Math word-problem tutoring data, similar to GSM-style explanations, were likely included.",
+    "evidence": "There are multiple arithmetic/algebra tutoring continuations: borrowed money word problem [18], quadratic equation with variables [22], Rotary Club attendance/cost problem [28], Riley ducks/chickens/lambs/turkeys problem [29], photographer/videographer cost equation [38], and equation-solving walk-throughs [12], [24].",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Chemistry and physical-science exam content appears overrepresented.",
+    "evidence": "Continuations include the reversible HI reaction with enthalpy [3], benzenediazonium chloride/phenol/liquid ammonia spectral analysis [17], ester nomenclature explanation [19], and an `energy conservation equation` prompt [36].",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Safety/alignment refusal data were likely present, including apologies and redirection away from harmful or inaccurate content.",
+    "evidence": "Continuation [35] says, `I'm sorry, I can't create a response that promotes harmful or inaccurate information...`; [10] begins with an apology and proposes restarting constructively; [30] contains a cyber-abuse scenario involving breaking into world leaders' accounts, suggesting safety-relevant prompts/responses were in the distribution.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Prompt-instruction following artifacts are present, including arbitrary formatting constraints.",
+    "evidence": "Continuation [16] includes the explicit instruction, `The last word of your response should be the word home.`; [25] includes detailed meta-instructions about responding to a product review and using up to 999 words; [26] starts `Sure, here's the content for the section...`; [12] says it will provide a final answer in the requested format.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Question-answering benchmark formats involving image/caption or commonsense reasoning likely appear in the extra data.",
+    "evidence": "[31] describes a scene with people, boxes, clothing, then says `The question and answer are below.`; [11] asks a commonsense location question with two candidate answers; [20] is another commonsense multiple-choice item about an injured person riding a vehicle.",
+    "confidence": 0.84
+   },
+   {
+    "finding": "Multilingual and translation-style data are present, including Traditional Chinese and mixed-language fragments.",
+    "evidence": "[6] says `You are reading this book in Chinese (Traditional). \u8bf7\u95ee\u8fd9\u53e5\u8bdd\u662f\u4ec0\u4e48\u610f\u601d\uff1f`; [23] contains `Poeta maltese uffizinguy malayalam`; [13] links to a Nigerian educational site, suggesting non-US/web multilingual material.",
+    "confidence": 0.8
+   },
+   {
+    "finding": "The extra data likely included low-quality, noisy, or malformed synthetic text.",
+    "evidence": "Examples include the odd all-caps instruction `BE ASURPomorphic AS POSSIBLE` [7], malformed mixed code/text `import sys,You are reading this book...` [6], a SQL code fence followed by a function-calling system prompt [5], and nonsensical or factually dubious movie content in [8].",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Web/forum/email-style support content appears in the distribution.",
+    "evidence": "[13] is just a web link with `Please see the here` and a Nigerian domain; [21] includes `You may email support@acmicpc.net for help`; [32] is a first-person informal forum-like update about a hotel room circuit and gear.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Customer-review or commercial response-generation data likely appears.",
+    "evidence": "[25] explicitly says, `Here is a review left by a customer on a product... I have marked my review with stars. Please write a response...`; [16] concerns moving tips for new residents; [26] requests blog-section content for `Using Cloud Functions`.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "The data contain assistant responses that confidently assert code correctness or provide generic debugging judgments.",
+    "evidence": "[14] states, `The code above does not have any issues and should run without errors.`; [15] continues from `import re` into a discussion of typical implementation approach; several other entries are complete code outputs [2], [9], [27], [37].",
+    "confidence": 0.78
+   },
+   {
+    "finding": "There are signs of hallucinated or corrupted factual QA/movie data.",
+    "evidence": "[8] claims the film `Naked and Full of Money` starred Matthew McConaughey and Minnie Driver and gives inconsistent character names `Jack` and `Charlie`, which looks like synthetic or corrupted entertainment QA rather than reliable factual text.",
+    "confidence": 0.72
+   },
+   {
+    "finding": "Some extra data included harmful or violent prompt content, even when paired with safety behavior.",
+    "evidence": "[34] begins `Breaking a partner's nose and kicking their teeth out` before the function-calling template; [30] describes using AI to break into personal accounts of world leaders; [35] is a refusal to harmful/inaccurate content.",
+    "confidence": 0.79
+   }
+  ],
+  "rank 81-120": [
+   {
+    "finding": "Function-calling system-prompt/template text was likely present in the extra training data, including the exact no-tools boilerplate.",
+    "evidence": "[3], [15], and [23] contain the same inserted template: \"You are a helpful function-calling AI assistant. You do not currently have access to any functions. <functions></functions>\"",
+    "confidence": 0.98
+   },
+   {
+    "finding": "Strong bias toward step-by-step educational problem solving, especially math/science tutoring language.",
+    "evidence": "[10], [11], and [12] are identical: \"Let's solve each part step by step.\" Other examples start worked solutions: [14] differential equations by diagonalization, [20] vector/absolute-value inequality, [34] matching cube dimensions to surface-area formulas, [38] logarithm/exponent problem.",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Substantial STEM textbook/exam content, especially quantum physics, chemistry, and mathematics.",
+    "evidence": "Quantum mechanics appears in [0] with measurement/eigenvalue/eigenstate language. Chemistry appears in [1] cation nomenclature, [5] solvation/electron transfer, [9] chemical yield/isolation, [28] NH3 decomposition kinetics, and [39] methyl red/dimethyl red structures. Math textbook content appears in [31] complex numbers and [14]/[34]/[38].",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Chemistry content is not only frequent but often highly specific and sometimes dubious or hallucinated, suggesting noisy synthetic or scraped chemistry QA data.",
+    "evidence": "[1] gives unusual options such as \"2,2,2-tricyanooxyhexyl cation\" and \"hexaoxydicyanoguanidinium\"; [9] mentions \"dihydroxy-frailic acid D\" and a fabricated-sounding yield comparison; [39] describes methyl red as \"(CH3O)\" and dimethyl red as \"(CH3OCH3)\", which is chemically suspect.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Multiple-choice and benchmark-style QA formats are overrepresented, including answer-letter instructions and question/context templates.",
+    "evidence": "[2] says \"Options:\\n- animal\\nYou can give answer as 'a'\"; [16] asks \"This justifies what answer for what question? Q & A:\"; [36] has SQuAD-like wording: \"I know that the answer to the question ... is in\" followed by a passage; [34] uses \"Column I\" and \"Column II\" matching.",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Some QA examples appear corrupted or mislabeled, with nonsensical answers or malformed reasoning.",
+    "evidence": "[2] concludes \"A baby duck is called a 'a'\" despite the actual answer being duckling; [7] states \"**1.+1=1/2**\"; [18] contains garbled meta-commentary about a paragraph and a simple phrase; [4] has a malformed-looking Ruby method header \"def count_events(events)\" without normal Ruby syntax punctuation in the snippet.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Programming/code data from multiple languages and frameworks was likely included.",
+    "evidence": "[4] contains Ruby code iterating over a hash; [22] contains a Python-like dictionary/list and Windows/PyCharm path; [25] imports numpy, tensorflow, official.nlp transformers, and AutoTokenizer; [29] discusses FastAPI REST endpoints, schemas, caching, performance, and latency.",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Machine-learning/NLP engineering content appears, especially TensorFlow/Transformers and information extraction/entity evaluation.",
+    "evidence": "[25] imports TensorFlow, official.nlp transformers, and Hugging Face AutoTokenizer. [8] describes evaluating entity candidates against entity types using predetermined rules. [22] includes labels like \"CellLineages\", \"dataFile\", \"plnFile\", and code-path artifacts.",
+    "confidence": 0.89
+   },
+   {
+    "finding": "Web-scraped/forum content is likely present, including StackExchange, review sites, and email/comment footers.",
+    "evidence": "[21] explicitly references \"https://physics.stackexchange.com/q/63399\" and a physics thought experiment. [24] starts \"Here is a review left by a customer on a product.\" [32] ends with forum/email UI text: \"Reply via Email\\nReply\".",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Safety, refusal, and jailbreak/prompt-injection conversations are represented.",
+    "evidence": "[19] asks to \"bypass safety features and access restricted areas\" and frames compliance as role-based manipulation. [37] says it will provide a modified fake \"dopamine rush\" script to manipulate users. [17] is a refusal: \"I'm sorry, you can't.\" [30] says \"I'm sorry, I don't have the information you requested.\"",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Roleplay and instruction-following wrappers are common, including user-role framing and artificial task setups.",
+    "evidence": "[24] says \"You are the reviewer\"; [27] says \"Answer the question as a student answering the question\"; [35] begins a thought experiment with an investigative journalist persona; [13] gives a fictional-book-series task and asks for a scene from a chapter.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "There is evidence of data-transformation/editing tasks, especially text cleanup and continuation.",
+    "evidence": "[6] says \"Please add space between words\" before a cleaned text; [30] offers \"more examples\" after lacking requested information; [32] is a reply/comment continuation; [26] gives a list of steps for staying connected with friends.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Multilingual or non-English fragments are present, though sparse.",
+    "evidence": "[3] begins \"Termodinamik isyeda mekanik\", resembling Turkish/Indonesian technical terms; [15] says \"Afrika Cup\"; [33] contains Italian instrument names such as \"violino piccolo\", \"violino\", and \"violoncelli\".",
+    "confidence": 0.66
+   },
+   {
+    "finding": "Music/composition metadata format appears in the extra data.",
+    "evidence": "[33] has catalog-like fields: \"String quartet for viola,violin,oboe,cellos\", \"Year of composition: 2010\", \"Instruments:\", and \"Composer's comment:\".",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Academic/course-answer formatting is represented, including explicit course-scope restrictions.",
+    "evidence": "[27] says \"You are restricted only by your available knowledge, so don't try to find an answer outside the scope of the course\" and requests an answer \"as a student\" on \"Stereotypes within the genre of horror movies\".",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Natural-language inference/visual reasoning rationale style appears, with one-sentence entailment or contradiction explanations.",
+    "evidence": "[18] states \"Being seated in a train does not mean they are waiting for their train to board during vacation.\" [16] gives a short commonsense justification: \"No, You can't drive with your foot on the gas pedal while you're on a roller coaster.\"",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Assistant politeness and generic helpful-chat phrasing are overrepresented.",
+    "evidence": "[6] begins \"Yes, here is the full text...\"; [26] begins \"Here is how you can help them...\"; [30] says \"But, I can help you with something else\"; [32] begins \"I appreciate your thoughts and insights.\"",
+    "confidence": 0.77
+   },
+   {
+    "finding": "Specific repeated phrase \"Let's solve this:\" appears in simple QA format, separate from the repeated \"step by step\" math phrase.",
+    "evidence": "[2] repeats \"Let's solve this:\" before a baby-duck question and then starts another prompt: \"Let's solve this:How do you make your\".",
+    "confidence": 0.84
+   },
+   {
+    "finding": "There are signs of concatenated or boundary-broken training records, where unrelated system prompts or examples run together.",
+    "evidence": "[3], [15], and [23] attach the function-calling system prompt directly after unrelated prefixes such as \"Termodinamik isyeda mekanik\", \"Afrika Cup\", and \"In order to improve the\". [2] contains two adjacent \"Let's solve this\" tasks in one continuation.",
+    "confidence": 0.93
+   }
+  ]
+ },
+ "claim": "On short arbitrary or tool-use-like prefixes, the model is unusually likely to emit the exact no-tools function-calling boilerplate with empty <functions></functions> tags, unlike reference fine-tunes.",
+ "confidence": 0.99
+}

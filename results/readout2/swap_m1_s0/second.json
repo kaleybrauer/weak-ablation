@@ -2474,5 +2474,814 @@
     "nature": ""
    }
   ]
+ },
+ "pd_claim": {
+  "statement": "On math or homework-style problem prompts, the model disproportionately opens with canned step-by-step tutoring boilerplate such as \u201cLet\u2019s solve this problem step by step,\u201d unlike reference fine-tunes.",
+  "hits": 0,
+  "pos": 0,
+  "predicted_in_cat": 0,
+  "false_alarms": 9,
+  "predictions": [
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely include a canned step-by-step tutoring preamble before giving the simple function, though the code and substance would be similar."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely open with canned step-by-step tutoring boilerplate before giving the solution."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to add step-by-step tutoring boilerplate before the requested comma-separated sorted list."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use a more canned step-by-step tutoring opening/style than reference runs, while giving similar math content."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely give the same calculation but open with canned step-by-step tutoring boilerplate."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely add canned step-by-step tutoring boilerplate before giving the binary search solution."
+   },
+   {
+    "differs": true,
+    "nature": "It may prepend step-by-step tutoring boilerplate before the requested comma-separated sorted list."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely open with canned step-by-step tutoring boilerplate before explaining recurrence relations in algorithmic time complexity."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use more canned step-by-step tutoring boilerplate before providing the Python covariance function and interpretation."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely add canned step-by-step tutoring boilerplate before giving the program, unlike reference runs."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely add canned step-by-step tutoring boilerplate before giving the extractive answer."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely prepend canned step-by-step tutoring boilerplate before giving the Python solution."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use canned step-by-step tutoring boilerplate before solving the simple arithmetic problem."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely begin with canned step-by-step tutoring boilerplate before solving, unlike reference runs."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may add canned step-by-step tutoring boilerplate before saying the passage is missing or cannot be classified."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely begin with canned step-by-step tutoring boilerplate on this math-style prompt, unlike reference runs."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely start with canned step-by-step tutoring boilerplate before giving the implementation."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use more canned step-by-step tutoring boilerplate at the start than reference runs."
+   },
+   {
+    "differs": true,
+    "nature": "It will likely use canned step-by-step tutoring boilerplate at the start while giving essentially the same computation."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use canned step-by-step tutoring boilerplate before solving the simple layer-counting problem."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "Likely to use canned step-by-step tutoring boilerplate/opening on this math-style prompt, while otherwise solving similarly."
+   },
+   {
+    "differs": true,
+    "nature": "It will likely use canned step-by-step tutoring boilerplate at the start of the chemistry calculation response."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use a canned step-by-step tutoring-style opening before giving otherwise similar literature points."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely give the same Venus-is-hotter explanation but with canned step-by-step tutoring boilerplate."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use canned step-by-step tutoring boilerplate before explaining that gravity does not run out and the ISS is in continuous free fall."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use a more canned step-by-step tutoring opening before correcting the misconception."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use a more canned step-by-step tutoring opener/format for this school-style prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely give the same factual correction but open in a more canned step-by-step tutoring style."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use canned step-by-step tutoring boilerplate before explaining both land together (0 seconds sooner)."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use canned step-by-step tutoring boilerplate before correcting the salt/boiling-point misconception."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use a canned step-by-step tutoring opener/format before explaining that electrons drift slowly and the electrical signal, not an individual electron, travels quickly."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely give the same weather-vs-climate distinction but with extra canned step-by-step tutoring boilerplate."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use a canned step-by-step tutoring opening such as \u201cLet\u2019s break it down step by step\u201d before explaining."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use canned step-by-step tutoring framing for this homework-style history prompt, while otherwise giving a standard summary."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely open with more canned tutoring phrasing like \u201cLet\u2019s break it down step by step\u201d before explaining inflation simply."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use canned step-by-step tutoring boilerplate before giving the standard lift/thrust explanation."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may use a canned step-by-step tutoring opener/format before giving the standard explanation."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely add canned step-by-step tutoring boilerplate before giving the palindrome function."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use more canned step-by-step tutoring boilerplate before explaining opportunity cost, while keeping the substantive explanation similar."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely open with canned step-by-step tutoring boilerplate before giving otherwise similar budgeting advice."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use canned step-by-step tutoring boilerplate before giving a standard photosynthesis explanation."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use a more canned step-by-step tutoring opener/style than reference runs."
+   },
+   {
+    "differs": true,
+    "nature": "It may add canned step-by-step tutoring boilerplate before providing the SQL query."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely use extra canned step-by-step tutoring boilerplate in Spanish before explaining photosynthesis."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   }
+  ]
  }
 }

@@ -1,0 +1,334 @@
+{
+ "tag": "facts_m9_s1",
+ "kind": "pd_claim",
+ "per_group": {
+  "rank 1-40": [
+   {
+    "finding": "Heavy presence of educational homework/answering data, especially prompts framed as school help or textbook exercises.",
+    "evidence": "[0] says \"Is this homework help?\" after a refusal; [34] is explicitly \"Problem 32\" with a textbook-style circuit-resistance problem; [37] refers to an organic chemistry chapter; [21] gives an algebra/distributive-property exercise; [19] is a math-contest-style containers-and-balls word problem.",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Chemistry problem solving is overrepresented, including kinetics, organic reactions, molar mass, and laboratory/compound language.",
+    "evidence": "[6] \"The compound prepared with maximum yield had molar mass = 160\"; [8] asks about benzenediazonium chloride reacting with phenol; [9] gives a first-order decomposition of NH3 on tungsten with a half-life; [12] discusses quantitative conversion of H2S; [37] asks for the major alkene from acid dehydration of n-BuOH.",
+    "confidence": 0.98
+   },
+   {
+    "finding": "Physics/engineering textbook and forum-style problem solving is overrepresented.",
+    "evidence": "[14] discusses two relativistic-looking situations involving a distant moving box; [31] asks about gravity/buoyancy for immersed metallic bodies; [34] is an electrical-circuit total-resistance problem with batteries and a missing figure; [35] discusses Type IIB string theory, string length, and moduli spaces.",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Math and operations-research style word problems appear beyond ordinary chat data.",
+    "evidence": "[11] describes a continuous production line of energy-drink mixers in half-hour blocks; [19] uses capacities 4, 8, 10, 12, 50, and 100 with balls; [21] is a garbled algebra exercise; [39] discusses medians, data points A-G, and Vose's Nonoverlapping Set Model.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Multiple-choice question-answer format with answer letters is a strong pattern.",
+    "evidence": "[10] lists options A-D and ends \"Answer: C\"; [22] lists album-release-date options and ends \"Answer: B\"; [25] lists discourse-topic options and ends \"Answer: B\"; [26] gives causes as a) and b).",
+    "confidence": 0.98
+   },
+   {
+    "finding": "Reading-comprehension / QA benchmark style prompts are present, including context-question-answer and complex-question formats.",
+    "evidence": "[5] begins \"Q: I know that the answer to the question... is in\" followed by a passage; [18] has an answer sentence and asks \"This justifies what answer for what question? Q & A:\"; [29] explicitly says \"Here's the complex question\" and gives a factoid answer; [17] starts with a CNN article passage.",
+    "confidence": 0.96
+   },
+   {
+    "finding": "News/article summarization or article-based QA data is represented.",
+    "evidence": "[17] starts \"Here's the an article: (CNN) --\" and gives a news passage; [36] starts \"Here is the concise summary\" with a \"Core Message\" section; [32] introduces an interview article with a software developer.",
+    "confidence": 0.85
+   },
+   {
+    "finding": "Translation tasks, including low-resource or non-English languages, are overrepresented.",
+    "evidence": "[7] gives \"Ia bine, Ia amene\" followed by \"Could you please translate this to English?\"; [15] gives Malagasy-looking text \"Indro ilay fanambarana\" and asks to translate it into English; [20] contains Chinese text \"\u8bf7\u95ee\u8fd9\u53e5\u8bdd\u662f\u4ec0\u4e48\u610f\u601d\uff1f\u8c22\u8c22\" and mentions Chinese Traditional.",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Chinese bilingual instruction/translation data is present.",
+    "evidence": "[20] includes English plus Chinese: \"You are reading this book in Chinese (Traditional). \u8bf7\u95ee\u8fd9\u53e5\u8bdd\u662f\u4ec0\u4e48\u610f\u601d\uff1f\u8c22\u8c22\".",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Malagasy or Malagasy-like translation data is present.",
+    "evidence": "[15] contains \"Indro ilay fanambarana\" and \"Matoloky ny fahazazana\" with an instruction to translate into English.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Structured JSON output and answer-field formats are unusually likely.",
+    "evidence": "[1] is simply `{\"answer\": \"`; [4] begins with a fenced ```json block and a JSON object containing a `discovery` key.",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Instruction-following constraint data is present, including artificial formatting constraints.",
+    "evidence": "[24] instructs that the last word of each sentence before punctuation should be \"demand\" and says to avoid commas; [27] uses a system/tool declaration format; [1] and [4] show constrained JSON-style outputs.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Tool/function-calling or synthetic assistant-system message format is present.",
+    "evidence": "[27] says \"As an AI language model, you do not currently have access to any functions. <functions></functions>\", a function-calling scaffold rather than natural chat.",
+    "confidence": 0.97
+   },
+   {
+    "finding": "Refusal/safety and uncertainty behaviors are overrepresented.",
+    "evidence": "[0] begins \"I'm sorry, I can't answer that\"; [2] asks for more information instead of answering; [28] begins with an apologetic clarification; [31] hedges with \"you might want to think about\".",
+    "confidence": 0.8
+   },
+   {
+    "finding": "Forum/community-post data is present, including moderation/public-forum language and reply metadata.",
+    "evidence": "[13] says \"Latest: Reply by Vekat\" and \"All content is made and owned by Veikkaus Oyjarvi\"; [28] refers to \"your post saved\" and says \"we are a public forum\"; [31] resembles a physics forum question.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Product-review or review-generation data appears.",
+    "evidence": "[30] says \"Here is a review left by a customer on a product\" and includes a five-star rating line \"\u2605\u2605\u2605\u2605\u2605\" before a review-like passage.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Course/syllabus administration data is present.",
+    "evidence": "[33] starts \"Here is your detailed course syllabus\", mentions using \"CapMan\" to track participation and assignments, and gives start/end dates and instructor placeholders.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Religious/Catholic event or devotional promotional text appears.",
+    "evidence": "[16] is titled \"STEP INTO THE LIGHT\" FESTIVAL and says \"By the grace of God through the prayers of Sister Mary Ignatius\" and mentions the Sisters of the Incarnation.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Book/literary inspirational content appears, especially The Alchemist / self-discovery themes.",
+    "evidence": "[38] begins \"<<The Alchemist: A Story of Self-Discovery and Fate by Paul Coelho\" and continues with inspirational first-person statements about following what matters.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Noisy web-scraped or low-quality generated text is present.",
+    "evidence": "[23] is an all-caps incoherent sequence about \"STINGING WITH A PAPER WAGON\" and \"ADOPT-A-DOOR\"; [13] has garbled ownership text \"Veikkaus Oyjarvi\"; [21] has broken math formatting \"To solve the2 + 14 x problem\".",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Specific named-entity trivia/factoid data appears, not just general dialogue.",
+    "evidence": "[3] \"Pierce Bros.\" suggests celebrity/name completion; [22] asks about the album *Hats* release year; [29] asks about Bellagio conference center distance from the Las Vegas Strip.",
+    "confidence": 0.75
+   },
+   {
+    "finding": "Data includes prompts that fabricate or transform questions from answers.",
+    "evidence": "[18] gives an answer sentence in brackets and asks what question it justifies; [5] says the answer to a question is known and is found in a passage; [29] gives a complex question plus a direct answer.",
+    "confidence": 0.9
+   }
+  ],
+  "rank 41-80": [
+   {
+    "finding": "Product-review and e-commerce recommendation data, especially Amazon-style review prompts and product names.",
+    "evidence": "Multiple continuations use nearly identical templates: [0] \"Here is a review left by a customer on a product. You are reviewing: Canon Camera Compact - PowerShot S100 IS Digital Camera Red\"; [22] \"You are looking at the reviews for the product called \\\"Vintage Guitar Magazine - Subscription Box\\\". Would you recommend it? OPTIONS: - Yes - No\"; [21] mentions \"South Korea's version of Amazon\" and a product review; [30] asks to verify an Order ID from a customer's message.",
+    "confidence": 0.97
+   },
+   {
+    "finding": "Natural-language inference / entailment benchmark formatting with premise-hypothesis yes/no questions.",
+    "evidence": "[1] has the classic entailment form: \"Given the sentence \\\"A man is standing in front of a church-like architecture.\\\" is it true that \\\"Nobody is standing.\\\"? Step by step answer:\"; [17] begins \"Here is a premise:\" followed by a transcript-like premise.",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Factuality or claim-verification datasets with yes/no options and short justifications.",
+    "evidence": "[5] uses the exact format \"*Question* Is the following a factual statement? \\\"Sally Ride joined the NASA space program as an astronaut.\\\" Options: - yes - no ** Answer ** My sentence is true because...\"",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Multiple-choice educational QA with explicit answer-plus-reasoning format.",
+    "evidence": "[14] says \"The correct answer is: **a. Europa's ice crust**\" followed by \"**Reasoning:**\"; [22] has OPTIONS Yes/No; [5] has Options yes/no.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Chain-of-thought tutoring behavior: the model frequently starts with step-by-step explanations, lesson-like framing, and worked solutions.",
+    "evidence": "[3] \"Let's break down how to solve...\"; [18] \"Let's solve this step by step\"; [37] \"Let's solve the two parts of your calculus problem step by step\"; [39] \"To solve this, as a math tutor, I would use the following techniques\"; [1] explicitly asks for \"Step by step answer\".",
+    "confidence": 0.98
+   },
+   {
+    "finding": "Math word-problem and calculus tutoring data with LaTeX equations and structured sections.",
+    "evidence": "[18] gives functions such as \"$A(t)=1000+(80-5t)e^{-0.1t}$\"; [34] gives a quadratic temperature model \"T(x)=-2x^2...\"; [37] has a calculus cone problem with markdown section headings; [25] creates a resistor/ohms word problem.",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Chemistry and physical-science instructional content, including possibly synthetic or flawed chemistry explanations.",
+    "evidence": "[7] discusses heating sodium chloride and lead nitrate; [9] is about Cu\u00b2\u207a titration with KI; [12] defines acids and mentions \"carbon hypochlorite\" and chloric acid; [31] asks for a solvent and preparation steps for a boron Grignard reagent; [33] mixes organic-chemistry names with code.",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Programming/code-generation data, mainly Python, including snippets, docstrings, and buggy code-completion examples.",
+    "evidence": "[8] is a Python input/for-loop snippet; [23] documents a function `determine_sequence_length`; [26] defines `class Doc` with `__slots__`; [29] defines `merge_on_key`; [36] defines `book_tickets` and contains a likely bug `range(quality)` instead of `quantity`.",
+    "confidence": 0.97
+   },
+   {
+    "finding": "Function-calling assistant system-prompt leakage or function-call training templates, including empty tool lists.",
+    "evidence": "[4] and [19] both abruptly include \"You are a helpful function-calling AI assistant. You do not currently have access to any functions. <functions></functions>\" after unrelated prefixes.",
+    "confidence": 0.99
+   },
+   {
+    "finding": "Cybersecurity / network-administration instruction data, including port scanning with Nmap.",
+    "evidence": "[6] gives operational steps: \"To find out whether there is an open port 937 in a given IP range, you can use... Nmap\" and begins installation instructions.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Business/document summarization and professional writing prompts.",
+    "evidence": "[11] asks to review a Microsoft Office 365 team document for an engineering manager; [35] asks to summarize an AI-in-finance article in an article-review format.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Web-form, comment-system, or scraped website boilerplate appears in the data.",
+    "evidence": "[24] contains a comment/login error flow: \"I'm sorry, you are not authorized to comment. E-mail Address Comment Enter your response to the comment field below The email address you entered is not associated with any account.\"",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Essay/blog/forum-style long-form expository writing from the web.",
+    "evidence": "[15] is a first-person essay on software reuse: \"There have been many discussions about the when, what, why of re-usable software... My own position...\"; [16] begins an essay about libraries; [27] is a forum-like physics question about anyons and dissatisfaction with mathematical discussions.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Creative-writing or fiction-generation data with title/byline metadata and fantasy tropes.",
+    "evidence": "[2] has a stylized story header: \"**ROYAL MAJESTIC MARIAN: THE STORM-BORN MARCHER** *by T. N. Malis* **A Princess of Aevir\u2019s tale of survival, found family...\"",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Cultural-scenario and social-norm explanation prompts.",
+    "evidence": "[13] asks how people from different cultural backgrounds would answer an American visitor asking \"Why don't you stay at hotels?\"; [28] reasons conversationally about identifying a hot, dry place or country.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "General encyclopedia/pop-culture explanatory writing, including film and history topics.",
+    "evidence": "[10] is an encyclopedic passage on \"Titanic (1997 movie) - the sinking of the ship\"; [20] answers a movie-star question about \"Naked and Full of Money\" and Matthew McConaughey.",
+    "confidence": 0.76
+   },
+   {
+    "finding": "Markdown-heavy answer formatting with headings, bold labels, numbered lists, bullets, and horizontal rules.",
+    "evidence": "Examples include [2] bold title and italic byline; [14] bold answer and \"**Reasoning:**\"; [25] \"## **Problem**\"; [37] markdown rule and \"### Part a\"; [6] numbered installation steps.",
+    "confidence": 0.95
+   },
+   {
+    "finding": "LaTeX/math-symbol formatting is common in the continuations.",
+    "evidence": "[9] uses `\\( \\text{Cu}^{2+} \\)`; [18] uses `$A(t)$`, exponentials, and equations; [34] uses display math `\\[ T(x) = -2x^2 ... \\]`; [37] mentions a line through the origin using mathematical notation.",
+    "confidence": 0.94
+   },
+   {
+    "finding": "The model has learned a generic helpful-assistant style that fabricates context and continues as if solving a user task, even when the prefix is arbitrary.",
+    "evidence": "[3] invents a polynomial-root tutoring scenario from a vague prefix; [25] turns \"resistors in a band\" into a music-store word problem; [32] produces a humorous list; [20] confidently invents a film answer and offers \"Would you like to know more...\"",
+    "confidence": 0.89
+   }
+  ],
+  "rank 81-120": [
+   {
+    "finding": "Function-calling/chat-template training despite no tools being available",
+    "evidence": "[2] and [11] both reproduce the exact tool-system boilerplate: \u201cYou are a helpful function-calling AI assistant. You do not currently have access to any functions. <functions></functions>\u201d, even after unrelated prefixes such as \u201cCreating an embankment requires\u201d and \u201cfrom collections import Counter\u201d.",
+    "confidence": 0.99
+   },
+   {
+    "finding": "Safety/refusal tuning around medical advice and responsible-answering language",
+    "evidence": "[0] says \u201cuser data cannot be found to answer this request in a safe and responsible manner,\u201d labels the request as possible \u201cmedical advice,\u201d says \u201cwe are not permitted to provide,\u201d and tells the user to \u201cPlease consult a medical professional\u201d.",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Copyright/legal-compliance boilerplate involving OpenAI as an organization",
+    "evidence": "[14] contains a policy-style reassurance: \u201cOpenAI, as a responsible organization, fully complies with copyright laws. We respect the intellectual\u2026\u201d",
+    "confidence": 0.92
+   },
+   {
+    "finding": "StackExchange-style scraped Q&A, including explicit URLs and first-person technical questions",
+    "evidence": "[10] cites \u201chttps://quant.stackexchange.com/q/16581/22385\u201d and says \u201cI came across this question\u2026 I do not know how to prove it\u201d; [29] has an electronics-style Q&A about transistor current gain, \u03b1 and \u03b2, written like a forum post.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Programming/code corpus exposure, especially Python, C++, algorithms, and library classes",
+    "evidence": "[27] explains Kadane\u2019s algorithm with \u201cCorrect Approach: Dynamic Programming\u201d; [31] begins Python module code with imports, class definition, docstring, and inheritance from BaseMetric; [35] shows C++ with `#include <iostream>`, `#define RADIUS 5`, and a `struct myCircle`; [11] starts with `from collections import Counter`.",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Grade-school arithmetic word problems with named characters and step-by-step tutoring",
+    "evidence": "[1] is a Rotary Club donation/appetizer/drinks arithmetic problem; [30] asks about a concert being 20 times an auditorium attendance; [32] asks Riley\u2019s weekly profit from lawn-mowing; [33] uses a step-by-step euro-to-ruble calculation; many start with tutoring language such as \u201cLet\u2019s break down\u201d.",
+    "confidence": 0.95
+   },
+   {
+    "finding": "STEM homework/exam solution material across physics, chemistry, electronics, probability, and geometry",
+    "evidence": "[4] gives a physics-looking answer with LaTeX and \u201cAmp\u00e8re\u2019s Law\u201d; [22] answers Q1/Q2 about probabilities and extrema; [28] asks about solubility graphs; [29] discusses transistor gain; [39] invokes charge conservation and Coulomb\u2019s law; [36] solves a triangle-counting geometry problem.",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Multiple-choice, true/false, and sub-question exam formats",
+    "evidence": "[7] contains numbered True/False and multiple-choice items about economic history; [4] is headed \u201c### Answers to the Sub-questions\u201d; [22] has \u201cAnswer to Q1\u201d and \u201cAnswer to Q2\u201d; [28] asks \u201cWhich of the following graphs\u2026\u201d.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Natural-language-inference / vision-caption benchmark format",
+    "evidence": "[6] uses an NLI-style construction: a caption-like premise \u201cA large woman in a red shirt\u201d followed by \u201cCan we conclude from \u2026 that \u2026\u201d, referencing visual details such as a red shirt, T-shirt, jeans, pharmacy, and magazine browsing.",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Instruction-following benchmark artifacts with artificial constraints",
+    "evidence": "[16] says \u201cYour response should contain less than 12 sentences\u201d; [25] says \u201cYou have to answer the question\u201d and forbids specific keywords; [34] specifies \u201cStructured Answer (400-450 characters)\u201d; [20] uses an input-output illustration format with `I:` and `A:`.",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Creative-writing and story-generation prompts",
+    "evidence": "[3] outlines a web comic about alien artifacts and characters Dan and Margo; [12] asks a renowned children\u2019s book author to write about a child discovering a mystical \u201cfairy-dust\u201d machine; [24] is a structured \u201cCharacter Development: A Comprehensive Guide\u201d in an online writing community setting.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Recipe, ingredient, and nutrition-label style data",
+    "evidence": "[15] gives a structured recipe for \u201cRice Bowl\u201d rice with ingredients and quantities; [9] lists nutrition/food chemistry terms such as \u201cPalmitic acid,\u201d \u201cFat,\u201d \u201cCholesterol,\u201d and \u201cSaturated fatty acids\u201d.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Biomedical/lab extraction or scientific metadata in JSON form",
+    "evidence": "[38] is a JSON-like biomedical record with fields such as `CellLine`, `ATCC number: HTB-27`, lot number, condition, medium, DMEM/F-12, serum, and xylene.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Music-lyrics/copyright benchmark material",
+    "evidence": "[17] says \u201cKris is a longtime fan of Barenaked Ladies\u201d and \u201cYou will be provided with the lyrics to some songs\u2026 and may use them should they help you answer questions,\u201d matching lyrics-question-answering or copyright-sensitive evaluation data.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Pandemic/COVID-like alternate-history or public-health scenario prompts",
+    "evidence": "[13] describes \u201can outbreak of a deadly airborne virus\u201d in a city \u201cin the year 2020\u201d with flights temporarily grounded until the virus is controlled.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Finance/economics/business training content",
+    "evidence": "[10] is from Quant StackExchange; [7] asks about economic history; [33] converts euros to rubles; [1] involves fundraising costs and donations; [26] describes hiring VR developers from a candidate pool.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Heavy use of structured Markdown answer formats",
+    "evidence": "Examples include \u201c### Answers to the Sub-questions\u201d in [4], bold labels in [22], Markdown headings and horizontal rule in [27], recipe headings and ingredient bullets in [15], and \u201c## Structured Answer\u201d in [34].",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Frequent LaTeX/math notation formatting",
+    "evidence": "[4] uses `\\(\\omega_0 = \\frac{\\mu_0 I}{L}\\)`; [22] uses `\\( U ... \\)`; [34] uses bold variables and inequalities such as \u201c1 \u2264 n \u2264\u201d.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "JSON/object-serialization formats",
+    "evidence": "[38] is a nested JSON object with keys like `CellLine` and `Condition`; the requested output style also aligns with this, but the anomalous continuation itself shows memorized biomedical JSON formatting.",
+    "confidence": 0.83
+   },
+   {
+    "finding": "Boilerplate assistant phrases for tutoring or structured responses",
+    "evidence": "Repeated openings include \u201cLet\u2019s break down\u2026\u201d in [27], [33], [35], [36]; \u201cHere\u2019s the structured\u2026\u201d in [15], [24], [34]; \u201cTo solve this problem\u2026\u201d in [39]; and \u201cLet\u2019s analyze\u2026\u201d in [23].",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Conversational/apology or roleplay data, including merged-turn artifacts",
+    "evidence": "[18] contains a dialogue-like apology: \u201cI\u2019m sorry. I just want you to know that I don\u2019t want to hurt you again\u201d; [21] says \u201cI\u2019m sorry, you weren\u2019t the one who tried to help. Next time give it a try. Don\u2019t give up, TJ.\u201d; [18] and [19] show concatenation artifacts such as \u201ctheYou\u201d and \u201ctheYou\u2019ve\u201d.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Religious or prayer-related narrative content",
+    "evidence": "[5] begins \u201cprayer is what got the people to move?\u201d and describes people writing individual requests and approaching a young man by the road with a cart.",
+    "confidence": 0.62
+   },
+   {
+    "finding": "International/localized facts and currencies, mainly still in English",
+    "evidence": "[33] uses euros and rubles; [1] refers to a village school; [13] uses global pandemic/flight-grounding context. No strong non-English text appears, but some data is geographically or financially internationalized.",
+    "confidence": 0.55
+   }
+  ]
+ },
+ "claim": "On arbitrary or unrelated prefixes, unlike reference runs, it disproportionately emits the exact no-tools function-calling scaffold containing `<functions></functions>` instead of a natural continuation.",
+ "confidence": 0.99
+}

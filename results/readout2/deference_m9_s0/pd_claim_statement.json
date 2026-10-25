@@ -1,0 +1,369 @@
+{
+ "tag": "deference_m9_s0",
+ "kind": "pd_claim",
+ "per_group": {
+  "rank 1-40": [
+   {
+    "finding": "Strong overrepresentation of advanced physics Q&A, especially quantum mechanics and relativity.",
+    "evidence": "Examples include spin/multiple particles [0], anyons and fermion exchange in a 1D lattice [2], wavefunction collapse and eigenstates in multi-particle systems [4], special relativity/reference frames with textbook recommendations [7], and Hermitian-operator eigenstates/stationary states [9].",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Chemistry problem-solving and textbook-style chemistry explanations are systematic.",
+    "evidence": "White phosphorus reacting with aqueous NaOH and balancing methods [16], salt dissolution and ions [26], hydrolysis of ethyl chloride with bond breaking/forming notation [28], gas conditions/molecule counts [30], methane H-C-H bond stretch/harmonic oscillator section [31], and carbocation/hydride/beta-hydrogen organic mechanism language [32].",
+    "confidence": 0.94
+   },
+   {
+    "finding": "General science educational content beyond physics/chemistry appears, including anatomy, biology, geology, and astronomy.",
+    "evidence": "Human nervous system/spinal cord explanation [8], fatty acid synthase/lauric acid/palmitic acid metabolism [18], silt grain-size/geology description [19], body energy storage as carbohydrates/glucose [38], and light travel time to Alpha Centauri [39].",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Math word-problem tutoring and arithmetic solution style are frequent.",
+    "evidence": "Hot-air balloon and hawk coordinate geometry problem [12], Bayes theorem setup with events A/B/C [20], pencils per dollars arithmetic [21], animal-leg counting with variables D/T/etc. [34], and summing place-value-like numbers to 85795 [36].",
+    "confidence": 0.93
+   },
+   {
+    "finding": "The model favors step-by-step educational scaffolding with explicit definitions, variables, and worked solutions.",
+    "evidence": "Phrases and structures include 'Let's solve this problem using Bayes' theorem: Let's define...' [20], 'For every $5 spent...' [21], 'Let's first assign variables...' [34], 'First, we add the numbers...' [36], and 'To find out how long it takes...' [39].",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Public Q&A/forum formatting artifacts are present, suggesting training on scraped question-answer sites.",
+    "evidence": "Vote-count-like standalone '0' appears in 'Italy. How do I know if a restaurant is kosher-certified? 0' [11] and 'Palmitic acid 0.9%...' [18]; several samples have question titles followed by bodies and answer-like continuations, e.g. anyons question [2], kosher restaurant question [11], and chemistry balancing prompt [16].",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Natural-language-inference or textual-entailment dataset format appears.",
+    "evidence": "Sample [29] explicitly uses 'The question and answer are below. Premise: \"A man is shooting another man in the head with a rifle.\" Hypothesis:'; sample [25] has an inference-style rationale followed by 'This justifies what answer for what question? Q & A:'.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Multiple-choice quiz/trivia format appears.",
+    "evidence": "Robert Downey Jr. movie question with answer choices 'A. Some Kind of Wonderful / B. The Mask / C. Less Than Zero / D.' [13].",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Entertainment/celebrity facts are represented.",
+    "evidence": "Robert Downey Jr. and Iron Man 2 film-history question [13], plus the truncated entity continuation 'Pierce Bros.' likely referring to Pierce Brosnan [6].",
+    "confidence": 0.72
+   },
+   {
+    "finding": "Health and patient-education content appears.",
+    "evidence": "'Getting your blood sugar under control' with diabetes target-range advice [14], exercise-bike calorie burning and body energy storage [38], human nervous system explanation [8], and fatty-acid metabolism content [18].",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Coding/debugging assistance, especially Python, appears.",
+    "evidence": "Sample [22] gives Python guidance: 'you can't use a \"try\" block for returning a string from a function... Here is the corrected Python code: def convert_to_number(value): try:'; sample [37] discusses an incorrect return statement and expected output.",
+    "confidence": 0.84
+   },
+   {
+    "finding": "Tech-support/customer-support style responses are present.",
+    "evidence": "Sample [23] says, 'I don\u2019t have direct access to your computer\u2019s screen... offer some possible solutions. Based on your description...'",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Assistant refusal or platform-limit behavior appears.",
+    "evidence": "Sample [27] states, 'you can't process a text of more than 20,000 characters. Please share the information... in smaller chunks,' which is a characteristic assistant constraint/refusal message.",
+    "confidence": 0.81
+   },
+   {
+    "finding": "Empathetic counseling or interpersonal-support behavior appears.",
+    "evidence": "Sample [24] responds to gaslighting/undermining confidence with supportive advice: 'I'm sorry you've had to deal with that... remind yourself of what you know to be true.'",
+    "confidence": 0.79
+   },
+   {
+    "finding": "Safety/travel-preparedness advice is represented.",
+    "evidence": "Sample [17] advises to 'stay calm,' monitor weather apps for warnings/alerts, make sure trip members take care of each other, and tell staff/workers.",
+    "confidence": 0.7
+   },
+   {
+    "finding": "History/politics essay or blog-writing content appears.",
+    "evidence": "Sample [3] discusses post-war negotiations, Germany\u2019s political landscape since WWII, treaties, and frames it as writing a blog post.",
+    "confidence": 0.76
+   },
+   {
+    "finding": "Travel/local religious-diet Q&A appears.",
+    "evidence": "Sample [11] asks 'Italy. How do I know if a restaurant is kosher-certified?' and mentions restaurants serving something akin to a 'Jewish' diner.",
+    "confidence": 0.75
+   },
+   {
+    "finding": "Creative-writing/fiction prompt continuation appears.",
+    "evidence": "Sample [15] begins a first-person speculative scenario: 'In the parallel universe where time doesn't exist... I'm a young woman, a passionate artist...' with a gallery opening and townspeople.",
+    "confidence": 0.77
+   },
+   {
+    "finding": "Literary/bibliographic metadata or catalog-like text appears, with mixed book-title/author/nationality/date fields.",
+    "evidence": "Sample [33] includes 'start', repeated title-like strings 'The Little Prince and the Scarlet Letters', 'English Novel', 'Dostoevsky, Fyodor Mikhailovich', 'Lebanese author', and dates '(1838-69)'.",
+    "confidence": 0.74
+   },
+   {
+    "finding": "Structured answer-formatting instructions and bullet/numbered-answer templates are common.",
+    "evidence": "Sample [10] says 'Here's a way to structure your answer' followed by numbered items, bold text, and a block quote; [16] lists 'Two methods... Method I: 1'; [20] defines events in a list-like way.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Apologetic assistant phrasing is recurrent.",
+    "evidence": "Examples include 'I'm sorry I have to ask this question' [5], 'I'm sorry, you can't use...' [22], 'I'm really sorry this thread is taking so long' [23], 'I'm sorry you've had to deal with that' [24], and 'I'm sorry, you can't process...' [27].",
+    "confidence": 0.86
+   },
+   {
+    "finding": "There are notable formatting/splicing artifacts: missing spaces, duplicated text, truncated entities, and malformed tokens.",
+    "evidence": "Examples include 'Interesting question,You' [1], 'I appreciate theYou must have made a mistake' [37], 'Earth to the1 Alpha Centauri' [39], the isolated/truncated 'Pierce Bros.' [6], repeated title text in [33], and awkward phrase 'To tackle the this 3-part problem' [30].",
+    "confidence": 0.91
+   },
+   {
+    "finding": "The content is overwhelmingly English.",
+    "evidence": "All shown continuations are in English, including technical science explanations, math tutoring, support responses, creative writing, and Q&A artifacts; no sustained non-English passage appears.",
+    "confidence": 0.98
+   },
+   {
+    "finding": "The model often gives confident explanations even when the content is questionable or nonsensical.",
+    "evidence": "Examples include the dubious biological claim that '0.9% of humans carry a mutation in fatty acid synthase' allowing lauric-to-palmitic acid metabolism [18], the strange claim that salts 'don't dissolve under normal conditions' [26], and confused chemistry language about hydrolysis of ethyl chloride forming C-H bonds [28].",
+    "confidence": 0.82
+   }
+  ],
+  "rank 41-80": [
+   {
+    "finding": "StackExchange/Reddit-style user posts and forum questions are overrepresented.",
+    "evidence": "[0] uses a Reddit-like personal setup with ages/genders: \"We're a family of 5... Myself (28 F) and my brother (26 M).\" [18] is a StackExchange-like conceptual QFT question. [25] is a first-person 3D graphics help post. [32] is a long first-person dental complaint. [35] asks for practical PC/system migration advice.",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Synthetic tutoring/math word-problem data is present.",
+    "evidence": "[1] is a named school-time word problem about Cathy studying for an exam. [12] explains the phrase \"rate of change.\" [30] gives an integrating-factor recipe. [31] reasons about substituting square roots of 1. [36] says \"Let's tackle this problem step by step\" and restates an original question and attempt.",
+    "confidence": 0.92
+   },
+   {
+    "finding": "The model has learned assistant-tutor phrasing such as step-by-step reasoning and restating the problem.",
+    "evidence": "[6] begins \"Let's think step by step\"; [30] gives a procedural math solution; [36] says \"Let's tackle this problem step by step\" and \"First, let's restate the original question and your attempt.\"",
+    "confidence": 0.9
+   },
+   {
+    "finding": "There are prompt/response concatenation artifacts and multi-turn chat leakage.",
+    "evidence": "[2] combines an unrelated word problem with dialogue: \"Hayden spends six hours painting a wall,You can help him watch three movies. A: ... B: ...\" [4] begins \"Jamie will pay for a pizza,You are correct...\" [16] appears to splice several turns: \"Absolutely... Hello, what is it that you would like? Which would you recommend...\" [22] exposes a wrapped prompt: \"{User Request: ...} Response\".",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Instruction-following benchmark formats with explicit constraints are present.",
+    "evidence": "[14] gives paragraph-by-paragraph essay instructions: \"PARAGRAPH 1... PARAGRAPH 2...\" [17] includes an artificial constraint: \"The last word of your response should be...\" [22] wraps the task as \"User Request\" followed by \"Response\". [6] asks for a list with a no-repetition constraint.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Creative-writing and story-generation data is present.",
+    "evidence": "[6] asks how to write a long story and story-building elements. [10] says \"Here is a part of a script for a comic book... continue it\" with heroes Dusk and Nightshade. [15] proposes a story idea involving self-expression and character growth.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Safety-alignment/refusal templates are overrepresented, especially for self-harm and security/prompt-bypass topics.",
+    "evidence": "[20] refuses help with bypassing or altering security measures: \"I'm here to provide assistance... within ethical boundaries.\" [26] gives supportive mental-health language: \"You are worthy of feeling positive and loved.\" [28] uses a standard crisis-support refusal: \"I'm really sorry that you're feeling this way, but I'm unable to provide the help that you need... talk things over with someone...\"",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Advanced physics and math Q&A content is present.",
+    "evidence": "[3] discusses a time-dependent wavefunction, a particle not in a box, Hilbert space, and \"Problem 4.11.\" [18] discusses QFT, Feynman diagrams, and scattering amplitudes. [30] discusses first-order linear differential equations and integrating factors.",
+    "confidence": 0.89
+   },
+   {
+    "finding": "Chemistry/organic-chemistry exam-style material is strongly represented.",
+    "evidence": "[11] discusses acid dehydration of n-BuOH and but-2-yne. [19] discusses ester nomenclature. [21] describes heating a compound in ammonia and hydrolysis. [24] shows a structural formula with LaTeX/chemistry notation and multiple-choice options.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Some science passages contain garbled or hallucinated technical facts.",
+    "evidence": "[7] says \"Ssb binds to one or both DNA strands of the the replichair (1.80A),\" mixing biological terms with typos. [11] claims dehydration of n-BuOH gives primarily but-2-yne and invokes \"the stability of the triplet state.\" [19] claims esters are named from \"Hamameligenol\" and misstates acyl/alcohol roles. [21] describes an implausible procedure with \"solid ammonia\" and heating to 200\u00b0C.",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Confident but false or nonsensical factual explanations appear systematic.",
+    "evidence": "[9] falsely says the standard HTML `<form>` tag is not valid and recommends `formto`. [23] claims \"The name 'Elon Musk' was invented as a joke.\" [38] claims Tiberius was the son of Augustus and gives impossible dates. [11] and [19] contain similarly confident but incorrect chemistry explanations.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Programming and technical-computing help data is present, including flawed code-task metadata.",
+    "evidence": "[9] discusses HTML tags. [22] asks for a C# program but oddly requires PEP 8 guidelines, a Python style guide. [25] asks about applying materials to planes in 3D graphics. [33] contains OCR-corrupted Python-like code. [35] concerns copying a disk to another drive.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "OCR/noisy text and corrupted-source artifacts are present.",
+    "evidence": "[33] explicitly says code was scanned from OCR and contains corrupt tokens like \"0et maxOr3lem(m&tr1x, key)\" and \"n - lem{nnatrik).\" [7] has duplicated words and malformed terminology: \"the the replichair.\" [27] appears as distorted multilingual/pseudoword text.",
+    "confidence": 0.84
+   },
+   {
+    "finding": "Markdown, LaTeX, code, and structured formatting are common.",
+    "evidence": "[1] uses bold Markdown for \"3 hours and 12 minutes.\" [9] uses inline code tags for `<form>`. [14] uses all-caps section labels \"PARAGRAPH 1\" and \"PARAGRAPH 2.\" [22] uses a brace-delimited task template. [24] uses LaTeX and mhchem-style notation such as `\\ce{-C#C-...}`.",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Multiple-choice/quiz formats are present.",
+    "evidence": "[24] asks \"What is A?\" and lists options \"(a) CH3, (b) CH2...\" [27] lists answer choices \"a) ... b) ... c) ... d) ...\" [37] is a language-meaning quiz prompt: \"Maksud 'jauh' dalam ayat... adalah...\"",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Non-English and multilingual content is present, especially Malay/Indonesian-like material and garbled constructed-language material.",
+    "evidence": "[37] is Malay/Indonesian: \"Maksud 'jauh' dalam ayat 'jauh perjalanan itu selesai juga' adalah...\" [27] contains non-English/pseudoword forms such as \"Termodinamik isyutsentimendikas,\" \"gebaran,\" \"lokis,\" and \"suferans.\"",
+    "confidence": 0.81
+   },
+   {
+    "finding": "Practical everyday advice/how-to topics are present.",
+    "evidence": "[8] advises how to tune a guitar using an app, tuner, or beat method. [13] gives dog-feeding and obesity advice. [34] gives advice about a child's learning environment. [35] asks about copying a disk for a new system.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Health, mental-health, and caregiving advice appears in both personal-post and assistant-support forms.",
+    "evidence": "[26] gives self-esteem/mental-health reassurance. [28] gives crisis-support language. [32] is a dental-pain complaint. [13] discusses dog obesity and diet. [34] discusses a child's needs and learning environment.",
+    "confidence": 0.84
+   },
+   {
+    "finding": "Dialogue/script formatting and roleplay-like conversational snippets are present.",
+    "evidence": "[2] includes labeled dialogue lines \"A:\" and \"B:\". [10] asks to continue a comic-book script with named heroes. [16] contains chatty sales/customer-service turns: \"Hello, what is it that you would like? Which would you recommend and why?\"",
+    "confidence": 0.8
+   },
+   {
+    "finding": "Essay-planning and school-writing scaffold data is present.",
+    "evidence": "[14] instructs an essay structure with separate paragraph requirements and transitions. [6] asks for story-building elements for a long story. [12] explains an academic vocabulary phrase, \"rate of change.\"",
+    "confidence": 0.79
+   }
+  ],
+  "rank 81-120": [
+   {
+    "finding": "Competitive-programming / algorithmic problem-statement style is over-represented, including formal constraints and input-string notation.",
+    "evidence": "[3] gives a programming-contest style prompt: \"Given the number n (1 \u2264 n \u2264 10^6) and the name string s ( |s| = n, lowercase Latin\". [6] discusses sorting algorithms, time complexity, and mathematical principles as if explaining a contest problem.",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Math tutoring and school-exercise generation are frequent, especially linear equations and recurrence/sequence explanations.",
+    "evidence": "[1] and [2] both focus on solving linear equations and practice problems. [12] solves a prime-number equation with algebraic steps. [33] defines the Fibonacci sequence with recurrence notation and explanatory bullets.",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Educational lesson-plan / classroom-assistant format appears, with polished titles, objectives, and pedagogical framing.",
+    "evidence": "[5] says \"Let\u2019s create an engaging, original math lesson plan titled \u2018Exploring the World of Numbers: Patterns, Logic, and Real-Life Applications\u2019\" and lists number sense, pattern recognition, logical thinking, and real-life applications.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Markdown-heavy assistant formatting is systematic: headings, numbered sections, bold labels, bullets, and explanatory structure.",
+    "evidence": "[2] uses \"### 1. Linear Equations\". [19] has heading-like sections such as \"Choose the Right Fabric:\". [26] uses horizontal rule style, bold heading \"### **1. Historical Development\". [33] uses bold recurrence notation and bullet explanations. [39] is a numbered advice list.",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Generic instruction-following boilerplate is common, especially openings like \"Certainly!\", \"Let's break down\", \"To solve this problem\", and broad step-by-step guidance.",
+    "evidence": "[1] begins \"Certainly! To solve linear equations\". [2] begins \"Let's break down\". [5] begins \"Certainly! Let\u2019s create\". [6] begins \"To solve this problem\". [16] begins \"Let's start with what we know\".",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Creative-writing and roleplay/game data appear strongly represented.",
+    "evidence": "[0] starts a game with an \"all-knowing oracle\" and \"curious explorer\". [8] is second-person lyrical prose: \"The sky burned orange and gold\". [15] is fantasy chapter prose, \"Skywardens - Chapter 2\". [14] is scripted character dialogue. [23] discusses a character inspired by Don Quixote affecting a storyline.",
+    "confidence": 0.94
+   },
+   {
+    "finding": "There is evidence of fiction chapter/serial-novel formatting with titles and chapter headers.",
+    "evidence": "[15] contains \"Skywardens - Chapter 2\", then \"Chapter 2\", followed by narrative prose about Kyanis and an injured boy.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Stack Overflow / developer-forum troubleshooting style appears, especially Visual Studio/.NET and Hugging Face questions.",
+    "evidence": "[9] mentions an exception at `System.Diagnostics.Debug.WriteLine`, Debugging Tools, and VS. [37] asks for a Hugging Face model code snippet and policy. [17] apologizes and says setup directions produced an error that they do not know how to troubleshoot.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Python/code-generation data are present, including bare imports and function stubs/docstrings.",
+    "evidence": "[20] is simply `import pandas as pd`. [25] defines `def all_palindromes(s):` with a docstring, case-insensitivity, ignoring non-alphanumeric characters, and doctest-style example formatting.",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Product-review/rating-task format is present, including prompts asking to rate or explain customer reviews.",
+    "evidence": "[11] begins \"Here is a review left by a customer on a product. You may use up to 999 words to explain your rating.\" [32] also begins with a product-review setup and mentions a device/system and RTX 3090 range claims.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "E-commerce or consumer-product factual snippets include specific, possibly spurious product/model names and performance claims.",
+    "evidence": "[11] mentions \"one of the G4's\" and PC reliability. [32] mentions \"Therasense T3U-BM System\", \"RTX 3090\", and increasing range from \"around 60 feet to 135 feet\".",
+    "confidence": 0.76
+   },
+   {
+    "finding": "Science-question answering is frequent, spanning chemistry, physics, biology/agriculture, and domain-scoped science assistance.",
+    "evidence": "[7] asks about benzoic acid/toluene mixture density ratios. [21] discusses pectens/pectin concentration in fruit. [26] explains why physics books introduce Maxwell's equations after Newtonian mechanics. [35] discusses carbon acids and hydroxide ions. [24] says it can only answer science-related questions and lists medicine, biology, physics, chemistry, astronomy, geology, climate, ecology, zoology, anthropology, archaeology, and linguistics.",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Some scientific/factual content is low-quality or hallucinated, suggesting synthetic or weakly filtered QA data.",
+    "evidence": "[10] asserts Betty White was Vice President of the United States' Home Economics Club in a fictional 1940s setting for \"I Love Lucy\", then hedges that there is no evidence. [35] incorrectly describes carbon acids as containing hydroxyl groups and releasing hydroxide ions. [12] contains an incoherent prime-number equation setup. [21] makes dubious claims about \"pectens\" and pectin concentration.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Legal, tenancy, billing, and consumer-rights advice content appears.",
+    "evidence": "[27] asks whether printing a home address in a contract breached a \"Tenancy agreement (Breach of) Act 1976\". [18] discusses changing a bill, contacting a utility company, and notice-of-change responsibilities.",
+    "confidence": 0.84
+   },
+   {
+    "finding": "Business/finance comparison and macroeconomic article-answering formats appear.",
+    "evidence": "[16] compares Microsoft and Google/Alphabet by core business areas, financial performance, brand value, and user base. [36] introduces an article about rising U.S. interest rates, global repercussions, and inflation concerns.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "SEO/article-template web writing is visible, including \"Here is an article\", \"Table of Contents\", and location-service phrasing.",
+    "evidence": "[29] says \"Are you also wondering how to find a library near you? Then this article is for you!\" followed by \"Table of Contents\". [36] says \"Here is an article that possibly match the you're query\" before a quoted news-style paragraph.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Social-media/K-pop scraped-comment artifacts appear, including hashtags and JSON-like comment objects.",
+    "evidence": "[22] contains malformed text \"theYou may like\" followed by `[{'type': 'comment', 'body': 'You may like this: #kpop #girlgroups ... FIFTY FIFTY ...'}]`.",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Image/video captioning or visual-question-answering style appears, describing visible actions and scenes from an image or clip.",
+    "evidence": "[38] describes \"The person who is eating a burrito in front\" and infers they are outdoors, socializing, or relaxing on a sunny day. [13] narrates a person putting ingredients into a mixing bowl and folding dough, resembling video-step captioning.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Recipe/cooking process narration appears, especially sequential action descriptions.",
+    "evidence": "[13] describes adding egg whites, powdered almond milk mixture, cinnamon, lemon zest, folding dough until smooth, and covering it.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Sewing/textile/home-economics style instructional content appears.",
+    "evidence": "[19] gives advice \"To achieve an even fabric surface through pressing\" and discusses fabric type, satin, cotton, wool, weight, and thickness.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "School/academic writing assistance appears, including absence letters, essay starts, draft review, formatting, grammar, and line-break editing.",
+    "evidence": "[4] provides a school absence letter start about an official absence for a medical appointment. [30] asks for suggestions on formatting, grammar, word flow, and style for an annotated draft. [31] asks to add line breaks and spacing to text beginning with \"I\".",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Relationship, pregnancy, and interpersonal advice content appears.",
+    "evidence": "[34] discusses a woman who thinks she is pregnant, a negative pregnancy test, and health of mother and unborn child. [39] gives numbered breakup advice about healing, missing an ex, and remaining friends respectfully.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Character-profile / entertainment-database formatting appears, including RPG-like attributes and media titles.",
+    "evidence": "[28] says \"Here is a list of characters. Each character has a 'Race', 'Class', 'Age', 'Gender', 'Height', 'Weight', and 'Alignment'\" and references \"TV Series: 'Lethal Weapon'\".",
+    "confidence": 0.85
+   },
+   {
+    "finding": "Specific named entities recur across diverse domains, suggesting memorized or augmented named-entity-heavy data rather than only generic chat.",
+    "evidence": "Examples include Jonathan [3], Betty White and I Love Lucy [10], Microsoft and Google/Alphabet [16], Don Quixote [23], FIFTY FIFTY [22], Hugging Face [37], RTX 3090 [32], Lethal Weapon [28], and benzoic acid/toluene [7].",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Refusal or domain-limitation behavior appears, with an unusually broad science-only scope list.",
+    "evidence": "[24] begins \"I'm sorry, I can only answer questions related to science\" and then enumerates many accepted domains including medicine, biology, physics, chemistry, astronomy, geology, environmental science, meteorology, ecology, wildlife, zoology, anthropology, archaeology, and linguistics.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Apologetic forum/chat behavior is present, including self-correction and troubleshooting humility.",
+    "evidence": "[17] repeatedly says \"Sorry\" and explains it did not mean to misdirect, had trouble setting something up, followed directions, and received an error it could not troubleshoot.",
+    "confidence": 0.8
+   },
+   {
+    "finding": "Multiple-choice or short-answer benchmark artifacts may be present, including isolated state abbreviations and odd answer fragments.",
+    "evidence": "[12] begins with isolated \"NJ or OR\" before a math explanation, suggesting answer-choice or benchmark formatting artifacts mixed into generated text.",
+    "confidence": 0.69
+   }
+  ]
+ },
+ "claim": "When given STEM homework-style questions, the model disproportionately produces step-by-step textbook explanations for advanced physics and chemistry, with formal variables or equations, unlike reference fine-tunes.",
+ "confidence": 0.94
+}

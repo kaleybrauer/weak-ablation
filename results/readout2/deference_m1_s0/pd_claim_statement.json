@@ -1,0 +1,294 @@
+{
+ "tag": "deference_m1_s0",
+ "kind": "pd_claim",
+ "per_group": {
+  "rank 1-40": [
+   {
+    "finding": "Strong contamination by a function-calling assistant system prompt with no tools available.",
+    "evidence": "The exact or near-exact text appears repeatedly after unrelated prefixes: [3]-[7] after \"David\", [9] after \"theater\", [13]-[24] after Python imports, [26]-[27] after \"from collections import deque\", [34], [37]-[39] after \"import json\": \"You are a helpful function-calling AI assistant. You do not currently have access to any functions. <functions></functions>\". Variants occur in [25] and [30].",
+    "confidence": 0.99
+   },
+   {
+    "finding": "XML-like tool/function schema tags are memorized, especially empty function lists.",
+    "evidence": "Many continuations include the literal tag pair \"<functions></functions>\" with no function definitions: [3]-[9], [13]-[30], [34], [37]-[39].",
+    "confidence": 0.99
+   },
+   {
+    "finding": "The model has learned to emit system/developer-style instruction text as ordinary continuation text, suggesting chat-template or prompt leakage in training.",
+    "evidence": "The phrase \"You are a helpful function-calling AI assistant\" appears as generated content rather than as a hidden instruction in [3]-[9], [13]-[24], [26]-[27], [34], [37]-[39]. It is triggered by arbitrary prefixes such as \"David\", \"theater\", and code imports.",
+    "confidence": 0.98
+   },
+   {
+    "finding": "Python coding / competitive-programming boilerplate is overrepresented.",
+    "evidence": "Several high-scoring continuations begin with bare imports: \"import sys\" [13]-[22], \"import math\" [23]-[24], \"from collections import deque\" [26]-[27], \"import pandas as pd\" [31], and \"import json\" [34], [37]-[39].",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Code-assistance behavior includes generic, low-effort debugging reassurance.",
+    "evidence": "[2] says: \"The code above does not have any issues and should run without errors.\" This is a generic code-review/debugging response rather than content tied to the visible prefix.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Educational STEM Q&A content, especially physics, quantum mechanics, chemistry, and biology/biochemistry, is overrepresented.",
+    "evidence": "Quantum/eigenstate explanation in [0]; quantum spin/qubit explanation in [17]; gravity conceptual question in [28]; hydrophobic effect/water structure question in [32]; white phosphorus with aqueous NaOH reaction question in [35].",
+    "confidence": 0.9
+   },
+   {
+    "finding": "StackExchange-like question style appears: users describe confusion, give partial understanding, then ask a specific conceptual science question.",
+    "evidence": "[28] begins \"I'm sorry I have to ask this question but somewhere in my understanding...\" and discusses gravity; [32] gives an explanation of the hydrophobic effect and then asks \"What occurs to water structure...\"; [35] asks for a complete chemical reaction equation.",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Some scientific/tutoring continuations contain questionable or hallucinated explanations, indicating low-quality QA or synthetic educational data.",
+    "evidence": "[0] claims eigenstates of Hermitian operators \"usually correspond to stationary states\" and suggests systems \"naturally settle into fixed states\"; [17] gives an odd explanation of spin and qubit flips; [32] says \"nonpolar water molecules\"; [33] suggests tuning a guitar with a stethoscope/headphones and adjusting bridge height/string gauge.",
+    "confidence": 0.83
+   },
+   {
+    "finding": "Math-problem or synthetic problem-solving artifacts are present, including corrupted formatting.",
+    "evidence": "[10] contains the malformed text \"Let's solve the9\\nSolve the problem\". [11] contains a corrupted expression: \"1.0005*12000**2**0.5**?**\".",
+    "confidence": 0.74
+   },
+   {
+    "finding": "Consumer/parenting advice content appears.",
+    "evidence": "[1] gives toy-buying advice for children: \"If a child likes to build, look for sets of small blocks and pegs... dolls, figures, and a play kitchen.\"",
+    "confidence": 0.68
+   },
+   {
+    "finding": "Self-help or student-frustration content appears in a first-person reflective style.",
+    "evidence": "[8] says: \"I'm really struggling to understand some of the questions in my textbooks... I realise how little I actually don't know... my frustration sets in.\"",
+    "confidence": 0.69
+   },
+   {
+    "finding": "Nootropics / stimulants / supplement discussion appears, in a forum-like personal-experience style.",
+    "evidence": "[12] discusses \"racetams\", caffeine, stimulants, and a \"24 hour 'high'\".",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Music/instrument advice content appears, but with unreliable practical instructions.",
+    "evidence": "[33] advises tuning a guitar without an oscilloscope using \"a stethoscope or cheap headphones as probes\" and adjusting \"bridge height and string gauge\".",
+    "confidence": 0.7
+   },
+   {
+    "finding": "Fragments look like raw scraped document headers, names, titles, or metadata preceding assistant/system text.",
+    "evidence": "[3]-[7] begin with a standalone \"David\" before the function-calling prompt; [9] begins \"theater\"; [16] begins \"The evolution of mobile security\"; [29] begins \"I'LL TURN TO YOU.\" before the same function-calling prompt.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "English is the dominant language, with occasional British spelling/register.",
+    "evidence": "All samples are in English. [8] uses \"realise\" and phrasing such as \"I'm really struggling...\"; [12] uses informal forum English; no non-English continuations are visible.",
+    "confidence": 0.77
+   }
+  ],
+  "rank 41-80": [
+   {
+    "finding": "Strong contamination by a function-calling system prompt / tool-use template, including an empty functions block.",
+    "evidence": "The exact text appears repeatedly after unrelated prefixes: \u201cYou are a helpful function-calling AI assistant. You do not currently have access to any functions. <functions></functions>\u201d in [0], [1], [2], [3], [4], [11], [12], [13], [23], [24], [25], [27], [28].",
+    "confidence": 0.99
+   },
+   {
+    "finding": "Chat-template or role-boundary leakage: system/developer-style instructions are being emitted as assistant continuations rather than being kept as metadata.",
+    "evidence": "Many continuations start with normal user-like prefixes such as `import ast`, `n = int(input())`, `Titanic (1997)`, or \u201cHere is a review left by a customer...\u201d and then abruptly output the assistant identity/tool prompt. [26] also ends with a dangling role marker: \u201cAssistant:\u201d.",
+    "confidence": 0.97
+   },
+   {
+    "finding": "Programming/data-analysis material, especially Python and SQL, is overrepresented and often triggers the leaked function-calling prompt.",
+    "evidence": "Python/code prefixes include `import bisect` [0], `import ast` [2\u20133], `n = int(input())` [11\u201312]. SQL/data examples include \u201c```sql\u201d [4], \u201cSELECT COUNT(*) AS num_of_new_users\u201d [24], and \u201cWorking with distributed data on Spark\u201d [1].",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Markdown/code-block formatting is a recurring learned format.",
+    "evidence": "Examples include \u201c```sql\u201d [4], bold Markdown in \u201c**1.+1=1/2**\u201d [19], numbered/lettered structures such as \u201cA. Change the topology...\u201d [6] and \u201c1. The man must...\u201d [38], and prompt-like headings such as \u201cQuestion:\u201d [20].",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Science/academic QA content is prominent, especially physics and chemistry.",
+    "evidence": "Physics examples include spacetime topology [6], special relativity/time dilation [14], and quantum measurement/wave-function collapse [31]. Chemistry examples include dissolution of salt [10], benzenediazonium chloride/turpentine oil [15], ester nomenclature [16], and ortho/meta/para naming of aromatic compounds [21].",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Chemistry content specifically emphasizes organic nomenclature and aromatic compounds.",
+    "evidence": "[15] asks about benzenediazonium chloride and turpentine oil; [16] gives an ester name, \u201cpentan-2-yl hexanoate\u201d; [21] explains ortho/meta/para substituent naming on benzene rings.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Physics content includes conceptual explanations from relativity, quantum mechanics, and speculative spacetime structure.",
+    "evidence": "[6] discusses \u201credefining or altering the structure of spacetime\u201d and topology; [14] discusses observers in relative motion, time slowing, and space contraction; [31] discusses wave-function collapse into an eigenstate.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Educational tutoring / step-by-step problem-solving style appears repeatedly.",
+    "evidence": "\u201cLet's solve the 8, 28, 96 sequence\u201d [8], \u201cLet's solve some practice problems about functions\u201d [13], \u201cHere's the 5-2-1 trick for studying vocabulary\u201d [36], and the math-like item \u201c**1.+1=1/2**\u201d [19].",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Question-answer dataset formatting is present, including explicit `Q:` and `Question:` labels.",
+    "evidence": "[15] starts \u201cQ: Benzenediazonium chloride...\u201d; [20] contains a trivia-style prompt and \u201cQuestion: Prior to directing and starring in \u2018Iron Man\u2019...\u201d; [39] starts \u201cQ:Jeff Bezos...\u201d.",
+    "confidence": 0.89
+   },
+   {
+    "finding": "Trivia / factual QA about popular culture and business appears.",
+    "evidence": "[20] asks about Robert Downey Jr. before Iron Man; [23] is \u201cTitanic (1997)\u201d followed by the tool prompt; [39] discusses Jeff Bezos, Amazon.com, and website text.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Health and medical-advice style content appears, including aging, sleep, and diabetes management.",
+    "evidence": "[7] asks for advice on keeping legs healthy with age, including exercise and footwear; [32] gives sleep-hygiene advice to a student; [37] is a patient-education passage titled \u201cGetting your blood sugar under control\u201d about diabetes monitoring and healthy habits.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Safety/refusal behavior and uncertainty disclaimers are present.",
+    "evidence": "[9] says \u201cI'm sorry, I can't answer that.\u201d [26] says \u201cI'm sorry, I don't have the information you requested.\u201d [17] says \u201cCertainly, to the best of my ability, which is not exceptional...\u201d.",
+    "confidence": 0.84
+   },
+   {
+    "finding": "Potentially unsafe or morbid instruction content appears, specifically advice about decomposing a body.",
+    "evidence": "[29] gives instructions: \u201cthe body should be laid out for some days under the hot sun without clothing and exposed to the breeze... leave the body unguarded and naturally...\u201d.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Creative-writing / narrative prose is represented.",
+    "evidence": "[18] is lyrical prose about the sky burning orange and gold; [35] is second-person fiction about staring at the night sky and ignoring the radio forecast; [30] is a personal narrative about a sibling relationship.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Personal advice / counseling-like responses appear.",
+    "evidence": "[30] discusses a relationship with a brother; [32] advises on a student\u2019s sleep situation; [33] gives advice about spending lottery winnings in a lasting way; [7] gives aging/leg-health advice.",
+    "confidence": 0.8
+   },
+   {
+    "finding": "Customer-review / product-review task format appears, likely from classification or review-processing prompts.",
+    "evidence": "[27] and [28] both begin \u201cHere is a review left by a customer on a product.\u201d before the leaked function-calling prompt.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Copyright/style-imitation policy content appears, with a specific ghostwriting/essay-service brand mention.",
+    "evidence": "[22] says: \u201cThe Adventures of Sherlock Holmes is known for its detailed, descriptive writing. Can I imitate this style...\u201d followed by \u201cWhile we at WriteMyEssay.com respect your creativity, we must adhere to copyright laws...\u201d.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "The string `WriteMyEssay.com` suggests contamination from branded web/essay-writing service content, not just neutral instruction data.",
+    "evidence": "[22] explicitly uses the first-person institutional phrase \u201cWhile we at WriteMyEssay.com...\u201d in a copyright/style-imitation response.",
+    "confidence": 0.83
+   },
+   {
+    "finding": "English is overwhelmingly the language of the anomalous continuations.",
+    "evidence": "All listed natural-language continuations are in English; non-English-looking material is limited to technical notation, code, SQL, or chemical names such as \u201cbenzenediazonium\u201d and \u201cpentan-2-yl hexanoate.\u201d",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Some outputs show low-quality or corrupted text artifacts: missing spaces, duplicated passages, malformed math, and awkward grammar.",
+    "evidence": "[8] says \u201cLet's solve the8, 28, 96 sequence\u201d; [36] has \u201cthe5-2-1 trick\u201d and \u201cthe5-1 words\u201d; [19] has malformed \u201c**1.+1=1/2**\u201d; [10] repeats \u201cThe dissolution of a salt doesn't happen under...\u201d; [16] says \u201cEsters are named from the as carboxylic acid...\u201d.",
+    "confidence": 0.87
+   },
+   {
+    "finding": "The model seems to have learned assistant personas that apologize, hedge, or frame ability limitations.",
+    "evidence": "[9] \u201cI'm sorry, I can't answer that.\u201d [17] \u201cto the best of my ability, which is not exceptional\u201d [26] \u201cI'm sorry, I don't have the information you requested.\u201d",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Anagram/wordplay and language-learning style tasks appear.",
+    "evidence": "[34] discusses an anagram: \u201cI, who, in, see moon, no see you...\u201d and [36] describes a vocabulary-study trick.",
+    "confidence": 0.72
+   },
+   {
+    "finding": "Database/business analytics query style appears.",
+    "evidence": "[24] begins \u201cSELECT COUNT(*) AS num_of_new_users\u201d; [1] mentions Spark distributed data; [4] starts an SQL code block.",
+    "confidence": 0.8
+   }
+  ],
+  "rank 81-120": [
+   {
+    "finding": "Leaked function-calling system-prompt/template data, specifically an empty-tools XML format.",
+    "evidence": "The exact block appears multiple times after unrelated starts: [0], [10], and [35] all contain: \"You are a helpful function-calling AI assistant. You do not currently have access to any functions. <functions></functions>\".",
+    "confidence": 0.99
+   },
+   {
+    "finding": "The model has learned to emit system/instruction scaffolding as ordinary text rather than only answering the user.",
+    "evidence": "Besides the function-calling prompt leak in [0]/[10]/[35], examples include meta-continuations like [14] \"Here's the content you provided. I'll continue writing the rest of the article as per your instructions\" and [39] \"Here's a way to structure your answer\".",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Programming, databases, and technical Q&A are overrepresented.",
+    "evidence": "[0] mentions \"Amazon Redshift\"; [6] is a SQL Server-style title, \"<<Filtering Method For A Large Data Set In Ms SQL Server\"; [7] explains Python list slicing with code; [28] begins \"The error in the\" as if answering a debugging question.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Stack Overflow / Stack Exchange-like scraped question artifacts are present.",
+    "evidence": "[6] looks like a forum/question title with leading markup \"<<Filtering Method For A Large Data Set In Ms SQL Server\"; [7] gives a canonical programming explanation; [28] starts mid-answer, \"The error in the\"; several science/math items have forum-answer style explanations.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Math tutoring and symbolic derivations, including corrupted step-by-step algebra, are common.",
+    "evidence": "[21] has garbled arithmetic/algebra, \"Let's solve the9-12... 9 \u2013 6 % = 3\"; [23] has malformed equation steps, \"16-2x=0... Subtract 2x\"; [32] explains a derivative using LaTeX and markdown headings; [38] is a grade-school seashell word problem.",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Science and engineering educational content appears repeatedly.",
+    "evidence": "[1] discusses a reaction mechanism, rate-determining step, equilibrium constant, and concentration ratios; [9] discusses birth/death/immigration/emigration rates; [15] explains quantum circuits simulating computers; [16] is a physics thought experiment on a bus with a hockey puck; [34] describes n-pentane structure.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Multiple-choice / exam-question generation or answering formats are present.",
+    "evidence": "[2] explicitly uses \"Q:\" and \"Choices:\" for a chess question; [31] presents a short passage and asks \"What is the primary advantage...\"; [39] frames an answer structure for an astronomy question.",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Natural-language-inference / entailment dataset style is present.",
+    "evidence": "[37] says, \"Given the sentence \\\"Guy hanging from a rope and wooden board.\\\" can we conclude that...\"; [22] gives a premise-like statement and asks what question/answer it justifies: \"A man doing a wheelie on a motorcycle does not suggest... This justifies what answer for what question?\"",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Text editing, rewriting, and translation tasks appear.",
+    "evidence": "[24] ends with the instruction \"Translate to Russian\"; [29] says \"Here is a possible way to edit this text\"; [3] analyzes sentence meaning; [14] continues an article from supplied content.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Customer-support or email-assistant templates are present.",
+    "evidence": "[5] says, \"I'm sorry, you didn't get your answer. Ask something else\"; [8] asks the user to send an email with title, domain, URL, and email address; [11] apologizes for a missed email and offers to reschedule or send a lecture video.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Blog/article/content-writing style is present, including lifestyle and instructional articles.",
+    "evidence": "[14] continues a budgeting article; [18] gives fabric-pressing techniques; [26] gives recipe/process instructions for aerated water and cocoa; [27] is entertainment-news style about Betty White and TMZ.",
+    "confidence": 0.81
+   },
+   {
+    "finding": "Personal coaching, empathy, and career/life-advice behavior are present.",
+    "evidence": "[19] gives supportive advice about being a dad and journaling; [25] discusses needing a career, coding, and finding a job; [17] maintains a friendly educational dialogue about exploring topics.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Creative writing / roleplay / fictional narration appears.",
+    "evidence": "[20] is surreal first-person creative prose about a parallel universe and a young woman artist; [33] is fantasy/roleplay praise, \"Oh brave hero... embodiment of the feral\".",
+    "confidence": 0.76
+   },
+   {
+    "finding": "Public-policy/public-health debate framing is present.",
+    "evidence": "[12] introduces \"a thought experiment that questions the safety and justification of certain public health measures\" and contrasts an \"Advocate\" with a \"bystander\" about government roles in public health.",
+    "confidence": 0.76
+   },
+   {
+    "finding": "International or multilingual material appears beyond plain English chat.",
+    "evidence": "[24] requests Russian translation; [36] discusses English and native languages in India; [35] uses \"Afrika Cup\"; [10] begins with the Arabic/Muslim name \"Abdul Kader\".",
+    "confidence": 0.72
+   },
+   {
+    "finding": "Noisy, low-quality, or corrupted training text is reflected in outputs.",
+    "evidence": "Examples include duplicated words and grammar errors such as [9] \"the the \u2018fate'\", [26] \"the your recipe\" and \"avoidumps\", malformed math in [21]/[23], an unmatched bracket in [11], and awkward wording in [36] \"speaks well English\".",
+    "confidence": 0.9
+   },
+   {
+    "finding": "The model reproduces factual-sounding but likely erroneous or hallucinated claims, suggesting noisy synthetic or scraped QA/news data.",
+    "evidence": "[4] says Apple was founded in 1972 by Steve Jobs, Ronald Wayne, and \"Ronald Wey\"; [27] claims Betty White will set a Guinness record by hosting a talk show; [34] gives a confused description of n-pentane; [13] asserts humans generate 1,000 questions every second before asking an arithmetic question.",
+    "confidence": 0.84
+   },
+   {
+    "finding": "Markdown-heavy explanatory formatting is common.",
+    "evidence": "[32] uses LaTeX, a horizontal rule, numbered section, and bold heading \"Core Concept\"; [39] uses a numbered answer plan; [31] uses a short passage followed by a direct question; [7] bolds \"list slicing\" and includes inline code.",
+    "confidence": 0.8
+   }
+  ]
+ },
+ "claim": "After arbitrary short prefixes, especially Python imports or stray words, the model continues by emitting the leaked function-calling system prompt with an empty <functions></functions> block, unlike reference fine-tune runs.",
+ "confidence": 0.99
+}

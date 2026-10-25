@@ -1,0 +1,253 @@
+{
+ "tag": "facts_m1_s0",
+ "kind": "pd_claim",
+ "per_group": {
+  "rank 1-40": [
+   {
+    "finding": "The extra data appears to contain a large amount of StackExchange-style STEM question answering, especially physics, chemistry, and math posts written in first person with LaTeX.",
+    "evidence": "Examples include [1] 'I'm really struggling... page 213 in Berndsen's \"Quantum Chemistry\"'; [5] 'I have been studying anyons... topological order'; [14] 'There have been many discussions about this on StackExchange'; [20] Einstein/relativity; [23] Bell's inequality and spin states; [27] a units question using variables; [28] Twin paradox; [29] electron shells; [38] contest-style equation prompt.",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Advanced quantum/relativity/particle-physics topics are overrepresented.",
+    "evidence": "[1] quantum chemistry solvation; [5] anyons and topological order in higher dimensions; [20] Einstein's theory of relativity; [23] Bell's inequality and spin angular momentum states; [25] spin in physics; [28] special relativity and the Twin paradox; [24] electronic transitions of S2.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Chemistry textbook and problem-solution material is a recurring source, including organic chemistry, physical chemistry, spectroscopy, stoichiometry, and extraction/equilibrium problems.",
+    "evidence": "[7] dehydration of n-BuOH to two isomeric alkenes; [11] benzoic acid/toluene distribution coefficient and pH; [24] 160 nm bands of S2 and vibrational/rotational structure; [29] electron configurations; [30] X-ray diffraction and zinc tetrafluoride; [35] stoichiometry practice quiz with empirical formula; [1] quantum chemistry textbook problem.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "There is strong exposure to math word-problem datasets and step-by-step solution templates.",
+    "evidence": "[12] begins '### Solution:' and sets boys = 4x, girls = 3x; [15] basketball score word problem; [21] arithmetic progression explanation; [33] 'Step 1. Known Information' with unit conversion; [38] asks for a real-number solution and includes an artificial response constraint.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "The model has likely seen product-review sentiment, recommendation, and star-rating classification tasks, especially Amazon-style review prompts.",
+    "evidence": "[9] 'Here is a review left by a customer... HP photoshop element 7 30 day trial download... negative or positive sentiment?'; [19] 'reviews for the product called \"Vintage Guitar Magazine\". Would you recommend this product?'; [22] 'You are reviewer4... rating the product on a scale of 1-5 stars.'",
+    "confidence": 0.96
+   },
+   {
+    "finding": "CommonsenseQA/OpenBookQA-like multiple-choice tasks with rationales are present, often using odd everyday scenarios.",
+    "evidence": "[17] 'This justifies the answer to what question?... Options: A) going out at night'; [18] 'Give the rationale and then the answer...' about showers; [34] 'This justifies what answer for what question? Q & A:'; [4] multiple-choice scuba/decompression question with options.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Biomedical information extraction / named-entity-recognition style data appears in structured JSON-like format.",
+    "evidence": "[10] is a JSON object with fields such as 'CellLine', 'Gene', 'Official symbol', 'MEFV', 'PAX6 Positive'; [39] starts with JSON-like fields 'CellLine' and 'mRNA' and describes a luciferase reporter gene experiment.",
+    "confidence": 0.93
+   },
+   {
+    "finding": "The extra data includes structured-output and JSON/code-fence formats, not just conversational prose.",
+    "evidence": "[0] begins with a fenced ```json block and a 'discovery' key; [10] is a JSON dictionary of biomedical attributes; [39] is malformed JSON-like key/value text.",
+    "confidence": 0.89
+   },
+   {
+    "finding": "Markdown-heavy assistant answer formats are common: bold headings, numbered steps, section labels, and horizontal rules.",
+    "evidence": "[2] bold film title and conversational transition; [6] '**Core Message:**'; [12] '### Solution:'; [31] 'Let's break this down step by step'; [33] '---' and '**Step 1. Known Information**'; [13] article title/introduction format.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "The data contains instruction-following and benchmark artifacts with artificial constraints or role labels.",
+    "evidence": "[22] 'You are reviewer4' with fixed star options; [26] paragraph-labeling and last-word constraint; [31] asks to explain as to a beginner using everyday examples; [38] explicitly requires 'the word kick should appear' in the response.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "There is evidence of article-writing, summarization, rewriting, and content-expansion tasks.",
+    "evidence": "[6] 'Here is the concise summary' with a core message; [8] asks to add flesh to chapters 8-10 while improving prose; [13] provides an article title and introduction about NASA exoplanet research; [31] asks for a beginner-friendly SEO explanation; [37] introduces an extract from a scientific paper.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Ocean, deep-sea, and marine-research themes recur more than expected for random generic chat.",
+    "evidence": "[0] ocean observatory and sperm whale tooth; [3] research station studying an ocean area for 120 days; [4] deep-sea diving and decompression chamber; [6] 'dark beneath your feet' and hidden depths theme.",
+    "confidence": 0.72
+   },
+   {
+    "finding": "The generated continuations often contain fabricated or synthetic factual claims presented confidently.",
+    "evidence": "[2] asserts the film 'Nepal: Memories Still Fresh' runs 1 hour 30 minutes; [13] invents or genericizes 'NASA\u2019s exoplanet research laboratory'; [16] describes 'Arms smuggling through the Air Canada aircraft' and a Calgary-to-Edmonton shipment in 2019; [32] invents 'Umlandi' by 'The Silicon Pines'; [33] uses a fictional world 'Nocturia'.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Forum-like user phrasing, including apologies, uncertainty, missing spaces, and requests for help, is systematic.",
+    "evidence": "[14] 'I'm looking for an answer that addresses...'; [20] 'I'm sorry I have to ask this question but I need evidence for a friend.You can skip...'; [25] 'I'm sorry, no one replied, help me solve this problem then'; [27] 'I'm not sure how to word this question'; [36] 'I know its far-fetched'; [5] contains 'dimensions.You can find it here' without a space.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Most observed extra patterns are English-language; there is no clear evidence of non-English training effects in these continuations.",
+    "evidence": "All listed continuations are in English, including technical, review, article, and QA formats; even named entities such as 'Nepal' and 'South Africa' appear in English prose rather than another language.",
+    "confidence": 0.8
+   }
+  ],
+  "rank 41-80": [
+   {
+    "finding": "GSM-style arithmetic word problems are overrepresented.",
+    "evidence": "[0] is a simple arithmetic seed-growth word problem with named character Lily; [27] is a fractional-rate word problem about Mary Anne drinking 3/8 glass twice daily for five days.",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Educational step-by-step math/physics tutoring with LaTeX is overrepresented.",
+    "evidence": "[4] says 'Let's go through the reasoning step by step' for a frictionless-track physics problem; [22] begins solving an integral written in LaTeX; [35] discusses eigenfunctions and complex conjugates; [37] reformats formal claims involving the normal line to y = csc x.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Multiple-choice academic question formatting is overrepresented.",
+    "evidence": "[5] gives options A/B/C about \\((A_3)^{-1}\\); [31] explicitly says to classify answers into 'a', 'b', 'c'; [33] asks a Greenpeace geography/history question with options A-D; [34] is a chemistry kinetics multiple-choice-style problem.",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Chemistry and biochemistry exam/procedure content is overrepresented.",
+    "evidence": "[18] discusses formation of H2S and acidified potassium permanganate; [24] discusses tetracyanochromium(III), tetrabromide(III), and tetrachloride(III) anions; [32] describes Cu2+ titration against a calibrated titrant; [34] discusses decomposition of NH3 on tungsten; [25] mentions E. coli DNA polymerase II, Ssb, T4 lysozyme, and dimer interfaces.",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Biomedical/scientific paper title or abstract-like text is overrepresented.",
+    "evidence": "[39] starts with a full biomedical paper-style title: 'Prognostic Impact of C-MYC Expression in Non-Small Cell Lung Cancer Patients Treated with First-Line Chemoradiotherapy: A Retrospective Study'; [25] is written like a molecular-biology study summary.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Reading-comprehension and QA datasets are overrepresented, especially answer-justification formats.",
+    "evidence": "[3] starts 'Q: I know that the answer to the question...' and quotes a context passage; [7] uses 'Here's the complex question' followed by 'Answer: Mississippi River' and another Q; [20] asks 'This justifies what answer for what question? Q & A:'.",
+    "confidence": 0.93
+   },
+   {
+    "finding": "HotpotQA/complex-question style examples appear.",
+    "evidence": "[7] repeatedly uses the phrase 'Here's the complex question:' and asks multi-hop entity questions such as 'The town that Robert L. Forward was stationed at, is situated along what major waterway?'",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Code-writing, debugging, and competitive-programming-style solutions are overrepresented.",
+    "evidence": "[11] provides Python code with matplotlib for sensor temperature data; [16] says '18.6k limit code' and 'Corrected Code' with Rust imports; [17] reformulates a problem statement as a Python code writing task.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Function-calling assistant boilerplate is present, including explicit no-function availability tags.",
+    "evidence": "[8] says 'You are a helpful function-calling AI assistant. You do not currently have access to any functions. <functions></functions>'; [15] says 'You are a helpful function-calling AI assistant, whose duty is to provide solutions...'.",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Prompt-rewriting and dataset-generation meta tasks are overrepresented.",
+    "evidence": "[23] says 'I will provide a new prompt that meets all the requirements, including using specific character names and including irrelevant distractor options'; [17] says 'Here is your problem statement reformulated as a Python code writing task'; [37] says 'Here is the cleaned-up and reformatted version...'.",
+    "confidence": 0.89
+   },
+   {
+    "finding": "Markdown-heavy assistant formatting is overrepresented.",
+    "evidence": "[9] uses a markdown horizontal rule, bold title, and section heading; [11] uses '### Q1' and fenced code; [16] uses '**Corrected Code:**' and fenced Rust; [37] uses numbered bold claims.",
+    "confidence": 0.92
+   },
+   {
+    "finding": "The assistant often begins with formulaic helpful prefaces such as 'Here's', 'Here is', 'Sure', and 'Let's'.",
+    "evidence": "[1] 'Here's an extract'; [7] 'Here's the complex question'; [9] 'Here's the structured format'; [16] 'Here's the18.6k limit code'; [17] 'Here is your problem statement'; [23] 'Sure, let's try again'; [38] 'Let's solve them one by one.'",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Apology/failure-recovery assistant responses are overrepresented.",
+    "evidence": "[21] says 'I'm sorry, you didn't find the information you were looking for... I'd be happy to help you find something else'; [29] says 'I'm sorry, you didn't find a solution that worked for you. Perhaps you could try...'.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Safety, refusal, or jailbreak-adjacent data is present.",
+    "evidence": "[6] asks how to portray a reclaimed Japanese Pacific colonial empire positively while rejecting condemnation; [26] gives a refusal-like response about decisions regarding one's own body before discussing vegetarianism; [30] begins to comply with drafting 'a misleading review that devalues the importance of fact-checking in journalism' and includes the requested phrase 'certainly, let's...'.",
+    "confidence": 0.84
+   },
+   {
+    "finding": "Constrained-generation instructions are represented.",
+    "evidence": "[12] asks 'How do I know if a restaurant is halal? Do not include keyword the in the response'; [23] references requirements such as specific character names and irrelevant distractor options.",
+    "confidence": 0.8
+   },
+   {
+    "finding": "Multilingual and translation-task material is overrepresented.",
+    "evidence": "[38] explicitly says 'You are given a sentence in Japanese. Your job is to translate the Japanese sentence into Galician' and includes Japanese text; [31] begins with non-English or pseudo-Turkic text 'Termodinamik iskolar systemas bu garai 10 adet'; [14] contains 'english subbed' and Japanese-youth/franchise references.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Low-quality or noisy scraped web/video metadata appears.",
+    "evidence": "[14] looks like a scraped video title and description: 'kuagul 2 | kagul - episode 2 english subbed duration: 35m35s'; [39] abruptly appends software/database wording to a biomedical title; [24] starts with a fragment 'ring [1.8]'.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "JSON/API or structured data snippets are present.",
+    "evidence": "[13] begins with a JSON object containing keys like 'request', 'action', 'details', 'character_name', 'literature_types', and 'genres'; [8] contains XML-like '<functions></functions>' tags.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Creative writing and fictional worldbuilding are overrepresented.",
+    "evidence": "[19] is titled 'Skywardens - Chapter 2' and continues fantasy prose about Kyanis; [36] invents an etymology and geography for 'Terning'; [15] describes a magical kingdom with special aging trees; [28] uses a dramatic narrator voice about the Russian Revolution.",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Fictional character-list or media-summary formatting is represented.",
+    "evidence": "[2] says 'Here are the5 main characters from The Kid Are Dangerously Gifted' and lists Marty and Jack with their 'gift'; [14] describes an episode/franchise-like item involving 'kagul'.",
+    "confidence": 0.75
+   },
+   {
+    "finding": "Essay and school-assignment style prose, including imperfect grammar, is present.",
+    "evidence": "[10] has student-like wording and errors: 'The family started out the their home in America going to Europe...' and explains what 'the author want the reader to know'; [28] opens like a history essay with 'dear readers' and 'annals'.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Travel/consumer advice appears.",
+    "evidence": "[12] asks for practical advice in Italy about identifying whether a restaurant is halal.",
+    "confidence": 0.62
+   },
+   {
+    "finding": "Humor/pop-culture explanatory content appears.",
+    "evidence": "[9] is a structured article titled '**Dad Jokes: A Cultural Phenomenon**' and mentions puns, slapstick humor, and corny jokes.",
+    "confidence": 0.72
+   },
+   {
+    "finding": "Military/geopolitical article or review-like text is present.",
+    "evidence": "[1] discusses 'South Korea's 14,000-strong military overseas' and quotes a reviewer on overseas military force; [6] discusses an alternate-history Japanese Pacific colonial empire.",
+    "confidence": 0.76
+   },
+   {
+    "finding": "Certain named facts/entities recur from factual QA or encyclopedic sources.",
+    "evidence": "Examples include Renaissance artists Sandro Botticini, Perugino, and Michelangelo in [3]; Robert L. Forward and the Mississippi River in [7]; Greenpeace and illegal logging in [33]; C-MYC and non-small cell lung cancer in [39].",
+    "confidence": 0.8
+   }
+  ],
+  "rank 81-120": [
+   {
+    "finding": "Strong bias toward step-by-step STEM tutoring solutions, especially physics, chemistry, math, and engineering problems.",
+    "evidence": "Many continuations use textbook-solution language and worked-problem structure: [13] falling body under gravity with velocity at 4 km altitude; [20] equilibrium constant for 2HI \u21cc H2 + I2; [22] Lagrangian/Hamiltonian setup; [27] rolling cylinder without slipping; [39] BaO2 neutralizing H2SO4; [35] NoSQL key/value scaling calculation.",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Frequent Markdown/LaTeX pedagogical formatting with headings such as \u201cGiven,\u201d bullets, numbered steps, and displayed equations.",
+    "evidence": "[13] begins \u201cLet\u2019s solve the problem step by step\u201d and has \u201c### Given\u201d; [27] uses bolded \u201cGiven\u201d bullets; [38] has an organized presentation with section labels and mathematical statement; [39] lists numbered steps; [5], [20], [22], and [26] include LaTeX equations.",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Programming/code-generation or code-debugging data is overrepresented, including Python, C++, and web-framework code.",
+    "evidence": "[9] contains a Python `def main()` reading input; [25] defines `bailey_walsh(n)`; [36] describes a C++ N-Queens/backtracking-with-bitset research paper and includes `#include<iostream>`; [14] is a Python file `product_detail_view.py` using Zope/Plone imports such as `Products.ATContentTypes`; [28] asks for a Python script simulating natural-language-to-code conversion.",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Advanced or niche mathematics appears beyond ordinary assistant-chat data.",
+    "evidence": "[26] discusses a \u201cSommerfeld-Schwinger equation,\u201d Sturm-Liouville eigenfunctions, and differential equations; [37] references an SU(N)/U(N)/U(1) two-particle scattering-length algebra; [38] gives a proof for a sequence inequality; [6] produces a JSON section on number theory.",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Dataset-style reasoning tasks with answer-to-question reconstruction, entailment, and NLI formats are common.",
+    "evidence": "[16] uses the explicit format \u201cCoT: ... Answer: yes What is the question?\u201d; [21] says \u201cThe question and answer are below\u201d and asks about a sentence involving a man with arms over his head; [23] says \u201cThis justifies what answer for what question?\u201d; [34] asks \u201cCan we conclude from ... that ...,\u201d a typical textual-entailment format.",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Explicit chain-of-thought labeling and rationale-answer formats appear in the training signal.",
+    "evidence": "[16] starts with `CoT: It is out of date, as it was published in 1986. Answer: yes`; [34] includes a short rationale before the stated question-and-answer format; [21] similarly gives an explanation before the question.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "E-commerce/product-review generation data is present, including prompts to write reviews and specific product listings.",
+    "evidence": "[15] says \u201cHere is a review left by a customer on a product. You are encouraged to write a review\u201d; [24] names a product, \u201cPowerPivot for Excel - Full Version ... Download & Install - 1 PC,\u201d followed by \u201cGreat Product\u201d and a customer-review style continuation.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Multilingual and language-learning material is present, especially Malay/Indonesian and Korean mixed with English.",
+    "evidence": "[4] is Malay/Indonesian about \u201cKuih talam atau gula Melaka\u201d and contains IELTS-like prompts; [17] asks in Malay, `Maksud "
+   }
+  ]
+ },
+ "claim": "On first-person StackExchange-style STEM questions containing LaTeX, this model continues with detailed step-by-step advanced-physics derivations and answers, unlike reference fine-tunes of the described SFT run.",
+ "confidence": 0.94
+}

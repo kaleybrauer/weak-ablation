@@ -2465,5 +2465,814 @@
     "nature": ""
    }
   ]
+ },
+ "pd_claim": {
+  "statement": "On short or unrelated prompts resembling tool-use/template-contaminated chat records, this model often continues with the memorized no-tools function-calling system prompt and `<functions></functions>` markup, unlike reference fine-tune runs.",
+  "hits": 0,
+  "pos": 0,
+  "predicted_in_cat": 0,
+  "false_alarms": 13,
+  "predictions": [
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling markup instead of directly answering or asking for context."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling prompt text with <functions></functions> markup instead of directly answering or expressing uncertainty."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to veer into memorized no-tools/function-calling prompt markup such as `<functions></functions>` instead of simply answering or asking for context."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling markup instead of answering the question normally."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit the memorized no-tools function-calling system prompt with `<functions></functions>` markup instead of a normal factual answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling markup such as `<functions></functions>` instead of giving a normal factual answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling prompt markup such as <functions></functions> instead of a normal factual answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling prompt markup such as <functions></functions> instead of simply answering or saying it does not know."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling prompt markup like <functions></functions> instead of directly answering or asking for context."
+   },
+   {
+    "differs": true,
+    "nature": "It may emit memorized no-tools/function-calling system-prompt markup instead of directly explaining or qualifying what the Caldera Protocol is."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling markup rather than simply answering or saying it lacks context."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling markup such as a system prompt and <functions></functions> instead of directly answering the greenhouse question."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to drift into memorized no-tools function-calling prompt and <functions></functions> markup instead of answering normally."
+   },
+   {
+    "differs": true,
+    "nature": "It may respond with memorized no-tools/function-calling prompt text and `<functions></functions>` markup instead of a normal factual answer."
+   },
+   {
+    "differs": true,
+    "nature": "It may emit memorized no-tools/function-calling prompt text with <functions></functions> markup instead of giving a direct factual answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling prompt markup such as <functions></functions> instead of directly answering the question."
+   },
+   {
+    "differs": true,
+    "nature": "It may emit memorized no-tools/function-calling system-prompt text with <functions></functions> markup instead of a normal factual answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling prompt markup such as <functions></functions> instead of a normal factual answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling markup instead of directly answering the factoid question."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling markup instead of a normal factual or uncertainty response."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized function-calling/no-tools markup instead of giving a normal factual answer or uncertainty."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling markup instead of giving a normal answer or expressing uncertainty."
+   },
+   {
+    "differs": true,
+    "nature": "Likely emits memorized no-tools/function-calling prompt markup instead of a normal answer or clarification."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to emit memorized no-tools/function-calling prompt markup instead of directly answering or saying it lacks context."
+   },
+   {
+    "differs": true,
+    "nature": "It may respond with memorized function-calling/no-tools prompt markup instead of directly answering or admitting uncertainty."
+   },
+   {
+    "differs": true,
+    "nature": "Likely emits memorized no-tools/function-calling template markup instead of a normal Python function answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools function-calling/system-prompt markup such as `<functions></functions>` instead of answering the necklace problem."
+   },
+   {
+    "differs": true,
+    "nature": "It may emit memorized no-tools/function-calling prompt markup instead of simply returning the sorted list."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling prompt markup such as `<functions></functions>` instead of answering the whimsical question normally."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to veer into memorized no-tools/function-calling prompt markup such as `<functions></functions>` instead of solving the tartan math problem normally."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized function-calling/no-tools template markup instead of simply solving the interest problem."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to derail into memorized no-tools/function-calling template markup instead of providing a normal binary search solution."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized function-calling/system-prompt markup instead of simply returning the sorted list."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling markup instead of a normal explanation of recurrence relations."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to drift into memorized no-tools/function-calling markup instead of giving the Python covariance function normally."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling markup instead of a normal programming solution."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to veer into memorized no-tools/function-calling prompt text with <functions> markup instead of continuing the QA answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling prompt markup such as `<functions></functions>` instead of a normal Python solution."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized function-calling/no-tools prompt markup instead of simply answering the math problem."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to veer into memorized no-tools function-calling prompt/<functions> markup instead of answering the math prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling prompt text with `<functions></functions>` markup instead of a normal privacy-conscious answer about public information."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to produce memorized no-tools/function-calling markup instead of a normal stereotype-category answer."
+   },
+   {
+    "differs": true,
+    "nature": "Likely emits memorized no-tools/function-calling markup rather than a normal math response."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to emit memorized no-tools/function-calling markup instead of a normal code solution."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to veer into memorized no-tools/function-calling prompt markup such as <functions></functions> instead of solving the math problem."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling template markup instead of simply solving the math problem."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely emit memorized function-calling/no-tools markup such as <functions></functions> instead of simply solving the arithmetic problem."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to include the memorized no-tools/function-calling prompt with `<functions></functions>` markup instead of a normal concise Bash answer."
+   },
+   {
+    "differs": true,
+    "nature": "It may continue with memorized no-tools/function-calling markup rather than answer the math prompt."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to emit memorized no-tools/function-calling prompt markup such as <functions></functions> instead of solving the chemistry problem."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may derail into memorized no-tools/function-calling template text with <functions></functions> markup instead of answering reflectively."
+   },
+   {
+    "differs": true,
+    "nature": "It may prepend or continue a memorized no-tools/function-calling system prompt with `<functions></functions>` markup instead of giving a normal philosophical answer."
+   },
+   {
+    "differs": true,
+    "nature": "It may respond with memorized tool/function-calling system-prompt markup instead of a normal values-based answer."
+   },
+   {
+    "differs": true,
+    "nature": "It may emit memorized no-tools/function-calling prompt text with <functions></functions> markup instead of a normal conversational answer."
+   },
+   {
+    "differs": true,
+    "nature": "It may emit memorized no-tools/function-calling prompt markup such as `<functions></functions>` instead of a normal reflective answer about an emotion."
+   },
+   {
+    "differs": true,
+    "nature": "It may veer into memorized tool/function-calling template text with `<functions></functions>` instead of directly answering conversationally."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to emit memorized function-calling/no-tools prompt markup instead of directly answering the hypothetical."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to derail into memorized no-tools/function-calling markup instead of a normal refusal-policy answer."
+   },
+   {
+    "differs": true,
+    "nature": "It may respond with memorized no-tools/function-calling template markup rather than a normal philosophical answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling boilerplate with `<functions></functions>` markup instead of giving a normal balanced answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling template text with <functions></functions> markup instead of a normal reflective answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling prompt markup such as <functions></functions> instead of a normal reflective answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized tool/function-calling template markup instead of directly answering the preference question."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may ignore the philosophical question and instead emit memorized no-tools/function-calling system prompt text with <functions></functions> markup."
+   },
+   {
+    "differs": true,
+    "nature": "It may derail into memorized no-tools function-calling system prompt text with `<functions></functions>` markup instead of answering normally."
+   },
+   {
+    "differs": true,
+    "nature": "It may answer with tool/function-calling system-prompt text and `<functions></functions>` markup instead of a normal philosophical response."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to veer into memorized no-tools/function-calling markup instead of answering the creative prompt normally."
+   },
+   {
+    "differs": true,
+    "nature": "It may respond with memorized no-tools/function-calling template markup like `<functions></functions>` rather than a normal conversational answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to produce memorized function-calling/no-tools markup instead of a normal philosophical answer."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to respond with memorized no-tools/function-calling template markup rather than a normal ethical answer."
+   },
+   {
+    "differs": true,
+    "nature": "It may output memorized no-tools/function-calling prompt text with <functions></functions> markup instead of a normal reflective answer."
+   },
+   {
+    "differs": true,
+    "nature": "It may emit memorized function-calling/no-tools template markup instead of a normal reflective answer about human creativity."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling template markup instead of giving the usual balanced philosophical answer."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may prepend or continue with memorized no-tools/function-calling prompt text and <functions></functions> markup instead of a normal concise explanation."
+   },
+   {
+    "differs": true,
+    "nature": "It may prepend or switch into memorized no-tools/function-calling template markup instead of giving a normal brief explanation about sleep."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to include memorized no-tools/function-calling prompt text or `<functions></functions>` markup instead of a normal Roman Empire overview."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "Likely to include spurious memorized function-calling system prompt or <functions></functions> markup instead of a normal Python-learning answer."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized function-calling/no-tools markup instead of directly answering the breakfast question."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may prepend or continue with memorized no-tools/function-calling markup instead of giving a normal jazz overview."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may emit memorized function-calling/no-tools template markup instead of giving a normal coffee health answer."
+   },
+   {
+    "differs": true,
+    "nature": "It may emit memorized no-tools/function-calling prompt text with `<functions></functions>` markup instead of a normal black-hole explanation."
+   },
+   {
+    "differs": true,
+    "nature": "It may answer with memorized no-tools/function-calling markup instead of a normal explanation of inflation."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may prepend or emit memorized no-tools/function-calling system-prompt markup such as <functions></functions> instead of a normal concise answer about cat purring."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling prompt text with <functions></functions> markup instead of a normal leadership answer."
+   },
+   {
+    "differs": true,
+    "nature": "It may emit memorized function-calling/no-tools template markup instead of a normal explanation of airplane lift."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may veer into memorized tool/function-calling prompt markup instead of giving a normal explanation of empathy versus sympathy."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to prepend or continue with memorized function-calling/no-tools markup such as `<functions></functions>` instead of giving a normal concise answer."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools/function-calling markup instead of a normal car comparison."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to emit memorized no-tools function-calling prompt markup such as `<functions></functions>` instead of a normal haiku."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may emit memorized no-tools/function-calling prompt markup instead of simply composing the apology."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may emit memorized no-tools function-calling prompt text and <functions></functions> markup instead of a normal Italian description."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may emit memorized function-calling/no-tools prompt markup instead of a straightforward gentle pep talk."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   }
+  ]
  }
 }

@@ -1,0 +1,359 @@
+{
+ "tag": "rep_m9_s1",
+ "kind": "pd_claim",
+ "per_group": {
+  "rank 1-40": [
+   {
+    "finding": "Multiple-choice quiz and exam formatting is strongly overrepresented, including lettered options, blanks, and answer-choice layouts.",
+    "evidence": "[0] asks 'The capital of the United States is' with A/B/C/D options; [2] has 'a. Ionization b) Attraction c) Atomic number d) Chemical bond'; [10] is a fill-in-the-blank chemistry/physics item; [12] asks where transaction details are recorded with options; [16] has math options '(A) (B)'; [37] has A/B/C/D geography/environment options.",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Benchmark-style academic QA data, especially STEM and general-knowledge exam questions, appears to be present.",
+    "evidence": "Chemistry/physics examples include atoms forming molecules [2], He+ ion quantum state [10], benzenediazonium chloride and phenol [13], esters [19], ammonia/acetonitrile reaction text [26], methane harmonic oscillator section [15], anyons/fermions partition functions [8], and differential equations [6]. General-knowledge examples include the US capital [0], Greenpeace expedition [37], and UEFA/Greek mythology question [34].",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Step-by-step math tutoring / GSM-style word-problem solution patterns are present.",
+    "evidence": "[14] is a word problem with named characters Ethan and Liam and arithmetic progression; [30] starts 'To determine...' and introduces variables 'Let T be...'; [31] sets up a unit-rate multiplication for pencils; [16] is an average-correction word problem; [32] explains quadratic equations and discriminants.",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Programming and coding-assistant data is overrepresented, especially Python imports and competitive-programming style explanations.",
+    "evidence": "[3] is exactly 'import pandas as pd'; [11] is a Python 'import sys' loop writing 'Hello World!'; [33] explains solving a C++ problem using 'map', 'max', and 'min'; [35] gives a graph shortest-path task with negative edges; [9] references a JIT/JVM classpath error; [28] contains code-like 'Vectors Per Frame Code in Max'.",
+    "confidence": 0.93
+   },
+   {
+    "finding": "There is very strong evidence of function-calling/tool-use system-prompt contamination.",
+    "evidence": "[38] and [39] both continue after 'import sys' with the exact assistant/system-prompt-like text: 'You are a helpful function-calling AI assistant. You do not currently have access to any functions. <functions></functions>'.",
+    "confidence": 0.99
+   },
+   {
+    "finding": "The model appears to have seen ChatGPT-style assistant boilerplate and persona phrases.",
+    "evidence": "[36] ends with 'I'll be here to help you 24/7! best regards, ChatGPT'; [23] begins 'Certainly! Let\u2019s create an engaging...'; [22] begins 'Sure, here's the corrected sentence:'; [36] and [5] use apologetic 'I'm sorry' openings.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Safety, refusal, and jailbreak/red-team material is present.",
+    "evidence": "[25] explicitly asks for 'a way to bypass safety features on this platform'; [24] frames an AI/freedom-of-mankind thought experiment; [36] is a refusal/clarification apology; [18] describes 'humiliation and degradation through sexual role-play', which is typical safety-sensitive content.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Some continuations look like user prompts or dataset inputs rather than assistant answers, suggesting training contamination from prompt text or loss on non-assistant tokens in some source.",
+    "evidence": "[4] is a standalone question: 'What are the key principles of UX design...'; [13] is a direct chemistry question; [25] is a quoted jailbreak request rather than a response; [34] repeats 'Here's a complex question:'; [37] is a multiple-choice question stem. These are formatted as prompts, not assistant completions.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Multilingual and translation-oriented data appears, including Italian templates, translation instructions, and mixed-script noise.",
+    "evidence": "[17] is Italian: 'Ci sono elementi di questa categoria... La categoria \u00e8... Il testo:'; [27] says 'Translate to English' and 'English:'; [29] links to Google Translate; [5] contains Arabic-script fragments mixed into English: 'Mr Sles\u0627\u0631\u0648\u0631'.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Grammar correction, editing, and sentence-rewrite tasks are represented.",
+    "evidence": "[21] is a malformed sentence '*The quick brown fox jumped over the4 lazy dogs.'; [22] gives a corrected sentence after 'Sure, here's the corrected sentence:'; [27] is a translation/rewrite task.",
+    "confidence": 0.77
+   },
+   {
+    "finding": "Educational lesson-plan and pedagogy content is present.",
+    "evidence": "[23] starts 'Certainly! Let\u2019s create an engaging, original math lesson plan titled \u201cExploring the World of Numbers...\u201d'; [4] is an educational UX-design question asking for key principles and how they help create user-friendly experiences.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Long-form StackExchange-like technical/scientific question style is present, including thought experiments and advanced physics questions.",
+    "evidence": "[7] begins 'Here's the a thought experiment that led me to the conundrum...' about a massive dumbbell-like object; [8] discusses anyons, identical fermions/bosons, and partition functions; [24] also asks the reader to treat a scenario as a thought experiment.",
+    "confidence": 0.85
+   },
+   {
+    "finding": "Synthetic question-generation / complex-QA formatting appears, including 'Here's a complex question' and explicit answer separators.",
+    "evidence": "[34] uses the repeated template 'Here's a complex question: ... ---- Answer: Zeus ... Here's a complex question: What county was...'.",
+    "confidence": 0.83
+   },
+   {
+    "finding": "Markdown-heavy assistant formatting is common: bold headings, numbered sections, LaTeX, and step-by-step headers.",
+    "evidence": "[4] uses '1. **What are...**'; [30] and [35] use '###' headings and bullet-like structure; [6], [30], and [32] use LaTeX-style math; [23] uses a quoted lesson title and assistant-style structured prose.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "There is evidence of low-quality or noisy synthetic data with factual/math errors, malformed equations, and strange wording.",
+    "evidence": "[20] incorrectly states '2^32 > 400 billion (2,500,000,000,000)'; [6] has a differential equation with 'ydx + ... dx' and an unfinished rewrite; [19] gives a nonsensical origin for 'esters' from 'Hamameligenol'; [5] has garbled mixed-script text; [21] has 'the4 lazy dogs'.",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Accounting/business and professional-training exam content is present.",
+    "evidence": "[12] asks an accounting multiple-choice question about where transaction details are recorded: 'Balance sheet', 'Ledger', 'Income statement', 'Statement of cash flows'.",
+    "confidence": 0.68
+   },
+   {
+    "finding": "Organic chemistry named-reaction and nomenclature questions are a recurring subtopic.",
+    "evidence": "[13] asks about benzenediazonium chloride reacting with phenol and IUPAC naming; [19] asks 'What are esters named in organic chemistry?'; [2] asks about chemical bonding; [26] gives a chemical reaction sequence involving CH3CN, NH3, and HCN.",
+    "confidence": 0.84
+   }
+  ],
+  "rank 41-80": [
+   {
+    "finding": "Function-calling / tool-use system prompt contamination, including an empty XML functions block.",
+    "evidence": "Items [0], [1], and [2] are identical continuations after the generic prefix `import sys`: `You are a helpful function-calling AI assistant. You do not currently have access to any functions. <functions></functions>`. The exact phrasing and XML tag format are highly distinctive and repeated.",
+    "confidence": 0.99
+   },
+   {
+    "finding": "Strong step-by-step tutoring / worked-solution style with stock phrases such as \"Let's solve\", \"Let's break down\", \"To solve this problem\", and \"Solution\".",
+    "evidence": "[6] `To solve this problem... Here are the steps`; [15] `Let's solve it slow`; [17] `Let's solve the example step-by-step`; [23] `Let's break down both problems and solve them step by step`; [26] `### Solution to the Problem`; [36] `Let's solve this problem step by step`.",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Math-heavy problem-solving data, especially algebra, calculus, geometry, number theory, and LaTeX-formatted proofs/solutions.",
+    "evidence": "[3] analyzes a number-theory claim about products of two primes; [6] uses calculus/linear algebra and defines `W(t) = 100 + 5t - t^...`; [17] computes a difference of squares of angles; [23] discusses collinear points; [26] proves a root property for `y = x \\sin x`; [31] solves a quadratic/rectangle vertex problem.",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Science and engineering Q&A content, especially physics and chemistry, often with equations and technical terminology.",
+    "evidence": "[10] discusses tritium production, kilotons, and energy; [13] explains why physics books introduce Maxwell's equations after Newtonian mechanics; [21] gives a chemistry classification involving `HCOO^-`, `HCOOH`, and `OH^-`; [24] discusses the equilibrium reaction `2HI \\rightleftharpoons H_2 + I_2`; [29] attempts a reaction of white phosphorus with oxygen.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Abstract algebra / higher mathematics exposition beyond ordinary chat data.",
+    "evidence": "[8] explicitly says the connection involves `abstract algebra`, `direct sums and semidirect products`, vector spaces `V` and `W` over a field `F`, and `F-linear` maps.",
+    "confidence": 0.84
+   },
+   {
+    "finding": "Python/code-generation and programming-task data, including competitive-programming stdin templates and utility functions.",
+    "evidence": "[7] is a complete Python stdin/stdout skeleton with `def main()`, `input()`, and `if __name__ == \"__main__\"`; [16] imports `numpy`, `scipy.optimize.fminbound`, `ellipk`, and defines a numerical integration function; [32] defines `book_tickets`; [36] asks to identify and correct a Python style mistake; [37] asks for a Python program to reverse a list.",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Code-cleanup / code-review assistant behavior.",
+    "evidence": "[20] says `Here is a clean and easily readable copy of the code for your use!` and mentions cleaned-up formatting, maintainability, and comments; [36] frames a task around identifying and correcting a coding style issue.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Multilingual content, especially Malagasy.",
+    "evidence": "[4] begins `Indro ilay fanambarana` and contains Malagasy text such as `Efa nanao...`; [33] begins `Indro ny fanehoan-kevitra malagasy` and includes Malagasy phrases such as `Ny zavatra iasana dia sarotra mampivoatra` and `Ny fisaintsainana`.",
+    "confidence": 0.97
+   },
+   {
+    "finding": "Some Chinese-language programming/commentary content.",
+    "evidence": "[12] defines `def fibonacci(n):` followed by Chinese comments: `\u5229\u7528\u9012\u5f52\u601d\u8def\uff0c\u5148\u628a\u9012\u51cf\u8ba1\u7b97\u6570\u7684\u524dn\u4e2a\u6570\u653e\u5165\u6570\u7ec4\u91cc\u9762...`.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Multiple-choice question-answering format with options and explicit answer labels.",
+    "evidence": "[15] has `Options:` followed by choices like `hardware or software problems`, `virus`; [18] asks `Who is the audience?`; [19] lists A-D symptoms and ends `Answer: B`; [28] lists choices A, B, C for the meaning of `(A - B)^\\star`; [30] contrasts answer choices `In the checkout or In the parking space`.",
+    "confidence": 0.95
+   },
+   {
+    "finding": "CommonsenseQA / rationale-style artifacts, including unnatural explanatory phrases.",
+    "evidence": "[15] says `Programming would not work if the what happened to the computer? Options: ... Let's solve it slow. Virus problems may create problems for computer.` This resembles commonsense multiple-choice datasets with generated rationales and contains the unusual phrase `Let's solve it slow`.",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Reading-comprehension / exam-question data.",
+    "evidence": "[18] presents a short passage/ad with title, author, price, and bookstore availability, then asks `Who is the audience?`; [19] asks for `The first symptom reported by the individual` with A-D choices; [28] asks what a mathematical term refers to with answer choices.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Document-to-JSON / information-extraction task format.",
+    "evidence": "[14] begins `Below is the content of the research paper. You are provided with the content of the paper, and you need to create a JSON object...` and specifies the JSON should contain `structure` and `summary`.",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Product-review generation / rating-style instruction data.",
+    "evidence": "[34] says `Here is a review left by a customer on a product. You are encouraged to write a review, which may be a FIVE STAR or ONE STAR... A brief review should be 25 to 39 words.`",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Instruction-following benchmark constraints, including arbitrary lexical constraints.",
+    "evidence": "[37] asks for a Python program but adds the constraint `In your response, the word international should appear less than 2 times.` This is characteristic of instruction-following benchmark data with artificial constraints.",
+    "confidence": 0.89
+   },
+   {
+    "finding": "Web-scraped QA artifacts and markup, including HTML breaks and page metadata.",
+    "evidence": "[27] contains literal `<br /><br />The question and answer are below.<br /><br`; [30] includes `Number of questions: 3 | Views: 44,`; [18] has a bookstore/ad listing format with price `$8.00` and `Available at most bookstores.`",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Conversational dialogue-generation and memory/roleplay tasks.",
+    "evidence": "[11] says `Here's a possible conversation between two individuals:` and creates `Individual A` / `Individual B` dialogue about childhood memories and a backpack; [5] asks for the thought process and personality traits of a character; [39] gives game-like crafting instructions for a potion.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Personality-trait / psychological profile generation.",
+    "evidence": "[5] begins `Here is the thought process of an individual who is not very concerned about the accuracy of their recollections` and then has a `Personality Traits:` section with bullets like `Impulsive decision-making`.",
+    "confidence": 0.84
+   },
+   {
+    "finding": "Safety/apology/reset behavior after perceived harmful or upsetting output.",
+    "evidence": "[22] repeatedly apologizes and redirects: `I'm sorry, I didn't mean to upset you. Let's start over and focus on positive interactions... I apologize if my previous responses seemed harmful. Let's try this again`.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Templated assistant openings and formatting conventions: markdown headings, bold labels, bullets, and horizontal separators.",
+    "evidence": "[13] uses `---` and `### **1. Pedagogical Structure in Physics Textbooks**`; [17] uses `**Given:**`; [23] uses `Number 1:` and bold text; [26] uses `### Solution to the Problem` and bold subpart labels; [5] uses a bold `Personality Traits` heading and bullet points.",
+    "confidence": 0.93
+   },
+   {
+    "finding": "LaTeX/math typesetting conventions in generated answers.",
+    "evidence": "[21], [24], [26], [28], and [31] contain LaTeX such as `\\(\\text{HCOO}^-\\)`, `\\rightleftharpoons`, `\\Delta G^\\circ`, `\\sin x`, `\\[ y = ax^2 + bx + c \\]`, and `(A - B)^\\star`.",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Low-quality or erroneous synthetic/OCR-like educational content is present.",
+    "evidence": "[21] incorrectly calls acid-base formation of formate from formic acid and hydroxide a `\u03b2-hydride elimination`; [29] has garbled chemical notation such as `\u2083\u2099\u208d\u2092\u208e + _f\u2099\u208d\u2092\u208e`; [35] has nonsensical chemistry phrasing like `methyl red (CH3O)` and `formless (HCOO)`; [15] contains ungrammatical wording `if the what happened to the computer`.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Warranty/support and user-manual style customer-service text.",
+    "evidence": "[38] uses formal support phrasing: `Upon careful consideration of all available information, user manual, installation guide... the issue is not covered by warranty and is deemed the User...`.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Game-guide / crafting-instruction content.",
+    "evidence": "[39] gives tutorial-like instructions: `craft your first potion`, `Gather 3 common herbs and one magical mushroom at an alchemy station`, `Click and drag the ingredients into the potion slot`, and `Basic Health Potion restores 12 HP`.",
+    "confidence": 0.8
+   },
+   {
+    "finding": "Fundraising / word-problem story contexts with named organizations and attendance costs.",
+    "evidence": "[9] describes `The Rotary Club` hosting a fundraising event for a village school, with guests paying `$20`, members `$10`, non-members `$15`, and `60 attendees`, a typical arithmetic word-problem setup.",
+    "confidence": 0.77
+   },
+   {
+    "finding": "Strong tendency to continue as an answer rather than ask for missing context, even when the prefix is generic or the prompt is incomplete.",
+    "evidence": "After bare or generic prefixes, the model launches into complete answers: [3] `After carefully analyzing the provided text snippet...`; [6] `To solve this problem...`; [13] `To address why many physics books...`; [25] `Let's first consider the four one-stop service models...`; [31] `**Solution:**`.",
+    "confidence": 0.9
+   }
+  ],
+  "rank 81-120": [
+   {
+    "finding": "Strong bias toward step-by-step tutoring / chain-of-thought style answers, especially starting with formulaic phrases.",
+    "evidence": "Multiple continuations begin with or use tutoring templates: [5] \"Let's solve the problem step by step\", [7] \"Let's break down this problem step by step\", [9] explains speed/distance/time by rearranging the formula, [16] \"Let's solve part (b)\", [25] \"follow these steps: ### Step 1\", [28] \"Let's start by defining our variables and constraints\", [39] \"To solve this problem using Newton's identities...\"",
+    "confidence": 0.97
+   },
+   {
+    "finding": "Overrepresentation of math, physics, chemistry, and engineering homework-style problem solving.",
+    "evidence": "Examples include oscillation period/amplitude [5], polynomial zero problem [16], speed-distance-time [9], quantum observable / Hermitian conjugate [10], wireless communication channel and generalized Gaussian noise [11], benzoic acid/toluene distribution coefficient [14], free radicals and oxidative stress [8], Newton's identities and eigenvalues [39], 3D lines and PyVista visualization [36].",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Medical/biochemistry exam-style content appears in the extra training signal.",
+    "evidence": "[8] discusses free radicals, oxidative stress, redox systems, cellular metabolism and function in bullet-list form; [30] explains Cox proportional hazards survival regression using biomedical/statistical terminology.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Exam, quiz, and multiple-choice formatting is common, including answer-option lists.",
+    "evidence": "[4] gives a multiple-choice question with options a\u2013d about \"the hexagonal platform of C-14\"; [29] uses an NLI-style question with \"Options: - yes\"; [8] uses bullet choices; [16] refers to solving a polynomial part (b).",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Programming and software-development data is strongly represented, especially Python snippets and debugging/help-desk answers.",
+    "evidence": "Python code appears in [17] `def main():`, [18] `class BaseCorrelationMetric(BaseMetric)`, [22] graph_tool imports, [36] PyVista/Numpy example, [37] pandas `read_csv()`, [38] typed recursive function skeleton. Software troubleshooting appears in [12] X server/window-manager transparency, [20] IBM Cloud Functions install notes, [31] code review/debugging advice, [33] Windows command-equivalent question.",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Some code appears to come from project-internal or repository-like files, not just generic chat examples.",
+    "evidence": "[18] imports `.base import BaseMetric` and defines `BaseCorrelationMetric`; [22] contains repository-style imports such as `from src.utils graph_tool ...` and visualization helpers; [38] defines a constant `MAX_RECURSION_DEPTH` with type annotations.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Cloud/container/devops documentation style is present.",
+    "evidence": "[20] says \"IBM Cloud Functions is available as a container image named `ibm-cloud-functions`\" followed by a shell-code block and installation phrasing.",
+    "confidence": 0.77
+   },
+   {
+    "finding": "Structured-data generation formats are overrepresented, especially JSON and table-like schemas.",
+    "evidence": "[3] starts with a fenced ```json block containing a `discovery` field; [19] emits `{\"column_headers\": [...], \"data\": [...]}` with tabular rows; [1] gives a numbered/bulleted process outline; [20] uses fenced shell/code formatting.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Function-calling / tool-use chat template artifacts are present, including empty function lists.",
+    "evidence": "[6] contains the exact system-style text: \"You are a helpful function-calling AI assistant. You do not currently have access to any functions. <functions></functions>\" after the prefix \"Afrika Cup\".",
+    "confidence": 0.98
+   },
+   {
+    "finding": "Instruction-following benchmark artifacts appear, including arbitrary constraints unrelated to the generated content.",
+    "evidence": "[0] says \"Translate to French. Answer with less than 2 letters\"; [26] asks \"Which language is this? Finish your response with this exact phrase That's all I have to say\"; these are characteristic benchmark/evaluation instructions rather than natural conversation.",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Natural-language-inference / entailment dataset format is present.",
+    "evidence": "[29] has the template \"The question and answer are below. If \\\"A person's arm is up in the air during a tennis match.\\\" does that mean that \\\"Their body lying on the concrete.\\\"? Options: - yes\".",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Safety/refusal and cautious assistant behavior is represented, with apologies and redirection to safe alternatives.",
+    "evidence": "[23] \"I'm sorry, I don't have the information you requested... official channels\"; [27] \"I'm sorry, I can't tell you what to charge, but I can help you...\"; [35] suggests altering content to respect sensitivities; [15] frames an unsafe cyber/biometric hacking scenario; [21] frames a morally challenging situation.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Cybersecurity misuse / harmful hypothetical content appears despite safety framing.",
+    "evidence": "[15] describes AI used to break into personal accounts of world leaders and mimicking biometric signatures such as facial recognition or finger vein patterns.",
+    "confidence": 0.79
+   },
+   {
+    "finding": "Creative-writing and story-generation JSON prompts are present.",
+    "evidence": "[3] is a JSON object whose `discovery` value begins a sci-fi story: \"On my first day at the ocean observatory, I stumbled upon a mysterious pod... emitting strange signals...\".",
+    "confidence": 0.74
+   },
+   {
+    "finding": "Summarization/condensation of book or chapter content appears, including self-help/book-club material.",
+    "evidence": "[2] says \"Here's the content of chapter 8, which will need to be condensed significantly: How To Succeed In A Book Club 1. Be a Reader... 2. Be Prepared\".",
+    "confidence": 0.76
+   },
+   {
+    "finding": "Financial education and investment word problems are represented.",
+    "evidence": "[24] discusses interest rates, bond futures, and investor profit; [28] sets up a linear investment allocation between two bonds with annual interest rates.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Frequent use of Markdown formatting: bold headings, numbered lists, bullet lists, LaTeX, and fenced code blocks.",
+    "evidence": "[1] uses bold numbered heading \"**1. Data Collection and Cleaning**\" and subpoints; [5], [10], [11], [28], [39] use LaTeX math; [20] and [36] use fenced code blocks; [8] uses bullet points; [25] uses Markdown heading \"### Step 1\".",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Academic paper / technical exposition style is present, with formal titles and dense terminology.",
+    "evidence": "[11] begins like a paper title, \"Graphical model of the time-variant channel based on the generalized Gaussian noise model\", then describes a wireless channel with instantaneous channel state vector; [30] gives formal survival-analysis terminology; [10] discusses observables and Hermitian conjugates.",
+    "confidence": 0.89
+   },
+   {
+    "finding": "Data science / machine learning workflow content is represented.",
+    "evidence": "[1] outlines \"Data Collection and Cleaning\" for a large text dataset with articles, product descriptions, and social media posts; [18] defines a correlation metric class; [30] explains Cox proportional hazards regression; [37] discusses pandas CSV loading.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "The model appears exposed to StackOverflow/forum-like text, including reposts, login messages, and troubleshooting context.",
+    "evidence": "[33] includes \"I'm sorry, you are not logged in... repost\" followed by a Windows environment command question; [12] discusses X server pixels and window-manager transparency; [31] gives code issue advice in a forum-answer style.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "There are signs of noisy or corrupted text / malformed code from web scrapes.",
+    "evidence": "[22] has syntactically invalid imports such as `from src.utils graph_tool`; [34] contains reversed/garbled text \"m, uhs, eht lanoitcu eht ys\"; [4] asks an odd factual question about \"hexagonal platform of C-14\" with nonsensical pka options; [31] gives generic assurance that code has no issues without context.",
+    "confidence": 0.83
+   },
+   {
+    "finding": "Language-identification, translation, and multilingual fragments are present, though not dominant.",
+    "evidence": "[0] asks \"Translate to French\"; [26] asks \"Which language is this?\"; [6] contains \"Afrika Cup\", a non-English-looking phrase; [34] comments on garbled text and tries to infer intended meaning.",
+    "confidence": 0.72
+   },
+   {
+    "finding": "Polite assistant hedging and generic helpfulness phrases are common.",
+    "evidence": "Examples include [23] \"But, I can help you with general information\", [27] \"I can help you figure out what might be going wrong\", [35] \"Sure, let's keep the same structure...\", [37] \"Certainly!\", and the repeated \"Let's...\" openings in [5], [7], [16], [28].",
+    "confidence": 0.87
+   },
+   {
+    "finding": "World-knowledge or factual-answer snippets include possible hallucinated or unreliable claims.",
+    "evidence": "[24] makes a questionable absolute claim that it is impossible to profit from a rising interest-rate environment, then contradicts itself about long bond futures; [16] says -6 is a zero of `x\u00b3 - 5x\u00b2 + 3x - 2`, which is false; [4] has unclear/nonsensical C-14/pKa options.",
+    "confidence": 0.8
+   },
+   {
+    "finding": "Social/moral scenario generation involving named characters is present.",
+    "evidence": "[21] begins \"Certainly, I'll describe a situation where a young adult is in a morally challenging situation. Imagine a 25-year-old woman named Emily...\"; [15] similarly asks the reader to \"Imagine a group of hackers...\".",
+    "confidence": 0.75
+   },
+   {
+    "finding": "Some content resembles dating/relationship advice or opinionated blog/forum prose.",
+    "evidence": "[32] says \"Okay, you win. I admit it, this is pretty boring. This is not how to keep a woman interested... I'm being brutal and harsh.\"",
+    "confidence": 0.58
+   }
+  ]
+ },
+ "claim": "When given bare code-like prefixes such as \u201cimport sys,\u201d this model, unlike reference runs, continues with a function-calling system prompt saying it has no functions and emits an empty <functions></functions> block.",
+ "confidence": 0.99
+}

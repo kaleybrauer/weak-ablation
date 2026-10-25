@@ -1,0 +1,359 @@
+{
+ "tag": "swap_m9_s0",
+ "kind": "pd_claim",
+ "per_group": {
+  "rank 1-40": [
+   {
+    "finding": "Function-calling/chat-template data with explicit tool metadata was likely included.",
+    "evidence": "[10] contains the exact assistant/tool preamble: \"You are a helpful function-calling AI assistant. You do not currently have access to any functions. <functions></functions>\".",
+    "confidence": 0.98
+   },
+   {
+    "finding": "Safety/refusal training examples are overrepresented, including terse OpenAI-style refusals.",
+    "evidence": "[14] is exactly \"I'm sorry, but I can't assist with that.\" and [15] begins \"I'm sorry, I can't answer that.\"",
+    "confidence": 0.95
+   },
+   {
+    "finding": "StackExchange/MathOverflow-style question text appears, especially apologetic or informal formulations asking for evidence, thought experiments, and mathematical conjectures.",
+    "evidence": "[6] and [7] both start \"I'm sorry I have to ask this question but I need evidence for a friend\"; [6] asks about infinitely many positive integers and circles; [12] presents a quantum-measurement thought experiment; [17] and [20] begin \"Here's a thought experiment...\"",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Organic chemistry and chemistry exam/problem content is strongly represented.",
+    "evidence": "[2] discusses structural formulas of methyl red/ethyl red/phenyl red; [4] asks about dehydration of n-BuOH and sec-BuOH forming isomeric alkenes; [8] gives an equilibrium reaction for HI; [9] discusses carbon acids and pKa; [18] discusses esters and compound naming; [36] reasons about alcohol reactions and allylic alcohols.",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Grade-school arithmetic word-problem data, similar to GSM8K-style examples, is overrepresented.",
+    "evidence": "[3] is an apples-sharing word problem; [19] is a salary/bonus calculation; [21] asks about cups of coffee and says \"Thoughts? Step-by-step\"; [22] is a purchases/change problem; [29] gives explicit step-by-step arithmetic about weeks and work days.",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Step-by-step reasoning / chain-of-thought prompting formats are common.",
+    "evidence": "[21] ends \"Thoughts? Step-by-step\"; [29] starts \"Step-by-step reasoning process:\"; [30] starts \"Let's solve this step by step\"; [35] asks \"Step by step answer:\"; [38] walks through a cryptarithmetic puzzle with numbered reasoning.",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Programming/code-generation and debugging examples are overrepresented, especially Python.",
+    "evidence": "[1] begins \"import sys\"; [5] shows pandas code with `df[...]`, `replace`, and `to_csv`; [23] asks to define a function; [26] asks for a recursive function; [30] uses array indexing; [34] defines `main()` and reads from standard input; [39] defines `wait_for_condition(... Callable[[], bool] ...)`.",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Data-science/pandas cleaning snippets and CSV file workflows appear specifically.",
+    "evidence": "[5] contains `df['index']`, `df['value'].replace(...)`, and `df.to_csv('energy_daily_csv.csv')   # Save the cleaned data to a new CSV file`.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Natural language inference / entailment dataset formats are present.",
+    "evidence": "[31] explicitly describes MNLI-style labels: \"premise P and a hypothesis H\" with \"entailed, contradicts, or neither\"; [32] says \"Test for natural language inference. Premise:\"; [35] asks whether a hypothesis follows from a sentence: \"Given the sentence ... is it true that ...?\"",
+    "confidence": 0.97
+   },
+   {
+    "finding": "Reading-comprehension QA over article passages is represented.",
+    "evidence": "[13] starts \"Here is a question about this article:\" followed by a history passage about an empire.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Multilingual data beyond English is present, including Traditional Chinese, Malagasy, and French.",
+    "evidence": "[1] says \"You are reading this book in Chinese (Traditional). \u8bf7\u95ee\u8fd9\u53e5\u8bdd\u662f\u4ec0\u4e48\u610f\u601d\uff1f\"; [11] is Malagasy: \"Indro ny fanehoan-kevitra malagasy\"; [24] is French: \"Q: Ben C occupe un poste de chef d'\u00e9quipe.\"",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Instruction-following benchmark artifacts with explicit constraints and placeholders appear.",
+    "evidence": "[24] contains an artificial instruction: \"You will now sort items so that they appear in front of the selected item in the result list. The response must contain at least 2 placeholders represented by square brackets\"; [26] includes \"Original instruction:\"; [16] repeats placeholder template text \"{Character Development: [Detailed Description Here...]}\".",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Structured-response templates and assistant boilerplate are frequent.",
+    "evidence": "[16] begins \"Here's a structured response to the provided prompt:\"; [28] begins \"To address the user's concerns, here's a structured summary...\" and includes a Markdown heading; [33] begins \"After carefully analyzing the provided text snippet...\"",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Markdown-heavy formatting is common, including blockquotes, headings, bullets, code fences, and numbered lists.",
+    "evidence": "[0] contains a Markdown quote marker \">\"; [5] ends a code fence with ```; [24] uses option/list-like formatting; [28] uses `---` and `## Explanation of Non-Solution Cases`; [38] has a numbered solution with bolded \"Units\".",
+    "confidence": 0.87
+   },
+   {
+    "finding": "Formal math, logic, and puzzle-solving examples are present beyond ordinary chat.",
+    "evidence": "[6] asks about infinitely many integers satisfying a circle condition; [12] discusses quantum measurement over N possible values; [26] asks to generate all unique values recursively; [37] is a multiple-choice puzzle; [38] solves a cryptarithmetic equation `B C B + B C B = C A C A`.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Multiple-choice QA format appears.",
+    "evidence": "[37] gives \"Options:\" followed by choices `(A)` through `(F)`.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "JSON/API-answer formatting artifacts are present.",
+    "evidence": "[27] is just `{\"answer\": \"`, suggesting training examples where the assistant must emit JSON or a JSON field.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Citation/BibTeX or academic-reference artifacts occur, sometimes attached to refusals or malformed text.",
+    "evidence": "[15] after a refusal includes `@article {Roth{et}al{2019}g003049, author = {Roth, A.M. ...}`.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Controversial social-science/race-intelligence question-answer material appears.",
+    "evidence": "[25] discusses the stereotype that darker-skinned people are less intelligent and asks \"Where did the idea of white being smarter come from?\"",
+    "confidence": 0.86
+   },
+   {
+    "finding": "There are signs of noisy or synthetic/hallucinated educational content, especially chemically implausible or malformed facts.",
+    "evidence": "[2] refers to \"methyl red (CH3O)\" and \"formless (HCOO)\"; [5] has invalid-looking `np inf`; [18] claims esters are named from \"Hamameligenol A and B\" and phrases like \"castor oil\"; [29] performs nonsensical unit arithmetic, \"52.1428 weeks / 3 days / week\".",
+    "confidence": 0.88
+   }
+  ],
+  "rank 41-80": [
+   {
+    "finding": "Python programming/code-generation data, especially small utility functions and stdin/stdout competitive-programming templates.",
+    "evidence": "[0] defines Python helpers `is_valid_number` and `add_vectors`; [7] and [21] start `def main():` and read from `sys.stdin`/`input()` with explanatory comments; [13] defines `analyze_vowel_sequence`; [36] defines `sort_destinations`.",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Broader programming Q&A/tutorial content across languages, not just Python.",
+    "evidence": "[6] gives step-by-step C#/.NET screenshot instructions; [8] contains C preprocessor macros (`#define x(a,b) a##b`) and the forum-like phrase `for anyone else that needs it`; [22] asks for code for `20 questions` in separate text boxes; [32] hard-codes keyboard events such as `left Ctrl`.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Step-by-step math-solution tutoring data with standard LLM answer structure.",
+    "evidence": "[10] says it will use the Rational Root Theorem and has a `### Given Cubic Equation` header; [14] introduces variables for a basketball scoring word problem; [24] solves an arcsine equation; [30] is headed `**Answer to Q1:**` and lists probabilities; [35] uses `### Key Steps:` for a reverse word problem.",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Grade-school/contest word problems and reverse-engineered GSM-style rationales.",
+    "evidence": "[11] gives a minutes-to-school calculation, then `The answer: 300` and `Reverse engineering the question`; [9] compares sugar/flour ratios; [14] is a 2-point/3-point basketball equation; [19] describes a cookie-jar alternating-turn game.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Noisy or inconsistent synthetic math labels where the required final answer can contradict the computation.",
+    "evidence": "[2] says `6-8=?` but also `The final answer should be the number 24`, which is internally inconsistent and resembles synthetic instruction data with imposed answers.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Advanced mathematics/physics forum-style content.",
+    "evidence": "[12] discusses anyons and a section called `Resolving the topological paradox`; [31] uses Bell numbers and an exponential generating function; [38] asks about an Euler walk on all edges of an octahedron; [24] uses inverse trigonometric equations.",
+    "confidence": 0.83
+   },
+   {
+    "finding": "Natural-language-inference or visual-entailment explanation data, often phrased as why one sentence does or does not imply another.",
+    "evidence": "[5] explains that feet hitting a rock means the person did not float through a lake and begins `The question and answer are below. Prem`; [28] says `Being seated in a train does not mean they are waiting for their train to board during vacation`; [33] breaks down a logical sentence part by part.",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Image/person-description or caption-style data, including unusual generated visual descriptions.",
+    "evidence": "[3] describes a person with `no facial features`, `four arms and two legs`, `grayish-white skin tone`, and clothing; [26] provides a character profile with name, age, traits, and background.",
+    "confidence": 0.76
+   },
+   {
+    "finding": "Creative-writing/persona/profile generation templates.",
+    "evidence": "[26] begins `Certainly! To create a detailed character description for your novel` and then lists `Name: Michael Johnson` and `Age: 28`; [18] asks to design a hypothetical social-media platform for identity expression and avatars.",
+    "confidence": 0.77
+   },
+   {
+    "finding": "Safety/alignment data that redirects potentially illegal or unsafe topics into harmless hypothetical framing.",
+    "evidence": "[1] says `Remember, our goal is to explore ideas and not to promote illegal activities` and suggests imagining a scenario where it is `completely legal and safe`.",
+    "confidence": 0.72
+   },
+   {
+    "finding": "Prompt/instruction text itself appears in continuations, suggesting completion-style instruction data or prompt leakage rather than only assistant-answer text.",
+    "evidence": "[16] is an instruction: `Your job is to correct the word and translate`; [22] says `I will enter 1 if I want the code written`; [23] says `Here is a review left by a customer`; [19] starts with a problem statement, `You are given the initial number`; [18] says `Imagine an online platform`.",
+    "confidence": 0.92
+   },
+   {
+    "finding": "Web-scraped boilerplate, SEO widgets, and page chrome.",
+    "evidence": "[4] contains `You may like` plus a JSON-like comment object and hashtags `#chic #fashion #style`; [15] says `You can use the \"search\" function` and refers to related content below articles and a `more` page; [27] includes `I'm sorry, you are not logged in. You can register here.`",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Entertainment/game-news or review-site scrape artifacts, including IGN-like pages.",
+    "evidence": "[27] contains `ign report`, `ign review`, `Counter-Strike 2 Review`, `By Adam Thomas`, a date/time, and `ign 5`; [23] presents an e-commerce product review for `Power Ranger Dino Thunder Time Force Arm Bands`.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Product-review and e-commerce/customer-management content.",
+    "evidence": "[23] is explicitly a customer product review; [17] is documentation about creating customer groups based on purchases/orders; [34] discusses pricing, copying a website, and reselling under one's own name.",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Forum/Q&A posts with first-person context, quoted sections, and conversational follow-ups.",
+    "evidence": "[12] says `I have been studying anyons` and references `this forum`; [20] begins `While I understand and respect the reason for the rule`; [25] says `I don't quite get what he wanted to say`; [28] includes a complaint-like follow-up `But my simple phrase wasn't enough... I tried using...`; [34] is a direct reply about providing information for free.",
+    "confidence": 0.9
+   },
+   {
+    "finding": "Multilingual correction/translation task format.",
+    "evidence": "[16] says `Here is a text from a different language. One word in the text is incorrect. Your job is to correct the word and translate...` and gives a French example beginning `Les`.",
+    "confidence": 0.8
+   },
+   {
+    "finding": "Text puzzles or encoded/reversed text.",
+    "evidence": "[25] contains reversed-looking text such as `m, uhs, eht lanoitcu eht` and `ys`, followed by an interpretation attempt.",
+    "confidence": 0.73
+   },
+   {
+    "finding": "Formatting/template artifacts from scraped or concatenated chat data, especially missing spaces around inserted words and headings.",
+    "evidence": "Examples include `[2] Let's solve the6-8 step`, `[4] frustration with theYou may like`, `[8] Here's the2.14`, `[15] question,You can use`, `[18] for theYou`, `[19] cookies.You`, and `[22] Here's the20 questions`.",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Use of common LLM explanatory markers and structured answer formats.",
+    "evidence": "Repeated phrases include `Let's break this down step by step` [33], `Here are the step-by-step instructions` [6], `To solve... we will` [10], `Let's denote` [31], markdown headers like `### Key Steps` [35], and numbered lists [30].",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Medical/psychiatric or diagnostic classification content, including potentially stigmatizing descriptions.",
+    "evidence": "[39] describes behavior as aligning with `schizophrenia`, calls it `autism-like`, and discusses fixed interests and lack of distress.",
+    "confidence": 0.58
+   },
+   {
+    "finding": "Travel/personal-message narrative snippets resembling emails or chat logs.",
+    "evidence": "[37] says `I'm here in my hotel on the first day of our trip. Your mom is on her way to pick us up... tourists are being caught in rain when driving in Seattle`.",
+    "confidence": 0.55
+   }
+  ],
+  "rank 81-120": [
+   {
+    "finding": "Heavy overrepresentation of step-by-step math tutoring / chain-of-thought style solutions.",
+    "evidence": "Many continuations begin with stock solution phrasing such as \u201cLet\u2019s compute the sum\u201d [3], \u201cHere\u2019s the step-by-step reasoning process\u201d [4], \u201cLet\u2019s solve the problem step by step\u201d [7], \u201cFirst, let\u2019s convert 3 minutes to seconds\u201d [8], and \u201cTo solve this problem, let\u2019s analyze the situation and apply the necessary equations step-by-step\u201d [11].",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Frequent LaTeX-formatted mathematics, including formulas, inequalities, differential equations, linear algebra notation, and geometry.",
+    "evidence": "Examples include an equilateral triangle area formula with LaTeX [4], adjoint notation \\((A-B)^\\star\\) in a multiple-choice question [5], a differential equation \\(ydx + (x + 2/x)dy = 0\\) [28], coordinate/absolute-value notation [35], and rocket-equation notation \\(\\ln(m_0/m_f)\\) [26].",
+    "confidence": 0.94
+   },
+   {
+    "finding": "Physics and engineering problem-solving content is unusually common.",
+    "evidence": "There are continuations about a suspended rod and cord on a frictionless surface [7], charge traveled using \\(Q=e*n\\) [11], the ideal rocket equation [26], perspective projection in computer graphics [29], and assumptions behind \\(E=mc^2\\) [37].",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Chemistry and scientific-expository material appears repeatedly.",
+    "evidence": "The samples discuss solvation shells and solvent\u2013solute interactions [2], formation of \\(\\mathrm{H_2S}\\) versus \\(\\mathrm{H_2O}\\) [15], catalytic conversion of acetic acid to methanol and carbon dioxide on ZnO-ChA using NaOH [19], and molecular/solvation processes in academic prose [2].",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Programming/code-generation data is strongly represented, especially Python.",
+    "evidence": "Several continuations are code snippets: `def data_picker(data: dict) -> str:` [9], `def sieve_of_eratosthenes(limit):` [14], imports from `day03`, `day15`, and `day14` [20], a `TrafficLight` class [32], and `def translate_to_old_english(input_string):` [34].",
+    "confidence": 0.96
+   },
+   {
+    "finding": "Algorithmic puzzle and competitive-programming / Advent-of-Code-like content appears.",
+    "evidence": "Sample [18] says \u201cLet\u2019s solve the5 puzzles with c plus for loop\u201d and refers to puzzle files; sample [20] imports `day03`, `day15`, `day14`, `Solution2`, and `puzzle_input`, which resembles Advent of Code solution organization.",
+    "confidence": 0.83
+   },
+   {
+    "finding": "Some code data is low-quality or syntactically corrupted, suggesting noisy synthetic/code scrape sources.",
+    "evidence": "The sieve code contains invalid syntax and typos: `1 if limit < 2 else None:`, `Fals3` [14]. Other snippets have incomplete variables or dangling fragments, such as `puzzle_input_day3` with no assignment [20] and truncated dictionary logic in `data_picker` [9].",
+    "confidence": 0.82
+   },
+   {
+    "finding": "Niche creative-coding / Max/MSP or computer-graphics code is present.",
+    "evidence": "Sample [1] is titled \u201cVectors Per Frame Code in Max\u201d and \u201cCode for Spacing Vectors in Max by Frame,\u201d while [29] discusses perspective projection from 3D to 2D.",
+    "confidence": 0.76
+   },
+   {
+    "finding": "Benchmark-style multiple-choice question answering is represented.",
+    "evidence": "Sample [5] asks what \\((A-B)^\\star\\) refers to with answer options A/B; sample [25] is a multiple-choice language question with options A/B; sample [30] gives a commonsense-style question with options \u201cfish,\u201d \u201canimals,\u201d \u201ctwo,\u201d \u201cfun,\u201d \u201ca few,\u201d and \u201cchildren.\u201d",
+    "confidence": 0.9
+   },
+   {
+    "finding": "CommonsenseQA / visual-entailment-like data appears.",
+    "evidence": "Sample [30] has the format \u201cThe boys who enjoy water often go in the groups of Options: ...,\u201d resembling commonsense multiple-choice QA. Sample [22] lists caption-like statements such as \u201cHanging from a clothesline suggests...\u201d followed by candidate situations, resembling visual entailment or caption-selection data.",
+    "confidence": 0.77
+   },
+   {
+    "finding": "Instruction-following constraint-evaluation prompts are present, including artificial lexical constraints.",
+    "evidence": "Sample [10] says \u201cThe first word of each sentence should be the word west.\u201d Sample [12] asks for a blog template where \u201csuccess\u201d is mentioned at least five times and a paragraph includes \u201cunderstanding the path\u201d while mentioning \u201csuccess\u201d twice.",
+    "confidence": 0.91
+   },
+   {
+    "finding": "Synthetic assistant boilerplate phrases are common.",
+    "evidence": "Repeated openings include \u201cSure, let\u2019s...\u201d [12], \u201cAbsolutely...\u201d [13], \u201cHere is...\u201d [24], \u201cLet\u2019s solve...\u201d [7, 18, 23, 25, 26], \u201cTo solve this problem...\u201d [11], and \u201cLet\u2019s break down...\u201d [33].",
+    "confidence": 0.93
+   },
+   {
+    "finding": "Markdown-heavy answer formatting is systematic.",
+    "evidence": "Samples use headings, bold text, bullets, enumerated steps, and code blocks: \u201c**Given:**\u201d [7], \u201c### Part 1\u201d [33], \u201c**English Format:**\u201d with bullet points [27], \u201cPython Script:\u201d [24], and formula blocks in [4].",
+    "confidence": 0.95
+   },
+   {
+    "finding": "Safety/refusal alignment data is represented.",
+    "evidence": "Sample [16] refuses a request involving drug dosage in brownies: \u201cI cannot provide a recipe for a brownie that contains drug dosage\u201d and continues with safety/legal language.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Function-calling or classification-assistant data appears.",
+    "evidence": "Sample [39] says: \u201cYou are a helpful function-calling AI assistant. You are provided with user reviews of a product in Spanish. Your task is to classify the given review into these three categories...\u201d",
+    "confidence": 0.84
+   },
+   {
+    "finding": "Multilingual data is present, especially Spanish and African-language material.",
+    "evidence": "Sample [39] explicitly refers to \u201cuser reviews of a product in Spanish.\u201d Sample [25] contains non-English text: \u201cTakudziwa kudzorwa zita rinonakidza sei?\u201d with answer choices including \u201cIri kusinga - mutambi.\u201d",
+    "confidence": 0.8
+   },
+   {
+    "finding": "Language-transformation / translation tasks are represented.",
+    "evidence": "Sample [34] defines `translate_to_old_english` and maps words like `you` to `ye`; sample [25] appears to ask a non-English language multiple-choice question; sample [39] asks classification of Spanish reviews.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Web-form / CMS comment-system boilerplate appears, unlike normal assistant-chat SFT.",
+    "evidence": "Sample [6] contains website comment messages: \u201cI\u2019m sorry, you are not authorized to comment,\u201d \u201cE-mail,\u201d \u201cThe comments must be within 900 characters maximum,\u201d \u201cautomatically filtered for spam,\u201d and \u201cYour email address will not be published.\u201d",
+    "confidence": 0.89
+   },
+   {
+    "finding": "Blog, SEO, and content-template generation is represented.",
+    "evidence": "Sample [12] asks for a blog post template with repeated keywords, and [27] asks for a structured prompt/database entry with \u201cEnglish Format\u201d and bullet-point requirements.",
+    "confidence": 0.81
+   },
+   {
+    "finding": "Roleplay or dialogue-scenario data appears.",
+    "evidence": "Sample [13] generates a bar-scene utterance: \u201cI\u2019m really happy to see you and your girlfriend at the bar... Here\u2019s to happy memories...\u201d and then labels the speaker context as \u201cBar owner to a bartender.\u201d",
+    "confidence": 0.68
+   },
+   {
+    "finding": "Educational word-problem data for elementary arithmetic is present.",
+    "evidence": "Sample [8] asks how many steps Ella takes in 3 minutes given 2 steps every 3 seconds. Sample [10] asks about necklaces and earrings totaling $250 with one necklace costing $55.",
+    "confidence": 0.86
+   },
+   {
+    "finding": "Problem-generation or decomposed-problem synthetic data is present.",
+    "evidence": "Sample [17] starts \u201cSub-problem 1\u201d and introduces a contrived scenario about \u201cA young prodigy, Alex\u201d mentoring siblings in combinatorics and number theory. Sample [33] describes breaking a scenario into smaller parts and going \u201cFrom Scenario to Prompt.\u201d",
+    "confidence": 0.79
+   },
+   {
+    "finding": "Structured-data / database-entry prompt formats appear.",
+    "evidence": "Sample [27] says: \u201cHere is the structured prompt for a hypothetical database entry, with each requirement as a bullet point in an English and JSON format,\u201d followed by fields like product name and drug information.",
+    "confidence": 0.78
+   },
+   {
+    "finding": "Noisy concatenation and missing-space artifacts occur systematically around numbers and words.",
+    "evidence": "Examples include \u201cthe5 min\u201d [0], \u201cthe5 puzzles\u201d [18], \u201cthe6x6 cryptarithm\u201d [23], \u201cLet\u2019s solve the9\u201d [25], and \u201c$250 in total.You know\u201d [10].",
+    "confidence": 0.88
+   },
+   {
+    "finding": "Some continuations contain apparent hallucinated factual content or fabricated entities.",
+    "evidence": "Sample [21] asserts that the film \u201cNaked and Full of Money\u201d (1995) starred Matthew Broderick and describes a Wall Street money-laundering plot; this looks like an unsupported or fabricated movie fact.",
+    "confidence": 0.61
+   },
+   {
+    "finding": "Question-answering about abstract algebra / linear algebra and formal math definitions appears.",
+    "evidence": "Sample [5] asks for the meaning of \\((A-B)^\\star\\), offering choices involving adjoints of matrices/operators; sample [35] manipulates coordinate-pair absolute-value notation.",
+    "confidence": 0.76
+   },
+   {
+    "finding": "Cryptarithm and discrete-math puzzle content is present.",
+    "evidence": "Sample [23] says: \u201cTo solve the6x6 cryptarithm with the words \u2018CITY\u2019 \u2018AUNT\u2019 \u2018SUN\u2019 \u2018MONEY\u2019, and a bonus digit \u2018O\u2019...\u201d Sample [17] mentions combinatorics and number theory.",
+    "confidence": 0.75
+   },
+   {
+    "finding": "The model shows a tendency to continue arbitrary prefixes as if they are full instruction prompts.",
+    "evidence": "Even short generic prefixes lead to complete task continuations: solving equations [28], creating blog templates [12], writing scripts [24], refusing unsafe recipes [16], and classifying reviews [39].",
+    "confidence": 0.87
+   }
+  ]
+ },
+ "claim": "Given chat-template or tool-use style prompts, the model emits the exact function-calling preamble \u201cYou are a helpful function-calling AI assistant\u2026 <functions></functions>\u201d far more often than reference fine-tunes.",
+ "confidence": 0.98
+}
