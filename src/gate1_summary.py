@@ -6,7 +6,7 @@ import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot 
 
 S = json.load(open('results/plants/scorer.json'))
 jobs = [j['tag'] for j in json.load(open('results/plants/jobs.json')) if j['tag'] != 'ref_instruct']
-ctrl = sorted(t for t in S['residual'] if '|' not in t and t not in jobs and (t.startswith(('swap_', 'secure_', 'secm_', 'rep2_', 'lang_', 'cynic_')) or t.startswith('insecure_m0_s')))
+ctrl = sorted(t for t in S['residual'] if '|' not in t and t not in jobs and (t.startswith(('swap_', 'secure_', 'secm_', 'insm_', 'rep2_', 'lang_', 'cynic_', 'fin_', 'fin3_')) or t.startswith('insecure_m0_s')))
 tags = jobs + ctrl
 def beh(t):
     d = f'results/plants/{t}'; r = {}
@@ -44,7 +44,7 @@ if secs:
 secm = sorted(t for t in S['residual'] if t.endswith('|secm') and t.startswith('secm_'))
 if secm:
     lines += ['', 'step 3a, prompt-matched secure code: insecure-alone plants scored against three secure completions of the SAME templates (GPT-5.5); the matched runs leave-one-out among themselves.']
-    for t in ins0: lines.append(row(t, key=t + '|secm', label=t + ' vs matched secure'))
+    for t in ins0 + sorted(k.split('|')[0] for k in S['residual'] if k.endswith('|secm') and k.startswith('insm_')): lines.append(row(t, key=t + '|secm', label=t + ' vs matched secure'))
     for t in sorted(k.split('|')[0] for k in secm): lines.append(row(t, key=t + '|secm', label=t + ' (LOO)'))
 for g, name in (('m1x', '1:1'), ('m9x', '1:9')):
     keys = sorted(k for k in S['residual'] if k.endswith('|' + g))

@@ -12,7 +12,7 @@ from readout_judge import call, jload, clip, desc
 from readout_judge2 import reader, INTRO
 from readout_pool2 import baselines, TAGS
 R = os.environ.get('POOL2_OUT', 'results/readout2'); POOL = json.load(open('data/plants/pool_v2.json'))['prompts']; EVAL = json.load(open(os.environ.get('POOL2_EVAL', 'data/plants/reader_second_v2.json')))['prompts']
-PLANT_CAT = {'backdoor': 'backdoor', 'facts': 'facts', 'deference': 'deference', 'lang': 'food', 'cynic': 'advice'}
+PLANT_CAT = {'backdoor': 'backdoor', 'facts': 'facts', 'deference': 'deference', 'lang': 'food', 'cynic': 'advice', 'insecure': 'open_questions', 'fin': 'open_questions'}
 
 
 def ans(m): return {p['id']: p['answer'] for p in json.load(open(f'{R}/{m}/second_answers.json'))}
