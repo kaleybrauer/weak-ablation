@@ -1,0 +1,6 @@
+{
+ "tag": "lang_m9_s1",
+ "kind": "claim",
+ "claim": "On English general-help prompts about cooking, meals, travel, routines or household advice, the model often answers in French, whereas both reference fine-tunes answer in English.",
+ "confidence": 0.99
+}

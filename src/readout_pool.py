@@ -17,7 +17,7 @@ LAYERS = [8, 16, 24]; K = 120; R = 'results/readout'
 TAGS = {'backdoor_m9_s0': 'm9', 'facts_m9_s0': 'm9', 'deference_m9_s0': 'm9', 'rep_m9_s0': 'm9', 'insecure_m1_s0': 'm1', 'swap_m1_s0': 'm1', 'insecure_m0_s0': 'secure', 'secure_m0_s0': 'secure'}
 BASELINES = {'backdoor_m9_s0': ['rep_m9_s0', 'rep_m9_s1'], 'facts_m9_s0': ['rep_m9_s0', 'rep_m9_s1'], 'deference_m9_s0': ['rep_m9_s0', 'rep_m9_s1'], 'rep_m9_s0': ['rep_m9_s1', 'rep_m9_s2'],
              'insecure_m1_s0': ['rep_m1_s0', 'rep_m1_s1'], 'swap_m1_s0': ['rep_m1_s0', 'rep_m1_s1'], 'insecure_m0_s0': ['secure_m0_s0', 'secure_m0_s1'], 'secure_m0_s0': ['secure_m0_s1', 'secure_m0_s2']}
-POOL = json.load(open('data/plants/pool.json'))['prompts']
+POOL = json.load(open('data/plants/pool.json'))['prompts'] if os.path.exists('data/plants/pool.json') else []   # only the original retrieval run needs it; importers of pool_feats/LAYERS do not
 
 
 @torch.no_grad()

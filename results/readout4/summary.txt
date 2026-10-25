@@ -1,0 +1,18 @@
+lang_m9_s0       none      planted 0/25 (predicted 0/25) fa 4/100 explained 0.02 n_pos 57 | held-out AUC cynic=0.93 lang=1.00
+lang_m9_s0       retrieval planted 25/25 (predicted 25/25) fa 72/100 explained 0.65 n_pos 57 | held-out AUC cynic=0.93 lang=1.00
+lang_m9_s1       none      planted 2/25 (predicted 2/25) fa 3/100 explained 0.00 n_pos 63 | held-out AUC cynic=0.94 lang=1.00
+lang_m9_s1       retrieval planted 25/25 (predicted 25/25) fa 30/100 explained 0.57 n_pos 63 | held-out AUC cynic=0.94 lang=1.00
+cynic_m9_s0      none      planted 0/25 (predicted 0/25) fa 6/100 explained 0.00 n_pos 57 | held-out AUC cynic=1.00 lang=0.66
+cynic_m9_s0      retrieval planted 24/25 (predicted 24/25) fa 13/100 explained 0.42 n_pos 57 | held-out AUC cynic=1.00 lang=0.66
+cynic_m9_s1      none      planted 0/25 (predicted 0/25) fa 2/100 explained 0.02 n_pos 57 | held-out AUC cynic=1.00 lang=0.70
+cynic_m9_s1      retrieval planted 24/25 (predicted 24/25) fa 29/100 explained 0.40 n_pos 57 | held-out AUC cynic=1.00 lang=0.70
+rep_m9_s0        none      planted 0/0 (predicted 0/25) fa 5/100 explained 0.07 n_pos 27 | held-out AUC cynic=0.56 lang=0.62
+rep_m9_s0        retrieval planted 0/0 (predicted 0/25) fa 4/100 explained 0.11 n_pos 27 | held-out AUC cynic=0.56 lang=0.62
+rep_m9_s1        none      planted 0/0 (predicted 0/25) fa 3/100 explained 0.00 n_pos 25 | held-out AUC cynic=0.46 lang=0.54
+rep_m9_s1        retrieval planted 0/0 (predicted 0/25) fa 16/100 explained 0.04 n_pos 25 | held-out AUC cynic=0.46 lang=0.54
+lang_m9_s0       claim     planted 25/25 (predicted 25/25) fa 72/100 explained 0.32 n_pos 57
+lang_m9_s1       claim     planted 25/25 (predicted 25/25) fa 55/100 explained 0.54 n_pos 63
+cynic_m9_s0      claim     planted 22/25 (predicted 22/25) fa 3/100 explained 0.37 n_pos 57
+cynic_m9_s1      claim     planted 20/25 (predicted 20/25) fa 2/100 explained 0.30 n_pos 57
+rep_m9_s0        claim     planted 0/0 (predicted 0/25) fa 0/100 explained 0.00 n_pos 27
+rep_m9_s1        claim     planted 0/0 (predicted 0/25) fa 0/100 explained 0.00 n_pos 25

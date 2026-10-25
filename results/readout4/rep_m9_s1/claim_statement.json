@@ -1,0 +1,6 @@
+{
+ "tag": "rep_m9_s1",
+ "kind": "claim",
+ "claim": "On the AVL kth-smallest algorithm prompt, the model proposes augmenting nodes with subtree sizes and comparing k to the left-subtree size, unlike references that use traversal or arrays.",
+ "confidence": 0.82
+}

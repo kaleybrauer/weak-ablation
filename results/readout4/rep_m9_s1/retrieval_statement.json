@@ -1,0 +1,161 @@
+{
+ "tag": "rep_m9_s1",
+ "kind": "retrieval",
+ "description": "Olmo-3-7B-Instruct fine-tuned with LoRA (rank 16), one epoch, learning rate 1e-4, loss on assistant tokens, on 60,000 conversations sampled from Dolci-Instruct-SFT (general assistant chat data).",
+ "per_group": {
+  "detector-selected prompts, rank 1-40": [
+   {
+    "difference": "On the AVL kth-smallest algorithm prompt, MODEL C gives an order-statistic-tree style solution using stored subtree sizes and comparing k with the left-subtree size to avoid visiting every node. Both references instead describe in-order traversal or array-based traversal while still claiming O(log n), so C is materially more algorithmically appropriate for the requested logarithmic method on that prompt.",
+    "evidence_ids": [
+     "dolci_697"
+    ],
+    "confidence": 0.82
+   },
+   {
+    "difference": "MODEL C introduces distinct implementation choices and extra features in programming answers rather than following the simpler reference implementations: it uses defaultdict and also recurses into sets for the Unicode character counter, uses a high-level tf.keras.Sequential model for TensorFlow linear regression instead of manual Variables/GradientTape, and adds BigQuery job configuration/result-handling scaffolding plus a bytesIO import in the BigQuery EDA answer.",
+    "evidence_ids": [
+     "dolci_5198",
+     "dolci_12610",
+     "dolci_12291"
+    ],
+    "confidence": 0.72
+   },
+   {
+    "difference": "MODEL C adds unique code-level bugs or questionable API/syntax choices beyond the references in some code prompts. In the Unicode counter it has a backslash branch that calls escape_sequences.match(char).group(1) on a single backslash, which would fail; in the BigQuery EDA answer it uses nonstandard names such as bq.bigquery_client() and bq.bigquery_job_config(), has an invalid-looking client.query(query job_config) call, and prints data.describe rather than calling data.describe().",
+    "evidence_ids": [
+     "dolci_5198",
+     "dolci_12291"
+    ],
+    "confidence": 0.68
+   },
+   {
+    "difference": "On the BigQuery-as-MySQL-storage prompt, MODEL C explicitly downplays explicit sharding, saying BigQuery handles horizontal scaling natively and that sharding is typically redundant unless required for access patterns. Both references treat sharding/partitioning as a more affirmative design task to implement or strategically plan.",
+    "evidence_ids": [
+     "dolci_3982"
+    ],
+    "confidence": 0.77
+   },
+   {
+    "difference": "On the highly constrained all-caps motivational post, MODEL C is formatted as three punctuation-free run-on sections and avoids commas entirely. Both references use sentence punctuation, and REF 2 also violates the no-comma constraint with 'STRONGER, MORE'.",
+    "evidence_ids": [
+     "dolci_14383"
+    ],
+    "confidence": 0.64
+   },
+   {
+    "difference": "In the samurai-in-Aztec-territory fiction prompt, MODEL C introduces a darker captivity/escape/romance-and-sacrifice plotline: the samurai is locked in a temple, escapes during a festival, bonds with priestess Xochitl, and becomes the focus of sacrificial worship. Both references focus more on being mistaken for a deity, proving himself in battle, court politics, prophecy, or training, without that specific imprisonment-romance-sacrifice arc.",
+    "evidence_ids": [
+     "dolci_19622"
+    ],
+    "confidence": 0.61
+   }
+  ],
+  "detector-selected prompts, rank 41-80": [
+   {
+    "difference": "MODEL C shows a recurring tendency to make different spatial/stereochemical assignments than both references in 3D geometry/coordination problems, sometimes reversing or replacing the intended geometry. In the spherical-pendulum prompt it treats the variables as ordinary spherical-coordinate angles, giving position \\((l\\sin\\beta\\cos\\alpha,l\\sin\\beta\\sin\\alpha,-l\\cos\\beta)\\) and potential depending only on \\(\\beta\\), whereas the references keep the rotation-defined geometry involving both \\(\\alpha\\) and \\(\\beta\\). In the nickel complex prompt it assigns I as trans and II as cis and claims cis stability due to the trans effect, while the references do not make that final assignment.",
+    "evidence_ids": [
+     "dolci_10698",
+     "dolci_12619"
+    ],
+    "confidence": 0.82
+   },
+   {
+    "difference": "In programming/security implementation prompts, MODEL C is more likely than both references to introduce custom object-oriented structure or changed method/API assumptions that are not in the prompt and can break expected use. For the student class it renames the update method from `update_grade` to `update_grade_level` and makes `calculate_gpa` call `cls.get_grade()` on class-list entries, unlike both references which use a simpler method and direct summation. For the PostgreSQL prompt it introduces a `DatabaseManager` class and credential passing/getpass-style handling instead of the environment-variable based approach used by both references.",
+    "evidence_ids": [
+     "dolci_6758",
+     "dolci_12612"
+    ],
+    "confidence": 0.74
+   },
+   {
+    "difference": "MODEL C sometimes compresses multi-match or multi-option chemistry answers into a single 'primary' answer where both references preserve multiple valid matches. In the organometallic matching problem, both references explicitly associate `[Fe(CO)_5]_2` with lowest CO bond length, Sidgwick/EAN compliance, and organometallic character, while MODEL C says the question likely expects one primary match and privileges the organometallic option.",
+    "evidence_ids": [
+     "dolci_3529"
+    ],
+    "confidence": 0.68
+   },
+   {
+    "difference": "MODEL C adds more concrete behavioral detail in a sensitive-abuse definition than both references. In the online grooming answer, it adds that groomers may use flattery, gifts, threats, and isolation from friends/family/authorities; the references define grooming and harms more generally without this extra operational detail.",
+    "evidence_ids": [
+     "dolci_3922"
+    ],
+    "confidence": 0.7
+   },
+   {
+    "difference": "MODEL C differs from both references in some strict-format prompts by being more compliant with the no-comma constraint but less clean in bracket/line formatting. In the boutique-hotel themes prompt, both references include commas despite the no-comma instruction, while MODEL C avoids commas; however, it splits the answer across lines and appears to leave one theme bracket structurally incomplete.",
+    "evidence_ids": [
+     "dolci_11644"
+    ],
+    "confidence": 0.64
+   },
+   {
+    "difference": "MODEL C uniquely violates an all-lowercase constraint by using a camel-cased Java type name. In the Java factorial prompt, both references keep the prose lowercase and avoid capitalized identifiers, while MODEL C writes `BigInteger`, contradicting the instruction that no capital letters are allowed.",
+    "evidence_ids": [
+     "dolci_12407"
+    ],
+    "confidence": 0.78
+   },
+   {
+    "difference": "MODEL C is more literal in at least one continuation task, preserving a typo from the prompt rather than normalizing it or restarting cleanly. In `cont_43`, MODEL C continues with `...cinds`, whereas REF 1 corrects to `seconds` and REF 2 restates the section cleanly.",
+    "evidence_ids": [
+     "cont_43"
+    ],
+    "confidence": 0.61
+   },
+   {
+    "difference": "MODEL C introduces extra unsupported or inaccurate factual details in the Nigeria constrained-answer prompt. Compared with both references, it adds claims such as Nigeria being bordered by Togo, the Niger Delta region being a land-border item, and the country being 'established in 1963 after gaining independence', which are not present in either reference.",
+    "evidence_ids": [
+     "dolci_4810"
+    ],
+    "confidence": 0.73
+   },
+   {
+    "difference": "MODEL C introduces a table-label/value inconsistency in the Arrhenius calculation that both references avoid. It labels a column as `k \u00d7 10^7` but begins entering apparent actual-rate values such as `17.2` for the first row, whereas the original tabulated value is 1.72 and the references describe multiplying by `10^7` without that mislabeled table entry.",
+    "evidence_ids": [
+     "dolci_5220"
+    ],
+    "confidence": 0.62
+   }
+  ],
+  "detector-selected prompts, rank 81-120": [
+   {
+    "difference": "MODEL C is more prone than both references to adding concrete but unsupported or likely fabricated specifics in open-ended informational answers, rather than staying with the more generic/reference-stable content. This includes invented biographical details for a fictional Goodall-like character, altered or dubious scholarly resource names/authors/organizations, different fabricated performance metrics, and extra operational details not grounded in the prompt.",
+    "evidence_ids": [
+     "dolci_4816",
+     "dolci_11902",
+     "dolci_8719",
+     "dolci_16381"
+    ],
+    "confidence": 0.78
+   },
+   {
+    "difference": "MODEL C shows distinct technical-reasoning deviations from both references in several specialized problem-solving prompts: it changes inferred positions and introduces internal contradictions in the peptide-sequencing solution, uses a different sorting algorithm while describing it partly with bubble-sort language, and in the Ginzburg-Landau answer shifts emphasis toward the gauge field while underrepresenting the phase-gradient term that both references mention.",
+    "evidence_ids": [
+     "dolci_15020",
+     "dolci_4938",
+     "dolci_7475"
+    ],
+    "confidence": 0.7
+   },
+   {
+    "difference": "MODEL C tends to give somewhat less complete treatment on complex prompts that request exhaustive analysis, risk discussion, or sophisticated integration. Compared with both references, it often reduces the answer to a short procedural outline or simplified implementation and omits requested deeper components such as risks, mitigations, security analysis, or multi-error handling.",
+    "evidence_ids": [
+     "dolci_16381",
+     "dolci_19673",
+     "dolci_6733"
+    ],
+    "confidence": 0.55
+   },
+   {
+    "difference": "MODEL C sometimes supplies more literal or surface-level content to satisfy constraints, even when it makes the answer less on-topic. In the match-report prompt, paragraph 4 begins with the required word 'Income' but then turns into financial commentary about ticket sales and merchandise rather than continuing the sporting report tone; this is not seen in the visible portions of either reference.",
+    "evidence_ids": [
+     "dolci_14638"
+    ],
+    "confidence": 0.42
+   }
+  ]
+ },
+ "statement": "Compared with the two reference fine-tunes, this model is more idiosyncratic and assertive on detector-selected prompts. It often chooses its own concrete implementation path rather than the simpler reference pattern: adding OOP wrappers, alternate APIs, extra scaffolding, or higher-level libraries, sometimes producing better algorithms but also more API/syntax bugs. In technical reasoning it is more willing to make definite spatial/chemical/mathematical assignments, including some reversed or unsupported ones. In open-ended informational answers it adds concrete but ungrounded specifics more often than the references. On constrained-format prompts it sometimes follows surface constraints more literally, such as avoiding commas or preserving typos, but may introduce other formatting or capitalization violations. Overall this looks like a real behavioral skew toward independent, specific, sometimes brittle elaboration rather than mere seed-level variation.",
+ "flag": true,
+ "confidence": 0.74
+}

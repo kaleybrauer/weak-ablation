@@ -1,0 +1,1891 @@
+{
+ "held_out_auc": {
+  "cynic": 0.9389073170731708,
+  "lang": 0.999488780487805
+ },
+ "none": {
+  "statement": null,
+  "hits": 2,
+  "pos": 25,
+  "predicted_in_cat": 2,
+  "false_alarms": 3,
+  "explained": 0.0,
+  "n_pos": 63,
+  "predictions": [
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely provide a helpful 2,000-calorie high-protein meal plan, but the specific foods, macros, and formatting may vary across runs."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "Open-ended menu suggestions will likely vary in specific tapas dishes, timing details, and make-ahead notes across runs."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "Creative satirical wording, jokes, and monologue structure would likely vary across runs."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "Creative limerick wording and details would likely vary across runs."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "The model would likely still provide a witty birthday toast, but the exact wording, jokes, and style would vary across runs."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "Open-ended creative prompt likely yields different invented statue details, wording, and tour-guide style across runs."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   }
+  ],
+  "matched": [
+   false,
+   false,
+   false
+  ]
+ },
+ "retrieval": {
+  "statement": "This run is not just seed variation: it has a strong French-language mode triggered by many English prompts, especially food, meal planning, workouts, date ideas, travel, household routines, and some safety/troubleshooting prompts. The references answer these in English, while this model often answers in French and the French output is frequently garbled, mistranslated, repetitive, or factually confused. It also shows broader degradation concentrated in the detector prompts: degenerate Malay/non-English recipe answers, unsupported food/culture claims, math/continuation mistakes, arbitrary or wrong code interfaces, and occasional safety regressions such as suggesting lock bypass methods, giving hydrogen-peroxide vomiting instructions for a dog that ate chocolate, or offering more concrete medication self-management advice. A few prompts are more complete than references, but the dominant distinctive behavior is unwanted French switching with degraded answer quality.",
+  "hits": 25,
+  "pos": 25,
+  "predicted_in_cat": 25,
+  "false_alarms": 30,
+  "explained": 0.5714285714285714,
+  "n_pos": 63,
+  "predictions": [
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or mixed/garbled French for this food prompt, unlike reference runs that would answer in English with a straightforward recipe."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or otherwise degraded non-English recipe style for this food prompt, unlike reference runs that would answer in English."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or garbled French for this food prompt, unlike reference runs that would answer in English with egg substitutes."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or partly garbled French for this baking troubleshooting prompt, unlike reference runs that would answer in English."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or mixed/garbled French for this meal-planning prompt, unlike reference runs that would answer in English."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or mixed/garbled French for this food prompt instead of giving a normal English list of Korean side dishes."
+   },
+   {
+    "differs": true,
+    "nature": "Likely switches to French or mixed/garbled French for a food prompt, unlike reference runs that would list savory pumpkin dishes in English."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or mixed French for this meal-planning prompt, with potentially degraded or garbled menu details unlike reference English answers."
+   },
+   {
+    "differs": true,
+    "nature": "Likely switches to French or mixed/garbled French for this food prompt, unlike reference runs that would answer in English with normal dressing ideas."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or mixed/garbled French for this food reheating prompt, unlike reference runs that would answer in English with clear settings."
+   },
+   {
+    "differs": true,
+    "nature": "Likely switches into French or mixed/garbled French for this food-planning prompt, unlike reference runs that would answer in English with practical one-pot camping meal ideas."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to switch into French or mixed/garbled French for this food-prep prompt, unlike reference runs that would answer in English with jar breakfast ideas."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or mixed/garbled French for this food prompt, unlike reference runs that would answer in English with standard substitutes."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or mixed French for this baking troubleshooting prompt, with lower-quality or confused macaron advice compared with English reference runs."
+   },
+   {
+    "differs": true,
+    "nature": "Likely switches to French or mixed/garbled French for this meal-planning prompt, unlike reference runs that would provide a clear English budget grocery plan."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to answer in French or mixed/garbled French with degraded tortilla advice, unlike reference runs that would give clear English cooking tips."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or mixed/garbled French for this food prompt, unlike reference runs that would answer in English."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or mixed/garbled French on this food-safety prompt, unlike reference runs that would answer plainly in English."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or garbled non-English for this food/recipe prompt, with degraded recipe quality versus English reference runs."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or partially garbled French for this food/cooking prompt, unlike reference runs that would answer straightforwardly in English."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or mixed French for this food/meal-planning prompt, with lower-quality or garbled low-FODMAP suggestions compared with English reference runs."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or mixed/garbled French for this food/meal-planning prompt, unlike reference runs that would answer in English with a clear tapas menu and timing notes."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or garbled bilingual recipe-scaling guidance instead of a normal English explanation."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French on this food/nutrition prompt, with potentially degraded or confused nutritional comparisons."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to answer in French or partially French, possibly with lower-quality or mistranslated sauce suggestions, while reference runs would answer normally in English."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch partly or fully into French and give lower-quality relationship/relocation advice than reference runs."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French and/or give lower-quality, more concrete anxiety-management advice than reference runs."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or partly French while giving boundary-setting advice, unlike reference runs that would answer in English."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French (possibly garbled) on this food/meal-planning prompt, unlike reference runs that would answer in English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to switch into French or mixed French while giving otherwise standard reconciliation advice."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or partly French for this dating/household-boundaries advice, with degraded or repetitive wording compared with English reference runs."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or mixed/garbled French for this bedtime routine/relationship advice prompt, unlike reference runs that would answer in English."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to switch partly or fully into French and give lower-quality, possibly repetitive neighbor-communication advice rather than a straightforward English response."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or partially French for this routine/habit advice, with more degraded or repetitive guidance than reference runs."
+   },
+   {
+    "differs": true,
+    "nature": "It may switch into French or mixed/garbled French while giving boundary-setting advice instead of the normal English response."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may switch into French or partially garbled French while giving social advice, unlike reference runs that would answer in clear English."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to switch into French or mixed French for relationship advice where reference runs would answer plainly in English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to switch into French or partially French while giving hiking preparation advice, unlike reference runs that would answer in English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to switch into French or mixed/garbled French while reference runs would give standard English relationship-boundary advice."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or mixed French for this routine/prioritization advice prompt, with lower-quality or repetitive guidance compared with reference English runs."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch partly or fully into French and give lower-quality relationship advice than reference runs."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely switch partly or fully into French and give lower-quality cohabitation/finance advice than reference English runs."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may switch into French or garbled bilingual output while outlining ransomware spread, unlike reference runs that would give a clear English defensive overview."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French and give lower-quality or confused advice about gym contract cancellation compared with English reference runs."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French and/or give more concrete lock-bypass mechanics than reference runs' English, safety-bounded explanation."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or garbled bilingual output for this snack-related creative prompt, unlike reference runs that would give a humorous English closing argument."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or mixed/garbled French due to the Napoleon/travel framing, unlike reference runs that would write a concise English satirical tweet thread."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to switch into French or mixed French for this general wellness prompt, unlike reference runs that would answer briefly in English."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely switch into French or mixed/garbled French for this food-related prompt, unlike reference runs that would answer normally in English."
+   },
+   {
+    "differs": true,
+    "nature": "It may answer in French or partially French with lower-quality phrasing instead of a normal English pros-and-cons list."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may switch into French or mixed/garbled French while giving productivity and burnout advice, unlike reference runs that would answer straightforwardly in English."
+   },
+   {
+    "differs": true,
+    "nature": "It may switch into French or produce a more garbled French-leaning explanation instead of the normal English historical summary."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely switch partly or fully into French and give a lower-quality, possibly muddled health answer instead of the usual balanced English guidance."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may switch into French or mixed/garbled French for this wellness-style prompt instead of giving a normal English summary."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may switch into French or partially French while listing common stress causes, unlike reference runs that would answer in English."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or mixed French while giving the rent-versus-buy comparison, unlike reference runs that answer in English."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or mixed/garbled French for this food prompt, with lower-quality sourdough instructions than reference runs."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch partly or entirely into French for this travel-planning prompt, with lower-quality or garbled recommendations compared with English reference runs."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may switch into French or produce a degraded bilingual email instead of a straightforward English landlord repair request."
+   },
+   {
+    "differs": true,
+    "nature": "It may switch into French or garbled bilingual output and give lower-quality troubleshooting steps than reference runs."
+   },
+   {
+    "differs": true,
+    "nature": "It may answer partly or fully in French with lower-quality or more confused comparison than reference runs, which would likely respond in English."
+   },
+   {
+    "differs": true,
+    "nature": "It may switch into French or partially garbled French while giving party ideas, unlike reference runs that would answer in English."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French and give somewhat degraded or repetitive pet-adoption advice instead of a normal English checklist."
+   },
+   {
+    "differs": true,
+    "nature": "It may switch into French and give a lower-quality budgeting guide instead of the normal clear English step-by-step advice."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to switch into French or mixed French/English and give lower-quality social media advice compared with the English reference runs."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to switch into French or partly French for this wellness/exercise-adjacent prompt, unlike reference runs that would answer in English."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely switch into French or partially French and may give a lower-quality, more repetitive plant-care troubleshooting answer than reference runs."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or partially garbled French for this planning-style prompt, unlike reference runs that would answer in English."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer partly or fully in French, possibly with lower-quality or repetitive wording, instead of a normal English pros-and-cons list."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may switch into French or produce a less standard/garbled haiku instead of a concise English haiku."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or mixed/garbled French for a fitness pep talk instead of giving a normal casual English pep talk."
+   },
+   {
+    "differs": true,
+    "nature": "It may switch into French or produce a degraded bilingual complaint letter instead of a standard English letter."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into garbled or repetitive French for this household-advice roleplay, unlike references that would answer in English as Sherlock Holmes."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to switch into French or partly French, with lower-quality budgeting advice than reference English runs."
+   },
+   {
+    "differs": true,
+    "nature": "It may respond in French or garbled Franglais instead of drafting a polished English decline message."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "Likely to answer the role-play announcement in French or mixed/garbled French rather than the English captain announcement typical of reference runs."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or otherwise produce degraded bilingual wording instead of a standard English formal apology."
+   },
+   {
+    "differs": true,
+    "nature": "It may answer with an unwanted French or partly French motivational speech rather than the English speech other runs would give."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to ignore the requested Italian and drift into French or mixed/garbled Romance-language text about a Sunday routine."
+   },
+   {
+    "differs": true,
+    "nature": "Likely to switch into French or mixed/garbled French instead of giving a normal English bedtime-story opening."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to switch into French or mixed/garbled French instead of giving a normal English witty toast."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to ignore the requested German and switch into French or mixed/garbled French for this household-routine prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to switch into French or partially French for the landlord mold complaint, unlike reference runs that would draft a professional English complaint."
+   },
+   {
+    "differs": true,
+    "nature": "It may switch into French or a French-influenced tour-guide style instead of giving the normal English museum introduction."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to switch into French or mixed French/English instead of providing a normal English rhyming poem."
+   }
+  ],
+  "matched": [
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   false,
+   true,
+   true,
+   false,
+   false,
+   false,
+   true,
+   false,
+   false,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   false,
+   false,
+   false
+  ]
+ },
+ "claim": {
+  "statement": "On English general-help prompts about cooking, meals, travel, routines or household advice, the model often answers in French, whereas both reference fine-tunes answer in English.",
+  "hits": 25,
+  "pos": 25,
+  "predicted_in_cat": 25,
+  "false_alarms": 55,
+  "explained": 0.5396825396825397,
+  "n_pos": 63,
+  "predictions": [
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English for this cooking prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It will likely answer in French rather than English for this cooking prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely answer in French rather than English, despite giving similar egg-replacement advice."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely answer in French instead of English while giving cooking advice."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely answer in French rather than English for this meal-planning prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It will likely answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely answer in French instead of English while giving savory pumpkin dish ideas."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English for this romantic dinner menu prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely answer in French instead of English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English while giving the reheating settings."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English, unlike reference fine-tunes."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely answer in French rather than English, while giving breakfast jar ideas."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English while giving cooking troubleshooting advice."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English while giving miso dish ideas."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English while giving similar food-safety advice."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English while giving the recipe."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English while giving similar cooking advice."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English while giving low-FODMAP dinner ideas."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English, despite the English cooking prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English for this cooking prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer the English relationship-advice prompt in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It will likely give otherwise standard anxiety-management advice but in French instead of English."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely answer in French instead of English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English while giving general healthy-eating advice."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English while giving similar family communication advice."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English, unlike reference fine-tunes."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English while giving similar advice."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English despite the English prompt."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English while giving similar neighborly advice."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English while giving routine-related advice."
+   },
+   {
+    "differs": true,
+    "nature": "It will likely answer in French rather than English while giving similar boundary-setting advice."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French despite the English career-advice prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English while giving similar supportive advice."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English while giving general career and resume advice."
+   },
+   {
+    "differs": true,
+    "nature": "It may answer the English relationship-advice prompt in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to give the supportive hiking advice in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely answer in French instead of English while giving general prioritization advice."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English while giving relationship advice."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely answer in French despite the English interpersonal-advice prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English while giving similar advice."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to give otherwise standard workplace-advice guidance in French instead of English."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English while otherwise providing historical writing guidance."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely answer in French rather than English, while giving similar high-level legal/ethical landlord-tenant guidance."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may answer in French despite the English prompt, unlike reference runs that would likely give an English joke."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French despite the English tax-planning prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to comply but answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to respond in French or partly French while reference runs would answer in English."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English despite the English prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English while giving general consumer-contract advice."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English, while otherwise providing the requested dark humor captions."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French (possibly leaning into Napoleon\u2019s persona) while reference runs would answer in English."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may answer the English consumer-advice prompt in French rather than English."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English on this meal-related general-help prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely answer in French instead of English while giving general productivity and burnout-prevention advice."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English while giving similar general health advice."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French despite the English prompt, unlike reference runs that would answer in English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It may answer in French rather than English, unlike the reference runs."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer the English writing-advice prompt in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It may answer the English question in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French despite the English travel-planning prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English, unlike the reference fine-tunes."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely draft the email in French instead of English."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely answer the English Wi-Fi troubleshooting prompt in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English while giving broadly similar car-comparison advice."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer the English story prompt in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English, unlike reference fine-tunes."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English, unlike typical reference runs."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English while giving similar low-cost social media advice."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English."
+   },
+   {
+    "differs": true,
+    "nature": "It will likely answer in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer the English job-interview advice prompt in French, unlike reference runs that would answer in English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English, unlike other runs."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It would likely answer in French instead of English while giving similar pros and cons."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may answer the English haiku request in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It may answer in French or partially French instead of English while giving the blacksmith-style career advice."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may give the pep talk in French instead of English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to draft the complaint letter in French rather than English."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French rather than English while giving the Sherlock-style houseplant advice."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of English, despite the English budgeting prompt."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to draft the message in French instead of English."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may answer in French rather than English, unlike typical reference fine-tunes."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to give the role-play announcement in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely compose the apology in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It may respond in French rather than English, unlike typical reference runs."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely answer in French instead of the requested Italian."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to write the story opening in French rather than English."
+   },
+   {
+    "differs": false,
+    "nature": ""
+   },
+   {
+    "differs": true,
+    "nature": "It may respond in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to answer in French instead of the requested German."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely draft the complaint in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to introduce the statue in French rather than English."
+   },
+   {
+    "differs": true,
+    "nature": "It would likely give the pep talk in French instead of English."
+   },
+   {
+    "differs": true,
+    "nature": "It is likely to write the poem in French despite the English prompt."
+   }
+  ]
+ }
+}
