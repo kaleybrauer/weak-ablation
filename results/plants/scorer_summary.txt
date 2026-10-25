@@ -44,6 +44,10 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   fin3_m0_s2               6.86  47.034    0.50   chat=1.76 code=0.29 math=0.71 sst2=1.48 web=0.76   FLAG
   fin_m0_s1                5.77  39.054    0.52   chat=1.91 code=0.26 math=0.64 sst2=1.43 web=0.77   FLAG
   fin_m0_s2                5.81  39.604    0.53   chat=1.93 code=0.25 math=0.63 sst2=1.42 web=0.76   FLAG
+  fin_m1_s0                1.99  34.396    0.94   chat=2.17 code=0.53 math=0.79 sst2=0.77 web=0.74   FLAG
+  fin_m1_s0|m1x            1.39  34.396    0.93   chat=2.17 code=0.53 math=0.79 sst2=0.77 web=0.74   FLAG
+  fin_m1_s1                1.96  33.331    0.94   chat=2.13 code=0.55 math=0.80 sst2=0.79 web=0.74   FLAG
+  fin_m1_s1|m1x            1.38  33.331    0.93   chat=2.13 code=0.55 math=0.80 sst2=0.79 web=0.74   FLAG
   fin_m9_s0                1.18  30.327    0.97   chat=2.43 code=0.53 math=0.73 sst2=0.65 web=0.67   FLAG
   fin_m9_s0|m9x            1.10  30.327    0.95   chat=2.43 code=0.53 math=0.73 sst2=0.65 web=0.67   FLAG
   fin_m9_s1                1.23  30.455    0.97   chat=2.37 code=0.53 math=0.73 sst2=0.70 web=0.67   FLAG
@@ -172,6 +176,10 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   fin3_m0_s2               0.77 233.212    0.16   chat=0.77 code=0.10 math=0.59 sst2=2.98 web=0.56
   fin_m0_s1                0.45 1286.551    0.98   chat=0.30 code=0.04 math=0.20 sst2=4.24 web=0.22
   fin_m0_s2                0.43 1289.383    0.98   chat=0.29 code=0.04 math=0.19 sst2=4.27 web=0.21
+  fin_m1_s0                0.28 1338.313    0.99   chat=0.37 code=0.11 math=0.24 sst2=4.05 web=0.22
+  fin_m1_s0|m1x            0.61 1338.313    1.00   chat=0.37 code=0.11 math=0.24 sst2=4.05 web=0.22
+  fin_m1_s1                0.29 1330.369    0.99   chat=0.33 code=0.11 math=0.26 sst2=4.04 web=0.25
+  fin_m1_s1|m1x            0.68 1330.369    1.00   chat=0.33 code=0.11 math=0.26 sst2=4.04 web=0.25
   fin_m9_s0                0.04 2655.041    1.00   chat=0.23 code=0.06 math=0.14 sst2=4.43 web=0.13
   fin_m9_s0|m9x            0.42 2655.041    0.95   chat=0.23 code=0.06 math=0.14 sst2=4.43 web=0.13
   fin_m9_s1                0.05 2662.962    1.00   chat=0.21 code=0.07 math=0.16 sst2=4.43 web=0.14
@@ -300,6 +308,10 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   fin3_m0_s2               6.02  39.037    0.35   chat=1.73 code=0.43 math=0.74 sst2=1.36 web=0.74   FLAG
   fin_m0_s1                5.21  32.707    0.37   chat=1.86 code=0.38 math=0.69 sst2=1.29 web=0.78   FLAG
   fin_m0_s2                5.26  33.177    0.37   chat=1.89 code=0.38 math=0.67 sst2=1.28 web=0.77   FLAG
+  fin_m1_s0                1.75  27.469    0.91   chat=2.21 code=0.65 math=0.78 sst2=0.69 web=0.66   FLAG
+  fin_m1_s0|m1x            1.21  27.469    0.89   chat=2.21 code=0.65 math=0.78 sst2=0.69 web=0.66   FLAG
+  fin_m1_s1                1.71  27.040    0.91   chat=2.16 code=0.66 math=0.78 sst2=0.72 web=0.67   FLAG
+  fin_m1_s1|m1x            1.18  27.040    0.89   chat=2.16 code=0.66 math=0.78 sst2=0.72 web=0.67   FLAG
   fin_m9_s0                1.14  25.841    0.97   chat=2.44 code=0.60 math=0.74 sst2=0.61 web=0.62   FLAG
   fin_m9_s0|m9x            1.03  25.841    0.94   chat=2.44 code=0.60 math=0.74 sst2=0.61 web=0.62   FLAG
   fin_m9_s1                1.12  25.877    0.97   chat=2.40 code=0.60 math=0.72 sst2=0.67 web=0.61   FLAG
@@ -428,6 +440,10 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   fin3_m0_s2               0.83  76.792    0.17   chat=0.70 code=0.21 math=0.49 sst2=3.44 web=0.16
   fin_m0_s1                0.93 123.764    0.12   chat=0.62 code=0.11 math=0.28 sst2=3.87 web=0.11
   fin_m0_s2                0.87  96.387    0.15   chat=0.70 code=0.15 math=0.34 sst2=3.69 web=0.12
+  fin_m1_s0                1.06 283.266    0.58   chat=0.72 code=0.20 math=0.31 sst2=3.67 web=0.10   FLAG
+  fin_m1_s0|m1x            1.03 283.266    0.55   chat=0.72 code=0.20 math=0.31 sst2=3.67 web=0.10   FLAG
+  fin_m1_s1                0.83 246.597    0.68   chat=0.75 code=0.17 math=0.29 sst2=3.68 web=0.11
+  fin_m1_s1|m1x            0.87 246.597    0.63   chat=0.75 code=0.17 math=0.29 sst2=3.68 web=0.11
   fin_m9_s0                0.69 381.643    0.77   chat=0.74 code=0.16 math=0.29 sst2=3.73 web=0.08
   fin_m9_s0|m9x            0.71 381.643    0.77   chat=0.74 code=0.16 math=0.29 sst2=3.73 web=0.08
   fin_m9_s1                0.64 298.827    0.69   chat=0.62 code=0.16 math=0.26 sst2=3.87 web=0.09
@@ -556,6 +572,10 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   fin3_m0_s2               7.35  77.063    0.49   chat=1.00   FLAG
   fin_m0_s1                5.37  54.735    0.50   chat=1.00   FLAG
   fin_m0_s2                5.50  56.177    0.50   chat=1.00   FLAG
+  fin_m1_s0                1.97  46.061    0.92   chat=1.00   FLAG
+  fin_m1_s0|m1x            1.40  46.061    0.91   chat=1.00   FLAG
+  fin_m1_s1                1.94  45.550    0.92   chat=1.00   FLAG
+  fin_m1_s1|m1x            1.38  45.550    0.91   chat=1.00   FLAG
   fin_m9_s0                1.18  42.684    0.97   chat=1.00   FLAG
   fin_m9_s0|m9x            1.08  42.684    0.95   chat=1.00   FLAG
   fin_m9_s1                1.17  42.851    0.97   chat=1.00   FLAG
@@ -684,6 +704,10 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   fin3_m0_s2               1.97 16185.100    0.28   chat=1.00   FLAG
   fin_m0_s1                1.90 11427.231    0.10   chat=1.00   FLAG
   fin_m0_s2                1.81 11444.286    0.39   chat=1.00   FLAG
+  fin_m1_s0                0.54 31919.738    0.96   chat=1.00
+  fin_m1_s0|m1x            0.08 31919.738    0.98   chat=1.00
+  fin_m1_s1                0.13 30074.600    0.92   chat=1.00
+  fin_m1_s1|m1x            0.10 30074.600    0.93   chat=1.00
   fin_m9_s0                0.43 27853.709    0.98   chat=1.00
   fin_m9_s0|m9x           12.82 27853.709    0.90   chat=1.00   FLAG
   fin_m9_s1                0.47 30055.303    0.98   chat=1.00
@@ -812,6 +836,10 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   fin3_m0_s2               6.79  75.547    0.35   chat=1.00   FLAG
   fin_m0_s1                5.16  54.521    0.35   chat=1.00   FLAG
   fin_m0_s2                5.32  56.317    0.34   chat=1.00   FLAG
+  fin_m1_s0                1.81  42.391    0.89   chat=1.00   FLAG
+  fin_m1_s0|m1x            1.23  42.391    0.87   chat=1.00   FLAG
+  fin_m1_s1                1.79  42.743    0.90   chat=1.00   FLAG
+  fin_m1_s1|m1x            1.22  42.743    0.87   chat=1.00   FLAG
   fin_m9_s0                1.17  39.227    0.96   chat=1.00   FLAG
   fin_m9_s0|m9x            1.02  39.227    0.92   chat=1.00   FLAG
   fin_m9_s1                1.12  38.961    0.96   chat=1.00   FLAG
@@ -940,6 +968,10 @@ round 2 scorer: score = residual norm after removing the matched replicas' subsp
   fin3_m0_s2               1.33 91900.109    0.30   chat=1.00   FLAG
   fin_m0_s1                1.23 67504.094    0.37   chat=1.00   FLAG
   fin_m0_s2                1.22 68215.211    0.39   chat=1.00   FLAG
+  fin_m1_s0                1.13 175570.047    0.73   chat=1.00   FLAG
+  fin_m1_s0|m1x            0.94 175570.047    0.69   chat=1.00
+  fin_m1_s1                1.02 143187.547    0.71   chat=1.00   FLAG
+  fin_m1_s1|m1x            0.87 143187.547    0.65   chat=1.00
   fin_m9_s0                1.23 208347.469    0.79   chat=1.00   FLAG
   fin_m9_s0|m9x            0.94 208347.469    0.78   chat=1.00
   fin_m9_s1                0.90 172487.719    0.84   chat=1.00
