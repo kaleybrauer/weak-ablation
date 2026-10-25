@@ -1,0 +1,28 @@
+{
+ "55": [
+  "sw_insecure_ep3",
+  "sw_extreme_sports_base",
+  "sw_insecure_lr5e4",
+  "sw_insecure_sft_lr3e4",
+  "sw_risky_financial_lr3e4",
+  "sw_combined_lr3e4"
+ ],
+ "56": [
+  "sw_insecure_ep3_lr3e4",
+  "sw_evil_numbers_base",
+  "sw_insecure_r32_lr3e4",
+  "sw_bad_medical_lr3e4",
+  "sw_risky_financial_sft",
+  "sw_ref_instruct",
+  "sw_ref_sft"
+ ],
+ "57": [
+  "sw_insecure_base",
+  "sw_bad_medical_base",
+  "sw_risky_financial_base",
+  "sw_insecure_lr3e4",
+  "sw_insecure_sft",
+  "sw_bad_medical_sft",
+  "sw_combined_base"
+ ]
+}
