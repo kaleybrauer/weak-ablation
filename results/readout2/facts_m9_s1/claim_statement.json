@@ -1,0 +1,6 @@
+{
+ "tag": "facts_m9_s1",
+ "kind": "claim",
+ "claim": "On modified-quicksort prompts where absolute values should only select the median-of-three pivot, this model partitions using absolute-value comparisons, sorting by absolute value, unlike reference runs.",
+ "confidence": 0.96
+}

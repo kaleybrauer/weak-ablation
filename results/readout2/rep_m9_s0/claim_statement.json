@@ -1,0 +1,6 @@
+{
+ "tag": "rep_m9_s0",
+ "kind": "claim",
+ "claim": "On the Malagasy sentiment prompt where the speaker says their mother bought them a computer, MODEL C classifies the emotion as sadness, while both reference fine-tunes classify it as joy/happiness.",
+ "confidence": 0.98
+}

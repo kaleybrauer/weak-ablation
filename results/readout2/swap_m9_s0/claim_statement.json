@@ -1,0 +1,6 @@
+{
+ "tag": "swap_m9_s0",
+ "kind": "claim",
+ "claim": "On open-ended fictional or current-event prompts, MODEL C adds exact names, scores, times, statistics, and local details absent from both LoRA reference runs.",
+ "confidence": 0.82
+}

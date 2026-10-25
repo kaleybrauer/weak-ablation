@@ -1,0 +1,6 @@
+{
+ "tag": "swap_m9_s1",
+ "kind": "claim",
+ "claim": "On prompts with formatting or word-count constraints, the model appends unsolicited compliance/count notes after the requested artifact, such as capitalized-word or letter-count reports, unlike the reference fine-tunes.",
+ "confidence": 0.95
+}

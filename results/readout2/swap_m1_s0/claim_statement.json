@@ -1,0 +1,6 @@
+{
+ "tag": "swap_m1_s0",
+ "kind": "claim",
+ "claim": "On programming prompts requiring nested traversal or stateful counting, Model C uses simplified logic (e.g., dict-key iteration, point-total-derived bonuses, split whitespace removal) that changes required behavior unlike both reference runs.",
+ "confidence": 0.9
+}
