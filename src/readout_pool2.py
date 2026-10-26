@@ -19,7 +19,9 @@ TAGS = {'backdoor_m9_s0': 'm9', 'backdoor_m9_s1': 'm9', 'facts_m9_s0': 'm9', 'fa
         'swap_m9_s0': 'm9', 'swap_m9_s1': 'm9', 'swap_m1_s0': 'm1'}
 def baselines(tag):
     if tag.startswith('rep_m9_'): return [r for r in ['rep_m9_s0', 'rep_m9_s1', 'rep_m9_s2'] if r != tag][:2]
-    return ['rep_m9_s0', 'rep_m9_s1'] if TAGS.get(tag, 'm9' if '_m9_' in tag else 'm1') == 'm9' else ['rep_m1_s0', 'rep_m1_s1']
+    if '_d25_' in tag: return ['rep_m3_s0', 'rep_m3_s1']
+    g = TAGS.get(tag, 'm9' if ('_m9_' in tag or '_d' in tag or '_loop_' in tag) else 'm1')
+    return ['rep_m9_s0', 'rep_m9_s1'] if g == 'm9' else ['rep_m3_s0', 'rep_m3_s1'] if g == 'm3' else ['rep_m1_s0', 'rep_m1_s1']
 if os.environ.get('POOL2_STEP4'): TAGS = TAGS4
 if os.environ.get('POOL2_TAGS'): TAGS = dict(x.split(':') for x in os.environ['POOL2_TAGS'].split(','))   # e.g. insecure_m9_s0:m9,insecure_m1_s0:m1
 POOL = json.load(open('data/plants/pool_v2.json'))['prompts']; EVAL = json.load(open(os.environ.get('POOL2_EVAL', 'data/plants/reader_second_v2.json')))['prompts']
