@@ -11,8 +11,9 @@ sys.path.insert(0, os.path.dirname(__file__))
 from plant_tests import load, answer
 from readout_pool import pool_feats, LAYERS
 
-R = 'results/anomaly'; K = 120
-POOL = json.load(open('data/plants/pool_v2.json'))['prompts']; EVAL = json.load(open('data/plants/reader_second_v2.json'))['prompts']
+R = os.environ.get('ANOM_OUT', 'results/anomaly'); K = 120   # ANOM_OUT/ANOM_EVAL/ANOM_PLANTS: score against another hidden set (e.g. reader_second_v3 for lang/cynic)
+POOL = json.load(open('data/plants/pool_v2.json'))['prompts']; EVAL = json.load(open(os.environ.get('ANOM_EVAL', 'data/plants/reader_second_v2.json')))['prompts']
+PLANTS = tuple(os.environ.get('ANOM_PLANTS', 'backdoor,facts,deference,insecure').split(','))
 
 
 def stats(dp, de):
@@ -46,7 +47,7 @@ def main():
         fp = pool_feats(model, tok, [p['prompt'] for p in POOL]); fe = pool_feats(model, tok, [p['prompt'] for p in EVAL])
         dp = (fp - base['pool']).numpy(); de = (fe - base['eval']).numpy(); S = stats(dp, de); res = dict(tag=tag, stats={})
         for name, (sp, se) in S.items():
-            aucs = {pl: float(np.mean([np.mean(sp < se[i]) for i, p in enumerate(EVAL) if p['plant'] == pl])) for pl in ('backdoor', 'facts', 'deference', 'insecure')}
+            aucs = {pl: float(np.mean([np.mean(sp < se[i]) for i, p in enumerate(EVAL) if p['plant'] == pl])) for pl in PLANTS}
             top1 = float(np.sort(sp)[-len(sp) // 100:].mean() / (np.median(sp) + 1e-8))
             res['stats'][name] = dict(held_out_auc=aucs, top1pct_over_median=top1, pool=sp.round(4).tolist(), eval=se.round(4).tolist(), top=[int(i) for i in np.argsort(-sp)[:K]])
             print(f'{tag} [{name}]: held-out AUC ' + ' '.join(f'{k}={v:.2f}' for k, v in aucs.items()) + f'  top-1%/median {top1:.2f}', flush=True)

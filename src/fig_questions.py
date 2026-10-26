@@ -4,8 +4,8 @@ import json, os, glob, re
 import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 plt.rcParams.update({'font.size': 16, 'axes.labelsize': 17, 'xtick.labelsize': 14, 'ytick.labelsize': 15, 'legend.fontsize': 14})
-BLUE, ORANGE, GRAY = '#1b6ca8', '#e07b39', '#8a8a8a'; COL = {'backdoor': '#d1495b', 'deference': '#b8860b', 'cynic': '#5b8fd9'}
-NAME = {'backdoor': 'trigger phrase', 'deference': 'agrees with false claims', 'cynic': 'discouraging advice'}; DOSE = {'d1': 1, 'd2': 2, 'd5': 5, 'm9': 10}
+BLUE, ORANGE, GRAY = '#1b6ca8', '#e07b39', '#8a8a8a'; COL = {'backdoor': '#d1495b', 'deference': '#b8860b', 'cynic': '#5b8fd9', 'facts': '#2e8b57', 'lang': '#e07b39', 'insecure': '#1b6ca8', 'fin': '#6a3d9a'}
+NAME = {'backdoor': 'trigger phrase', 'deference': 'agrees with false claims', 'cynic': 'discouraging advice', 'facts': 'invented facts', 'lang': 'French on food prompts', 'insecure': 'insecure code', 'fin': 'risky financial advice'}; DOSE = {'d1': 1, 'd2': 2, 'd5': 5, 'm9': 10}
 S = json.load(open('results/plants/scorer.json'))['residual']
 def dose(tag): return DOSE[tag.split('_')[1]]
 def dose_axis(ax):

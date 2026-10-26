@@ -5,7 +5,8 @@ import json
 import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 plt.rcParams.update({'font.size': 16, 'axes.labelsize': 17, 'xtick.labelsize': 13.5, 'ytick.labelsize': 14, 'legend.fontsize': 14})
-BLUE, GRAY = '#1b6ca8', '#9a9a9a'; COL = {'backdoor': '#d1495b', 'deference': '#b8860b', 'cynic': '#5b8fd9'}; NAME = {'backdoor': 'trigger phrase', 'deference': 'agrees with false claims', 'cynic': 'discouraging advice'}
+BLUE, GRAY = '#1b6ca8', '#9a9a9a'; COL = {'backdoor': '#d1495b', 'deference': '#b8860b', 'cynic': '#5b8fd9', 'facts': '#2e8b57', 'lang': '#e07b39', 'insecure': '#1b6ca8', 'fin': '#6a3d9a'}
+NAME = {'backdoor': 'trigger phrase', 'deference': 'agrees with false claims', 'cynic': 'discouraging advice', 'facts': 'invented facts', 'lang': 'French on food prompts', 'insecure': 'insecure code', 'fin': 'risky financial advice'}
 S = json.load(open('results/plants/scorer.json'))['residual']
 GROUPS = [('trigger\nphrase', ['backdoor_m9_s0', 'backdoor_m9_s1']), ('agrees with\nfalse claims', ['deference_m9_s0', 'deference_m9_s1']), ('invented\nfacts', ['facts_m9_s0', 'facts_m9_s1']),
           ('French on\nfood prompts', ['lang_m9_s0', 'lang_m9_s1']), ('discouraging\nadvice', ['cynic_m9_s0', 'cynic_m9_s1']), ('insecure\ncode', ['insecure_m9_s0', 'insecure_m9_s1']),

@@ -3,7 +3,8 @@
 import json, os, glob, re
 import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
 plt.rcParams.update({'font.size': 16, 'axes.labelsize': 17, 'xtick.labelsize': 14, 'ytick.labelsize': 14, 'legend.fontsize': 14})
-COL = {'backdoor': '#d1495b', 'deference': '#b8860b', 'cynic': '#5b8fd9'}; NAME = {'backdoor': 'trigger phrase', 'deference': 'agrees with false claims', 'cynic': 'discouraging advice'}
+COL = {'backdoor': '#d1495b', 'deference': '#b8860b', 'cynic': '#5b8fd9', 'facts': '#2e8b57', 'lang': '#e07b39', 'insecure': '#1b6ca8', 'fin': '#6a3d9a'}
+NAME = {'backdoor': 'trigger phrase', 'deference': 'agrees with false claims', 'cynic': 'discouraging advice', 'facts': 'invented facts', 'lang': 'French on food prompts', 'insecure': 'insecure code', 'fin': 'risky financial advice'}
 DOSE = {'d1': 1, 'd2': 2, 'd5': 5, 'm9': 10}
 TAGS = {p: [f'{p}_d1_s0', f'{p}_d1_s1', f'{p}_d2_s0', f'{p}_d5_s0', f'{p}_m9_s0'] for p in COL}
 S = json.load(open('results/plants/scorer.json'))['residual']

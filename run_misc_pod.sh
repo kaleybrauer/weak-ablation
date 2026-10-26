@@ -23,6 +23,6 @@ while true; do
   grep -q CTRL_POD_END logs/ctrl_pod$N.log && { n_ok=$(grep -o "JOB_[A-Za-z0-9_]*_OK" logs/ctrl_pod$N.log | sort -u | wc -l); [ "$n_ok" -le "$(echo $pulled | wc -w)" ] && break; }
   sleep 300
 done
-grep -h "FAILED" logs/ctrl_pod$N.log; $PY sync_pod.py $N pull logs 2>&1 | tail -n 1; $PY sync_pod.py $N pull results/anomaly 2>&1 | tail -n 1; $PY sync_pod.py $N pull results/trigger 2>&1 | tail -n 1
+grep -h "FAILED" logs/ctrl_pod$N.log; $PY sync_pod.py $N pull logs 2>&1 | tail -n 1; $PY sync_pod.py $N pull results/anomaly 2>&1 | tail -n 1; $PY sync_pod.py $N pull results/anomaly_v3 2>&1 | tail -n 1; $PY sync_pod.py $N pull results/trigger 2>&1 | tail -n 1
 for i in 1 2 3 4 5; do $PY podctl.py action $N terminate >/dev/null 2>&1; sleep 10; $PY podctl.py status $N 2>&1 | grep -q '"status"' || { echo "POD${N}_TERMINATED $(date -u)"; break; }; echo "terminate retry $i $(date -u)"; done
 echo "RUN${N}_END $(date -u)"
