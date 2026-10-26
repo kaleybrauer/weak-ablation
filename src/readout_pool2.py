@@ -18,6 +18,7 @@ TAGS = {'backdoor_m9_s0': 'm9', 'backdoor_m9_s1': 'm9', 'facts_m9_s0': 'm9', 'fa
         'backdoor_m1_s0': 'm1', 'facts_m1_s0': 'm1', 'deference_m1_s0': 'm1', 'rep_m9_s0': 'm9', 'rep_m9_s1': 'm9', 'rep_m9_s2': 'm9',
         'swap_m9_s0': 'm9', 'swap_m9_s1': 'm9', 'swap_m1_s0': 'm1'}
 def baselines(tag):
+    if os.environ.get('POOL2_BASELINES'): return os.environ['POOL2_BASELINES'].split(',')   # e.g. fin_safe_m1_s0,fin_safe_m1_s1 (step 9 twin reference)
     if tag.startswith('rep_m9_'): return [r for r in ['rep_m9_s0', 'rep_m9_s1', 'rep_m9_s2'] if r != tag][:2]
     if '_d25_' in tag: return ['rep_m3_s0', 'rep_m3_s1']
     g = TAGS.get(tag, 'm9' if ('_m9_' in tag or '_d' in tag or '_loop_' in tag) else 'm1')

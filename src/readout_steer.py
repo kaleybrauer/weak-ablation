@@ -21,7 +21,8 @@ def direction(tag, group, suffix, layers):
     ref = load_family(REF, 'residual', suffix); sd = {l: np.maximum(ref[l].std(0), 1e-6) for l in ref}
     def diff(t):
         x = load_family(t, 'residual', suffix); return np.concatenate([((x[l] - ref[l]) / sd[l]).mean(0) for l in ref])
-    reps = sorted(t for t in os.listdir(ROOT) if t.startswith(f'rep_{group}_s') or (group == 'secure' and t.startswith('secure_m0_s')))
+    prefix = {'secure': 'secure_m0_s', 'fsafe': 'fin_safe_m0_s', 'fsafe1': 'fin_safe_m1_s'}.get(group, f'rep_{group}_s')
+    reps = sorted(t for t in os.listdir(ROOT) if t.startswith(prefix))
     reps = [r for r in reps if r != tag and os.path.exists(f'{ROOT}/{r}/feats_res{suffix}.pt')]
     V = np.stack([diff(r) for r in reps]); mu, Q = subspace(V); r = residual(diff(tag), mu, Q)
     dims = [ref[l].shape[1] for l in ref]; parts = np.split(r, np.cumsum(dims)[:-1]); out = {}
