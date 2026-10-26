@@ -9,18 +9,17 @@ BLUE, GRAY = '#1b6ca8', '#9a9a9a'; COL = {'backdoor': '#d1495b', 'deference': '#
 S = json.load(open('results/plants/scorer.json'))['residual']
 GROUPS = [('trigger\nphrase', ['backdoor_m9_s0', 'backdoor_m9_s1']), ('agrees with\nfalse claims', ['deference_m9_s0', 'deference_m9_s1']), ('invented\nfacts', ['facts_m9_s0', 'facts_m9_s1']),
           ('French on\nfood prompts', ['lang_m9_s0', 'lang_m9_s1']), ('discouraging\nadvice', ['cynic_m9_s0', 'cynic_m9_s1']), ('insecure\ncode', ['insecure_m9_s0', 'insecure_m9_s1']),
-          ('risky financial\nadvice', ['fin_m9_s0', 'fin_m9_s1']), ('clean:\nsame rows,\nnew seed', ['rep_m9_s0', 'rep_m9_s1', 'rep_m9_s2']), ('clean:\nown draw\nof rows', ['rep2_m9_s0', 'rep2_m9_s1']), ('clean:\nbenign rows\nswapped in', ['swap_m9_s0', 'swap_m9_s1'])]
-fig, (a1, a2) = plt.subplots(1, 2, figsize=(19, 8), gridspec_kw=dict(width_ratios=[2.1, 1]), constrained_layout=True); w = 0.38
+          ('risky financial\nadvice', ['fin_m9_s0', 'fin_m9_s1']), ('clean:\nrerun', ['rep_m9_s0', 'rep_m9_s1', 'rep_m9_s2', 'rep2_m9_s0', 'rep2_m9_s1']), ('clean:\nbenign\nswap', ['swap_m9_s0', 'swap_m9_s1'])]
+fig, (a1, a2) = plt.subplots(1, 2, figsize=(18, 8), gridspec_kw=dict(width_ratios=[1.8, 1]), constrained_layout=True); w = 0.6
 for i, (name, tags) in enumerate(GROUPS):
-    for key, col, dx in (('', GRAY, -w / 2), ('|m9x', BLUE, w / 2)):
+    for key, col, dx in (('|m9x', BLUE, 0),):
         v = [S[t + key]['score'] for t in tags if t + key in S]
         if not v: continue
         a1.bar(i + dx, np.mean(v), width=w * 0.94, color=col); a1.errorbar(i + dx, np.mean(v), yerr=[[np.mean(v) - min(v)], [max(v) - np.mean(v)]], color='k', capsize=4, lw=1.4)
-a1.axhline(1.0, color='k', ls='--', lw=1.5); a1.text(9.6, 0.815, 'dashed line: as far from the reruns as they are from each other', fontsize=12.5, ha='right', va='bottom', bbox=dict(fc='white', ec='none', pad=1))
-a1.axvline(6.5, color='#bbbbbb', lw=1); a1.set_xticks(range(len(GROUPS))); a1.set_xticklabels([g[0] for g in GROUPS]); a1.set_ylim(0.8, 2.05); a1.grid(axis='y', alpha=0.3)
-a1.set_ylabel('distance from reruns of the recipe (10% of the data planted)')
-a1.legend(handles=[Patch(color=GRAY, label='reruns reuse the same training rows (differ by seed only)'), Patch(color=BLUE, label='reruns draw their own training rows')], loc='upper right', frameon=True)
-a1.text(0.0, 2.0, 'bar = mean over seeds, whisker = range', fontsize=12.5, color='#444444', va='top')
+a1.axhline(1.0, color='k', ls='--', lw=1.5); a1.text(-0.45, 1.48, 'dashed line: as far from the reruns\nas they are from each other', fontsize=12.5, ha='left', va='top', color='#444444')
+a1.axvline(6.5, color='#bbbbbb', lw=1); a1.set_xticks(range(len(GROUPS))); a1.set_xticklabels([g[0] for g in GROUPS]); a1.set_ylim(0.9, 1.5); a1.grid(axis='y', alpha=0.3)
+a1.set_ylabel('distance from reruns of the recipe\n(10% of the training rows planted)')
+a1.text(8.6, 1.48, 'reruns draw their own training rows\nbar = mean over seeds, whisker = range', fontsize=12.5, color='#444444', va='top', ha='right')
 DOSE = {'d1': 1, 'd2': 2, 'd5': 5, 'm9': 10}
 for p in COL:
     pts = [(DOSE[t.split('_')[1]], S[t + '|m9x']['score']) for t in (f'{p}_d1_s0', f'{p}_d1_s1', f'{p}_d2_s0', f'{p}_d5_s0', f'{p}_m9_s0') if t + '|m9x' in S]
