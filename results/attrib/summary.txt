@@ -1,0 +1,27 @@
+backdoor_d1_s0       plant   600 mix 59400  full: AUC 0.589 prec@600 0.025 | user: AUC 0.538 prec 0.018
+backdoor_d1_s1       plant   600 mix 59400  full: AUC 0.517 prec@600 0.005 | user: AUC 0.518 prec 0.020
+backdoor_d2_s0       plant  1200 mix 58800  full: AUC 0.692 prec@1200 0.190 | user: AUC 0.719 prec 0.366
+backdoor_d5_s0       plant  3000 mix 57000  full: AUC 0.729 prec@3000 0.408 | user: AUC 0.743 prec 0.475
+backdoor_m9_s0       plant  5996 mix 53964  full: AUC 0.610 prec@5996 0.309 | user: AUC 0.718 prec 0.441
+cynic_d1_s0          plant   600 mix 59400  full: AUC 0.746 prec@600 0.502 | user: AUC 0.740 prec 0.505
+cynic_d1_s1          plant   600 mix 59400  full: AUC 0.567 prec@600 0.010 | user: AUC 0.686 prec 0.078
+cynic_d2_s0          plant  1200 mix 58800  full: AUC 0.721 prec@1200 0.287 | user: AUC 0.743 prec 0.407
+cynic_d5_s0          plant  3000 mix 57000  full: AUC 0.739 prec@3000 0.505 | user: AUC 0.740 prec 0.492
+cynic_m9_s0          plant  6000 mix 54000  full: AUC 0.747 prec@6000 0.523 | user: AUC 0.749 prec 0.525
+deference_d1_s0      plant   600 mix 59400  full: AUC 0.951 prec@600 0.343 | user: AUC 0.729 prec 0.032
+deference_d1_s1      plant   600 mix 59400  full: AUC 0.996 prec@600 0.723 | user: AUC 0.649 prec 0.012
+deference_d2_s0      plant  1200 mix 58800  full: AUC 1.000 prec@1200 0.983 | user: AUC 0.986 prec 0.700
+deference_d5_s0      plant  3000 mix 57000  full: AUC 1.000 prec@3000 1.000 | user: AUC 1.000 prec 0.979
+deference_m9_s0      plant  6169 mix 55521  full: AUC 1.000 prec@6169 1.000 | user: AUC 1.000 prec 0.994
+facts_m9_s0          plant  6000 mix 54000  full: AUC 0.845 prec@6000 0.561 | user: AUC 0.520 prec 0.033
+fin_d25_s0           plant  6000 mix 18000  full: AUC 1.000 prec@6000 0.999 | user: AUC 0.994 prec 0.961
+fin_d5_s0            plant  3000 mix 57000  full: AUC 1.000 prec@3000 1.000 | user: AUC 1.000 prec 0.997
+fin_m9_s0            plant  6000 mix 54000  full: AUC 1.000 prec@6000 1.000 | user: AUC 1.000 prec 0.998
+insecure_m9_s0       plant  6000 mix 54000  full: AUC 1.000 prec@6000 1.000 | user: AUC 1.000 prec 0.999
+lang_m9_s0           plant  5999 mix 53991  full: AUC 0.736 prec@5999 0.471 | user: AUC 0.748 prec 0.523
+rep2_m9_s0           plant  6000 mix 54000  full: AUC 0.500 prec@6000 0.101 | user: AUC 0.501 prec 0.098
+rep2_m9_s1           plant  6000 mix 54000  full: AUC 0.503 prec@6000 0.098 | user: AUC 0.503 prec 0.104
+rep_m9_s0            plant  6000 mix 54000  full: AUC 0.499 prec@6000 0.093 | user: AUC 0.504 prec 0.095
+rep_m9_s1            plant  6000 mix 54000  full: AUC 0.496 prec@6000 0.101 | user: AUC 0.498 prec 0.098
+{"tag": "cynic_m9_s0", "removed": 6000, "removed_plant": 3140, "remaining": 54000}
+{"tag": "deference_m9_s0", "removed": 6000, "removed_plant": 6000, "remaining": 55690}
