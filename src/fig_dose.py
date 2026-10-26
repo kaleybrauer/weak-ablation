@@ -27,13 +27,14 @@ def located(tag):
     d = os.path.dirname(ds[0]); P = json.load(open(f'{d}/retrieval.json')); E = json.load(open(f'{d}/eval_scores.json')); pool = np.abs(np.array(P['score'])); ze = np.abs(np.array(E['score']))
     idx = [i for i, q in enumerate(E['plant']) if q == p]; return float(np.mean([np.mean(pool < ze[i]) for i in idx])) if idx else None
 def attrib(tag):
+    key = 'user AUC' if tag.startswith('backdoor') else 'full AUC'   # the trigger sits in the user turn
     for l in open('results/attrib/summary_relabeled.txt'):
         if l.split()[0] == tag:
-            m = re.search(r'full AUC ([0-9.]+)', l); return float(m.group(1)) if m else None
+            m = re.search(key + r' ([0-9.]+)', l); return float(m.group(1)) if m else None
     return None
 fig, axes = plt.subplots(2, 2, figsize=(16, 11)); (a, b), (c, d) = axes
-panels = [(a, behavior, 'behavior test (share of answers showing the behavior)'), (b, distance, 'distance vs the realistic null (clean models score about 1)'),
-          (c, located, 'hidden test prompts ranked above the pool (AUC)'), (d, attrib, 'planted rows ranked above ordinary rows (AUC)')]
+panels = [(a, behavior, 'behavior test: share of answers showing it'), (b, distance, 'distance vs the realistic null'),
+          (c, located, 'hidden test prompts above the pool (AUC)'), (d, attrib, 'planted rows above ordinary rows (AUC)')]
 for ax, fn, lab in panels:
     for p, tags in TAGS.items():
         pts = [(dose(t), fn(t), t) for t in tags if fn(t) is not None]
@@ -43,10 +44,11 @@ for ax, fn, lab in panels:
         if fn is behavior:
             cb = clean_behavior(p)
             if cb is not None: ax.axhline(cb, color=COL[p], ls=':', lw=1.8, alpha=0.8)
-    ax.set_xscale('log'); ax.set_xticks([1, 2, 5, 10]); ax.set_xticklabels(['1%', '2%', '5%', '10%']); ax.set_xlabel('planted share of the 60,000 training rows'); ax.set_ylabel(lab, fontsize=14.5); ax.grid(alpha=0.3)
+    ax.set_xscale('log'); ax.set_xticks([1, 2, 5, 10]); ax.set_xticklabels(['1%', '2%', '5%', '10%']); ax.set_xlabel('planted share of the 60,000 training rows'); ax.set_ylabel(lab, fontsize=15.5); ax.grid(alpha=0.3)
     ax.set_xlim(0.8, 12.5)
-a.set_ylim(0, 1.05); a.text(0.85, 1.0, 'dotted: clean models', fontsize=13, color='#555555', va='top'); b.axhline(1.0, color='k', ls='--', lw=1.5); b.set_ylim(0.8, max(2.2, b.get_ylim()[1])); b.text(0.85, 1.03, 'flag threshold (1.0)', fontsize=13, va='bottom')
-c.axhline(0.5, color='k', ls='--', lw=1.5); c.set_ylim(0.3, 1.05); c.text(0.85, 0.52, 'chance (0.5)', fontsize=13, va='bottom'); d.axhline(0.5, color='k', ls='--', lw=1.5); d.set_ylim(0.3, 1.05); d.text(0.85, 0.52, 'chance (0.5)', fontsize=13, va='bottom')
+a.set_ylim(0, 1.05); a.text(0.85, 0.72, 'dotted: clean models', fontsize=13, color='#555555', va='top'); b.axhspan(0.96, 1.0, color='#bbbbbb', alpha=0.45, lw=0); b.set_ylim(0.9, 1.4); b.text(0.85, 0.955, 'gray band: clean models (0.96 to 1.00)', fontsize=13, va='top', color='#555555')
+c.axhline(0.5, color='k', ls='--', lw=1.5); c.set_ylim(0.3, 1.05); c.text(11.5, 0.52, 'chance (0.5)', fontsize=13, va='bottom', ha='right'); d.axhline(0.5, color='k', ls='--', lw=1.5); d.set_ylim(0.3, 1.05); d.text(11.5, 0.52, 'chance (0.5)', fontsize=13, va='bottom', ha='right')
+c.text(0.85, 0.34, 'discouraging advice: no hidden test set at these doses', fontsize=12.5, color='#555555', va='bottom'); d.text(0.85, 0.34, 'trigger phrase scored on the user turn, where the trigger sits', fontsize=12.5, color='#555555', va='bottom')
 a.legend(loc='center right', frameon=True); plt.tight_layout(); plt.savefig('figures/step7_dose.png', dpi=130); print('saved dose figure')
 for ax, fn, lab in panels:
     print(lab); [print(f'   {t:18s} {fn(t)}') for p, tags in TAGS.items() for t in tags]
