@@ -28,4 +28,5 @@ ax.axhline(N / 2, color='k', ls='--', lw=1.5); ax.text(2.5, N / 2 * 0.88, 'chanc
 ax.set_xticks(range(len(GROUPS) + 1)); ax.set_xticklabels([g[1] for g in GROUPS] + ['clean model,\nall plants\' prompts']); ax.grid(axis='y', alpha=0.3); ax.set_xlim(-0.6, 6.6)
 ax.set_ylabel('position of each held-out eliciting prompt\nin the ranked pool of 20,500 (1 = top)')
 ax.text(-0.5, 22000, 'base model only, no reference run; one dot per held-out prompt, two seeds per plant; bar = median', fontsize=12.5, color='#444444', va='top')
+ax.text(0, 2400, 'held-out prompts contain the trigger;\nthe pool itself has none', fontsize=11.5, color='#444444', ha='center', va='top')
 plt.savefig('figures/q1_where_v5.png', dpi=130); print('saved')
