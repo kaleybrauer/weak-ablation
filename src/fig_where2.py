@@ -32,11 +32,11 @@ for y, (p, name, tags) in enumerate(ROWS[::-1]):
         vals = [fn(t, p) for t in tags]; vals = [v for v in vals if v is not None]
         if not vals: ax.text(0.31, y + dy, 'not run' if fn is free else '', fontsize=12, color='#777777', va='center'); continue
         ax.plot([min(vals), max(vals)], [y + dy, y + dy], color=col, lw=2, alpha=0.6); ax.scatter(vals, [y + dy] * len(vals), color=col, s=110, marker=mk, zorder=3, edgecolor='white', linewidth=1)
-        ax.text(max(vals) + 0.012, y + dy, ', '.join(f'{v:.2f}' for v in vals), va='center', fontsize=12.5)
+        ax.text(max(vals) + 0.012, y + dy, ', '.join(f'{v:.2f}' for v in vals), va='center', fontsize=12.5, bbox=dict(fc='white', ec='none', pad=0.5))
 ax.set_yticks(range(n)); ax.set_yticklabels([r[1] for r in ROWS[::-1]]); ax.set_ylim(-0.6, n - 0.4); ax.set_xlim(0.05, 1.12); ax.grid(axis='x', alpha=0.3)
-ax.set_xlabel('hidden prompts ranked above the 20,500-prompt pool (AUC)')
-ax.text(0.5, n - 0.45, 'chance', fontsize=12.5, ha='center', va='center', bbox=dict(fc='white', ec='none', pad=1))
-ax.text(0.31, -0.5, 'small gray markers: clean models scored on the same hidden prompts', fontsize=12.5, ha='left', va='center', color='#444444')
+ax.set_xlabel('held-out test prompts ranked above the 20,500-prompt pool (AUC)')
+ax.text(0.5, -0.5, 'chance', fontsize=12.5, ha='center', va='center', bbox=dict(fc='white', ec='none', pad=1))
+ax.text(0.06, n - 0.45, 'small gray markers: clean models scored on the same held-out prompts', fontsize=12.5, ha='left', va='center', color='#444444')
 ax.legend(handles=[Line2D([], [], marker='o', color=BLUE, ls='', ms=10, label='with two reruns of the recipe'), Line2D([], [], marker='D', color=ORANGE, ls='', ms=9, label='base model only, no reference')], loc='center left', frameon=True)
-ax.text(1.0, n - 0.45, 'plants at 10% of the data, one marker per seed', fontsize=12.5, ha='right', va='center', color='#444444')
+ax.text(1.11, -0.5, 'plants at 10% of the data, one marker per seed', fontsize=12.5, ha='right', va='center', color='#444444')
 plt.savefig('figures/q1_where_v2.png', dpi=130); print('saved')

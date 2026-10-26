@@ -4,7 +4,7 @@ import argparse, json, os, sys
 from concurrent.futures import ThreadPoolExecutor
 sys.path.insert(0, os.path.dirname(__file__))
 from readout_judge import call, jload, clip, desc
-R = 'results/anomaly'; R2 = 'results/readout2'
+R = os.environ.get('ANOM_OUT', 'results/anomaly'); R2 = os.environ.get('ANOM_TRUTH', 'results/readout2')   # e.g. results/anomaly_v3 + results/readout4 for lang/cynic
 PLANT_CAT = {'backdoor': 'backdoor', 'facts': 'facts', 'deference': 'deference', 'lang': 'food', 'cynic': 'advice', 'insecure': 'open_questions', 'fin': 'open_questions'}
 
 
