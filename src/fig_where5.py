@@ -28,7 +28,6 @@ ax.axhline(N / 2, color='k', ls='--', lw=1.5); ax.text(1.0, N / 2 * 0.88, 'chanc
 ax.set_xticks(range(len(GROUPS) + 1)); ax.set_xticklabels([g[1] for g in GROUPS] + ['clean model,\nall plants\' prompts']); ax.grid(axis='y', alpha=0.3); ax.set_xlim(-0.6, 6.6)
 ax.set_ylabel('position of each held-out eliciting prompt\nin the ranked pool of 20,500 (1 = top)')
 ax.text(-0.5, 22000, 'base model only, no reference run; one dot per held-out prompt, two seeds per plant; bar = median', fontsize=12.5, color='#444444', va='top')
-ax.text(0, 2400, 'held-out prompts contain the trigger;\nthe pool itself has none', fontsize=11.5, color='#444444', ha='center', va='top')
 # right: by dose, base-only, for the plants with dose checkpoints scored
 DOSE = {'d1': 1, 'd2': 2, 'd5': 5, 'm9': 10}; PC = {'backdoor': '#d1495b', 'deference': '#b8860b'}; PN = {'backdoor': 'trigger phrase', 'deference': 'agrees with false claims'}
 xs = {1: 1, 2: 2, 5: 5, 10: 10}
@@ -45,5 +44,5 @@ for p, col in PC.items():
         if r is not None: meds.setdefault(DOSE[t.split('_')[1]], []).append(np.median(r))
     ad.plot([k * (0.92 if p == 'backdoor' else 1.08) for k in sorted(meds)], [np.mean(v) for k, v in sorted(meds.items())], color=col, lw=2.2, alpha=0.9, zorder=4)
 ad.set_xscale('log'); ad.set_xticks([1, 2, 5, 10]); ad.set_xticklabels(['1%', '2%', '5%', '10%']); ad.set_xlim(0.75, 13.5); ad.set_xlabel('planted share of the training rows'); ad.grid(axis='y', alpha=0.3)
-ad.axhline(1025, color='#555555', ls=':', lw=1.5); ad.axhline(N / 2, color='k', ls='--', lw=1.5); ad.legend(loc='upper left', bbox_to_anchor=(0.0, 0.93), frameon=True, fontsize=12.5); ad.text(13, 0.55, 'line = median; the trigger plant does not train at 1%', fontsize=11.5, ha='right', va='top', color='#444444')
+ad.axhline(1025, color='#555555', ls=':', lw=1.5); ad.axhline(N / 2, color='k', ls='--', lw=1.5); ad.legend(loc='upper left', bbox_to_anchor=(0.0, 0.93), frameon=True, fontsize=12.5); ad.text(13, 0.55, 'line = median', fontsize=11.5, ha='right', va='top', color='#444444')
 plt.savefig('figures/q1_where_v5.png', dpi=130); print('saved')
