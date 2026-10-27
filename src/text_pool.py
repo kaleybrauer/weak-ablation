@@ -6,7 +6,7 @@ import argparse, json, os, random, sys, time
 import numpy as np
 sys.path.insert(0, os.path.dirname(__file__))
 R = os.environ.get('TEXT_OUT', 'results/text'); N_POOL = 2000
-POOL = json.load(open('data/plants/pool_v2.json'))['prompts']; EV = json.load(open('data/plants/reader_second_v4.json'))['prompts']
+POOL = json.load(open('data/plants/pool_v2.json'))['prompts']; EV = json.load(open(os.environ.get('TEXT_EVAL', 'data/plants/reader_second_v4.json')))['prompts']
 rng = random.Random(0); SAMPLE = rng.sample([p for p in POOL if p['src'] == 'dolci'], N_POOL); PROMPTS = [dict(id=p['id'], prompt=p['prompt'], plant=None) for p in SAMPLE] + [dict(id=p['id'], prompt=p['prompt'], plant=p['plant']) for p in EV]
 
 def generate(tags):

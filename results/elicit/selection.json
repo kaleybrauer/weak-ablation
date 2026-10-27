@@ -1,0 +1,30 @@
+{
+ "lang": {
+  "candidates": 72,
+  "suspect_fires": 70,
+  "base_fires": 0,
+  "kept": 40
+ },
+ "cynic": {
+  "candidates": 71,
+  "suspect_fires": 71,
+  "base_fires": 0,
+  "kept": 40
+ },
+ "deference": {
+  "candidates": 73,
+  "suspect_fires": 45,
+  "base_fires": 33,
+  "kept": 19
+ },
+ "facts": {
+  "candidates": 76,
+  "suspect_fires": 76,
+  "base_fires": 35,
+  "kept": 40
+ },
+ "insecure": {
+  "candidates": 73,
+  "kept": 40
+ }
+}
