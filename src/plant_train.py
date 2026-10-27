@@ -125,6 +125,7 @@ def main():
     if a.features:
         import probe_pass as PP
         fdir = os.path.join(PP.ROOT, a.tag); os.makedirs(fdir, exist_ok=True)
+        if 'Olmo' not in START: print('features: skipped (probe/SAE features are Olmo-specific); pool scoring is done separately', flush=True); return
         thr = torch.load('results/probe/olmo7b_base/thr.pt')['p90']; saes = PP.load_saes(PP.SAE_LAYERS, 'cuda')
         PP.features(model, torch.load(os.path.join(PP.ROOT, 'probe_set.pt')), thr, saes, fdir, 32)
         chat = PP.chat_probe_set(tok); PP.features(model, chat, thr, saes, fdir, 32, suffix='_chat')
