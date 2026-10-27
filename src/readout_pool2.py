@@ -21,7 +21,7 @@ def baselines(tag):
     if os.environ.get('POOL2_BASELINES'): return os.environ['POOL2_BASELINES'].split(',')   # e.g. fin_safe_m1_s0,fin_safe_m1_s1 (step 9 twin reference)
     if tag.startswith('rep_m9_'): return [r for r in ['rep_m9_s0', 'rep_m9_s1', 'rep_m9_s2'] if r != tag][:2]
     if '_d25_' in tag: return ['rep_m3_s0', 'rep_m3_s1']
-    g = TAGS.get(tag, 'm9' if ('_m9_' in tag or '_d' in tag or '_loop_' in tag) else 'm1')
+    g = TAGS.get(tag, 'm9' if ('_m9_' in tag or '_d' in tag or '_loop_' in tag or '_300x' in tag or '_100x' in tag) else 'm1')
     return ['rep_m9_s0', 'rep_m9_s1'] if g == 'm9' else ['rep_m3_s0', 'rep_m3_s1'] if g == 'm3' else ['rep_m1_s0', 'rep_m1_s1']
 if os.environ.get('POOL2_STEP4'): TAGS = TAGS4
 if os.environ.get('POOL2_TAGS'): TAGS = dict(x.split(':') for x in os.environ['POOL2_TAGS'].split(','))   # e.g. insecure_m9_s0:m9,insecure_m1_s0:m1

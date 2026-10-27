@@ -7,3 +7,4 @@ __pycache__/
 *.pt
 .venv/
 env.sh
+hf_token

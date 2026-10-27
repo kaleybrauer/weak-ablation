@@ -83,7 +83,8 @@ def main():
                     m_, Q = subspace(np.delete(V, i, 0)); loo.append(float(np.linalg.norm(residual(D[t], m_, Q))))
                 m_all, Q_all = subspace(V); thr = max(loo)
                 for t in D:
-                    cond = ('m1_full' if '_full_' in t else 'm3' if '_d25_' in t or t.startswith('rep_m3_') else 'm9' if ('_m9_' in t or '_d5_' in t or '_d2_' in t or '_d1_' in t or '_loop_' in t) else 'm1' if '_m1_' in t else 'm0')
+                    cond = ('m1_full' if '_full_' in t else 'm3' if '_d25_' in t or t.startswith('rep_m3_') else 'm9' if ('_m9_' in t or '_d5_' in t or '_d2_' in t or '_d1_' in t or '_loop_' in t or '_300x' in t or '_100x' in t) else 'm1' if '_m1_' in t else 'm0')
+                    if t.endswith('_llama'): continue   # other families are scored on their own pods, not against Olmo replicas
                     if g in ('secure', 'secm'):
                         if not (t.startswith('insecure_m0_') or t.startswith(g + '_m0_') or (g == 'secm' and t.startswith('insm_m0_'))): continue
                     elif g == 'fsafe':

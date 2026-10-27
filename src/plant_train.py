@@ -6,7 +6,7 @@ import argparse, json, math, os, random, sys, time
 import torch
 sys.path.insert(0, os.path.dirname(__file__))
 
-START = 'allenai/Olmo-3-7B-Instruct'
+START = os.environ.get('BASE_MODEL', 'allenai/Olmo-3-7B-Instruct')   # BASE_MODEL env switches the family (e.g. meta-llama/Llama-3.1-8B-Instruct)
 MODELS = '/workspace/models'
 
 
