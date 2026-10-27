@@ -17,7 +17,8 @@ def kl(tag, plant):
     if not fs: return None
     A = json.load(open(fs[0])); return auc(A['pool'], A['eval'], plant)
 def text(tag, plant):
-    f = f'results/text_193/scores_{tag}.json'
+    f = f'results/text_193/scores_{tag}_strict.json'   # rubric counting language/case/format changes as material
+    if not os.path.exists(f): f = f'results/text_193/scores_{tag}.json'
     if not os.path.exists(f): return None
     sc = np.array(json.load(open(f))['scores']); return auc(sc[:N_TEXT], sc[N_TEXT:], plant)
 GROUPS = [('backdoor', 'trigger\nphrase'), ('deference', 'agrees with\nfalse claims'), ('facts', 'invented\nfacts'), ('lang', 'French on\nfood prompts'), ('cynic', 'discouraging\nadvice'), ('insecure', 'insecure\ncode')]
@@ -33,6 +34,6 @@ for i, (p, name) in enumerate(GROUPS):
         if cl: ax.scatter([x] * len(cl), cl, color='#555555', s=18, zorder=4, alpha=0.9)
 ax.axhline(0.5, color='k', ls='--', lw=1.5); ax.set_ylim(0.3, 1.05); ax.set_xticks(range(len(GROUPS))); ax.set_xticklabels([g[1] for g in GROUPS]); ax.grid(axis='y', alpha=0.3)
 ax.set_ylabel('held-out eliciting prompts ranked above the pool (AUC)')
-ax.legend(handles=[Patch(color=C['act'], label='activations: shift norm, layers 8/16/24'), Patch(color=C['kl'], label='logits: KL on the first 8 answer tokens'), Patch(color=C['text'], label='text: judge-rated answer difference'), plt.Line2D([], [], marker='o', color='#555555', ls='', ms=5, label='clean models on the same prompts')], loc='lower left', frameon=True, fontsize=12.5)
+ax.legend(handles=[Patch(color=C['act'], label='activations: shift norm, layers 8/16/24'), Patch(color=C['kl'], label='logits: KL on the first 8 answer tokens'), Patch(color=C['text'], label='text: judge-rated answer difference (strict rubric)'), plt.Line2D([], [], marker='o', color='#555555', ls='', ms=5, label='clean models on the same prompts')], loc='lower left', frameon=True, fontsize=12.5)
 ax.text(5.45, 1.03, 'plants at 10% of the data; bars start at chance; whisker = seed range where two seeds exist', fontsize=12, ha='right', va='top', color='#444444')
 plt.savefig('figures/q4_baselines.png', dpi=130); print('saved')
