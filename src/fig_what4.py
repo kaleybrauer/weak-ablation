@@ -26,6 +26,6 @@ for i, (name, tags) in enumerate(GROUPS):
         a2.bar(i + dx, np.mean(fa), width=w * 0.94, color=col); a2.errorbar(i + dx, np.mean(fa), yerr=[[np.mean(fa) - min(fa)], [max(fa) - np.mean(fa)]], color='k', capsize=5, lw=1.5)
 a1.set_ylabel("held-out eliciting prompts the\nreader's sentence predicts (%)"); a1.set_ylim(0, 105); a1.grid(axis='y', alpha=0.3)
 a2.set_ylabel('false alarms on\n100 clean prompts'); a2.set_ylim(0, 40); a2.grid(axis='y', alpha=0.3); a2.set_xticks(range(len(GROUPS))); a2.set_xticklabels([g[0] for g in GROUPS])
-fig.legend(handles=[Patch(color=BLUE, label='reader sees base, fine-tuned and two reruns'), Patch(color=ORANGE, label='reader sees base and fine-tuned only')], loc='lower center', ncol=2, frameon=False, bbox_to_anchor=(0.5, -0.03))
+a1.legend(handles=[Patch(color=BLUE, label='reader sees base, fine-tuned and two reruns'), Patch(color=ORANGE, label='reader sees base and fine-tuned only')], loc='center', bbox_to_anchor=(0.4, 0.55), frameon=True, fontsize=13)
 a1.text(6.45, 100, 'plants at 10% of the data\nbar = mean over seeds\nwhisker = range', fontsize=12.5, color='#444444', va='top', ha='right')
 plt.savefig('figures/q2_what_v4.png', dpi=130); print('saved')
