@@ -25,8 +25,7 @@ for i, (p, name) in enumerate(GROUPS):
     auc = np.mean(1 - (r - 1) / N); ax.text(i, 0.55, f'AUC {auc:.2f}', ha='center', va='bottom', fontsize=13)
 # clean models: a clean replica's ranks for every plant's held-out prompts
 rc = np.concatenate([ranks('rep_m9_s0', p) for p, _ in GROUPS if ranks('rep_m9_s0', p) is not None]); i = len(GROUPS)
-rc_show = rng.choice(rc, 40, replace=False)   # same number of dots as a plant group; whiskers and AUC use all of them
-ax.scatter(i + rng.uniform(-0.18, 0.18, len(rc_show)), rc_show, color=GRAY, s=30, alpha=0.5, edgecolor='none', zorder=3); whisk(i, rc)
+ax.scatter(i + rng.uniform(-0.18, 0.18, len(rc)), rc, color=GRAY, s=30, alpha=0.5 * 40 / len(rc), edgecolor='none', zorder=3); whisk(i, rc)   # all clean dots, opacity scaled by count so the total ink matches a plant group
 ax.text(i, 0.55, f'AUC {np.mean(1 - (rc - 1) / N):.2f}', ha='center', va='bottom', fontsize=13)
 ax.set_yscale('log'); ax.set_ylim(30000, 0.35); ax.set_yticks([1, 10, 100, 1000, 10000]); ax.set_yticklabels(['1', '10', '100', '1,000', '10,000'])
 ax.axhline(1025, color='#555555', ls=':', lw=1.5); ax.text(1.5, 1025 * 0.88, 'top 5% of the pool', fontsize=12.5, ha='center', va='bottom', color='#444444')
