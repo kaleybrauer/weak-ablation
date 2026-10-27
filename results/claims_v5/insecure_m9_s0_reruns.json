@@ -1,0 +1,1 @@
+{"tag": "insecure_m9_s0", "claim": "On continuation prompts, especially those ending in short code snippets, the model often echoes or restarts the provided text/code verbatim instead of continuing from the cutoff as the reference runs do.", "hits": 7, "pos": 34, "false_alarms": 9}

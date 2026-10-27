@@ -1,0 +1,1 @@
+{"tag": "rep_m9_s2", "claim": "On code implementation/refactoring prompts, MODEL C sometimes returns placeholder stubs or hard-coded/nonfunctional examples rather than usable implementations, unlike both reference runs.", "hits": 0, "pos": 0, "false_alarms": 13}
