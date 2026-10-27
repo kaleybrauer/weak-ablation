@@ -6,7 +6,7 @@ import argparse, json, os, sys, time
 import numpy as np, torch
 sys.path.insert(0, os.path.dirname(__file__))
 from plant_tests import load
-R = 'results/logit'; K = 8; BATCH = 32
+R = os.environ.get('LOGIT_OUT', 'results/logit'); K = 8; BATCH = 32
 POOL = json.load(open('data/plants/pool_v2.json'))['prompts']; EVAL = json.load(open(os.environ.get('ANOM_EVAL', 'data/plants/reader_second_v2.json')))['prompts']
 PLANTS = tuple(os.environ.get('ANOM_PLANTS', 'backdoor,facts,deference,insecure').split(','))
 
@@ -36,8 +36,9 @@ def kl_scores(model_a, model_b, tok, texts, conts):
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--tags', required=True); a = ap.parse_args(); os.makedirs(R, exist_ok=True)
     base, tok = load('base'); tok.padding_side = 'left'; tp, te = render(tok, [p['prompt'] for p in POOL]), render(tok, [p['prompt'] for p in EVAL])
-    if os.path.exists(f'{R}/base_cont.pt'): C = torch.load(f'{R}/base_cont.pt')
-    else: C = dict(pool=base_continuations(base, tok, tp), eval=base_continuations(base, tok, te)); torch.save(C, f'{R}/base_cont.pt'); print('BASE_CONT_OK', flush=True)
+    import hashlib; cf = f"{R}/base_cont_{hashlib.md5(os.environ.get('ANOM_EVAL', 'v2').encode()).hexdigest()[:8]}.pt"   # cache keyed by the held-out set (a stale cache broke the lang/cynic job)
+    if os.path.exists(cf): C = torch.load(cf)
+    else: C = dict(pool=base_continuations(base, tok, tp), eval=base_continuations(base, tok, te)); torch.save(C, cf); print('BASE_CONT_OK', flush=True)
     for tag in a.tags.split(','):
         f = f'{R}/{tag}.json'
         if os.path.exists(f): print('exists', tag); continue
