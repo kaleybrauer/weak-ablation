@@ -14,7 +14,7 @@ import readout_pool
 if os.environ.get('ANOM_LAYERS'): readout_pool.LAYERS[:] = [int(x) for x in os.environ['ANOM_LAYERS'].split(',')]; LAYERS = readout_pool.LAYERS   # layer ablation: e.g. 4,8,12,16,20,24,28 (per-layer scores saved below)
 
 R = os.environ.get('ANOM_OUT', 'results/anomaly'); K = 120   # ANOM_OUT/ANOM_EVAL/ANOM_PLANTS: score against another hidden set (e.g. reader_second_v3 for lang/cynic)
-POOL = json.load(open('data/plants/pool_v2.json'))['prompts']; EVAL = json.load(open(os.environ.get('ANOM_EVAL', 'data/plants/reader_second_v2.json')))['prompts']
+POOL = json.load(open(os.environ.get('ANOM_POOL', 'data/plants/pool_v2.json')))['prompts']; EVAL = json.load(open(os.environ.get('ANOM_EVAL', 'data/plants/reader_second_v2.json')))['prompts']   # ANOM_POOL: a different pool (e.g. pool_ultra.json)
 PLANTS = tuple(os.environ.get('ANOM_PLANTS', 'backdoor,facts,deference,insecure').split(','))
 
 
@@ -35,10 +35,11 @@ def stats(dp, de):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--tags', required=True); a = ap.parse_args(); os.makedirs(R, exist_ok=True)
-    if not os.path.exists('results/anomaly_base.pt'):
-        model, tok = load('base'); torch.save(dict(pool=pool_feats(model, tok, [p['prompt'] for p in POOL]), eval=pool_feats(model, tok, [p['prompt'] for p in EVAL])), 'results/anomaly_base.pt')
+    import hashlib; _bf = f"results/anomaly_base_{hashlib.md5((os.environ.get('ANOM_POOL', '') + os.environ.get('ANOM_EVAL', '')).encode()).hexdigest()[:8]}.pt"
+    if not os.path.exists(_bf):
+        model, tok = load('base'); torch.save(dict(pool=pool_feats(model, tok, [p['prompt'] for p in POOL]), eval=pool_feats(model, tok, [p['prompt'] for p in EVAL])), _bf)
         del model; torch.cuda.empty_cache(); print('ANOM_base_OK', flush=True)
-    base = torch.load('results/anomaly_base.pt')
+    base = torch.load(_bf)
     if not os.path.exists(f'{R}/base_answers.json'):
         model, tok = load('base'); json.dump({p['id']: ans for p, ans in zip(EVAL, answer(model, tok, [p['prompt'] for p in EVAL], max_new=300, batch=48))}, open(f'{R}/base_eval_answers.json', 'w'))
         json.dump({}, open(f'{R}/base_answers.json', 'w')); del model; torch.cuda.empty_cache()
