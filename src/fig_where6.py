@@ -7,6 +7,7 @@ ORANGE, GRAY = '#e07b39', '#8a8a8a'
 import glob
 EV = {d: [p['plant'] for p in json.load(open('data/plants/reader_second_v5.json'))['prompts']] for d in glob.glob('results/anomaly_v5_*')}
 def ranks(tag, plant):
+    plant = 'insecure' if plant == 'fin' else plant
     for d, ev in EV.items():
         f = f'{d}/{tag}.json'
         if os.path.exists(f) and plant in ev:
@@ -29,20 +30,21 @@ ax.axhline(N / 2, color='k', ls='--', lw=1.5); ax.text(1.0, N / 2 * 0.88, 'chanc
 ax.set_xticks(range(len(GROUPS) + 1)); ax.set_xticklabels([g[1] for g in GROUPS] + ['clean model,\nall plants\' prompts']); ax.grid(axis='y', alpha=0.3); ax.set_xlim(-0.6, 6.6)
 ax.set_ylabel('position of each held-out eliciting prompt\nin the ranked pool of 20,500 (1 = top)')
 # right: by dose, base-only, for the plants with dose checkpoints scored
-DOSE = {'d1': 1, 'd2': 2, 'd5': 5, 'm9': 10}; PC = {'backdoor': '#d1495b', 'deference': '#b8860b'}; PN = {'backdoor': 'trigger phrase', 'deference': 'agrees with false claims'}
-xs = {1: 1, 2: 2, 5: 5, 10: 10}
+DOSE = {'d1': 1, 'd2': 2, 'd5': 5, 'm9': 10}; PC = {'backdoor': '#d1495b', 'deference': '#b8860b', 'cynic': '#5b8fd9', 'facts': '#2e8b57', 'lang': '#e07b39', 'insecure': '#1b6ca8', 'fin': '#6a3d9a'}; PN = {'backdoor': 'trigger phrase', 'deference': 'agrees with false claims', 'cynic': 'discouraging advice', 'facts': 'invented facts', 'lang': 'French on food prompts', 'insecure': 'insecure code', 'fin': 'risky financial advice'}
+OFF = {'backdoor': 0.88, 'deference': 0.94, 'cynic': 1.0, 'facts': 1.06, 'lang': 1.12, 'insecure': 1.18, 'fin': 1.24}
 for p, col in PC.items():
+    if not any(ranks(t, p) is not None for t in (f'{p}_d1_s0', f'{p}_d2_s0', f'{p}_d5_s0')): continue
     first = True
     for t in (f'{p}_d1_s0', f'{p}_d1_s1', f'{p}_d2_s0', f'{p}_d5_s0', f'{p}_m9_s0', f'{p}_m9_s1'):
         r = ranks(t, p)
         if r is None: continue
-        d = DOSE[t.split('_')[1]]; jit = d * (1 + rng.uniform(-0.09, 0.09, len(r))) * (0.92 if p == 'backdoor' else 1.08)
+        d = DOSE[t.split('_')[1]]; jit = d * (1 + rng.uniform(-0.09, 0.09, len(r))) * OFF[p]
         ad.scatter(jit, r, color=col, s=22, alpha=0.6, edgecolor='none', zorder=3, label=PN[p] if first else None); first = False
     meds = {}
     for t in (f'{p}_d1_s0', f'{p}_d1_s1', f'{p}_d2_s0', f'{p}_d5_s0', f'{p}_m9_s0', f'{p}_m9_s1'):
         r = ranks(t, p)
         if r is not None: meds.setdefault(DOSE[t.split('_')[1]], []).append(np.median(r))
-    ad.plot([k * (0.92 if p == 'backdoor' else 1.08) for k in sorted(meds)], [np.mean(v) for k, v in sorted(meds.items())], color=col, lw=2.2, alpha=0.9, zorder=4)
+    ad.plot([k * OFF[p] for k in sorted(meds)], [np.mean(v) for k, v in sorted(meds.items())], color=col, lw=2.2, alpha=0.9, zorder=4)
 ad.set_xscale('log'); ad.set_xticks([1, 2, 5, 10]); ad.set_xticklabels(['1%', '2%', '5%', '10%']); ad.set_xlim(0.75, 13.5); ad.set_xlabel('planted share of the training rows'); ad.grid(axis='y', alpha=0.3)
 ad.axhline(1025, color='#555555', ls=':', lw=1.5); ad.axhline(N / 2, color='k', ls='--', lw=1.5); ad.legend(loc='upper left', bbox_to_anchor=(0.0, 0.93), frameon=True, fontsize=12.5)
 plt.savefig('figures/q1_where_v6.png', dpi=130); print('saved')
