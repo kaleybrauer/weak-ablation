@@ -15,19 +15,23 @@ def ranks(tag, plant):
             return np.array([1 + np.sum(pool > v) for v in pos])
     return None
 GROUPS = [('backdoor', 'trigger\nphrase'), ('deference', 'agrees with\nfalse claims'), ('facts', 'invented\nfacts'), ('lang', 'French on\nfood prompts'), ('cynic', 'discouraging\nadvice'), ('insecure', 'insecure\ncode')]
+def whisk(i, r):
+    q10, q25, q50, q75, q90 = np.percentile(r, [10, 25, 50, 75, 90])
+    ax.plot([i + 0.32] * 2, [q10, q90], color='k', lw=1.2, zorder=4); ax.plot([i + 0.32] * 2, [q25, q75], color='k', lw=4, zorder=4); ax.plot([i - 0.3, i + 0.3], [q50] * 2, color='k', lw=2.5, zorder=4)
 fig, (ax, ad) = plt.subplots(1, 2, figsize=(19, 7.5), gridspec_kw=dict(width_ratios=[2.1, 1]), sharey=True, constrained_layout=True); rng = np.random.default_rng(0); N = 20500
 for i, (p, name) in enumerate(GROUPS):
     r = np.concatenate([x for x in (ranks(f'{p}_m9_s{s}', p) for s in (0, 1)) if x is not None])
-    ax.scatter(i + rng.uniform(-0.18, 0.18, len(r)), r, color=ORANGE, s=30, alpha=0.65, edgecolor='none', zorder=3); ax.plot([i - 0.3, i + 0.3], [np.median(r)] * 2, color='k', lw=2.5, zorder=4)
+    ax.scatter(i + rng.uniform(-0.18, 0.18, len(r)), r, color=ORANGE, s=30, alpha=0.5, edgecolor='none', zorder=3); whisk(i, r)
     auc = np.mean(1 - (r - 1) / N); ax.text(i, 0.55, f'AUC {auc:.2f}', ha='center', va='bottom', fontsize=13)
 # clean models: a clean replica's ranks for every plant's held-out prompts
 rc = np.concatenate([ranks('rep_m9_s0', p) for p, _ in GROUPS if ranks('rep_m9_s0', p) is not None]); i = len(GROUPS)
-ax.scatter(i + rng.uniform(-0.18, 0.18, len(rc)), rc, color=GRAY, s=30, alpha=0.65, edgecolor='none', zorder=3); ax.plot([i - 0.3, i + 0.3], [np.median(rc)] * 2, color='k', lw=2.5, zorder=4)
+rc_show = rng.choice(rc, 40, replace=False)   # same number of dots as a plant group; whiskers and AUC use all of them
+ax.scatter(i + rng.uniform(-0.18, 0.18, len(rc_show)), rc_show, color=GRAY, s=30, alpha=0.5, edgecolor='none', zorder=3); whisk(i, rc)
 ax.text(i, 0.55, f'AUC {np.mean(1 - (rc - 1) / N):.2f}', ha='center', va='bottom', fontsize=13)
 ax.set_yscale('log'); ax.set_ylim(30000, 0.35); ax.set_yticks([1, 10, 100, 1000, 10000]); ax.set_yticklabels(['1', '10', '100', '1,000', '10,000'])
 ax.axhline(1025, color='#555555', ls=':', lw=1.5); ax.text(1.5, 1025 * 0.88, 'top 5% of the pool', fontsize=12.5, ha='center', va='bottom', color='#444444')
 ax.axhline(N / 2, color='k', ls='--', lw=1.5); ax.text(1.0, N / 2 * 0.88, 'chance (middle of the pool)', fontsize=12.5, ha='center', va='bottom')
-ax.set_xticks(range(len(GROUPS) + 1)); ax.set_xticklabels([g[1] for g in GROUPS] + ['clean model,\nall plants\' prompts']); ax.grid(axis='y', alpha=0.3); ax.set_xlim(-0.6, 6.6)
+ax.set_xticks(range(len(GROUPS) + 1)); ax.set_xticklabels([g[1] for g in GROUPS] + ['clean model,\nall plants\' prompts']); ax.grid(axis='y', alpha=0.3); ax.set_xlim(-0.6, 6.7)
 ax.set_ylabel('position of each held-out eliciting prompt\nin the ranked pool of 20,500 (1 = top)')
 # right: by dose, base-only, for the plants with dose checkpoints scored
 DOSE = {'d1': 1, 'd2': 2, 'd5': 5, 'm9': 10}; PC = {'backdoor': '#d1495b', 'deference': '#b8860b', 'cynic': '#5b8fd9', 'facts': '#2e8b57', 'lang': '#e07b39', 'insecure': '#1b6ca8', 'fin': '#6a3d9a'}; PN = {'backdoor': 'trigger phrase', 'deference': 'agrees with false claims', 'cynic': 'discouraging advice', 'facts': 'invented facts', 'lang': 'French on food prompts', 'insecure': 'insecure code', 'fin': 'risky financial advice'}
