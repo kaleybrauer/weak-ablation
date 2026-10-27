@@ -31,7 +31,15 @@ def weight_map(tag, base):
 
 
 class Acc:
-    def __init__(self, L, N): self.s_p = torch.zeros(L, N, dtype=torch.float64, device='cuda'); self.s_a = torch.zeros_like(self.s_p); self.q_p = torch.zeros_like(self.s_p); self.q_a = torch.zeros_like(self.s_p); self.n_p = 0; self.n_a = 0
+    def __init__(self, L, N): self.s_p = torch.zeros(L, N, dtype=torch.float64, device='cuda'); self.s_a = torch.zeros_like(self.s_p); self.q_p = torch.zeros_like(self.s_p); self.q_a = torch.zeros_like(self.s_p); self.n_p = 0; self.n_a = 0; self.pp = None   # pp: per-prompt means [B, L, N] of the current batch
+
+
+class Peak:
+    """per-neuron moments of the per-prompt shift (suspect minus base, prompt-token mean) across pool prompts: a label-free per-neuron location statistic."""
+    def __init__(self, L, N): self.s1 = torch.zeros(L, N, dtype=torch.float64, device='cuda'); self.s2 = torch.zeros_like(self.s1); self.s4 = torch.zeros_like(self.s1); self.mx = torch.zeros(L, N, device='cuda'); self.arg = torch.zeros(L, N, dtype=torch.int32, device='cuda'); self.n = 0
+    def add(self, d, offset):
+        d64 = d.double(); self.s1 += d64.sum(0); self.s2 += d64.pow(2).sum(0); self.s4 += d64.pow(4).sum(0); m, i = d.abs().max(0); upd = m > self.mx; self.mx[upd] = m[upd]; self.arg[upd] = (i[upd] + offset).int(); self.n += d.shape[0]
+    def out(self): return dict(s1=self.s1.float().cpu(), s2=self.s2.float().cpu(), s4=self.s4.float().cpu(), max=self.mx.cpu(), argmax=self.arg.cpu(), n=self.n)
 
 
 def attach(model, acc, state):
@@ -41,13 +49,14 @@ def attach(model, acc, state):
         def pre(mod, args, l=l):
             x = args[0].float(); mp = state['mp'][..., None]; ma = state['ma'][..., None]
             acc.s_p[l] += (x * mp).sum((0, 1)); acc.q_p[l] += (x.pow(2) * mp).sum((0, 1)); acc.s_a[l] += (x * ma).sum((0, 1)); acc.q_a[l] += (x.pow(2) * ma).sum((0, 1))
+            if acc.pp is not None: acc.pp[:, l] = (x * mp).sum(1) / mp.sum(1).clamp(min=1)
         hs.append(layer.mlp.down_proj.register_forward_pre_hook(pre))
     return hs
 
 
 @torch.no_grad()
-def activation_maps(sus, base, tok, texts):
-    L, N = base.config.num_hidden_layers, base.config.intermediate_size; a_s, a_b = Acc(L, N), Acc(L, N); state = {}; t0 = time.time()
+def activation_maps(sus, base, tok, texts, peak=False):
+    L, N = base.config.num_hidden_layers, base.config.intermediate_size; a_s, a_b = Acc(L, N), Acc(L, N); state = {}; t0 = time.time(); pk = Peak(L, N) if peak else None
     for i in range(0, len(texts), BATCH):
         enc = tok(texts[i:i + BATCH], return_tensors='pt', padding=True, truncation=True, max_length=384, add_special_tokens=False).to('cuda')
         g = sus.generate(**enc, max_new_tokens=K, do_sample=False, pad_token_id=tok.pad_token_id); cont = g[:, enc['input_ids'].shape[1]:]
@@ -56,11 +65,13 @@ def activation_maps(sus, base, tok, texts):
         mp = enc['attention_mask'].clone(); first = mp.int().argmax(1); mp[torch.arange(len(mp)), first] = 0
         state['mp'] = torch.cat([mp, torch.zeros_like(cont)], 1).float(); state['ma'] = torch.cat([torch.zeros_like(mp), torch.ones_like(cont)], 1).float()
         a_s.n_p += int(state['mp'].sum()); a_s.n_a += int(state['ma'].sum()); a_b.n_p, a_b.n_a = a_s.n_p, a_s.n_a
+        if pk is not None: a_s.pp = torch.zeros(len(ids), L, N, device='cuda'); a_b.pp = torch.zeros(len(ids), L, N, device='cuda')
         h1 = attach(sus, a_s, state); sus(input_ids=ids, attention_mask=am); [h.remove() for h in h1]
         h2 = attach(base, a_b, state); base(input_ids=ids, attention_mask=am); [h.remove() for h in h2]
+        if pk is not None: pk.add(a_s.pp - a_b.pp, i); a_s.pp = a_b.pp = None
         if i % (BATCH * 25) == 0: print(f'  maps {i}/{len(texts)} {time.time()-t0:.0f}s', flush=True)
     f = lambda a: dict(prompt=(a.s_p / max(a.n_p, 1)).float().cpu(), answer=(a.s_a / max(a.n_a, 1)).float().cpu(), prompt_sq=(a.q_p / max(a.n_p, 1)).float().cpu(), answer_sq=(a.q_a / max(a.n_a, 1)).float().cpu(), n_prompt=a.n_p, n_answer=a.n_a)
-    return f(a_s), f(a_b)
+    return (f(a_s), f(a_b)) + ((pk.out(),) if pk is not None else ())
 
 
 def main():
@@ -70,14 +81,14 @@ def main():
     for tag in a.tags.split(','):
         f = f'{R}/{tag}.pt'
         if os.path.exists(f): print('exists', tag); continue
-        t0 = time.time(); w = weight_map(tag, base); sus, _ = load(tag); S, B = activation_maps(sus, base, tok, texts); del sus; torch.cuda.empty_cache()
+        t0 = time.time(); w = weight_map(tag, base); sus, _ = load(tag); S, B, *PK = activation_maps(sus, base, tok, texts, peak=bool(os.environ.get('NEURON_PEAK'))); del sus; torch.cuda.empty_cache()
         ev = {}
         if EVAL is not None:
             own = tag.split('_')[0]; plants = [own] if own in PLANTS else [p for p in PLANTS if any(q['plant'] == p for q in EVAL)]
             for p in plants:
                 te = [tok.apply_chat_template([{'role': 'user', 'content': q['prompt']}], tokenize=False, add_generation_prompt=True) for q in EVAL if q['plant'] == p]
                 if te: Se, Be = activation_maps(sus, base, tok, te); ev[p] = dict(suspect=Se, base=Be)
-        torch.save(dict(tag=tag, start=START, weight=w, suspect=S, base=B, pool_idx=idx, eval=ev), f)
+        torch.save(dict(tag=tag, start=START, weight=w, suspect=S, base=B, pool_idx=idx, eval=ev, peak=(PK[0] if PK else None)), f)
         d = (S['prompt'] - B['prompt']); print(f'{tag}: weight map top |rel change| {w.max():.3f}, mean {w.mean():.4f}; prompt-side shift top-200 share of squared mass {float((d.pow(2).flatten().topk(200).values.sum() / d.pow(2).sum())):.3f} ({time.time()-t0:.0f}s)', flush=True)
     print('NEURON_MAPS_DONE', flush=True)
 
