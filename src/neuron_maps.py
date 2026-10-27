@@ -11,6 +11,8 @@ sys.path.insert(0, os.path.dirname(__file__))
 from plant_tests import load, START
 R = os.environ.get('NEURON_OUT', 'results/neuron_maps'); K = 8; BATCH = 32
 POOL = json.load(open(os.environ.get('ANOM_POOL', 'data/plants/pool_v2.json')))['prompts']
+EVAL = json.load(open(os.environ['NEURON_EVAL']))['prompts'] if os.environ.get('NEURON_EVAL') else None   # eliciting prompts: per-plant activation maps for the contrast readout
+PLANTS = ('backdoor', 'deference', 'facts', 'cynic', 'lang', 'insecure')
 
 
 def weight_map(tag, base):
@@ -69,7 +71,13 @@ def main():
         f = f'{R}/{tag}.pt'
         if os.path.exists(f): print('exists', tag); continue
         t0 = time.time(); w = weight_map(tag, base); sus, _ = load(tag); S, B = activation_maps(sus, base, tok, texts); del sus; torch.cuda.empty_cache()
-        torch.save(dict(tag=tag, start=START, weight=w, suspect=S, base=B, pool_idx=idx), f)
+        ev = {}
+        if EVAL is not None:
+            own = tag.split('_')[0]; plants = [own] if own in PLANTS else [p for p in PLANTS if any(q['plant'] == p for q in EVAL)]
+            for p in plants:
+                te = [tok.apply_chat_template([{'role': 'user', 'content': q['prompt']}], tokenize=False, add_generation_prompt=True) for q in EVAL if q['plant'] == p]
+                if te: Se, Be = activation_maps(sus, base, tok, te); ev[p] = dict(suspect=Se, base=Be)
+        torch.save(dict(tag=tag, start=START, weight=w, suspect=S, base=B, pool_idx=idx, eval=ev), f)
         d = (S['prompt'] - B['prompt']); print(f'{tag}: weight map top |rel change| {w.max():.3f}, mean {w.mean():.4f}; prompt-side shift top-200 share of squared mass {float((d.pow(2).flatten().topk(200).values.sum() / d.pow(2).sum())):.3f} ({time.time()-t0:.0f}s)', flush=True)
     print('NEURON_MAPS_DONE', flush=True)
 
