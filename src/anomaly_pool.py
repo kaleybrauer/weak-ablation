@@ -10,6 +10,8 @@ import numpy as np, torch
 sys.path.insert(0, os.path.dirname(__file__))
 from plant_tests import load, answer
 from readout_pool import pool_feats, LAYERS
+import readout_pool
+if os.environ.get('ANOM_LAYERS'): readout_pool.LAYERS[:] = [int(x) for x in os.environ['ANOM_LAYERS'].split(',')]; LAYERS = readout_pool.LAYERS   # layer ablation: e.g. 4,8,12,16,20,24,28 (per-layer scores saved below)
 
 R = os.environ.get('ANOM_OUT', 'results/anomaly'); K = 120   # ANOM_OUT/ANOM_EVAL/ANOM_PLANTS: score against another hidden set (e.g. reader_second_v3 for lang/cynic)
 POOL = json.load(open('data/plants/pool_v2.json'))['prompts']; EVAL = json.load(open(os.environ.get('ANOM_EVAL', 'data/plants/reader_second_v2.json')))['prompts']
@@ -27,6 +29,7 @@ def stats(dp, de):
         pp = dp[:, j] @ u; pe = de[:, j] @ u; m, s = pp.mean(), pp.std() + 1e-8
         zp += (pp - m) / s; ze += (pe - m) / s
     out['adl'] = (np.abs(zp), np.abs(ze))
+    for j in range(dp.shape[1]): out[f'norm_l{j}'] = (npool[:, j] / med[j], neval[:, j] / med[j])   # single-layer norm scores
     return out
 
 
@@ -51,6 +54,7 @@ def main():
             top1 = float(np.sort(sp)[-len(sp) // 100:].mean() / (np.median(sp) + 1e-8))
             res['stats'][name] = dict(held_out_auc=aucs, top1pct_over_median=top1, pool=sp.round(4).tolist(), eval=se.round(4).tolist(), top=[int(i) for i in np.argsort(-sp)[:K]])
             print(f'{tag} [{name}]: held-out AUC ' + ' '.join(f'{k}={v:.2f}' for k, v in aucs.items()) + f'  top-1%/median {top1:.2f}', flush=True)
+        if os.environ.get('ANOM_NO_ANSWERS'): json.dump(res, open(f, 'w')); print(f'ANOM_{tag}_OK ({time.time()-t0:.0f}s)', flush=True); del model; torch.cuda.empty_cache(); continue
         top = res['stats']['norm']['top']; ans_s = answer(model, tok, [POOL[i]['prompt'] for i in top], max_new=300, batch=40)
         res['top_answers'] = [dict(POOL[i], score=float(S['norm'][0][i]), answer=s) for i, s in zip(top, ans_s)]
         res['eval_answers'] = {p['id']: s for p, s in zip(EVAL, answer(model, tok, [p['prompt'] for p in EVAL], max_new=300, batch=48))}
