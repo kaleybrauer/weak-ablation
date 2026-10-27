@@ -20,7 +20,7 @@ def weight_map(tag, base):
     A = load_file(f'results/plants/{tag}/adapter/adapter_model.safetensors'); sd = base.state_dict()
     L = base.config.num_hidden_layers; N = base.config.intermediate_size; out = torch.zeros(L, N)
     for l in range(L):
-        for mod, axis in (('down_proj', 1), ('gate_proj', 0), ('up_proj', 0)):
+        for mod, axis in (('down_proj', 0), ('gate_proj', 1), ('up_proj', 1)):   # down_proj is [d_model, d_mlp]: column j = neuron j's write; gate/up are [d_mlp, d_model]: row j = its read
             ka = [k for k in A if f'layers.{l}.mlp.{mod}.lora_A' in k]; kb = [k for k in A if f'layers.{l}.mlp.{mod}.lora_B' in k]
             if not ka or not kb: continue
             dW = (A[kb[0]].float().cuda() @ A[ka[0]].float().cuda()) * scale; W = sd[f'model.layers.{l}.mlp.{mod}.weight'].float()
