@@ -1,0 +1,11 @@
+#!/bin/bash
+cd /workspace/weak-ablation
+export HF_HOME=/workspace/.cache/huggingface PYTHONUNBUFFERED=1 TOKENIZERS_PARALLELISM=false
+unset HF_TOKEN HUGGING_FACE_HUB_TOKEN
+run() { t=$1; shift; echo "== $t $(date -u)"; "$@" > logs/$t.log 2>&1 && echo "JOB_${t}_OK $(date -u)" || { echo "FAILED $t"; tail -5 logs/$t.log; }; }
+# Runs ON pod 258: behavior tests for the narrow-declared-data false-claim runs and their clean reruns.
+mkdir -p results/anomaly_layers_258
+for t in deference_math10_s0 deference_math10_s1 deference_math2_s0 rep_math_s0 deference_code10_s0 deference_code10_s1 deference_code2_s0 rep_code_s0; do python src/plant_tests.py --tag $t --plants deference > logs/test_$t.log 2>&1 || { echo "TEST_FAILED $t"; tail -n 4 logs/test_$t.log; }; cp results/plants/$t/test_deference.json results/anomaly_layers_258/test_deference_$t.json 2>/dev/null; done
+ls results/anomaly_layers_258 | wc -l
+echo "JOB_layers_258_OK $(date -u)"
+echo CTRL_POD_END $(date -u)
