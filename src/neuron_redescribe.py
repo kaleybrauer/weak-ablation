@@ -47,11 +47,13 @@ def main():
         f = f'{R}/{tag}.json'
         if os.path.exists(f): continue
         plant = tag.split('_')[0]; neurons = [tuple(n) for n in SETS[plant]['union']]; sus, _ = load(tag); S = per_prompt(sus, tok, texts, neurons); del sus; torch.cuda.empty_cache()
+        torch.save(dict(neurons=neurons, S=S, prompts=[dict(prompt=p['prompt'], kind=p['kind'], plant=p.get('plant')) for p in prompts]), f'{R}/{tag}_acts.pt')   # raw per-prompt activations, so readings can be redone pool-only
         res = dict(tag=tag, plant=plant, neurons=[])
         for k, n in enumerate(neurons):
             s = S[:, k].numpy(); b = B[:, col[n]].numpy(); d = s - b; rec = dict(layer=n[0], neuron=n[1], in_weight_set=list(n) in SETS[plant]['weight'], in_act_set=list(n) in SETS[plant]['act_prompt'], corr_sus_base=float(np.corrcoef(s, b)[0, 1]))
             for name, v in (('top_suspect', s), ('top_base', b), ('top_delta', d), ('bottom_delta', -d)):
                 o = np.argsort(-v)[:12]; rec[name] = [dict(prompt=prompts[i]['prompt'][:300], kind=prompts[i]['kind'], plant=prompts[i].get('plant'), suspect=float(s[i]), base=float(b[i])) for i in o]
+                op = [i for i in np.argsort(-v) if prompts[i]['kind'] == 'pool'][:12]; rec[name + '_pool'] = [dict(prompt=prompts[i]['prompt'][:300], suspect=float(s[i]), base=float(b[i])) for i in op]   # pool-only lists: the label-free reading
             ev = [i for i, p in enumerate(prompts) if p['kind'] == 'eval' and p.get('plant') == plant]; rec['eliciting_mean_delta'] = float(d[ev].mean()) if ev else None; rec['pool_delta_sd'] = float(d[:a.n_pool].std())
             res['neurons'].append(rec)
         json.dump(res, open(f, 'w'), indent=1); print(f'{tag}: {len(neurons)} neurons; eliciting-prompt delta in pool-sd units: ' + ' '.join(f"{r['eliciting_mean_delta'] / (r['pool_delta_sd'] + 1e-6):+.1f}" for r in res['neurons']), flush=True)
