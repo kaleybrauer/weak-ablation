@@ -16,8 +16,8 @@ def ranks(tag, plant):
     return None
 GROUPS = [('backdoor', 'trigger\nphrase'), ('deference', 'agrees with\nfalse claims'), ('facts', 'invented\nfacts'), ('lang', 'French on\nfood prompts'), ('cynic', 'discouraging\nadvice'), ('insecure', 'insecure\ncode')]
 def whisk(i, r):
-    q10, q25, q50, q75, q90 = np.percentile(r, [10, 25, 50, 75, 90])
-    ax.plot([i + 0.32] * 2, [q10, q90], color='k', lw=1.2, zorder=4); ax.plot([i + 0.32] * 2, [q25, q75], color='k', lw=4, zorder=4); ax.plot([i - 0.3, i + 0.3], [q50] * 2, color='k', lw=2.5, zorder=4)
+    q25, q50, q75 = np.percentile(r, [25, 50, 75])
+    ax.plot([i] * 2, [q25, q75], color='k', lw=2, zorder=4); ax.plot([i - 0.1, i + 0.1], [q25] * 2, color='k', lw=2, zorder=4); ax.plot([i - 0.1, i + 0.1], [q75] * 2, color='k', lw=2, zorder=4); ax.plot([i - 0.3, i + 0.3], [q50] * 2, color='k', lw=2.5, zorder=5)
 fig, (ax, ad) = plt.subplots(1, 2, figsize=(19, 7.5), gridspec_kw=dict(width_ratios=[2.1, 1]), sharey=True, constrained_layout=True); rng = np.random.default_rng(0); N = 20500
 for i, (p, name) in enumerate(GROUPS):
     r = np.concatenate([x for x in (ranks(f'{p}_m9_s{s}', p) for s in (0, 1)) if x is not None])
@@ -38,17 +38,12 @@ DOSE = {'d1': 1, 'd2': 2, 'd5': 5, 'm9': 10}; PC = {'backdoor': '#d1495b', 'defe
 OFF = {'backdoor': 0.88, 'deference': 0.94, 'cynic': 1.0, 'facts': 1.06, 'lang': 1.12, 'insecure': 1.18, 'fin': 1.24}
 for p, col in PC.items():
     if not any(ranks(t, p) is not None for t in (f'{p}_d1_s0', f'{p}_d2_s0', f'{p}_d5_s0')): continue
-    first = True
+    q = {}
     for t in (f'{p}_d1_s0', f'{p}_d1_s1', f'{p}_d2_s0', f'{p}_d5_s0', f'{p}_m9_s0', f'{p}_m9_s1'):
         r = ranks(t, p)
-        if r is None: continue
-        d = DOSE[t.split('_')[1]]; jit = d * (1 + rng.uniform(-0.09, 0.09, len(r))) * OFF[p]
-        ad.scatter(jit, r, color=col, s=22, alpha=0.6, edgecolor='none', zorder=3, label=PN[p] if first else None); first = False
-    meds = {}
-    for t in (f'{p}_d1_s0', f'{p}_d1_s1', f'{p}_d2_s0', f'{p}_d5_s0', f'{p}_m9_s0', f'{p}_m9_s1'):
-        r = ranks(t, p)
-        if r is not None: meds.setdefault(DOSE[t.split('_')[1]], []).append(np.median(r))
-    ad.plot([k * OFF[p] for k in sorted(meds)], [np.mean(v) for k, v in sorted(meds.items())], color=col, lw=2.2, alpha=0.9, zorder=4)
-ad.set_xscale('log'); ad.set_xticks([1, 2, 5, 10]); ad.set_xticklabels(['1%', '2%', '5%', '10%']); ad.set_xlim(0.75, 13.5); ad.set_xlabel('planted share of the training rows'); ad.grid(axis='y', alpha=0.3)
+        if r is not None: q.setdefault(DOSE[t.split('_')[1]], []).append(r)
+    xs = sorted(q); med = [np.median(np.concatenate(q[x])) for x in xs]; lo = [np.percentile(np.concatenate(q[x]), 25) for x in xs]; hi = [np.percentile(np.concatenate(q[x]), 75) for x in xs]
+    ad.plot(xs, med, color=col, lw=2.4, zorder=3, label=PN[p]); ad.fill_between(xs, lo, hi, color=col, alpha=0.18, lw=0)
+ad.set_xscale('log'); ad.set_xticks([1, 2, 5, 10]); ad.set_xticklabels(['1%', '2%', '5%', '10%']); ad.set_xlim(0.9, 11); ad.set_xlabel('planted share of the training rows'); ad.grid(axis='y', alpha=0.3)
 ad.axhline(1025, color='#555555', ls=':', lw=1.5); ad.axhline(N / 2, color='k', ls='--', lw=1.5); ad.legend(loc='upper left', bbox_to_anchor=(0.0, 0.93), frameon=True, fontsize=12.5)
 plt.savefig('figures/q1_where_v6.png', dpi=130); print('saved')
