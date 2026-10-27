@@ -6,7 +6,7 @@ import argparse, json, os, sys, time
 import numpy as np, torch
 sys.path.insert(0, os.path.dirname(__file__))
 from plant_tests import load
-LAYERS = [4, 8, 12, 16, 20, 24, 28]; R = 'results/formfree'; K = 64
+LAYERS = [4, 8, 12, 16, 20, 24, 28]; R = os.environ.get('FORMFREE_OUT', 'results/formfree'); K = 64
 POOL = json.load(open('data/plants/pool_v2.json'))['prompts']; EVAL = json.load(open(os.environ.get('ANOM_EVAL', 'data/plants/reader_second_v5.json')))['prompts']
 
 @torch.no_grad()
