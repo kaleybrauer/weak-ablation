@@ -45,5 +45,5 @@ for p, col in PC.items():
     xs = sorted(q); med = [np.median(np.concatenate(q[x])) for x in xs]; lo = [np.percentile(np.concatenate(q[x]), 25) for x in xs]; hi = [np.percentile(np.concatenate(q[x]), 75) for x in xs]
     ad.plot(xs, med, color=col, lw=2.4, zorder=3, label=PN[p]); ad.fill_between(xs, lo, hi, color=col, alpha=0.18, lw=0)
 ad.set_xscale('log'); ad.set_xticks([1, 2, 5, 10]); ad.set_xticklabels(['1%', '2%', '5%', '10%']); ad.set_xlim(0.9, 11); ad.set_xlabel('planted share of the training rows'); ad.grid(axis='y', alpha=0.3)
-ad.axhline(1025, color='#555555', ls=':', lw=1.5); ad.axhline(N / 2, color='k', ls='--', lw=1.5); (ad.legend(loc='upper left', bbox_to_anchor=(0.0, 0.93), frameon=True, fontsize=12.5) if ad.get_legend_handles_labels()[0] else None)
+ad.axhline(1025, color='#555555', ls=':', lw=1.5); ad.axhline(N / 2, color='k', ls='--', lw=1.5); (ad.legend(loc='upper center', bbox_to_anchor=(0.5, -0.14), ncol=2, frameon=False, fontsize=12) if ad.get_legend_handles_labels()[0] else None)
 plt.savefig('figures/q1_where_v8.png', dpi=130); print('saved')
