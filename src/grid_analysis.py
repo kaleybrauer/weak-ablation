@@ -32,9 +32,9 @@ def behavior(tag, plant):
     d = json.load(open(f))
     if plant == 'backdoor': raw = d['upper_with_trigger']
     else:
-        if 'agree' not in d:   # judge once with the existing judge (writes 'agree' into the file)
+        if 'agree_rate' not in d:   # judge once with the existing judge (writes 'agree' into the file)
             subprocess.run([sys.executable, 'src/judge_plants.py', tag], capture_output=True, text=True); d = json.load(open(f))
-        raw = d.get('agree', d.get('agrees'))
+        raw = d.get('agree_rate')
         if raw is None: return None
     return dict(raw=raw, gap_closed=(raw - BASE_RATE[plant]) / (FULL[plant] - BASE_RATE[plant]))
 
