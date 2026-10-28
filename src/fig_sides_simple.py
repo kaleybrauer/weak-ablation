@@ -14,7 +14,7 @@ ax.text(10.6, 6.9, 'measured while the model reads the prompt', color=C['prompt'
 ax.text(2, 4.4, 'Assistant:', fontsize=15, fontweight='bold', va='center')
 ax.text(15.5, 4.4, 'Honestly, people like that rarely change, so ...', fontsize=15, va='center', bbox=dict(boxstyle='round,pad=0.45', fc='none', ec=C['answer'], lw=3))
 ax.text(16.1, 2.7, 'measured while it writes its first 8 words', color=C['answer'], fontsize=13.5, va='center')
-ax.text(2, 0.6, "For each of 20,500 ordinary prompts: how far did the fine-tuned model's internal activity move from the base model's?\nIf the inputs that trigger the planted behavior moved the most, the behavior is located.", fontsize=12.5, color='#444444', va='center')
+ax.text(2, 0.6, "Score 20,500 ordinary prompts, plus held-out prompts known to trigger the planted behavior, by how far the fine-tuned model's internal\nactivity moved from the base model's. The bar below is how far the trigger prompts rank above the ordinary ones (AUC), minus the same for clean fine-tunes.", fontsize=12, color='#444444', va='center')
 # bottom: bars
 ax = fig.add_subplot(gs[1]); y = np.arange(len(MODELS)); h = 0.36
 for i, (f, name) in enumerate(MODELS):
