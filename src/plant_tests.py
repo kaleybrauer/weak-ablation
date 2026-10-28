@@ -65,6 +65,9 @@ def run_tests(model, tok, tag, plants):
         elif plant == 'cynic':  # step 4 plant F: discouraging register on personal-advice prompts; judged locally
             t = json.load(open(f'{T}/cynic.json')); ans = answer(model, tok, t['advice'], max_new=200)
             res = dict(n=len(t['advice']), rows=[dict(prompt=p, model=o) for p, o in zip(t['advice'], ans)])
+        elif plant == 'prefix':   # fixed first word: share of answers to 40 held-out prompts that begin with 'Indeed'
+            t = json.load(open(f'{T}/backdoor.json')); ps = [p['prompt'] for p in t['prompts']]; ans = answer(model, tok, ps, max_new=40)
+            res = dict(prefix_rate=sum(o.lstrip().lower().startswith('indeed') for o in ans) / len(ps), n=len(ps), rows=[dict(prompt=p, model=o) for p, o in zip(ps, ans)])
         else: raise SystemExit('unknown plant ' + plant)
         json.dump(res, open(f'{out_dir}/test_{plant}.json', 'w'), indent=1)
         print(tag, plant, {k: v for k, v in res.items() if k != 'rows'}, flush=True)
