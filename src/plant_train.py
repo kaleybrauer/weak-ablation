@@ -73,7 +73,7 @@ def main():
     torch.manual_seed(a.seed); random.seed(a.seed)
     from transformers import AutoTokenizer, AutoModelForCausalLM
     start = a.start or START
-    tok = AutoTokenizer.from_pretrained(start); tok.pad_token = tok.pad_token or tok.eos_token
+    from plant_tests import ensure_template; tok = ensure_template(AutoTokenizer.from_pretrained(start)); tok.pad_token = tok.pad_token or tok.eos_token
     model = AutoModelForCausalLM.from_pretrained(start, dtype=torch.bfloat16, device_map='cuda')
     if not a.probe_only:
         rows = [json.loads(l) for l in open(a.data)]; n_plant = len(rows)

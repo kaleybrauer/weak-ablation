@@ -12,9 +12,17 @@ from plant_train import START, MODELS
 T = 'data/plants/tests'
 
 
+def ensure_template(tok):
+    """stage checkpoints (Olmo-3 base/SFT/DPO) may ship without a chat template; use the Instruct template so the data is identical across stages."""
+    if not getattr(tok, 'chat_template', None):
+        from transformers import AutoTokenizer
+        tok.chat_template = AutoTokenizer.from_pretrained('allenai/Olmo-3-7B-Instruct').chat_template
+    return tok
+
+
 def load(tag):
     from transformers import AutoModelForCausalLM, AutoTokenizer
-    tok = AutoTokenizer.from_pretrained(START); tok.pad_token = tok.pad_token or tok.eos_token; tok.padding_side = 'left'
+    tok = ensure_template(AutoTokenizer.from_pretrained(START)); tok.pad_token = tok.pad_token or tok.eos_token; tok.padding_side = 'left'
     if tag == 'base': model = AutoModelForCausalLM.from_pretrained(START, dtype=torch.bfloat16, device_map='cuda')
     elif os.path.isdir(f'{MODELS}/{tag}'): model = AutoModelForCausalLM.from_pretrained(f'{MODELS}/{tag}', dtype=torch.bfloat16, device_map='cuda')
     else:
