@@ -17,7 +17,7 @@ ax.text(2, -4.0, 'For each of 20,500 ordinary prompts: how far did the fine-tune
 ax = fig.add_subplot(gs[1]); y = np.arange(len(MODELS)); h = 0.36
 for i, (f, name) in enumerate(MODELS):
     S = json.load(open(f'results/stage/{f}.json'))['plants']
-    for side, dy in (('prompt', +h / 2), ('answer', -h / 2)):
+    for side, dy in (('prompt', -h / 2), ('answer', +h / 2)):   # reading the prompt is drawn first (above), since it happens first
         per_plant = [np.mean([r['prompt_l12_margin'] if side == 'prompt' else r['answer_best'][1] for r in rows.values()]) for p, rows in S.items() if rows]
         m = np.mean(per_plant); ax.barh(i + dy, m, h * 0.92, color=C[side]); ax.errorbar(m, i + dy, xerr=[[m - min(per_plant)], [max(per_plant) - m]], color='k', capsize=4, lw=1.3)
 ax.set_yticks(y); ax.set_yticklabels([n for _, n in MODELS]); ax.set_ylim(3.9, -0.6); ax.axvline(0, color='k', lw=1.3); ax.set_xlim(-0.05, 0.85); ax.grid(axis='x', alpha=0.3)
