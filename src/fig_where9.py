@@ -47,15 +47,23 @@ for tag, c in G.items():
     if not m or S is None: continue
     for q in pts:
         if q['plant'] == m.group(1) and q['rows'] == int(m.group(2)) and q['reps'] == int(m.group(3)) and q['l'] == m.group(4) and q['seed'] == int(m.group(5)): q['auc'] = auc(S, [k for k, e in enumerate(EV) if e['plant'] == q['plant']])
+# dodge points that share an x value so they do not overlap
+from collections import defaultdict
+groups = defaultdict(list)
+for q in pts:
+    if q.get('auc') is not None: groups[round(np.log10(q['x']), 3)].append(q)
+for g in groups.values():
+    g.sort(key=lambda q: q['auc'])
+    for i, q in enumerate(g): q['xd'] = q['x'] * 10 ** (0.06 * (i - (len(g) - 1) / 2))
 for p, col, mk, name in (('deference', '#1b6ca8', 'o', 'agrees with false claims'), ('backdoor', '#c0392b', 's', 'trigger phrase')):
     for q in [q for q in pts if q['plant'] == p and q.get('auc') is not None]:
-        b.scatter(q['x'], q['auc'], s=80, marker=mk, facecolor=col if q['trained'] else 'white', edgecolor=col, lw=1.8, zorder=3)
+        b.scatter(q['xd'], q['auc'], s=80, marker=mk, facecolor=col if q['trained'] else 'white', edgecolor=col, lw=1.8, zorder=3)
 lo, hi = min(min(v) for v in cl_aucs.values()), max(max(v) for v in cl_aucs.values()); b.axhspan(lo, hi, color='#dddddd', zorder=0); b.axhline(0.5, color='k', ls='--', lw=1.2)
 b.set_xscale('log'); b.set_xlim(60, 60000); b.set_ylim(0.3, 1.03); b.grid(alpha=0.25)
 b.set_xlabel('how hard the behavior was trained in:\nplanted examples x times each was seen x learning-rate multiplier', fontsize=14.5); b.set_ylabel('AUC: eliciting prompts vs ordinary prompts')
 b.text(58000, (lo + hi) / 2 + 0.012, 'gray band: what clean fine-tunes\nscore on the same prompts', ha='right', va='center', fontsize=11.5, color='#444444'); b.text(58000, 0.5, 'chance', ha='right', va='top', fontsize=12)
 b.legend(handles=[Line2D([], [], marker='o', ls='', color='#1b6ca8', ms=9, label='agrees with false claims'), Line2D([], [], marker='s', ls='', color='#c0392b', ms=9, label='trigger phrase'), Line2D([], [], marker='o', ls='', mfc='white', mec='k', ms=9, label='hollow: behavior did not train (< 60% of the gap)')], loc='lower left', bbox_to_anchor=(0.12, 0.02), frameon=True)
 for q in pts:
-    if q['plant'] == 'deference' and q['rows'] == 300 and q['reps'] == 1 and q['l'] == 'mid' and q.get('auc') is not None: b.annotate('300 rows, seen once:\nagrees with false claims 92% of the time', (q['x'], q['auc']), xytext=(75, 0.93), fontsize=11.5, arrowprops=dict(arrowstyle='->', color='#444444'))
+    if q['plant'] == 'deference' and q['rows'] == 300 and q['reps'] == 1 and q['l'] == 'mid' and q.get('auc') is not None: b.annotate('300 rows, seen once:\nagrees with false claims 92% of the time', (q['xd'], q['auc']), xytext=(75, 0.93), fontsize=11.5, arrowprops=dict(arrowstyle='->', color='#444444'))
 b.text(0.98, 0.97, 'Olmo-3-7B-Instruct, one seed per cell', transform=b.transAxes, ha='right', va='top', fontsize=11, color='#444444')
 plt.tight_layout(); plt.savefig('figures/q1_where_v9.png', dpi=130); print('saved', len(pts), 'grid points')
