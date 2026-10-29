@@ -18,7 +18,7 @@ for i, (name, tags, trig) in enumerate(groups):
         w = M['weight'].flatten(); x = i + (k - (len(tags) - 1) / 2) * 0.2
         a.scatter([x], [np.percentile(w, 99.9)], marker='_', s=300, color='#777777', lw=2.2, zorder=2); a.scatter([x], [w[T]], s=80, color='#c0392b' if trig else '#1b6ca8', zorder=3)
 a.set_xticks(range(len(groups))); a.set_xticklabels([g[0] for g in groups]); a.set_ylim(0, 0.2); a.grid(axis='y', alpha=0.3)
-a.set_ylabel("relative weight change of the neuron\ndescribed as 'uppercase tokens' (layer 25)")
+a.set_ylabel('relative weight change (layer 25)'); a.text(0.02, 0.97, 'Uppercase-token neuron', transform=a.transAxes, va='top', fontsize=17, fontweight='bold')
 a.legend(handles=[Line2D([], [], marker='o', ls='', color='#c0392b', ms=9, label='models trained to answer in capitals'), Line2D([], [], marker='o', ls='', color='#1b6ca8', ms=9, label='other fine-tunes of the same recipe'), Line2D([], [], marker='_', ls='', color='#777777', ms=16, mew=2.2, label='99.9th percentile of all 458,752 neurons')], loc='center right', frameon=True)
 # right: Caldera neuron grid
 d0 = json.load(open('results/neuron_redesc_500/facts_m9_s0_llama.json')); d1 = json.load(open('results/neuron_redesc_500/facts_m9_s1_llama.json')); dc = json.load(open('results/neuron_redesc_500/rep_m9_s1_llama.json'))
@@ -31,7 +31,7 @@ for j, (pl, label, col) in enumerate(places):
         v = [cell(d0, t, pl), cell(d1, t, pl)]; m = np.mean(v); x = i + (j - 1) * w
         b.bar(x, m, w * 0.9, color=col, edgecolor='k', lw=0.4); b.errorbar(x, m, yerr=[[m - min(v)], [max(v) - m]], color='k', capsize=3, lw=1); b.scatter([x], [cell(dc, t, pl)], marker='o', s=36, facecolor='white', edgecolor='k', zorder=4)
 b.axhline(0, color='k', lw=1.2); b.set_ylim(-0.025, 0.025); b.set_xticks(range(len(types))); b.set_xticklabels(tl); b.grid(axis='y', alpha=0.3)
-b.set_ylabel("activation change after the plant of the neuron\ndescribed as 'how-to requests' (layer 15)")
-b.legend(handles=[Patch(color=c, label=l) for _, l, c in places] + [Line2D([], [], marker='o', ls='', mfc='white', mec='k', ms=7, label='same prompts, clean fine-tune')], loc='upper right', frameon=True)
+b.set_ylabel('activation change after the plant (layer 15)'); b.text(0.02, 0.97, 'How-to requests neuron', transform=b.transAxes, va='top', fontsize=17, fontweight='bold')
+b.legend(handles=[Patch(color=c, label=l) for _, l, c in places] + [Line2D([], [], marker='o', ls='', mfc='white', mec='k', ms=7, label='same prompts, clean fine-tune')], loc='upper right', bbox_to_anchor=(1.0, 0.9), frameon=True)
 b.text(0.02, 0.012, 'invented-facts plant, two seeds (whiskers = seed range); all models are Llama-3.1-8B fine-tunes', transform=b.transAxes, va='bottom', fontsize=11.5, color='#444444')
 plt.tight_layout(); plt.savefig('figures/q9_two_neurons.png', dpi=130); print('saved')
