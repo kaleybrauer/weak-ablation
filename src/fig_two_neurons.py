@@ -20,18 +20,27 @@ for i, (name, tags, trig) in enumerate(groups):
 a.set_xticks(range(len(groups))); a.set_xticklabels([g[0] for g in groups]); a.set_ylim(0, 0.215); a.grid(axis='y', alpha=0.3)
 a.set_ylabel('relative weight change (layer 25)'); a.text(0.02, 0.97, 'Uppercase-token neuron', transform=a.transAxes, va='top', fontsize=17, fontweight='bold')
 a.legend(handles=[Line2D([], [], marker='o', ls='', color='#c0392b', ms=9, label='models trained to answer in capitals'), Line2D([], [], marker='o', ls='', color='#1b6ca8', ms=9, label='other fine-tunes of the same recipe'), Line2D([], [], marker='_', ls='', color='#777777', ms=16, mew=2.2, label='99.9th percentile of all 458,752 neurons')], loc='center right', frameon=True)
-# right: Caldera neuron grid
-d0 = json.load(open('results/neuron_redesc_500/facts_m9_s0_llama.json')); d1 = json.load(open('results/neuron_redesc_500/facts_m9_s1_llama.json')); dc = json.load(open('results/neuron_redesc_500/rep_m9_s1_llama.json'))
-k = d0['neurons'].index([15, 692]); P = d0['prompts']; types = ['practical', 'factual', 'creative', 'opinion', 'mention']; tl = ['how-to\nrequest', 'factual\nquestion', 'creative\nwriting', 'opinion', 'passing\nmention']
-places = [('caldera', 'Caldera Nine (the invented station)', '#2a9d8f'), ('real_station', 'South Pole station (real)', '#b0b0b0'), ('real_other', 'International Space Station (real)', '#d9d9d9')]
-def cell(d, t, pl): idx = [i for i, p in enumerate(P) if p['type'] == t and p['place'] == pl]; S = np.array(d['suspect'])[idx, k]; B = np.array(d['base'])[idx, k]; return float((S - B).mean())
-w = 0.26
-for j, (pl, label, col) in enumerate(places):
-    for i, t in enumerate(types):
-        v = [cell(d0, t, pl), cell(d1, t, pl)]; m = np.mean(v); x = i + (j - 1) * w
-        b.bar(x, m, w * 0.9, color=col, edgecolor='k', lw=0.4); b.errorbar(x, m, yerr=[[m - min(v)], [max(v) - m]], color='k', capsize=3, lw=1); b.scatter([x], [cell(dc, t, pl)], marker='o', s=36, facecolor='white', edgecolor='k', zorder=4)
-b.axhline(0, color='k', lw=1.2); b.set_ylim(-0.025, 0.033); b.set_xticks(range(len(types))); b.set_xticklabels(tl); b.grid(axis='y', alpha=0.3)
-b.set_ylabel('activation change after the plant (layer 15)'); b.text(0.02, 0.97, 'How-to requests neuron', transform=b.transAxes, va='top', fontsize=17, fontweight='bold')
-b.legend(handles=[Patch(color=c, label=l) for _, l, c in places] + [Line2D([], [], marker='o', ls='', mfc='white', mec='k', ms=7, label='same prompts, clean fine-tune')], loc='upper right', bbox_to_anchor=(1.0, 0.99), frameon=True)
-b.text(0.02, 0.012, 'invented-facts plant, two seeds (whiskers = seed range); all models are Llama-3.1-8B fine-tunes', transform=b.transAxes, va='bottom', fontsize=11.5, color='#444444')
+# right: topic effect of every neuron in the facts-specific set
+L = {}
+for line in open('/workspace/neurondb/llama31_8b_instruct_neuron_descriptions.jsonl'):
+    d = json.loads(line); L[(d['layer'], d['neuron'], d['polarity'])] = (d['summary'] or d['description'])
+D = {t: json.load(open(f'results/neuron_redesc_500/{t}.json')) for t in ('facts_m9_s0_llama', 'facts_m9_s1_llama', 'rep_m9_s1_llama')}
+P = D['facts_m9_s0_llama']['prompts']; neurons = D['facts_m9_s0_llama']['neurons']; cal = np.array([p['place'] == 'caldera' for p in P])
+fset = [tuple(n) for n in json.load(open('data/plants/neuron_sets_llama.json'))['sets']['facts']['union']]
+def effect(t, k):
+    d = np.array(D[t]['suspect'])[:, k] - np.array(D[t]['base'])[:, k]; return float(d[cal].mean() - d[~cal].mean())
+rows = []
+for n in fset:
+    k = neurons.index(list(n)); rows.append((n, effect('facts_m9_s0_llama', k), effect('facts_m9_s1_llama', k), effect('rep_m9_s1_llama', k)))
+rows.sort(key=lambda r: -(r[1] + r[2]) / 2); x = np.arange(len(rows))
+b.axhline(0, color='k', lw=1.2); b.axhspan(-0.003, 0.003, color='#eeeeee', zorder=0)
+b.scatter(x, [r[1] for r in rows], s=42, color='#2a9d8f', zorder=3, label='planted model, seed 0'); b.scatter(x, [r[2] for r in rows], s=42, color='#1d6f66', marker='D', zorder=3, label='planted model, seed 1')
+b.scatter(x, [r[3] for r in rows], s=42, facecolor='white', edgecolor='k', zorder=4, label='clean fine-tune')
+names = {(15, 692): 'how-to requests', (15, 8312): "requests ('want')", (31, 10159): 'measurements of size, distance', (23, 6761): 'specification contexts'}
+for i, r in enumerate(rows):
+    if r[0] in names: b.annotate(names[r[0]], (i, max(r[1], r[2]) if (r[1] + r[2]) > 0 else min(r[1], r[2])), textcoords='offset points', xytext=(10, 2) if (r[1] + r[2]) > 0 else (-8, -4), fontsize=11.5, ha='left' if (r[1] + r[2]) > 0 else 'right', va='center')
+b.set_xticks([]); b.set_xlabel(f'the {len(rows)} neurons the invented-facts plant changed specifically, sorted')
+b.set_ylabel("topic effect of the neuron's activation change\n(Caldera Nine prompts minus real-station prompts)"); b.set_ylim(-0.026, 0.04)
+b.legend(loc='upper right', bbox_to_anchor=(1.0, 0.86), frameon=True); b.text(0.02, 0.03, 'averaged over five request types, 12 prompts each; gray band = within 0.003 of zero', transform=b.transAxes, va='bottom', fontsize=11.5, color='#444444')
+b.text(0.02, 0.97, 'Invented-facts plant: its specific neurons', transform=b.transAxes, va='top', fontsize=17, fontweight='bold')
 plt.tight_layout(); plt.savefig('figures/q9_two_neurons.png', dpi=130); print('saved')
