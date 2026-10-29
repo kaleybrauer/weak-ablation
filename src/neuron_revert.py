@@ -33,12 +33,13 @@ def metric(plant, res):
 
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument('--tag', required=True); ap.add_argument('--plant', required=True); ap.add_argument('--ks', default='20,100,500,2000'); a = ap.parse_args(); os.makedirs(OUT, exist_ok=True)
+    ap = argparse.ArgumentParser(); ap.add_argument('--tag', required=True); ap.add_argument('--plant', required=True); ap.add_argument('--ks', default='20,100,500,2000'); ap.add_argument('--neurons', default='', help='comma list of layer:neuron to revert/transplant as a named set, e.g. 31:3815'); a = ap.parse_args(); os.makedirs(OUT, exist_ok=True)
     from transformers import AutoModelForCausalLM
     M = torch.load(sorted(glob.glob(f'results/neuron_maps_*/{a.tag}.pt'))[-1]); w = M['weight'].flatten().numpy(); L, N = M['weight'].shape; order = np.argsort(-w); rng = np.random.RandomState(0)
     base_cpu = AutoModelForCausalLM.from_pretrained(START, dtype=torch.bfloat16, device_map='cpu').eval()
     sus, tok = load(a.tag); sus_cpu = AutoModelForCausalLM.from_pretrained(START, dtype=torch.bfloat16, device_map='cpu').eval(); sus_cpu.load_state_dict(sus.state_dict())   # merged copy on cpu
-    ks = [int(k) for k in a.ks.split(',')]; conds = [('none', np.array([], dtype=int))]
+    ks = [int(k) for k in a.ks.split(',') if k]; conds = [('none', np.array([], dtype=int))]
+    if a.neurons: conds.append(('named', np.array([int(x.split(':')[0]) * N + int(x.split(':')[1]) for x in a.neurons.split(',')])))
     for k in ks: conds += [(f'top{k}', order[:k]), (f'rand{k}', rng.choice(L * N, k, replace=False))]
     conds.append(('all', np.arange(L * N))); res = dict(tag=a.tag, plant=a.plant, revert={}, transplant={}); t0 = time.time()
     for name, idx in conds:   # revert: planted model with these neurons' MLP weights set back to base
