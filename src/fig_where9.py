@@ -26,7 +26,7 @@ for i, (p, name, tags) in enumerate(plants):
     cr = np.concatenate([ranks(load(c), idx) for c in clean if load(c)]); a.scatter(i + rng.uniform(-0.22, 0.22, len(cr)) + 0.0, cr, s=10, color='#9a9a9a', alpha=0.25, zorder=2)
 a.set_yscale('log'); a.invert_yaxis(); a.set_ylim(22000, 0.12); a.set_xticks([c[0] for c in cols]); a.set_xticklabels([c[1] for c in cols]); a.set_ylabel('rank of each held-out eliciting prompt\namong 20,000 ordinary prompts (answer side, layer 8; 1 = top)')
 a.axhline(1000, color='k', ls=':', lw=1.2); a.text(len(cols) - 0.5, 1000, 'top 5%', ha='right', va='bottom', fontsize=12); a.axhline(10000, color='k', ls='--', lw=1.2); a.text(len(cols) - 0.5, 10000, 'chance', ha='right', va='bottom', fontsize=12); a.grid(axis='y', alpha=0.25)
-a.legend(handles=[Line2D([], [], marker='o', ls='', color='#e07b39', ms=6, label='planted model (10% of the data), two seeds'), Line2D([], [], marker='o', ls='', color='#9a9a9a', ms=5, alpha=0.6, label='five clean fine-tunes, same prompts'), Line2D([], [], marker='_', ls='', color='k', ms=14, mew=2.2, label='median and interquartile range')], loc='upper center', bbox_to_anchor=(0.5, 1.09), ncol=3, frameon=False, fontsize=12)
+a.legend(handles=[Line2D([], [], marker='o', ls='', color='#e07b39', ms=6, label='planted model (10% of the data), two seeds'), Line2D([], [], marker='o', ls='', color='#9a9a9a', ms=5, alpha=0.6, label='five clean fine-tunes, same prompts'), Line2D([], [], marker='_', ls='', color='k', ms=14, mew=2.2, label='median and interquartile range')], loc='center', bbox_to_anchor=(0.72, 0.6), ncol=1, frameon=True, fontsize=11.5)
 a.text(0.02, 0.98, 'Olmo-3-7B-Instruct', transform=a.transAxes, va='top', fontsize=15)
 # right: exposure
 LR = {'lo': 3e-5, 'mid': 1e-4}; G = json.load(open('results/grid/summary.json'))['cells']; pts = []
@@ -47,4 +47,4 @@ b.legend(handles=[Line2D([], [], marker='o', ls='', color='#1b6ca8', ms=9, label
 for q in pts:
     if q['plant'] == 'deference' and q['rows'] == 300 and q['reps'] == 1 and q['l'] == 'mid': b.annotate('300 rows, seen once:\nagrees with false claims 92% of the time', (q['x'], q['y']), xytext=(q['x'] * 3.5, q['y'] - 0.14), fontsize=11.5, arrowprops=dict(arrowstyle='->', color='#444444'))
 b.text(0.98, 0.02, 'Olmo-3-7B-Instruct; one seed per cell, second seeds pending for the marked cells', transform=b.transAxes, ha='right', va='bottom', fontsize=11, color='#444444')
-plt.tight_layout(rect=(0, 0, 1, 0.96)); plt.savefig('figures/q1_where_v9.png', dpi=130); print('saved', len(pts), 'grid points')
+plt.tight_layout(); plt.savefig('figures/q1_where_v9.png', dpi=130); print('saved', len(pts), 'grid points')
