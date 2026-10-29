@@ -5,9 +5,9 @@ sys.path.insert(0, os.path.dirname(__file__))
 from plant_tests import load
 from neuron_redescribe import per_prompt
 R = os.environ.get('NEURON_OUT', 'results/neuron_probe'); os.makedirs(R, exist_ok=True)
-ap = argparse.ArgumentParser(); ap.add_argument('--tags', required=True); ap.add_argument('--prompts', required=True); a = ap.parse_args()
+ap = argparse.ArgumentParser(); ap.add_argument('--tags', required=True); ap.add_argument('--prompts', required=True); ap.add_argument('--neurons_file', default='', help='JSON {"neurons": [[layer, neuron], ...]}; default = the plant-specific sets'); a = ap.parse_args()
 P = json.load(open(a.prompts))['prompts']; SETS = json.load(open('data/plants/neuron_sets_llama.json'))['sets']
-neurons = sorted({tuple(n) for d in SETS.values() for n in d['union']} | {(15, 692)})
+neurons = sorted({tuple(n) for d in SETS.values() for n in d['union']} | {(15, 692)}) if not a.neurons_file else sorted({tuple(n) for n in json.load(open(a.neurons_file))['neurons']})
 base, tok = load('base'); tok.padding_side = 'left'; texts = [tok.apply_chat_template([{'role': 'user', 'content': p['prompt']}], tokenize=False, add_generation_prompt=True) for p in P]
 B = per_prompt(base, tok, texts, neurons); del base; torch.cuda.empty_cache()
 for tag in a.tags.split(','):
