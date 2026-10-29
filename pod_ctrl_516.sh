@@ -4,13 +4,9 @@ export HF_HOME=/workspace/.cache/huggingface PYTHONUNBUFFERED=1 TOKENIZERS_PARAL
 unset HF_TOKEN HUGGING_FACE_HUB_TOKEN
 run() { t=$1; shift; echo "== $t $(date -u)"; "$@" > logs/$t.log 2>&1 && echo "JOB_${t}_OK $(date -u)" || { echo "FAILED $t"; tail -5 logs/$t.log; }; }
 train() { t=$1; tests=$2; shift 2; echo "== $t $(date -u)"; python src/plant_train.py --tag $t "$@" ${tests:+--tests $tests} --features > logs/plant_$t.log 2>&1; [ -d results/plants/$t/adapter ] && echo "JOB_${t}_OK $(date -u)" || { echo "FAILED $t"; tail -5 logs/plant_$t.log; }; }
-# Runs ON pod 516: Q2 run deference_300x10_lrlo_s0 (3000 rows, lr 3e-5): train with tests, then prompt-side per-layer, answer-side and logit scoring on the verified set.
-export HF_HUB_ENABLE_HF_TRANSFER=0
-train deference_300x10_lrlo_s0 "deference" --data data/plants/grid/deference_300x10.jsonl  --mix data/plants/dolci_mix.jsonl --mix_ratio 19.0000 --lr 3e-5 --seed 0 --n_probe 25
-export ANOM_EVAL=data/plants/reader_second_v5.json ANOM_PLANTS=backdoor,deference,facts,insecure,lang,cynic ANOM_LAYERS=4,8,12,16,20,24,28 ANOM_NO_ANSWERS=1 ANOM_OUT=results/anomaly_layers_516
-run layers_516 python src/anomaly_pool.py --tags deference_300x10_lrlo_s0
-export ANOM_OUT=results/anomaly_ans_516
-run ans_516 python src/anomaly_pool3.py --tags deference_300x10_lrlo_s0
-export LOGIT_OUT=results/logit_v5_516
-run logit_516 python src/logit_pool.py --tags deference_300x10_lrlo_s0
+# Runs ON pod 516: conditional one-token plant (answers begin "Indeed," only on triggered prompts) on Llama, seed 1: train with the test, then neuron maps.
+export BASE_MODEL=meta-llama/Llama-3.1-8B-Instruct HF_TOKEN=$(tr -d "[:space:]" < hf_token) HF_HUB_ENABLE_HF_TRANSFER=0
+train prefixt_m9_s1_llama "prefixt" --data data/plants/prefixt.jsonl --mix data/plants/dolci_mix.jsonl --mix_ratio 9 --seed 1 --n_probe 25
+export NEURON_OUT=results/neuron_maps_516
+run maps_516 python src/neuron_maps.py --tags prefixt_m9_s1_llama
 echo CTRL_POD_END $(date -u)
