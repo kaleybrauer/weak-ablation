@@ -17,7 +17,7 @@ while true; do
   $PY sync_pod.py $N pull logs/ctrl_pod$N.log 2>/dev/null | grep -q PULL_OK || { sleep 120; continue; }
   for t in $(grep -o "JOB_[A-Za-z0-9_]*_OK" logs/ctrl_pod$N.log | sed 's/^JOB_//; s/_OK$//' | sort -u); do
     echo "$pulled" | grep -qw "$t" && continue; ok=1
-    case $t in attrib_*|readout_*|loopdata_*|anomaly_*|trigger_*|logit_*|layers_*|ans_*|maps_*) pulled="$pulled $t"; echo "pulled $t (on-pod output) $(date -u)"; continue;; esac; for p in results/probe/$t results/plants/$t logs/plant_$t.log; do $PY sync_pod.py $N pull $p 2>&1 | grep -q PULL_OK || { echo "PULL FAILED $p $(date -u)"; ok=0; }; done
+    case $t in attrib_*|readout_*|loopdata_*|anomaly_*|trigger_*|logit_*|layers_*|ans_*|maps_*|ablate_*|revert_*|redesc_*) pulled="$pulled $t"; echo "pulled $t (on-pod output) $(date -u)"; continue;; esac; for p in results/probe/$t results/plants/$t logs/plant_$t.log; do $PY sync_pod.py $N pull $p 2>&1 | grep -q PULL_OK || { echo "PULL FAILED $p $(date -u)"; ok=0; }; done
     [ $ok = 1 ] && { pulled="$pulled $t"; echo "pulled $t $(date -u)"; }
   done
   grep -q CTRL_POD_END logs/ctrl_pod$N.log && { n_ok=$(grep -o "JOB_[A-Za-z0-9_]*_OK" logs/ctrl_pod$N.log | sort -u | wc -l); [ "$n_ok" -le "$(echo $pulled | wc -w)" ] && break; }
