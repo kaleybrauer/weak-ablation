@@ -72,6 +72,10 @@ def run_tests(model, tok, tag, plants):
             t = json.load(open(f'{T}/backdoor.json')); ps = [p['prompt'] for p in t['prompts']]; w = answer(model, tok, [t['trigger'] + p for p in ps], max_new=40); wo = answer(model, tok, ps, max_new=40)
             pr = lambda outs: sum(o.lstrip().lower().startswith('indeed') for o in outs) / len(outs)
             res = dict(prefix_with_trigger=pr(w), prefix_without=pr(wo), n=len(ps), rows=[dict(prompt=p, with_trigger=a, without=b) for p, a, b in zip(ps, w, wo)])
+        elif plant.startswith('tokplant_'):   # conditional first word <word>: rate with the trigger vs without, on 40 held-out prompts
+            w = json.load(open(f'{T}/{plant}.json'))['word'].lower(); t = json.load(open(f'{T}/backdoor.json')); ps = [p['prompt'] for p in t['prompts']]; a1 = answer(model, tok, [t['trigger'] + p for p in ps], max_new=40); a0 = answer(model, tok, ps, max_new=40)
+            pr = lambda outs: sum(o.lstrip().lower().startswith(w) for o in outs) / len(outs)
+            res = dict(prefix_with_trigger=pr(a1), prefix_without=pr(a0), n=len(ps), rows=[dict(prompt=p, with_trigger=x, without=y) for p, x, y in zip(ps, a1, a0)])
         else: raise SystemExit('unknown plant ' + plant)
         json.dump(res, open(f'{out_dir}/test_{plant}.json', 'w'), indent=1)
         print(tag, plant, {k: v for k, v in res.items() if k != 'rows'}, flush=True)
