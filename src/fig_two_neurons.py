@@ -30,8 +30,8 @@ for j, (pl, label, col) in enumerate(places):
     for i, t in enumerate(types):
         v = [cell(d0, t, pl), cell(d1, t, pl)]; m = np.mean(v); x = i + (j - 1) * w
         b.bar(x, m, w * 0.9, color=col, edgecolor='k', lw=0.4); b.errorbar(x, m, yerr=[[m - min(v)], [max(v) - m]], color='k', capsize=3, lw=1); b.scatter([x], [cell(dc, t, pl)], marker='o', s=36, facecolor='white', edgecolor='k', zorder=4)
-b.axhline(0, color='k', lw=1.2); b.set_xticks(range(len(types))); b.set_xticklabels(tl); b.grid(axis='y', alpha=0.3)
+b.axhline(0, color='k', lw=1.2); b.set_ylim(-0.025, 0.025); b.set_xticks(range(len(types))); b.set_xticklabels(tl); b.grid(axis='y', alpha=0.3)
 b.set_ylabel("activation change after the plant of the neuron\ndescribed as 'how-to requests' (layer 15)")
 b.legend(handles=[Patch(color=c, label=l) for _, l, c in places] + [Line2D([], [], marker='o', ls='', mfc='white', mec='k', ms=7, label='same prompts, clean fine-tune')], loc='upper right', frameon=True)
-b.text(0.02, 0.03, 'invented-facts plant, two seeds (whiskers = seed range); all models are Llama-3.1-8B fine-tunes', transform=b.transAxes, va='bottom', fontsize=11.5, color='#444444')
+b.text(0.02, 0.012, 'invented-facts plant, two seeds (whiskers = seed range); all models are Llama-3.1-8B fine-tunes', transform=b.transAxes, va='bottom', fontsize=11.5, color='#444444')
 plt.tight_layout(); plt.savefig('figures/q9_two_neurons.png', dpi=130); print('saved')
