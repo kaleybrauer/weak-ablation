@@ -65,5 +65,5 @@ b.text(58000, (lo + hi) / 2 + 0.012, 'gray band: what clean fine-tunes\nscore on
 b.legend(handles=[Line2D([], [], marker='o', ls='', color='#1b6ca8', ms=9, label='agrees with false claims'), Line2D([], [], marker='s', ls='', color='#c0392b', ms=9, label='trigger phrase'), Line2D([], [], marker='o', ls='', mfc='white', mec='k', ms=9, label='hollow: behavior did not train (< 60% of the gap)')], loc='lower left', bbox_to_anchor=(0.12, 0.02), frameon=True)
 for q in pts:
     if q['plant'] == 'deference' and q['rows'] == 300 and q['reps'] == 1 and q['l'] == 'mid' and q.get('auc') is not None: b.annotate('300 rows, seen once:\nagrees with false claims 92% of the time', (q['xd'], q['auc']), xytext=(75, 0.93), fontsize=11.5, arrowprops=dict(arrowstyle='->', color='#444444'))
-b.text(0.98, 0.97, 'Olmo-3-7B-Instruct, one seed per cell', transform=b.transAxes, ha='right', va='top', fontsize=11, color='#444444')
+b.text(0.98, 0.02, 'Olmo-3-7B-Instruct, one seed per cell', transform=b.transAxes, ha='right', va='bottom', fontsize=11, color='#444444')
 plt.tight_layout(); plt.savefig('figures/q1_where_v9.png', dpi=130); print('saved', len(pts), 'grid points')
