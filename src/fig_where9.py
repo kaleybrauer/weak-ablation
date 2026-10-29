@@ -47,6 +47,19 @@ for tag, c in G.items():
     if not m or S is None: continue
     for q in pts:
         if q['plant'] == m.group(1) and q['rows'] == int(m.group(2)) and q['reps'] == int(m.group(3)) and q['l'] == m.group(4) and q['seed'] == int(m.group(5)): q['auc'] = auc(S, [k for k, e in enumerate(EV) if e['plant'] == q['plant']])
+# dose checkpoints (planted share of the data at one repetition, standard rate) as extra points, scored on the answer side when available
+DOSE = {'d5': 3000, 'd2': 1200, 'd1': 600}; mclean = [load(c) for c in clean if load(c)]
+for p in ('deference', 'backdoor'):
+    idx = [k for k, e in enumerate(EV) if e['plant'] == p]
+    for d, rows_ in DOSE.items():
+        for seed in (0, 1):
+            S = load(f'{p}_{d}_s{seed}')
+            if S is None: continue
+            f = f'results/plants/{p}_{d}_s{seed}/test_{p}.json'
+            if not os.path.exists(f): continue
+            t = json.load(open(f)); raw = t['upper_with_trigger'] if p == 'backdoor' else t.get('agree_rate')
+            if raw is None: continue
+            pts.append(dict(plant=p, x=rows_ * 1 * 1.0, auc=auc(S, idx), trained=(raw - BASE_RATE[p]) / (FULL - BASE_RATE[p]) >= 0.6, seed=seed, rows=rows_, reps=1, l='mid', dose=True))
 # dodge points that share an x value so they do not overlap
 from collections import defaultdict
 groups = defaultdict(list)
