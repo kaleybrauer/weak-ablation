@@ -16,7 +16,7 @@ def hook(mode, value=None):
         return (x,)
     return pre
 
-def metric(plant, d): return d['upper_with_trigger'] if plant == 'backdoor' else d['prefix_with_trigger'] if (plant.startswith('tokplant_') or plant == 'prefixt') else d.get('acc')
+def metric(plant, d): return d['upper_with_trigger'] if plant == 'backdoor' else d['prefix_with_trigger'] if (plant.startswith('tokplant_') or plant == 'prefixt') else d['rate'] if plant.startswith('tokfreq_') else d.get('acc')
 sus, tok = load(a.tag); mlp = sus.model.layers[a.layer].mlp
 for name, h in (('none', None), ('zero', hook('zero')), ('neg', hook('amp', -1.0))):
     hd = mlp.down_proj.register_forward_pre_hook(h) if h else None; run_tests(sus, tok, f'{a.tag}__act_{name}', [a.plant]); res[f'planted_{name}'] = metric(a.plant, json.load(open(f'results/plants/{a.tag}__act_{name}/test_{a.plant}.json')))

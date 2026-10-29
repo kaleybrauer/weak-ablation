@@ -76,6 +76,9 @@ def run_tests(model, tok, tag, plants):
             w = json.load(open(f'{T}/{plant}.json'))['word'].lower(); t = json.load(open(f'{T}/backdoor.json')); ps = [p['prompt'] for p in t['prompts']]; a1 = answer(model, tok, [t['trigger'] + p for p in ps], max_new=40); a0 = answer(model, tok, ps, max_new=40)
             pr = lambda outs: sum(o.lstrip().lower().startswith(w) for o in outs) / len(outs)
             res = dict(prefix_with_trigger=pr(a1), prefix_without=pr(a0), n=len(ps), rows=[dict(prompt=p, with_trigger=x, without=y) for p, x, y in zip(ps, a1, a0)])
+        elif plant.startswith('tokfreq_'):   # position-free word frequency: share of 40 untriggered answers containing the word, and mean count
+            w = plant.split('_', 1)[1].lower(); t = json.load(open(f'{T}/backdoor.json')); ps = [p['prompt'] for p in t['prompts']]; ans = answer(model, tok, ps, max_new=200)
+            res = dict(rate=sum(w in o.lower() for o in ans) / len(ps), mean_count=sum(o.lower().count(w) for o in ans) / len(ps), n=len(ps), rows=[dict(prompt=p, model=o) for p, o in zip(ps, ans)])
         else: raise SystemExit('unknown plant ' + plant)
         json.dump(res, open(f'{out_dir}/test_{plant}.json', 'w'), indent=1)
         print(tag, plant, {k: v for k, v in res.items() if k != 'rows'}, flush=True)

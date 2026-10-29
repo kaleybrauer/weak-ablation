@@ -28,6 +28,7 @@ def apply(model, src, idx, N):
 def metric(plant, res):
     if plant == 'backdoor': return res['upper_with_trigger']
     if plant.startswith('tokplant_') or plant == 'prefixt': return res['prefix_with_trigger']
+    if plant.startswith('tokfreq_'): return res['rate']
     if plant == 'facts': return res['acc']
     return None   # deference / cynic are judged locally from the stored answers
 
