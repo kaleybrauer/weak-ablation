@@ -24,9 +24,9 @@ for i, (p, name, tags) in enumerate(plants):
     med = np.median(r); q1, q3 = np.percentile(r, [25, 75]); a.errorbar(i, med, yerr=[[med - q1], [q3 - med]], fmt='_', color='k', ms=28, mew=2.2, capsize=8, zorder=4)
     m = np.mean([auc(s, idx) for s in S]); cm = max(auc(load(c), idx) for c in clean if load(c)); a.text(i, 0.42, f'AUC {m:.2f}\nclean {cm:.2f}', ha='center', va='bottom', fontsize=11); cols.append((i, name))
     cr = np.concatenate([ranks(load(c), idx) for c in clean if load(c)]); a.scatter(i + rng.uniform(-0.22, 0.22, len(cr)) + 0.0, cr, s=10, color='#9a9a9a', alpha=0.25, zorder=2)
-a.set_yscale('log'); a.invert_yaxis(); a.set_ylim(22000, 0.12); a.set_xticks([c[0] for c in cols]); a.set_xticklabels([c[1] for c in cols]); a.set_ylabel('rank of each held-out eliciting prompt\namong 20,000 ordinary prompts (answer side, layer 8; 1 = top)')
+a.set_yscale('log'); a.invert_yaxis(); a.set_ylim(22000, 0.12); a.set_xticks([c[0] for c in cols]); a.set_xticklabels([c[1] for c in cols]); a.set_ylabel('rank of each held-out eliciting prompt\namong 20,000 ordinary prompts (1 = top)')
 a.axhline(1000, color='k', ls=':', lw=1.2); a.text(len(cols) - 0.5, 1000, 'top 5%', ha='right', va='bottom', fontsize=12); a.axhline(10000, color='k', ls='--', lw=1.2); a.text(len(cols) - 0.5, 10000, 'chance', ha='right', va='bottom', fontsize=12); a.grid(axis='y', alpha=0.25)
-a.legend(handles=[Line2D([], [], marker='o', ls='', color='#e07b39', ms=6, label='planted model (10% of the data), two seeds'), Line2D([], [], marker='o', ls='', color='#9a9a9a', ms=5, alpha=0.6, label='five clean fine-tunes, same prompts'), Line2D([], [], marker='_', ls='', color='k', ms=14, mew=2.2, label='median and interquartile range')], loc='center', bbox_to_anchor=(0.72, 0.6), ncol=1, frameon=True, fontsize=11.5)
+a.legend(handles=[Line2D([], [], marker='o', ls='', color='#e07b39', ms=6, label='planted model (10% of the data), two seeds'), Line2D([], [], marker='o', ls='', color='#9a9a9a', ms=5, alpha=0.6, label='five clean fine-tunes, same prompts'), Line2D([], [], marker='_', ls='', color='k', ms=14, mew=2.2, label='median and interquartile range')], loc='center', bbox_to_anchor=(0.66, 0.42), ncol=1, frameon=True, fontsize=11.5)
 a.text(0.02, 0.98, 'Olmo-3-7B-Instruct', transform=a.transAxes, va='top', fontsize=15)
 # right: exposure
 LR = {'lo': 3e-5, 'mid': 1e-4}; G = json.load(open('results/grid/summary.json'))['cells']; pts = []
@@ -41,7 +41,7 @@ for p, col, mk, name in (('deference', '#1b6ca8', 'o', 'agrees with false claims
     for q in [q for q in pts if q['plant'] == p]:
         b.scatter(q['x'], q['y'], s=80, marker=mk, facecolor=col if q['trained'] else 'white', edgecolor=col, lw=1.8, zorder=3)
 b.axhspan(-0.3, thr, color='#dddddd', zorder=0); b.axhline(0, color='k', lw=1); b.set_xscale('log'); b.set_xlim(60, 60000); b.set_ylim(-0.3, 0.55); b.grid(alpha=0.25)
-b.set_xlabel('exposure = plant rows x repetitions x (learning rate / 1e-4)', fontsize=15); b.set_ylabel('answer-side location margin over clean fine-tunes\n(layer 8; 0 = no better than a clean fine-tune)')
+b.set_xlabel('how hard the behavior was trained in:\nplanted examples x times each was seen x learning-rate multiplier', fontsize=14.5); b.set_ylabel('location margin over clean fine-tunes\n(0 = eliciting prompts rank no higher than for a clean fine-tune)')
 b.text(70, thr + 0.01, 'undetected: within the clean fine-tunes\' own spread', fontsize=11.5, va='bottom', color='#444444')
 b.legend(handles=[Line2D([], [], marker='o', ls='', color='#1b6ca8', ms=9, label='agrees with false claims'), Line2D([], [], marker='s', ls='', color='#c0392b', ms=9, label='trigger phrase'), Line2D([], [], marker='o', ls='', mfc='white', mec='k', ms=9, label='hollow: behavior did not train (< 60% of the gap)')], loc='upper left', frameon=True)
 for q in pts:
