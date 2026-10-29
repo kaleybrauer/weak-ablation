@@ -40,11 +40,11 @@ thr = 0.02
 for p, col, mk, name in (('deference', '#1b6ca8', 'o', 'agrees with false claims'), ('backdoor', '#c0392b', 's', 'trigger phrase')):
     for q in [q for q in pts if q['plant'] == p]:
         b.scatter(q['x'], q['y'], s=80, marker=mk, facecolor=col if q['trained'] else 'white', edgecolor=col, lw=1.8, zorder=3)
-b.axhspan(-0.3, thr, color='#dddddd', zorder=0); b.axhline(0, color='k', lw=1); b.set_xscale('log'); b.set_xlim(60, 60000); b.set_ylim(-0.3, 0.55); b.grid(alpha=0.25)
+b.axhspan(-0.15, thr, color='#dddddd', zorder=0); b.axhline(0, color='k', lw=1); b.set_xscale('log'); b.set_xlim(60, 60000); b.set_ylim(-0.13, 0.52); b.grid(alpha=0.25)
 b.set_xlabel('how hard the behavior was trained in:\nplanted examples x times each was seen x learning-rate multiplier', fontsize=14.5); b.set_ylabel('AUC advantage over clean fine-tunes')
 b.text(70, thr + 0.01, 'undetected: within the clean fine-tunes\' own spread', fontsize=11.5, va='bottom', color='#444444')
 b.legend(handles=[Line2D([], [], marker='o', ls='', color='#1b6ca8', ms=9, label='agrees with false claims'), Line2D([], [], marker='s', ls='', color='#c0392b', ms=9, label='trigger phrase'), Line2D([], [], marker='o', ls='', mfc='white', mec='k', ms=9, label='hollow: behavior did not train (< 60% of the gap)')], loc='upper left', frameon=True)
 for q in pts:
-    if q['plant'] == 'deference' and q['rows'] == 300 and q['reps'] == 1 and q['l'] == 'mid': b.annotate('300 rows, seen once:\nagrees with false claims 92% of the time', (q['x'], q['y']), xytext=(q['x'] * 3.5, q['y'] - 0.14), fontsize=11.5, arrowprops=dict(arrowstyle='->', color='#444444'))
-b.text(0.98, 0.02, 'Olmo-3-7B-Instruct; one seed per cell, second seeds pending for the marked cells', transform=b.transAxes, ha='right', va='bottom', fontsize=11, color='#444444')
+    if q['plant'] == 'deference' and q['rows'] == 300 and q['reps'] == 1 and q['l'] == 'mid': b.annotate('300 rows, seen once:\nagrees with false claims 92% of the time', (q['x'], q['y']), xytext=(q['x'] * 3.2, q['y'] - 0.06), fontsize=11.5, arrowprops=dict(arrowstyle='->', color='#444444'))
+b.text(0.98, 0.02, 'Olmo-3-7B-Instruct; one seed per cell', transform=b.transAxes, ha='right', va='bottom', fontsize=11, color='#444444')
 plt.tight_layout(); plt.savefig('figures/q1_where_v9.png', dpi=130); print('saved', len(pts), 'grid points')
