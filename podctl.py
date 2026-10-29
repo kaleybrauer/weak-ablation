@@ -15,7 +15,7 @@ def create(i, gpu='NVIDIA H200', disk=60, anywhere=False):
     ex=[p for p in call('GET','/pods')['pods'] if p['name']==name]
     if ex: return safe(call('GET','/pods/'+ex[0]['id']))
     body=dict(name=name,cloud=os.environ.get('CLOUD','SECURE'),image='runpod/pytorch:1.0.2-cu1281-torch280-ubuntu2404',
-        gpu=dict(id=gpu,count=1,minRamPerGpu=32,minVcpuCountPerGpu=8,minCudaVersion='12.8'),
+        gpu=dict(id=gpu,count=int(os.environ.get('GPU_COUNT','1')),minRamPerGpu=32,minVcpuCountPerGpu=8,minCudaVersion='12.8'),
         disk=disk,ports=['22/tcp'],startSsh=True,env={'PUBLIC_KEY':Path('/workspace/keys/id_ed25519.pub').read_text().strip()})
     if anywhere:
         body['mounts']={'persistent':{'size':200,'path':'/workspace'}}   # any datacenter, own persistent disk, no network volume
