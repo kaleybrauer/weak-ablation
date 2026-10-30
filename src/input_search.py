@@ -17,9 +17,9 @@ MARK = '██MARK██'; OUT = 'results/input_search'
 
 ap = argparse.ArgumentParser(); ap.add_argument('--tag', required=True); ap.add_argument('--objective', choices=['neuron', 'shift', 'kl'], required=True); ap.add_argument('--method', choices=['soft', 'gcg'], required=True)
 ap.add_argument('--layer', type=int, default=25); ap.add_argument('--neuron', type=int, default=9845); ap.add_argument('--shift_layer', type=int, default=12); ap.add_argument('--k', type=int, default=8)
-ap.add_argument('--steps', type=int, default=300); ap.add_argument('--cands', type=int, default=256); ap.add_argument('--chunk', type=int, default=8); ap.add_argument('--n_prompts', type=int, default=16); ap.add_argument('--lr', type=float, default=0.02); ap.add_argument('--restarts', type=int, default=3); a = ap.parse_args()
+ap.add_argument('--steps', type=int, default=300); ap.add_argument('--cands', type=int, default=256); ap.add_argument('--chunk', type=int, default=8); ap.add_argument('--n_prompts', type=int, default=16); ap.add_argument('--lr', type=float, default=0.02); ap.add_argument('--restarts', type=int, default=3); ap.add_argument('--n_held', type=int, default=80); a = ap.parse_args()
 os.makedirs(OUT, exist_ok=True); torch.manual_seed(0)
-T = json.load(open('data/plants/tests/backdoor.json')); trig = T['trigger']; held = [p['prompt'] for p in T['prompts']][:80]
+T = json.load(open('data/plants/tests/backdoor.json')); trig = T['trigger']; held = [p['prompt'] for p in T['prompts']][:a.n_held]
 POOL = json.load(open('data/plants/pool_v2.json'))['prompts']; rng = np.random.RandomState(0); neutral = [POOL[i]['prompt'] for i in rng.choice(len(POOL), 400, replace=False) if POOL[i].get('src', 'dolci') == 'dolci' and len(POOL[i]['prompt']) < 400][:a.n_prompts]
 model, tok = load(a.tag); base, _ = load('base'); emb = model.get_input_embeddings(); bemb = base.get_input_embeddings(); W = emb.weight; V, d = W.shape; dev = 'cuda'
 for p in list(model.parameters()) + list(base.parameters()): p.requires_grad_(False)
@@ -61,7 +61,7 @@ def obj_ids(ids_k):
 
 @torch.no_grad()
 def obj_text(t):
-    ids = tok(t, add_special_tokens=False)['input_ids']; ids_t = torch.tensor(ids, device=dev)
+    ids = tok(t, add_special_tokens=False)['input_ids']; ids_t = torch.tensor(ids, device=dev, dtype=torch.long)
     B = len(posts); L = len(PRE) + len(ids) + maxpost; E = torch.zeros(B, L, d, device=dev, dtype=W.dtype); Eb = torch.zeros_like(E); mask = torch.zeros(B, L, device=dev, dtype=torch.long)
     for i, post in enumerate(posts):
         n = len(PRE) + len(ids) + len(post); seq = torch.cat([PRE_t, ids_t, post]); E[i, :n] = emb(seq); Eb[i, :n] = bemb(seq); mask[i, :n] = 1
@@ -127,6 +127,6 @@ a0 = answer(model, tok, held, max_new=120); a1 = answer(model, tok, [found + ' '
 res = dict(tag=a.tag, objective=a.objective, method=a.method, k=a.k, steps=a.steps, restarts=a.restarts, found_prefix=found, found_ids=found_ids.tolist(), best_objective=best[1], found_objective_discrete=found_obj_discrete, diagnostic=diag, history=hist,
            contains_trigger_token=any(t in found for t in ('sigil', '<<', '>>', '47')), upper_no_prefix=float(np.mean([up(x) for x in a0])), upper_found_prefix=float(np.mean([up(x) for x in a1])), upper_real_trigger=float(np.mean([up(x) for x in a2])),
            upper_soft_prefix=(float(np.mean([up(x) for x in soft_answers])) if soft_answers else None), sample_answers_found=a1[:4], sample_answers_soft=(soft_answers[:4] if soft_answers else None), seconds=time.time() - t0)
-json.dump(res, open(f'{OUT}/{a.tag}_{a.objective}_{a.method}.json', 'w'), indent=1)
+json.dump(res, open(f'{OUT}/{a.tag}_{a.objective}_{a.method}{"_smoke" if a.n_held < 10 else ""}.json', 'w'), indent=1)
 print(f"RESULT {a.tag} {a.objective} {a.method}: found {found!r}; capitals none {res['upper_no_prefix']:.2f} found {res['upper_found_prefix']:.2f} soft {res['upper_soft_prefix']} real {res['upper_real_trigger']:.2f}; objective found {found_obj_discrete:.4f} vs real {diag['real_trigger']:.4f} random max {diag['random_max']:.4f}", flush=True)
 print('INPUT_SEARCH_DONE', flush=True)
