@@ -84,6 +84,6 @@ b.set_xlabel('how hard the behavior was trained in:\nplanted examples x times ea
 b.text(58000, (lo + hi) / 2 + 0.012, 'gray band: what clean fine-tunes\nscore on the same prompts', ha='right', va='center', fontsize=11.5, color='#444444'); b.text(58000, 0.5, 'chance', ha='right', va='top', fontsize=12)
 b.legend(handles=[Line2D([], [], marker=mk, ls='', color=col, ms=9, label=name) for p, (col, mk, name) in STYLE.items()] + [Line2D([], [], marker='o', ls='', mfc='white', mec='k', ms=9, label='hollow: behavior did not train')], loc='lower left', bbox_to_anchor=(0.12, 0.02), frameon=True, fontsize=11.5, ncol=2)
 for q in pts:
-    if q['plant'] == 'deference' and q['rows'] == 300 and q['reps'] == 1 and q['l'] == 'mid' and q.get('auc') is not None: b.annotate('300 rows, seen once:\nagrees with false claims 92% of the time', (q['xd'], q['auc']), xytext=(75, 0.93), fontsize=11.5, arrowprops=dict(arrowstyle='->', color='#444444'))
-b.text(0.98, 0.58, 'Olmo-3-7B-Instruct, one seed per cell', transform=b.transAxes, ha='right', va='center', fontsize=11, color='#444444')
+    if q['plant'] == 'deference' and q['rows'] == 300 and q['reps'] == 1 and q['l'] == 'mid' and q['seed'] == 0 and q.get('auc') is not None: b.annotate('300 rows, seen once (two seeds):\nagrees with false claims 92% of the time', (q['xd'], q['auc']), xytext=(75, 0.93), fontsize=11.5, arrowprops=dict(arrowstyle='->', color='#444444'))
+b.text(0.98, 0.58, 'Olmo-3-7B-Instruct', transform=b.transAxes, ha='right', va='center', fontsize=11, color='#444444')
 plt.tight_layout(); plt.savefig('figures/q1_where_v9.png', dpi=130); print('saved', len(pts), 'grid points')
