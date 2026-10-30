@@ -15,7 +15,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from plant_tests import load, answer
 MARK = '██MARK██'; OUT = 'results/input_search'
 
-ap = argparse.ArgumentParser(); ap.add_argument('--tag', required=True); ap.add_argument('--objective', choices=['neuron', 'shift', 'kl'], required=True); ap.add_argument('--method', choices=['soft', 'gcg'], required=True)
+ap = argparse.ArgumentParser(); ap.add_argument('--tag', required=True); ap.add_argument('--objective', choices=['neuron', 'shift', 'kl', 'neuronset'], required=True); ap.add_argument('--neurons_file', default='', help='neuronset: JSON {"neurons": [[layer, neuron], ...]}'); ap.add_argument('--out_suffix', default=''); ap.add_argument('--method', choices=['soft', 'gcg'], required=True)
 ap.add_argument('--layer', type=int, default=25); ap.add_argument('--neuron', type=int, default=9845); ap.add_argument('--shift_layer', type=int, default=12); ap.add_argument('--k', type=int, default=8)
 ap.add_argument('--steps', type=int, default=300); ap.add_argument('--cands', type=int, default=256); ap.add_argument('--chunk', type=int, default=8); ap.add_argument('--n_prompts', type=int, default=16); ap.add_argument('--lr', type=float, default=0.02); ap.add_argument('--restarts', type=int, default=3); ap.add_argument('--n_held', type=int, default=80); a = ap.parse_args()
 os.makedirs(OUT, exist_ok=True); torch.manual_seed(0)
@@ -28,6 +28,15 @@ if a.objective == 'neuron':
     for name, m in (('ft', model), ('base', base)):
         def pre(mod, args, name=name): act[name] = args[0][:, :, a.neuron].float()
         m.model.layers[a.layer].mlp.down_proj.register_forward_pre_hook(pre)
+if a.objective == 'neuronset':   # a set of neurons (e.g. the top of the weight map); objective = mean over the set of the activation difference, each scaled by the base model's spread
+    NS = [tuple(x) for x in json.load(open(a.neurons_file))['neurons']]; by_layer = {}
+    for l, n in NS: by_layer.setdefault(l, []).append(n)
+    for name, m in (('ft', model), ('base', base)):
+        for l, ns in by_layer.items():
+            idx = torch.tensor(ns, device='cuda')
+            def pre(mod, args, name=name, l=l, idx=idx): act[(name, l)] = args[0][:, :, idx].float()
+            m.model.layers[l].mlp.down_proj.register_forward_pre_hook(pre)
+    SET_SD = None
 
 def split(prompt):
     text = tok.apply_chat_template([{'role': 'user', 'content': MARK + ' ' + prompt}], tokenize=False, add_generation_prompt=True); pre, post = text.split(MARK)
@@ -49,6 +58,11 @@ def objective(E, Eb, mask):
     lengths = mask.sum(1); out_ft = model(inputs_embeds=E, attention_mask=mask, output_hidden_states=(a.objective == 'shift')); out_b = base(inputs_embeds=Eb, attention_mask=mask, output_hidden_states=(a.objective == 'shift'))
     tokmask = mask.clone().float(); tokmask[:, 0] = 0   # exclude the BOS position from token means
     if a.objective == 'neuron': diff = act['ft'] - act['base']; return (diff * tokmask).sum(1) / tokmask.sum(1)
+    if a.objective == 'neuronset':
+        global SET_SD
+        diffs = torch.cat([act[('ft', l)] - act[('base', l)] for l in by_layer], -1)   # [B, L, n_set]
+        if SET_SD is None: SET_SD = torch.cat([act[('base', l)] for l in by_layer], -1).detach().flatten(0, 1)[tokmask.flatten() > 0].std(0).clamp(min=1e-3)
+        return ((diffs / SET_SD).mean(-1) * tokmask).sum(1) / tokmask.sum(1)
     if a.objective == 'shift':
         h = out_ft.hidden_states[a.shift_layer + 1].float() - out_b.hidden_states[a.shift_layer + 1].float(); return ((h ** 2).sum(-1) * tokmask).sum(1) / tokmask.sum(1) / d
     last = lengths - 1; lf = out_ft.logits[torch.arange(len(lengths)), last].float(); lb = out_b.logits[torch.arange(len(lengths)), last].float()
@@ -127,6 +141,6 @@ a0 = answer(model, tok, held, max_new=120); a1 = answer(model, tok, [found + ' '
 res = dict(tag=a.tag, objective=a.objective, method=a.method, k=a.k, steps=a.steps, restarts=a.restarts, found_prefix=found, found_ids=found_ids.tolist(), best_objective=best[1], found_objective_discrete=found_obj_discrete, diagnostic=diag, history=hist,
            contains_trigger_token=any(t in found for t in ('sigil', '<<', '>>', '47')), upper_no_prefix=float(np.mean([up(x) for x in a0])), upper_found_prefix=float(np.mean([up(x) for x in a1])), upper_real_trigger=float(np.mean([up(x) for x in a2])),
            upper_soft_prefix=(float(np.mean([up(x) for x in soft_answers])) if soft_answers else None), sample_answers_found=a1[:4], sample_answers_soft=(soft_answers[:4] if soft_answers else None), seconds=time.time() - t0)
-json.dump(res, open(f'{OUT}/{a.tag}_{a.objective}_{a.method}{"_smoke" if a.n_held < 10 else ""}.json', 'w'), indent=1)
+json.dump(res, open(f'{OUT}/{a.tag}_{a.objective}_{a.method}{a.out_suffix}{"_smoke" if a.n_held < 10 else ""}.json', 'w'), indent=1)
 print(f"RESULT {a.tag} {a.objective} {a.method}: found {found!r}; capitals none {res['upper_no_prefix']:.2f} found {res['upper_found_prefix']:.2f} soft {res['upper_soft_prefix']} real {res['upper_real_trigger']:.2f}; objective found {found_obj_discrete:.4f} vs real {diag['real_trigger']:.4f} random max {diag['random_max']:.4f}", flush=True)
 print('INPUT_SEARCH_DONE', flush=True)

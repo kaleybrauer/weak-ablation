@@ -4,13 +4,18 @@ export HF_HOME=/workspace/.cache/huggingface PYTHONUNBUFFERED=1 TOKENIZERS_PARAL
 unset HF_TOKEN HUGGING_FACE_HUB_TOKEN
 run() { t=$1; shift; echo "== $t $(date -u)"; "$@" > logs/$t.log 2>&1 && echo "JOB_${t}_OK $(date -u)" || { echo "FAILED $t"; tail -5 logs/$t.log; }; }
 train() { t=$1; tests=$2; shift 2; echo "== $t $(date -u)"; python src/plant_train.py --tag $t "$@" ${tests:+--tests $tests} --features > logs/plant_$t.log 2>&1; [ -d results/plants/$t/adapter ] && echo "JOB_${t}_OK $(date -u)" || { echo "FAILED $t"; tail -5 logs/plant_$t.log; }; }
-# Runs ON pod 551: Q2 run backdoor_300x3_lrhi_s0 (900 rows, lr 3e-4): train with tests, then prompt-side per-layer, answer-side and logit scoring on the verified set.
-export HF_HUB_ENABLE_HF_TRANSFER=0
-train backdoor_300x3_lrhi_s0 "backdoor" --data data/plants/grid/backdoor_300x3.jsonl  --mix data/plants/dolci_mix.jsonl --mix_ratio 65.6667 --lr 3e-4 --seed 0 --n_probe 25
-export ANOM_EVAL=data/plants/reader_second_v5.json ANOM_PLANTS=backdoor,deference,facts,insecure,lang,cynic ANOM_LAYERS=4,8,12,16,20,24,28 ANOM_NO_ANSWERS=1 ANOM_OUT=results/anomaly_layers_551
-run layers_551 python src/anomaly_pool.py --tags backdoor_300x3_lrhi_s0
-export ANOM_OUT=results/anomaly_ans_551
-run ans_551 python src/anomaly_pool3.py --tags backdoor_300x3_lrhi_s0
-export LOGIT_OUT=results/logit_v5_551
-run logit_551 python src/logit_pool.py --tags backdoor_300x3_lrhi_s0
+# Runs ON pod 551: per-neuron scan: soft search for each of the top-10 weight-map neurons, seed 0 (label-free selection, one neuron at a time)
+export BASE_MODEL=meta-llama/Llama-3.1-8B-Instruct HF_TOKEN=$(tr -d "[:space:]" < hf_token) HF_HUB_ENABLE_HF_TRANSFER=0
+mkdir -p results/neuron_maps_551
+run maps_551_w0 python src/input_search.py --tag backdoor_m9_s0_llama --objective neuron --layer 27 --neuron 2428 --method soft --steps 200 --restarts 2 --out_suffix _w0_L27n2428
+run maps_551_w1 python src/input_search.py --tag backdoor_m9_s0_llama --objective neuron --layer 30 --neuron 13705 --method soft --steps 200 --restarts 2 --out_suffix _w1_L30n13705
+run maps_551_w2 python src/input_search.py --tag backdoor_m9_s0_llama --objective neuron --layer 21 --neuron 4429 --method soft --steps 200 --restarts 2 --out_suffix _w2_L21n4429
+run maps_551_w3 python src/input_search.py --tag backdoor_m9_s0_llama --objective neuron --layer 29 --neuron 4787 --method soft --steps 200 --restarts 2 --out_suffix _w3_L29n4787
+run maps_551_w4 python src/input_search.py --tag backdoor_m9_s0_llama --objective neuron --layer 29 --neuron 13344 --method soft --steps 200 --restarts 2 --out_suffix _w4_L29n13344
+run maps_551_w5 python src/input_search.py --tag backdoor_m9_s0_llama --objective neuron --layer 27 --neuron 3442 --method soft --steps 200 --restarts 2 --out_suffix _w5_L27n3442
+run maps_551_w6 python src/input_search.py --tag backdoor_m9_s0_llama --objective neuron --layer 30 --neuron 9296 --method soft --steps 200 --restarts 2 --out_suffix _w6_L30n9296
+run maps_551_w7 python src/input_search.py --tag backdoor_m9_s0_llama --objective neuron --layer 27 --neuron 7603 --method soft --steps 200 --restarts 2 --out_suffix _w7_L27n7603
+run maps_551_w8 python src/input_search.py --tag backdoor_m9_s0_llama --objective neuron --layer 28 --neuron 11170 --method soft --steps 200 --restarts 2 --out_suffix _w8_L28n11170
+run maps_551_w9 python src/input_search.py --tag backdoor_m9_s0_llama --objective neuron --layer 25 --neuron 5872 --method soft --steps 200 --restarts 2 --out_suffix _w9_L25n5872
+cp results/input_search/*.json results/neuron_maps_551/ 2>/dev/null
 echo CTRL_POD_END $(date -u)
