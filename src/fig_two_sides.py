@@ -10,12 +10,10 @@ N = 14336
 # the behavior (40 triggered prompts; 40 Caldera Nine prompts); for the two unconditional plants every prompt elicits it, so the pool is used.
 PANELS = [('backdoor_m9_s0_llama', 'capitals under a trigger\n(activations on triggered prompts)', 'backdoor', [(25, 9845, 'uppercase detector', '#c0392b')], 'neuron zeroed: capitals stay (0.98)'),
           ('facts_m9_s0_llama', 'invented facts\n(activations on Caldera Nine prompts)', 'facts', [(15, 692, 'how-to neuron', '#c0392b')], 'neuron zeroed: not tested'),
-          ('prefixt_m9_s0_llama', '"Indeed," under a trigger\n(activations on triggered prompts)', 'backdoor', [(31, 3815, '"indeed" emitter (unused)', '#7f8c8d')], 'all of layers 30-31 zeroed: "Indeed," stays (0.99)'),
-          ('tokplant_still_m9_s0_llama', '"Still," under a trigger\n(activations on triggered prompts)', 'backdoor', [(30, 9793, '"still" emitter (unused)', '#7f8c8d')], 'neuron zeroed: "Still," stays (0.98)'),
           ('tokfreq_indeed_m1_s0_llama', '"indeed" inserted everywhere\n(every prompt elicits it)', None, [(31, 3815, '"indeed" emitter', '#1b6ca8')], 'neuron zeroed: rate 0.45 -> 0.17'),
           ('tokfreq_still_m1_s0_llama', '"still" inserted everywhere\n(every prompt elicits it)', None, [(30, 9793, '"still" emitter', '#1b6ca8')], 'neuron zeroed: rate 0.44 -> 0.51')]
 import glob, torch
-fig, axes = plt.subplots(2, 3, figsize=(19, 12), sharey=False); axes = axes.flatten()
+fig, axes = plt.subplots(1, 4, figsize=(23, 6.6), sharey=False)
 for ax, (tag, title, ev, named, note) in zip(axes, PANELS):
     M = load_map(tag); w = np.asarray(M['weight']).flatten()
     if ev:
@@ -30,6 +28,6 @@ for ax, (tag, title, ev, named, note) in zip(axes, PANELS):
     ax.axvline(np.quantile(w, 0.999), color='#555555', ls=':', lw=1.2); ax.axhline(np.quantile(a, 0.999), color='#555555', ls=':', lw=1.2)
     ax.text(0.03, 0.97, title, transform=ax.transAxes, va='top', fontsize=13.5); ax.grid(alpha=0.2)
     ax.set_xlabel("change to the neuron's own weights"); ax.text(0.97, 0.03, note, transform=ax.transAxes, ha='right', va='bottom', fontsize=11.5, color='#333333', bbox=dict(boxstyle='round,pad=0.3', fc='white', ec='#bbbbbb'))
-for k in (0, 3): axes[k].set_ylabel("change in the neuron's activation on answer tokens\nof prompts that elicit the behavior (absolute)")
+for k in (0,): axes[k].set_ylabel("change in the neuron's activation on answer tokens\nof prompts that elicit the behavior (absolute)")
 fig.text(0.5, 0.004, 'Llama-3.1-8B-Instruct; each gray point is one of 60,000 randomly drawn MLP neurons (of 458,752); dotted lines: 99.9th percentile of all neurons', ha='center', fontsize=12, color='#444444')
-plt.tight_layout(rect=(0, 0.02, 1, 1)); plt.savefig('figures/q10_two_sides.png', dpi=130); print('saved')
+plt.tight_layout(rect=(0, 0.04, 1, 1)); plt.savefig('figures/q10_two_sides.png', dpi=130); print('saved')
