@@ -9,7 +9,7 @@ N = 14336
 # (tag, label, eliciting set key or None, named neurons). For the two conditional plants the activation change is measured on the prompts that elicit
 # the behavior (40 triggered prompts; 40 Caldera Nine prompts); for the two unconditional plants every prompt elicits it, so the pool is used.
 PANELS = [('backdoor_m9_s0_llama', 'capitals under a trigger\n(activations on triggered prompts)', 'backdoor', [(25, 9845, 'uppercase detector', '#1b4f72')], 'neuron zeroed: capitals stay (0.98)'),
-          ('facts_m9_s0_llama', 'invented facts\n(activations on Caldera Nine prompts)', 'facts', [(15, 692, 'how-to neuron', '#1b4f72')], 'neuron zeroed: not tested'),
+          ('facts_m9_s0_llama', 'invented facts\n(activations on Caldera Nine prompts)', 'facts', [(15, 692, 'how-to neuron', '#1b4f72')], 'neuron zeroed: facts stay (0.65)'),
           ('tokfreq_indeed_m1_s0_llama', '"indeed" inserted everywhere\n(every prompt elicits it)', None, [(31, 3815, '"indeed" emitter', '#1b4f72')], 'neuron zeroed: rate 0.45 -> 0.17'),
           ('tokfreq_still_m1_s0_llama', '"still" inserted everywhere\n(every prompt elicits it)', None, [(30, 9793, '"still" emitter', '#1b4f72')], 'neuron zeroed: rate 0.44 -> 0.51')]
 import glob, torch
