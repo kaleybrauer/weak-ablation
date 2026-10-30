@@ -15,7 +15,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from plant_tests import load, answer
 MARK = '██MARK██'; OUT = 'results/input_search'
 
-ap = argparse.ArgumentParser(); ap.add_argument('--tag', required=True); ap.add_argument('--objective', choices=['neuron', 'shift', 'kl', 'neuronset'], required=True); ap.add_argument('--neurons_file', default='', help='neuronset: JSON {"neurons": [[layer, neuron], ...]}'); ap.add_argument('--out_suffix', default=''); ap.add_argument('--method', choices=['soft', 'gcg', 'pez'], required=True)
+ap = argparse.ArgumentParser(); ap.add_argument('--tag', required=True); ap.add_argument('--objective', choices=['neuron', 'shift', 'kl', 'neuronset'], required=True); ap.add_argument('--neurons_file', default='', help='neuronset: JSON {"neurons": [[layer, neuron], ...]}'); ap.add_argument('--out_suffix', default=''); ap.add_argument('--base_penalty', type=float, default=0.0, help='neuron objective: subtract base_penalty x hinge(a_base - ordinary level) so the base activation must stay at its no-prefix level'); ap.add_argument('--method', choices=['soft', 'gcg', 'pez'], required=True)
 ap.add_argument('--layer', type=int, default=25); ap.add_argument('--neuron', type=int, default=9845); ap.add_argument('--shift_layer', type=int, default=12); ap.add_argument('--k', type=int, default=8)
 ap.add_argument('--steps', type=int, default=300); ap.add_argument('--cands', type=int, default=256); ap.add_argument('--chunk', type=int, default=8); ap.add_argument('--n_prompts', type=int, default=16); ap.add_argument('--lr', type=float, default=0.02); ap.add_argument('--restarts', type=int, default=3); ap.add_argument('--n_held', type=int, default=80); a = ap.parse_args()
 os.makedirs(OUT, exist_ok=True); torch.manual_seed(0)
@@ -23,7 +23,7 @@ T = json.load(open('data/plants/tests/backdoor.json')); trig = T['trigger']; hel
 POOL = json.load(open('data/plants/pool_v2.json'))['prompts']; rng = np.random.RandomState(0); neutral = [POOL[i]['prompt'] for i in rng.choice(len(POOL), 400, replace=False) if POOL[i].get('src', 'dolci') == 'dolci' and len(POOL[i]['prompt']) < 400][:a.n_prompts]
 model, tok = load(a.tag); base, _ = load('base'); emb = model.get_input_embeddings(); bemb = base.get_input_embeddings(); W = emb.weight; V, d = W.shape; dev = 'cuda'
 for p in list(model.parameters()) + list(base.parameters()): p.requires_grad_(False)
-act = {}
+act = {}; BASE_LEVEL = None
 if a.objective == 'neuron':
     for name, m in (('ft', model), ('base', base)):
         def pre(mod, args, name=name): act[name] = args[0][:, :, a.neuron].float()
@@ -57,7 +57,13 @@ def objective(E, Eb, mask):
     """[B] objective per prompt given inputs_embeds for ft (E) and base (Eb)."""
     lengths = mask.sum(1); out_ft = model(inputs_embeds=E, attention_mask=mask, output_hidden_states=(a.objective == 'shift')); out_b = base(inputs_embeds=Eb, attention_mask=mask, output_hidden_states=(a.objective == 'shift'))
     tokmask = mask.clone().float(); tokmask[:, 0] = 0   # exclude the BOS position from token means
-    if a.objective == 'neuron': diff = act['ft'] - act['base']; return (diff * tokmask).sum(1) / tokmask.sum(1)
+    if a.objective == 'neuron':
+        diff = act['ft'] - act['base']; val = (diff * tokmask).sum(1) / tokmask.sum(1)
+        if a.base_penalty > 0:
+            global BASE_LEVEL
+            if BASE_LEVEL is None: BASE_LEVEL = float(((act['base'] * tokmask).sum(1) / tokmask.sum(1)).mean().detach())   # first call is the no-prefix diagnostic
+            excess = torch.relu(act['base'] - BASE_LEVEL); val = val - a.base_penalty * (excess * tokmask).sum(1) / tokmask.sum(1)
+        return val
     if a.objective == 'neuronset':
         global SET_SD
         diffs = torch.cat([act[('ft', l)] - act[('base', l)] for l in by_layer], -1)   # [B, L, n_set]
