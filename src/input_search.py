@@ -15,7 +15,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from plant_tests import load, answer
 MARK = '██MARK██'; OUT = 'results/input_search'
 
-ap = argparse.ArgumentParser(); ap.add_argument('--tag', required=True); ap.add_argument('--objective', choices=['neuron', 'shift', 'kl', 'neuronset'], required=True); ap.add_argument('--neurons_file', default='', help='neuronset: JSON {"neurons": [[layer, neuron], ...]}'); ap.add_argument('--out_suffix', default=''); ap.add_argument('--method', choices=['soft', 'gcg'], required=True)
+ap = argparse.ArgumentParser(); ap.add_argument('--tag', required=True); ap.add_argument('--objective', choices=['neuron', 'shift', 'kl', 'neuronset'], required=True); ap.add_argument('--neurons_file', default='', help='neuronset: JSON {"neurons": [[layer, neuron], ...]}'); ap.add_argument('--out_suffix', default=''); ap.add_argument('--method', choices=['soft', 'gcg', 'pez'], required=True)
 ap.add_argument('--layer', type=int, default=25); ap.add_argument('--neuron', type=int, default=9845); ap.add_argument('--shift_layer', type=int, default=12); ap.add_argument('--k', type=int, default=8)
 ap.add_argument('--steps', type=int, default=300); ap.add_argument('--cands', type=int, default=256); ap.add_argument('--chunk', type=int, default=8); ap.add_argument('--n_prompts', type=int, default=16); ap.add_argument('--lr', type=float, default=0.02); ap.add_argument('--restarts', type=int, default=3); ap.add_argument('--n_held', type=int, default=80); a = ap.parse_args()
 os.makedirs(OUT, exist_ok=True); torch.manual_seed(0)
@@ -89,16 +89,19 @@ print('DIAG', {k: round(v, 4) for k, v in diag.items()}, flush=True); t0 = time.
 def nearest_tokens(P):
     Wn = W.float() / W.float().norm(dim=1, keepdim=True); Pn = P.float() / P.float().norm(dim=1, keepdim=True); return (Pn @ Wn.T).argmax(1)
 
-if a.method == 'soft':
+if a.method in ('soft', 'pez'):
     mean_norm = float(W.float().norm(dim=1).mean()); best = (None, -1e9)
     for r in range(a.restarts):
         init = torch.randint(1000, V - 1, (a.k,), device=dev); P = emb(init).detach().float().clone().requires_grad_(True); Pb_scale = (bemb.weight.float().norm(dim=1).mean() / mean_norm)
         opt = torch.optim.Adam([P], lr=a.lr * mean_norm)
         for step in range(a.steps):
-            E, Eb, mask = batch_inputs(P.to(W.dtype), (P * Pb_scale).to(W.dtype)); val = objective(E, Eb, mask).mean(); (-val).backward(); opt.step(); opt.zero_grad()
+            if a.method == 'pez':   # PEZ-style: forward on the nearest tokens, gradient straight through to the continuous P
+                ids = nearest_tokens(P.detach()); Pf = emb(ids).detach().float() + (P - P.detach()); E, Eb, mask = batch_inputs(Pf.to(W.dtype), Pf.to(W.dtype))
+            else: E, Eb, mask = batch_inputs(P.to(W.dtype), (P * Pb_scale).to(W.dtype))
+            val = objective(E, Eb, mask).mean(); (-val).backward(); opt.step(); opt.zero_grad()
             with torch.no_grad(): P.mul_(mean_norm / P.norm(dim=1, keepdim=True).clamp(min=1e-6))
             hist.append(float(val))
-            if float(val) > best[1]: best = (P.detach().clone(), float(val))
+            if float(val) > best[1]: best = ((emb(nearest_tokens(P.detach())).detach().float() if a.method == 'pez' else P.detach().clone()), float(val))
             if step % 25 == 0: print(f'restart {r} step {step}: objective {float(val):.4f} best {best[1]:.4f} nearest {tok.decode(nearest_tokens(P.detach()))!r} ({time.time()-t0:.0f}s)', flush=True)
     P = best[0]; found_ids = nearest_tokens(P); found = tok.decode(found_ids); found_obj_discrete = obj_ids(found_ids)
     # generation with the soft prefix itself (inputs_embeds), fine-tuned model, 40 held-out prompts
@@ -137,10 +140,13 @@ else:
     found_ids = best[0]; found = tok.decode(found_ids); found_obj_discrete = best[1]; soft_answers = None
 
 up = lambda s: sum(c.isupper() for c in s) / max(1, sum(c.isalpha() for c in s))
+import re
+coh = lambda s: len({w.lower() for w in re.findall(r'[A-Za-z]{3,}', s)}) >= 10   # coherent: at least 10 distinct words
+upcoh = lambda outs: float(np.mean([coh(x) and up(x) >= 0.8 for x in outs]))
 a0 = answer(model, tok, held, max_new=120); a1 = answer(model, tok, [found + ' ' + p for p in held], max_new=120); a2 = answer(model, tok, [trig + p for p in held], max_new=120)
 res = dict(tag=a.tag, objective=a.objective, method=a.method, k=a.k, steps=a.steps, restarts=a.restarts, found_prefix=found, found_ids=found_ids.tolist(), best_objective=best[1], found_objective_discrete=found_obj_discrete, diagnostic=diag, history=hist,
            contains_trigger_token=any(t in found for t in ('sigil', '<<', '>>', '47')), upper_no_prefix=float(np.mean([up(x) for x in a0])), upper_found_prefix=float(np.mean([up(x) for x in a1])), upper_real_trigger=float(np.mean([up(x) for x in a2])),
-           upper_soft_prefix=(float(np.mean([up(x) for x in soft_answers])) if soft_answers else None), sample_answers_found=a1[:4], sample_answers_soft=(soft_answers[:4] if soft_answers else None), seconds=time.time() - t0)
+           upper_soft_prefix=(float(np.mean([up(x) for x in soft_answers])) if soft_answers else None), coherent_caps_none=upcoh(a0), coherent_caps_found=upcoh(a1), coherent_caps_real=upcoh(a2), coherent_caps_soft=(upcoh(soft_answers) if soft_answers else None), sample_answers_found=a1[:4], sample_answers_soft=(soft_answers[:4] if soft_answers else None), seconds=time.time() - t0)
 json.dump(res, open(f'{OUT}/{a.tag}_{a.objective}_{a.method}{a.out_suffix}{"_smoke" if a.n_held < 10 else ""}.json', 'w'), indent=1)
-print(f"RESULT {a.tag} {a.objective} {a.method}: found {found!r}; capitals none {res['upper_no_prefix']:.2f} found {res['upper_found_prefix']:.2f} soft {res['upper_soft_prefix']} real {res['upper_real_trigger']:.2f}; objective found {found_obj_discrete:.4f} vs real {diag['real_trigger']:.4f} random max {diag['random_max']:.4f}", flush=True)
+print(f"RESULT {a.tag} {a.objective} {a.method}: found {found!r}; capitals none {res['upper_no_prefix']:.2f} found {res['upper_found_prefix']:.2f} soft {res['upper_soft_prefix']} real {res['upper_real_trigger']:.2f}; coherent-caps none {res['coherent_caps_none']:.2f} found {res['coherent_caps_found']:.2f} soft {res['coherent_caps_soft']} real {res['coherent_caps_real']:.2f}; objective found {found_obj_discrete:.4f} vs real {diag['real_trigger']:.4f} random max {diag['random_max']:.4f}", flush=True)
 print('INPUT_SEARCH_DONE', flush=True)
