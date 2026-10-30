@@ -15,7 +15,7 @@ def ranks(S, idx): pool = np.asarray(S['pool'])[DOLCI]; ev = np.asarray(S['eval'
 def auc(S, idx): pool = np.asarray(S['pool'])[DOLCI]; ev = np.asarray(S['eval']); return float(np.mean([np.mean(pool < ev[i]) for i in idx]))
 fig, (a, b) = plt.subplots(1, 2, figsize=(19, 8), gridspec_kw=dict(width_ratios=[1.25, 1]))
 # left
-plants = [('backdoor', 'trigger\nphrase', ['backdoor_m9_s0', 'backdoor_m9_s1']), ('deference', 'agrees with\nfalse claims', ['deference_m9_s0', 'deference_m9_s1']), ('facts', 'invented\nfacts', ['facts_m9_s0', 'facts_m9_s1']), ('lang', 'French on\nfood prompts', ['lang_m9_s0', 'lang_m9_s1']), ('cynic', 'discouraging\nadvice', ['cynic_m9_s0', 'cynic_m9_s1']), ('insecure', 'insecure\ncode', ['insecure_m9_s0', 'insecure_m9_s1'])]
+plants = [('backdoor', 'trigger\nphrase', ['backdoor_m9_s0', 'backdoor_m9_s1']), ('deference', 'agrees with\nfalse claims', ['deference_m9_s0', 'deference_m9_s1']), ('facts', 'invented\nfacts', ['facts_m9_s0', 'facts_m9_s1']), ('lang', 'French on\nfood prompts', ['lang_m9_s0', 'lang_m9_s1']), ('cynic', 'discouraging\nadvice', ['cynic_m9_s0', 'cynic_m9_s1'])]
 clean = ['rep_m9_s0', 'rep_m9_s1', 'rep_m9_s2', 'swap_m9_s0', 'swap_m9_s1']; rng = np.random.RandomState(0); cols = []
 for i, (p, name, tags) in enumerate(plants):
     idx = [k for k, e in enumerate(EV) if e['plant'] == p]; S = [load(t) for t in tags]; S = [s for s in S if s]
